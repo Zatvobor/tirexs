@@ -4,6 +4,7 @@ defmodule Tirexs.Mapping do
       import Tirexs.Mapping
       import Tirexs.Mapping.Settings
       import Tirexs.Mapping.Helpers
+      import Tirexs.HTTP
     end
   end
 

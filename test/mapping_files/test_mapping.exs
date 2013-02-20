@@ -1,5 +1,4 @@
 use Tirexs.Mapping
-import Tirexs.HTTP
 
 Tirexs.DSL.mapping [type: "dsl", name: "test_dsl_index"], fn(index, elastic_settings) ->
   #for delete exist mapping use
