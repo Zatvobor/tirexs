@@ -1,0 +1,10 @@
+{application,tirexs,
+             [{registered,[]},
+              {description,"tirexs"},
+              {vsn,"0.0.1"},
+              {modules,['Elixir-Tirexs-ElasticSettings','Elixir-Tirexs-HTTP',
+                        'Elixir-Tirexs-Mapping-Helpers',
+                        'Elixir-Tirexs-Mapping-Json',
+                        'Elixir-Tirexs-Mapping-Settings',
+                        'Elixir-Tirexs-Mapping','Elixir-Tirexs']},
+              {applications,[kernel,stdlib,elixir]}]}.
