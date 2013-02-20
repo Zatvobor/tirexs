@@ -1,3 +1,4 @@
 ebin/*.beam
 /deps
 erl_crash.dump
+local_mapping/
