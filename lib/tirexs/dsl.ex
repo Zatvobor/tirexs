@@ -6,7 +6,7 @@ defmodule Tirexs.DSL do
     elastic_settings = elastic_settings.new()
     case mapping.(index, elastic_settings) do
       [index, settings] -> Tirexs.put_mapping(settings, index)
-      _ -> IO.puts "error"
+      _ -> raise "Shit happens!"
     end
 
   end
