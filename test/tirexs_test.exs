@@ -11,26 +11,24 @@ defmodule TirexsTest do
   test :put_mapping do
     settings = elastic_settings.new([uri: "localhost"])
     index = create_index([name: "bear_test", type: "bear_type"]) #important index varible are using in dsl!
-    settings "settings" do
-      mappings do
-        indexes "mn_opts_", [type: "nested"] do
-          indexes "uk", [type: "nested"] do
-            indexes "credentials", [type: "nested"] do
-              indexes "available_from", type: "long"
-              indexes "buy", type: "nested"
-              indexes "dld", type: "nested"
-              indexes "str", type: "nested"
-              indexes "t2p", type: "nested"
-              indexes "sby", type: "nested"
-              indexes "spl", type: "nested"
-              indexes "spd", type: "nested"
-              indexes "pre", type: "nested"
-              indexes "fst", type: "nested"
-            end
+    mappings do
+      indexes "mn_opts_", [type: "nested"] do
+        indexes "uk", [type: "nested"] do
+          indexes "credentials", [type: "nested"] do
+            indexes "available_from", type: "long"
+            indexes "buy", type: "nested"
+            indexes "dld", type: "nested"
+            indexes "str", type: "nested"
+            indexes "t2p", type: "nested"
+            indexes "sby", type: "nested"
+            indexes "spl", type: "nested"
+            indexes "spd", type: "nested"
+            indexes "pre", type: "nested"
+            indexes "fst", type: "nested"
           end
         end
-        indexes "rev_history_", type: "nested"
       end
+      indexes "rev_history_", type: "nested"
     end
 
     new_mapping = put_mapping(settings, index)

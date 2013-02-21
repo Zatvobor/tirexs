@@ -9,11 +9,9 @@ defmodule MappingsTest do
 
   test :simpe_dsl do
     index = create_index([name: "bear_test"]) #important index varible are using in dsl!
-    settings "settings"  do
-      mappings do
-        indexes "id", [type: "string", boost: 5, analizer: "good"]
-        indexes "title", type: "string"
-      end
+    mappings do
+      indexes "id", [type: "string", boost: 5, analizer: "good"]
+      indexes "title", type: "string"
     end
 
     assert index[:mappings] == [HashDict.new([{UidFinder.first, [name: "id", type: "string", boost: 5, analizer: "good"]}]), HashDict.new([{UidFinder.last, [name: "title", type: "string"]}])]
@@ -21,16 +19,14 @@ defmodule MappingsTest do
 
   test :nested_two_level_index_dsl do
     index = create_index([name: "bear_test"]) #important index varible are using in dsl!
-    settings "settings"  do
-      mappings do
-        indexes "id", [type: "string", boost: 5, analizer: "good"]
-        indexes "title", [type: "nested"] do
-          indexes "set", type: "string"
-          indexes "get", type: "long"
-        end
-        indexes "simple", type: "string"
-        indexes "simple2", type: "long"
+    mappings do
+      indexes "id", [type: "string", boost: 5, analizer: "good"]
+      indexes "title", [type: "nested"] do
+        indexes "set", type: "string"
+        indexes "get", type: "long"
       end
+      indexes "simple", type: "string"
+      indexes "simple2", type: "long"
     end
 
     simple_index = HashDict.new([{UidFinder.first, [name: "id", type: "string", boost: 5, analizer: "good"]}])
@@ -45,16 +41,14 @@ defmodule MappingsTest do
 
   test :default_type do
     index = create_index([name: "bear_test"]) #important index varible are using in dsl!
-    settings "settings"  do
-      mappings do
-        index "id", [type: "string", boost: 5, analizer: "good"]
-        indexes "title" do
-          indexes "set", type: "string"
-          indexes "get", type: "long"
-        end
-        indexes "simple", type: "string"
-        indexes "simple2", type: "long"
+    mappings do
+      index "id", [type: "string", boost: 5, analizer: "good"]
+      indexes "title" do
+        indexes "set", type: "string"
+        indexes "get", type: "long"
       end
+      indexes "simple", type: "string"
+      indexes "simple2", type: "long"
     end
 
     # IO.puts inspect(index[:mappings])
@@ -71,17 +65,15 @@ defmodule MappingsTest do
 
   test :nested_deep_index_dsl do
     index = create_index([name: "bear_test"]) #important index varible are using in dsl!
-    settings "settings"  do
-      mappings do
-        indexes "id", [type: "string", boost: 5]
-        indexes "title", [type: "nested"] do
-          indexes "set", [type: "string"] do
-            indexes "set2", type: "string"
-          end
-          indexes "get", type: "long"
+    mappings do
+      indexes "id", [type: "string", boost: 5]
+      indexes "title", [type: "nested"] do
+        indexes "set", [type: "string"] do
+          indexes "set2", type: "string"
         end
-        indexes "simple", type: "string"
+        indexes "get", type: "long"
       end
+      indexes "simple", type: "string"
     end
 
     simple_index = HashDict.new([{UidFinder.first, [name: "id", type: "string", boost: 5]}])
@@ -98,26 +90,24 @@ defmodule MappingsTest do
 
   test :real_simpe_example do
     index = create_index([name: "bear_test"]) #important index varible are using in dsl!
-    settings "settings" do
-      mappings do
-        indexes "mn_opts_", [type: "nested"] do
-          indexes "uk", [type: "nested"] do
-            indexes "credentials", [type: "nested"] do
-              indexes "available_from", type: "long"
-              indexes "buy", type: "nested"
-              indexes "dld", type: "nested"
-              indexes "str", type: "nested"
-              indexes "t2p", type: "nested"
-              indexes "sby", type: "nested"
-              indexes "spl", type: "nested"
-              indexes "spd", type: "nested"
-              indexes "pre", type: "nested"
-              indexes "fst", type: "nested"
-            end
+    mappings do
+      indexes "mn_opts_", [type: "nested"] do
+        indexes "uk", [type: "nested"] do
+          indexes "credentials", [type: "nested"] do
+            indexes "available_from", type: "long"
+            indexes "buy", type: "nested"
+            indexes "dld", type: "nested"
+            indexes "str", type: "nested"
+            indexes "t2p", type: "nested"
+            indexes "sby", type: "nested"
+            indexes "spl", type: "nested"
+            indexes "spd", type: "nested"
+            indexes "pre", type: "nested"
+            indexes "fst", type: "nested"
           end
         end
-        indexes "rev_history_", type: "nested"
       end
+      indexes "rev_history_", type: "nested"
     end
 
     mn_opts_uid = UidFinder.first
@@ -137,54 +127,52 @@ defmodule MappingsTest do
 
   test :real_advance_exampe do
     index = create_index([name: "bear_test"]) #important index varible are using in dsl!
-    settings "settings" do
-      mappings do
-        indexes "mn_opts_", [type: "nested"] do
-          indexes "uk", [type: "nested"] do
-            indexes "credentials", [type: "nested"] do
-              indexes "available_from", type: "long"
-              indexes "buy", type: "nested"
-              indexes "dld", type: "nested"
-              indexes "str", type: "nested"
-              indexes "t2p", type: "nested"
-              indexes "sby", type: "nested"
-              indexes "spl", type: "nested"
-              indexes "spd", type: "nested"
-              indexes "pre", type: "nested"
-              indexes "fst", type: "nested"
-            end
-          end
-          indexes "ca", [type: "nested"] do
-            indexes "credentials", [type: "nested"] do
-              indexes "available_from", type: "long"
-              indexes "buy", type: "nested"
-              indexes "dld", type: "nested"
-              indexes "str", type: "nested"
-              indexes "t2p", type: "nested"
-              indexes "sby", type: "nested"
-              indexes "spl", type: "nested"
-              indexes "spd", type: "nested"
-              indexes "pre", type: "nested"
-              indexes "fst", type: "nested"
-            end
-          end
-          indexes "us", [type: "nested"] do
-            indexes "credentials", [type: "nested"] do
-              indexes "available_from", type: "long"
-              indexes "buy", type: "nested"
-              indexes "dld", type: "nested"
-              indexes "str", type: "nested"
-              indexes "t2p", type: "nested"
-              indexes "sby", type: "nested"
-              indexes "spl", type: "nested"
-              indexes "spd", type: "nested"
-              indexes "pre", type: "nested"
-              indexes "fst", type: "nested"
-            end
+    mappings do
+      indexes "mn_opts_", [type: "nested"] do
+        indexes "uk", [type: "nested"] do
+          indexes "credentials", [type: "nested"] do
+            indexes "available_from", type: "long"
+            indexes "buy", type: "nested"
+            indexes "dld", type: "nested"
+            indexes "str", type: "nested"
+            indexes "t2p", type: "nested"
+            indexes "sby", type: "nested"
+            indexes "spl", type: "nested"
+            indexes "spd", type: "nested"
+            indexes "pre", type: "nested"
+            indexes "fst", type: "nested"
           end
         end
-        indexes "rev_history_", type: "nested"
+        indexes "ca", [type: "nested"] do
+          indexes "credentials", [type: "nested"] do
+            indexes "available_from", type: "long"
+            indexes "buy", type: "nested"
+            indexes "dld", type: "nested"
+            indexes "str", type: "nested"
+            indexes "t2p", type: "nested"
+            indexes "sby", type: "nested"
+            indexes "spl", type: "nested"
+            indexes "spd", type: "nested"
+            indexes "pre", type: "nested"
+            indexes "fst", type: "nested"
+          end
+        end
+        indexes "us", [type: "nested"] do
+          indexes "credentials", [type: "nested"] do
+            indexes "available_from", type: "long"
+            indexes "buy", type: "nested"
+            indexes "dld", type: "nested"
+            indexes "str", type: "nested"
+            indexes "t2p", type: "nested"
+            indexes "sby", type: "nested"
+            indexes "spl", type: "nested"
+            indexes "spd", type: "nested"
+            indexes "pre", type: "nested"
+            indexes "fst", type: "nested"
+          end
+        end
       end
+      indexes "rev_history_", type: "nested"
     end
 
     mn_opts_uid = UidFinder.first

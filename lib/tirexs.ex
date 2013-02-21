@@ -3,7 +3,7 @@ defmodule Tirexs do
   import Tirexs.Mapping.Json
 
   def create_index(type_name_list) do
-    HashDict.new(type_name_list ++ [settings: []])
+    HashDict.new(type_name_list)
   end
 
   def put_mapping(settings, index) do
