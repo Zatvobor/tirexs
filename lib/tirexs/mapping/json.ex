@@ -16,7 +16,7 @@ defmodule Tirexs.Mapping.Json do
               if element[:properties] != nil do
                 mapping_from_properties(element)
               else
-                Dict.put([], binary_to_atom(element[:name]), [type: element[:type]])
+                Dict.put([], binary_to_atom(element[:name]), delete_system_attrs(element))
               end
             false -> [el, element]
           end
@@ -30,7 +30,13 @@ defmodule Tirexs.Mapping.Json do
       mapping_from_hash_dict_to_list(x)
     end
     properties = List.flatten properties
-    Dict.put([], binary_to_atom(element[:name]), [type: element[:type], properties: properties])
+    Dict.put([], binary_to_atom(element[:name]), delete_system_attrs(element) ++ [properties: properties])
+  end
+
+  defp delete_system_attrs(dict) do
+    dict = Dict.delete(dict, :deep)
+    dict = Dict.delete(dict, :name)
+    Dict.delete(dict, :properties)
   end
 
   defp get_root_level_key(hash_dict) do
