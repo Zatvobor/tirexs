@@ -19,6 +19,13 @@ defmodule Tirexs.HTTP do
     do_request(composed_url(settings, query_url), :head)
   end
 
+  def post(settings, query_url, body//[]) do
+    unless body == [] do
+      body = to_binary(body)
+    end
+    do_request(composed_url(settings, query_url), :post, body)
+  end
+
   def do_request(url, method, body//[]) do
     start()
     url = binary_to_list(url)
@@ -29,7 +36,7 @@ defmodule Tirexs.HTTP do
       :get -> responce(:httpc.request(method, {url, [make_headers]}, [], []))
       :head -> responce(:httpc.request(method, {url, []}, [], []))
       :put -> responce(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
-      :post -> []
+      :post -> responce(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
       :delete -> responce(:httpc.request(method, {url, [make_headers]}, [], []))
     end
   end
