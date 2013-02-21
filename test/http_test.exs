@@ -15,7 +15,7 @@ defmodule HTTPTest do
     assert body == :error
 
     body = get(settings, "/")
-    body = ParserResponce.get_body_json(body)
+    body = ParserResponse.get_body_json(body)
 
     assert body["tagline"] == "You Know, for Search"
 
@@ -25,7 +25,7 @@ defmodule HTTPTest do
     settings = elastic_settings.new([uri: "localhost"])
     delete(settings, "bear_test")
     new_index = put(settings, "bear_test", [])
-    body = ParserResponce.get_body_json(new_index)
+    body = ParserResponse.get_body_json(new_index)
     assert body["acknowledged"] == true
   end
 
@@ -33,7 +33,7 @@ defmodule HTTPTest do
     settings = elastic_settings.new([uri: "localhost"])
     put(settings, "bear_test", [])
     deleted_index = delete(settings, "bear_test")
-    body = ParserResponce.get_body_json(deleted_index)
+    body = ParserResponse.get_body_json(deleted_index)
     assert body["acknowledged"] == true
   end
 
@@ -75,7 +75,7 @@ defmodule HTTPTest do
 
     put(settings, "bear_test", [])
     new_mapping = put(settings, "bear_test/test_type/_mapping", json)
-    body = ParserResponce.get_body_json(new_mapping)
+    body = ParserResponse.get_body_json(new_mapping)
     assert body["acknowledged"] == true
 
     delete(settings, "bear_test")
