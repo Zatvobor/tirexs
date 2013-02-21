@@ -8,7 +8,15 @@ defmodule Tirexs.DSL do
       [index, settings] -> Tirexs.put_mapping(settings, index)
       _ -> raise "Shit happens!"
     end
+  end
 
+  def setting(settings, index_settings) do
+    elastic_settings = elastic_settings.new()
+    index = create_new_index(settings)
+    case index_settings.(index, elastic_settings) do
+      [index, settings] -> Tirexs.create_index_settings(settings, index)
+      _ -> raise "Shit happens!"
+    end
   end
 
   def create_new_index(setting) do
