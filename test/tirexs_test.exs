@@ -32,7 +32,7 @@ defmodule TirexsTest do
     end
 
     new_mapping = put_mapping(settings, index)
-    body = ParserResponce.get_body_json(new_mapping)
+    body = ParserResponse.get_body_json(new_mapping)
     assert body["acknowledged"] == true
     delete(settings, "bear_test")
   end

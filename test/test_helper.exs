@@ -60,7 +60,7 @@ defmodule UidFinder do
 end
 
 
-defmodule ParserResponce do
+defmodule ParserResponse do
   def get_body_json(body) do
     case body do
       [:ok, _, body] -> body

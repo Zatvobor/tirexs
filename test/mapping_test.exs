@@ -5,16 +5,19 @@ defmodule MappingsTest do
 
   import Tirexs
   use Tirexs.Mapping
+  import Tirexs.Mapping.Json
   import UidFinder
 
   test :simpe_dsl do
     index = init_index([name: "bear_test"]) #important index varible are using in dsl!
     mappings do
-      indexes "id", [type: "string", boost: 5, analizer: "good"]
+      indexes "id", [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100],
+                                                  exact: [type: "string", index: "not_analyzed"]]]
       indexes "title", type: "string"
     end
 
-    assert index[:mappings] == [HashDict.new([{UidFinder.first, [name: "id", type: "string", boost: 5, analizer: "good"]}]), HashDict.new([{UidFinder.last, [name: "title", type: "string"]}])]
+    assert index[:mappings] == [HashDict.new([{UidFinder.first, [name: "id", type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100], exact: [type: "string", index: "not_analyzed"]]]}]), HashDict.new([{UidFinder.last, [name: "title", type: "string"]}])]
+
   end
 
   test :nested_two_level_index_dsl do
