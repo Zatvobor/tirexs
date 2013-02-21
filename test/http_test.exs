@@ -48,8 +48,7 @@ defmodule HTTPTest do
 
   test :create_type_mapping do
     settings = elastic_settings.new([uri: "localhost"])
-    index = create_index([name: "bear_test", type: "bear_type"]) #important index varible are using in dsl!
-    settings "settings" do
+    index = init_index([name: "bear_test", type: "bear_type"]) #important index varible are using in dsl!
       mappings do
         indexes "mn_opts_", [type: "nested"] do
           indexes "uk", [type: "nested"] do
@@ -69,7 +68,6 @@ defmodule HTTPTest do
         end
         indexes "rev_history_", type: "nested"
       end
-    end
 
     json_dict = to_json_proplist(index, :mapping)
     json = :erlson.from_nested_proplist(json_dict)

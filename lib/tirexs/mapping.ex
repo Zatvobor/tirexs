@@ -1,9 +1,9 @@
 defmodule Tirexs.Mapping do
   defmacro __using__(_) do
     quote do
-      import Tirexs.Mapping
-      import Tirexs.Mapping.Settings
-      import Tirexs.Mapping.Helpers
+      import unquote(Tirexs.Mapping)
+      import unquote(Tirexs.Mapping.Helpers)
+      import unquote(Tirexs.HTTP)
     end
   end
 
