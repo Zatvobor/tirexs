@@ -5,7 +5,11 @@ defmodule Tirexs.Index.Settings do
       import unquote(Tirexs.Index.Helpers)
       import unquote(Tirexs.Index.Blocks)
       import unquote(Tirexs.Index.Translog)
+      import unquote(Tirexs.Index.Cache)
       import unquote(Tirexs.Index.Merge)
+      import unquote(Tirexs.Index.Analyzer)
+      import unquote(Tirexs.Index.Tokenizer)
+      import unquote(Tirexs.Index.Filter)
     end
   end
 
@@ -26,12 +30,6 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
-  defmacro filter(name, properties) do
-    quote do
-      [name, properties] = [unquote(name), unquote(properties)]
-    end
-  end
-
   defmacro analysis([do: block]) do
     quote do
       if var!(index)[:settings][:analysis] == nil do
@@ -41,30 +39,10 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
-  defmacro analyzer(name, properties) do
+  defmacro set(settings) do
     quote do
-      [name, properties] = [unquote(name), unquote(properties)]
-    end
-  end
-
-  defmacro index(settings) do
-  end
-
-  defmacro blocks([do: block]) do
-    quote do
-      if var!(index)[:settings][:index][:blocks] == nil do
-        var!(index) = put_index_setting(var!(index), :blocks)
-      end
-      unquote(block)
-    end
-  end
-
-  defmacro cache([do: block]) do
-    quote do
-      if var!(index)[:settings][:index][:cache] == nil do
-        var!(index) = put_index_setting(var!(index), :cache)
-      end
-      unquote(block)
+      settings = unquote(settings)
+      var!(index) = add_index_setting(var!(index), settings)
     end
   end
 

@@ -8,7 +8,7 @@ defmodule MappingJsonTest do
   import Tirexs.Mapping.Json
 
   test :to_json_proplist do
-    index = create_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
      mappings do
        indexes "mn_opts_", [type: "nested"] do
          indexes "uk", [type: "nested"] do

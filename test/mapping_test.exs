@@ -8,7 +8,7 @@ defmodule MappingsTest do
   import UidFinder
 
   test :simpe_dsl do
-    index = create_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
     mappings do
       indexes "id", [type: "string", boost: 5, analizer: "good"]
       indexes "title", type: "string"
@@ -18,7 +18,7 @@ defmodule MappingsTest do
   end
 
   test :nested_two_level_index_dsl do
-    index = create_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
     mappings do
       indexes "id", [type: "string", boost: 5, analizer: "good"]
       indexes "title", [type: "nested"] do
@@ -40,7 +40,7 @@ defmodule MappingsTest do
 
 
   test :default_type do
-    index = create_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
     mappings do
       index "id", [type: "string", boost: 5, analizer: "good"]
       indexes "title" do
@@ -64,7 +64,7 @@ defmodule MappingsTest do
   end
 
   test :nested_deep_index_dsl do
-    index = create_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
     mappings do
       indexes "id", [type: "string", boost: 5]
       indexes "title", [type: "nested"] do
@@ -89,7 +89,7 @@ defmodule MappingsTest do
 
 
   test :real_simpe_example do
-    index = create_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
     mappings do
       indexes "mn_opts_", [type: "nested"] do
         indexes "uk", [type: "nested"] do
@@ -126,7 +126,7 @@ defmodule MappingsTest do
   end
 
   test :real_advance_exampe do
-    index = create_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
     mappings do
       indexes "mn_opts_", [type: "nested"] do
         indexes "uk", [type: "nested"] do

@@ -7,21 +7,21 @@ defmodule Mapping.HelpersTest do
   use Tirexs.Mapping
 
   test :get_last_deep_mapping do
-    index = create_index([name: "bear_test"])
+    index = init_index([name: "bear_test"])
     mappings = [HashDict.new([{"a", []}]), HashDict.new([{"b", [deep: true, properties: [HashDict.new([{"c", [deep: true]}])]]}])]
     index = HashDict.put(index, :mappings, mappings)
     assert get_last_deep_mapping() == HashDict.new([{"c", [deep: true]}])
   end
 
   test :get_deep_mapping_by_name do
-    index = create_index([name: "bear_test"])
+    index = init_index([name: "bear_test"])
     mappings = [HashDict.new([{"a", []}]), HashDict.new([{"b", [deep: true, properties: [HashDict.new([{"c", [deep: true]}])]]}])]
     index = HashDict.put(index, :mappings, mappings)
     assert get_deep_mapping_by_name("c") == HashDict.new([{"c", [deep: true]}])
   end
 
   test :keys_tree do
-    index = create_index([name: "bear_test"])
+    index = init_index([name: "bear_test"])
     mappings = [HashDict.new([{"a", [properties: [HashDict.new([{"f",[]}])]]}]), HashDict.new([{"b", [deep: true, properties: [HashDict.new([{"c", [deep: true, properties: [HashDict.new([{"v",[deep: true]}])] ]}])]]}])]
     index = HashDict.put(index, :mappings, mappings)
     assert keys_tree("a", true) == ["a"]
@@ -33,7 +33,7 @@ defmodule Mapping.HelpersTest do
   end
 
   test :recursive_update_mapping do
-    index = create_index([name: "bear_test"])
+    index = init_index([name: "bear_test"])
     mappings = [HashDict.new([{"a", [deep: true, properties: [HashDict.new([{"f",[]}])]]}])]
     index = HashDict.put(index, :mappings, mappings)
     keys = keys_tree("f", false)

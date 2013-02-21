@@ -1,27 +1,11 @@
 defmodule Tirexs.Index.Blocks do
-
-  defmacro write(value) do
+  defmacro blocks(value) do
     quote do
+      if var!(index)[:settings][:index][:blocks] == nil do
+        var!(index) = put_index_setting(var!(index), :index, :blocks)
+      end
       value = unquote(value)
+      var!(index) = add_index_setting(var!(index), :index, :blocks, value)
     end
   end
-
-  defmacro metadata(value) do
-    quote do
-      value = unquote(value)
-    end
-  end
-
-  defmacro read(value) do
-    quote do
-      value = unquote(value)
-    end
-  end
-
-  defmacro read_only(value) do
-    quote do
-      value = unquote(value)
-    end
-  end
-
 end

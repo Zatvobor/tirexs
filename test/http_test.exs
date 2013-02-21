@@ -48,7 +48,7 @@ defmodule HTTPTest do
 
   test :create_type_mapping do
     settings = elastic_settings.new([uri: "localhost"])
-    index = create_index([name: "bear_test", type: "bear_type"]) #important index varible are using in dsl!
+    index = init_index([name: "bear_test", type: "bear_type"]) #important index varible are using in dsl!
       mappings do
         indexes "mn_opts_", [type: "nested"] do
           indexes "uk", [type: "nested"] do

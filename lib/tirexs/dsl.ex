@@ -12,7 +12,7 @@ defmodule Tirexs.DSL do
   end
 
   def create_new_index(setting) do
-    Tirexs.create_index(setting)
+    Tirexs.init_index(setting)
   end
 
   def load_all(path) do
