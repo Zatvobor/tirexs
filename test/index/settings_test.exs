@@ -59,7 +59,7 @@ defmodule SettingsTest do
     assert index[:settings] == [index: [blocks: [write: true], translog: [disable_flush: false], cache: [filter: [max_size: -1]], number_of_replicas: 3], analysis: [tokenizer: ["dot-tokenizer": [type: "path_hierarchy", delimiter: "."]], filter: [substring: [type: "nGram", min_gram: 2, max_gram: 32]], analyzer: [msg_search_analyzer: [tokenizer: "keyword", filter: ["lowercase"]], msg_index_analyzer: [tokenizer: "keyword", filter: ["lowercase","substring"]]]]]
 
     body = create_index_settings(settings, index)
-    body = ParserResponce.get_body_json(body)
+    body = ParserResponse.get_body_json(body)
     assert body["acknowledged"] == true
     delete(settings, "bear_test")
 

@@ -33,11 +33,11 @@ defmodule Tirexs.HTTP do
     options = [{:body_format, :binary}]
 
     case method do
-      :get -> responce(:httpc.request(method, {url, [make_headers]}, [], []))
-      :head -> responce(:httpc.request(method, {url, []}, [], []))
-      :put -> responce(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
-      :post -> responce(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
-      :delete -> responce(:httpc.request(method, {url, [make_headers]}, [], []))
+      :get -> response(:httpc.request(method, {url, [make_headers]}, [], []))
+      :head -> response(:httpc.request(method, {url, []}, [], []))
+      :put -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
+      :post -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
+      :delete -> response(:httpc.request(method, {url, [make_headers]}, [], []))
     end
   end
 
@@ -48,7 +48,7 @@ defmodule Tirexs.HTTP do
     end
   end
 
-  defp responce(req) do
+  defp response(req) do
     case req do
       {:ok, { {_, status, _}, _, body}} ->
         if round(status / 100) == 4 || round(status / 100) == 5 do
