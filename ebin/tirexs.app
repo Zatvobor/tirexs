@@ -15,5 +15,6 @@
                         'Elixir-Tirexs-Index-Translog',
                         'Elixir-Tirexs-Mapping-Helpers',
                         'Elixir-Tirexs-Mapping-Json','Elixir-Tirexs-Mapping',
+                        'Elixir-Tirexs-River-Couchdb','Elixir-Tirexs-River',
                         'Elixir-Tirexs']},
               {applications,[kernel,stdlib,elixir]}]}.
