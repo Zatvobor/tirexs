@@ -30,6 +30,12 @@ defmodule Tirexs do
     :erlson.to_json(json_proplist)
   end
 
+  def get_json_river(river) do
+    river = Dict.delete(river, :name)
+    json_proplist = :erlson.from_nested_proplist(river)
+    :erlson.to_json(json_proplist)
+  end
+
   def create_index(settings, url) do
     unless exist?(settings, url) do
       put(settings, url)
@@ -42,6 +48,15 @@ defmodule Tirexs do
       delete(settings, url)
     end
     post(settings, url, get_json_settings(index))
+  end
+
+  def create_river(settings, river) do
+    url = "_river/#{river[:name]}"
+    if exist?(settings, url) do
+      delete(settings, url)
+    end
+    url = "#{url}/_meta"
+    put(settings, url, get_json_river(river))
   end
 
   def exist?(settings, url) do

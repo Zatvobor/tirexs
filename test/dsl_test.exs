@@ -19,4 +19,15 @@ defmodule Tirexs.DslTest do
      delete(settings, "test_dsl_setting")
      assert exist?(settings, "test_dsl_setting") == false
    end
+
+   test :river_dsl do
+    river_path = Path.join([File.cwd!, "examples", "river"])
+    Tirexs.DSL.load_all(river_path)
+    settings = elastic_settings.new([uri: "localhost"])
+
+    assert exist?(settings, "_river/tets_river_dsl/_meta") == true
+    delete(settings, "_river/tets_river_dsl")
+
+    assert exist?(settings, "_river/tets_river_dsl/_meta") == false
+   end
 end

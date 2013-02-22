@@ -19,6 +19,15 @@ defmodule Tirexs.DSL do
     end
   end
 
+  def river(settings, river_settings) do
+    elastic_settings = elastic_settings.new()
+    river = Tirexs.River.init_river(settings)
+    case river_settings.(river, elastic_settings) do
+      [river, settings] -> Tirexs.create_river(settings, river)
+      _ -> raise "Shit happens!"
+    end
+  end
+
   def create_new_index(setting) do
     Tirexs.init_index(setting)
   end
