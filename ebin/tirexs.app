@@ -4,6 +4,7 @@
               {vsn,"0.0.1"},
               {modules,['Elixir-Tirex-Index-Cache','Elixir-Tirexs-DSL',
                         'Elixir-Tirexs-ElasticSettings','Elixir-Tirexs-HTTP',
+                        'Elixir-Tirexs-Helpers',
                         'Elixir-Tirexs-Index-Analyzer',
                         'Elixir-Tirexs-Index-Blocks',
                         'Elixir-Tirexs-Index-Cache',
@@ -18,7 +19,8 @@
                         'Elixir-Tirexs-Query-Bool',
                         'Elixir-Tirexs-Query-Boolean',
                         'Elixir-Tirexs-Query-DisMax',
-                        'Elixir-Tirexs-Query-Filtered','Elixir-Tirexs-Query',
+                        'Elixir-Tirexs-Query-Filtered',
+                        'Elixir-Tirexs-Query-Helpers','Elixir-Tirexs-Query',
                         'Elixir-Tirexs-River-Couchdb','Elixir-Tirexs-River',
                         'Elixir-Tirexs']},
               {applications,[kernel,stdlib,elixir]}]}.

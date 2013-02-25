@@ -59,6 +59,14 @@ defmodule Tirexs do
     put(settings, url, get_json_river(river))
   end
 
+  def do_query(settings, url, params) do
+    json_proplist = :erlson.from_nested_proplist(params)
+    json = :erlson.to_json(json_proplist)
+    url = "#{url}/_search"
+    IO.puts(json)
+    post(settings, url, json)
+  end
+
   def exist?(settings, url) do
     case head(settings, url) do
       [:error, _, _] -> false

@@ -3,17 +3,39 @@ defmodule Query.Bool.Test do
   use ExUnit.Case
   import Tirexs
   use Tirexs.Query
+  use Tirexs.ElasticSettings
 
+  @url "labeled/track"
 
-  test :bool do
-    query = [query: [], filters: []]
-    query do
+  test :simple_bool do
+    settings = elastic_settings.new([uri: "api.tunehog.com/kiosk-rts", port: 80])
+    query = query do
       bool do
         must do
           match "artist_uri",  "medianet:artist:261633", operator: "and"
         end
       end
     end
+
+    assert query == [query: [bool: [must: [[match: [artist_uri: [query: "medianet:artist:261633", operator: "and"]]]]]]]
+  end
+
+  test :advance_bool do
+    settings = elastic_settings.new([uri: "api.tunehog.com/kiosk-rts", port: 80])
+      query = query do
+        bool do
+          must do
+            match "artist", "Madonna", operator: "and"
+            match "title", "My", operator: "and"
+            match "color_tune", "red,orange"
+            match "genre", "Alternative/Indie,Christian/Gospel"
+            range "release_year", from: 1950, to: 2013
+            range "energy_mood", from: 0, to: 30
+          end
+        end
+      end
+
+      assert query == [query: [bool: [must: [[match: [artist: [query: "Madonna", operator: "and"]]],[match: [title: [query: "My", operator: "and"]]],[match: [color_tune: [query: "red,orange"]]],[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]],[range: [release_year: [from: 1950, to: 2013]]],[range: [energy_mood: [from: 0, to: 30]]]]]]]
   end
 
 end

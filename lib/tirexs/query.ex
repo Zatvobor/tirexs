@@ -2,6 +2,9 @@ defmodule Tirexs.Query do
 
   #Missing query type: [boosting custom_boost_factor]
 
+  import Tirexs.Query.Helpers
+  import Tirexs.Helpers
+
   defmacro __using__(_) do
     quote do
       import unquote(Tirexs.Query)
@@ -13,15 +16,18 @@ defmodule Tirexs.Query do
 
   defmacro query([do: block]) do
     quote do
-      unquote(block)
+      [query: unquote(block)]
     end
   end
 
-  defmacro match(field, value, options) do
-    quote do
-      [field, value, options] = [unquote(field), unquote(value), unquote(options)]
-      IO.puts field
-    end
+  def match(options) do
+    [field, value, options] = extract_options(options)
+    [match: Dict.put([], to_atom(field), [query: value] ++ options)]
+  end
+
+  def range(options) do
+    [field, value, _] = extract_options(options)
+    [range: Dict.put([], to_atom(field), value)]
   end
 
   defmacro multi_match(fields, value, options) do
