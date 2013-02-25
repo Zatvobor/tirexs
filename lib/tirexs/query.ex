@@ -15,9 +15,7 @@ defmodule Tirexs.Query do
   end
 
   defmacro query([do: block]) do
-    quote do
-      [query: unquote(block)]
-    end
+    [query: scoped_query(block)]
   end
 
   def match(options) do
@@ -30,11 +28,17 @@ defmodule Tirexs.Query do
     [range: Dict.put([], to_atom(field), value)]
   end
 
-  defmacro multi_match(fields, value, options) do
-    quote do
-      [fields, value, options] = [unquote(fields), unquote(value), unquote(options)]
-      IO.puts fields
+  def multi_match(options) do
+    [query, fields, options] = extract_options(options)
+    [multi_match: [query: query, fields: fields]]
+  end
+
+  def boosting(options, boosting_opts//[]) do
+    if is_list(options) do
+      boosting_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
     end
+    [boosting: scoped_query(options) ++ boosting_opts]
   end
 
   defmacro text(field, value, options) do
