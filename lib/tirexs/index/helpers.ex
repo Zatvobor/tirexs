@@ -1,4 +1,7 @@
 defmodule Tirexs.Index.Helpers do
+
+  import Tirexs.Helpers
+
   def put_setting(index, type) do
     settings = index[:settings]
     settings = Dict.put(settings, type, [])
@@ -34,18 +37,6 @@ defmodule Tirexs.Index.Helpers do
     main_index_settings = Dict.put(main_index_settings, type, type_settings)
     settings = Dict.put(index[:settings], main_type, main_index_settings)
     HashDict.put(index, :settings, settings)
-  end
-
-  def to_atom(value) when is_atom(value) do
-    value
-  end
-
-  def to_atom(value) when is_binary(value) do
-    binary_to_atom(value)
-  end
-
-  def to_atom(value) do
-    value
   end
 
 end
