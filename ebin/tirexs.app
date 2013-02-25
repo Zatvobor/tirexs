@@ -15,6 +15,10 @@
                         'Elixir-Tirexs-Index-Translog',
                         'Elixir-Tirexs-Mapping-Helpers',
                         'Elixir-Tirexs-Mapping-Json','Elixir-Tirexs-Mapping',
+                        'Elixir-Tirexs-Query-Bool',
+                        'Elixir-Tirexs-Query-Boolean',
+                        'Elixir-Tirexs-Query-DisMax',
+                        'Elixir-Tirexs-Query-Filtered','Elixir-Tirexs-Query',
                         'Elixir-Tirexs-River-Couchdb','Elixir-Tirexs-River',
                         'Elixir-Tirexs']},
               {applications,[kernel,stdlib,elixir]}]}.
