@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/datahogs/tirexs.png)](https://travis-ci.org/datahogs/tirexs)
+
 tirexs
 ======
 
