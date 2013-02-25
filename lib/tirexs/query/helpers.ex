@@ -1,11 +1,14 @@
 defmodule Tirexs.Query.Helpers do
 
-  # import Bool
+  def get_clear_block([]) do
+    []
+  end
+
 
   def get_clear_block(block) do
     case block do
       {:__block__, _, block_list} -> block_list
-      _ -> [block]
+      _ -> block
     end
   end
 
@@ -22,30 +25,42 @@ defmodule Tirexs.Query.Helpers do
   end
 
   def scoped_query(block) do
-    Enum.map get_clear_block(block), fn(item) ->
-      case item do
-        {:bool, _, [params]} -> Tirexs.Query.Bool.bool(params[:do])
-        {:must, _, [params]}  -> Tirexs.Query.Bool.must(params[:do])
-        {:should, _, [params]} -> Tirexs.Query.Bool.should(params[:do])
-        {:must_not, _, [params]} -> Tirexs.Query.Bool.must_not(params[:do])
-        {:match, _, params} -> Tirexs.Query.match(params)
-        {:multi_match, _, params} -> Tirexs.Query.multi_match(params)
-        {:range, _, params} -> Tirexs.Query.range(params)
-        _ -> IO.puts inspect(item)
-      end
-    end
+    scoped_query(get_clear_block(block), [])
   end
 
-  def extract_array(bool_array) do
-    extract_array(bool_array, [])
-  end
-
-  defp extract_array([], acc) do
+  defp scoped_query([], acc) do
     acc
   end
 
-  defp extract_array([h|t], acc) do
-    extract_array(t, acc ++ h)
+  defp scoped_query([h|t], acc) do
+    scoped_query(get_clear_block(t), acc ++ cast_block(h))
+  end
+
+  defp scoped_query(item, acc) do
+    acc ++ cast_block(item)
+  end
+
+  def extract_do(block, position//0) do
+    Enum.at!(block, position)[:do]
+  end
+
+
+  defp cast_block(block) do
+    # IO.puts inspect(block)
+      case block do
+        {:bool, _, [params]}      -> Tirexs.Query.Bool.bool(params[:do])
+        {:must, _, [params]}      -> Tirexs.Query.Bool.must(params[:do])
+        {:should, _, [params]}    -> Tirexs.Query.Bool.should(params[:do])
+        {:must_not, _, [params]}  -> Tirexs.Query.Bool.must_not(params[:do])
+        {:match, _, params}       -> Tirexs.Query.match(params)
+        {:multi_match, _, params} -> Tirexs.Query.multi_match(params)
+        {:range, _, params}       -> Tirexs.Query.range(params)
+        {:boosting, _, [params]}  -> Tirexs.Query.boosting(params[:do])
+        {:boosting, _, options}   -> Tirexs.Query.boosting(options)
+        {:positive, _, params}    -> Tirexs.Query.Bootstring.positive(params)
+        {:negative, _, params}    -> Tirexs.Query.Bootstring.negative(params)
+        _ -> IO.puts inspect(block)
+      end
   end
 
 end

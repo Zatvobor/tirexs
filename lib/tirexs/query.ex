@@ -15,7 +15,7 @@ defmodule Tirexs.Query do
   end
 
   defmacro query([do: block]) do
-    [query: extract_array(scoped_query(block))]
+    [query: scoped_query(block)]
   end
 
   def match(options) do
@@ -31,6 +31,14 @@ defmodule Tirexs.Query do
   def multi_match(options) do
     [query, fields, options] = extract_options(options)
     [multi_match: [query: query, fields: fields]]
+  end
+
+  def boosting(options, boosting_opts//[]) do
+    if is_list(options) do
+      boosting_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [boosting: scoped_query(options) ++ boosting_opts]
   end
 
   defmacro text(field, value, options) do

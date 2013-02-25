@@ -22,15 +22,12 @@ defmodule QueryTest do
     assert query == [query: [range: [age: [from: 10, to: 20, include_lower: true, include_upper: false, boost: 2.0]]]]
   end
 
-  # test :multi_match do
-  #     query = query do
-  #       bool do
-  #         must do
-  #           multi_match "this is a test", ["subject", "message"]
-  #         end
-  #       end
-  #     end
-  #     assert query == [query: [bool: [must: [[multi_match: [query: "this is a test", fields: ["subject","message"]]]]]]]
-  #   end
+  test :multi_match do
+    query = query do
+      multi_match "this is a test", ["subject", "message"]
+    end
+    assert query == [query: [multi_match: [query: "this is a test", fields: ["subject","message"]]]]
+  end
+
 
 end
