@@ -18,6 +18,7 @@
                         'Elixir-Tirexs-Mapping-Json','Elixir-Tirexs-Mapping',
                         'Elixir-Tirexs-Query-Bool',
                         'Elixir-Tirexs-Query-Boolean',
+                        'Elixir-Tirexs-Query-Bootstring',
                         'Elixir-Tirexs-Query-DisMax',
                         'Elixir-Tirexs-Query-Filtered',
                         'Elixir-Tirexs-Query-Helpers','Elixir-Tirexs-Query',

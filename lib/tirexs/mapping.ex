@@ -3,6 +3,7 @@ defmodule Tirexs.Mapping do
     quote do
       import unquote(Tirexs.Mapping)
       import unquote(Tirexs.Mapping.Helpers)
+      import unquote(Tirexs.Helpers)
       import unquote(Tirexs.HTTP)
     end
   end

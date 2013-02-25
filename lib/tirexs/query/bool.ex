@@ -10,20 +10,35 @@ defmodule Tirexs.Query.Bool do
       end
     end
 
-  defmacro bool([do: block]) do
-    [bool: convert_bool_query(scoped_query(block))]
+  def bool(block) do
+    [bool: scoped_query(block)]
   end
 
   def must(block) do
-    [must: scoped_query(block)]
+    # IO.puts inspect to_bool_array(scoped_query(block))
+    [must: to_bool_array(scoped_query(block))]
   end
 
   def should(block) do
-    [should: scoped_query(block)]
+    [should: to_bool_array(scoped_query(block))]
   end
 
   def must_not(block) do
-    [must_not: scoped_query(block)]
+    [must_not: to_bool_array(scoped_query(block))]
   end
+
+  defp to_bool_array(dict) do
+    to_bool_array(dict, [])
+  end
+
+  defp to_bool_array([], acc) do
+    acc
+  end
+
+  defp to_bool_array([h|t], acc) do
+    to_bool_array(t, acc ++ [[h]])
+  end
+
+
 
 end
