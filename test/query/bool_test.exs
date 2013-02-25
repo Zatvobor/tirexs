@@ -8,7 +8,6 @@ defmodule Query.Bool.Test do
   @url "labeled/track"
 
   test :simple_bool do
-    settings = elastic_settings.new([uri: "api.tunehog.com/kiosk-rts", port: 80])
     query = query do
       bool do
         must do
@@ -22,20 +21,29 @@ defmodule Query.Bool.Test do
 
   test :advance_bool do
     settings = elastic_settings.new([uri: "api.tunehog.com/kiosk-rts", port: 80])
-      query = query do
-        bool do
-          must do
-            match "artist", "Madonna", operator: "and"
-            match "title", "My", operator: "and"
-            match "color_tune", "red,orange"
-            match "genre", "Alternative/Indie,Christian/Gospel"
-            range "release_year", from: 1950, to: 2013
-            range "energy_mood", from: 0, to: 30
-          end
+    query = query do
+      bool do
+        must do
+          match "artist", "Madonna", operator: "and"
+          match "title", "My", operator: "and"
+          match "color_tune", "red,orange"
+          match "genre", "Alternative/Indie,Christian/Gospel"
+          range "release_year", from: 1950, to: 2013
+          range "energy_mood", from: 0, to: 30
+        end
+
+        should do
+          match "genre", "Alternative/Indie,Christian/Gospel"
+          range "release_year", from: 1950, to: 2013
+        end
+
+        must_not do
+          match "genre", "Alternative/Indie,Christian/Gospel"
         end
       end
+    end
 
-      assert query == [query: [bool: [must: [[match: [artist: [query: "Madonna", operator: "and"]]],[match: [title: [query: "My", operator: "and"]]],[match: [color_tune: [query: "red,orange"]]],[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]],[range: [release_year: [from: 1950, to: 2013]]],[range: [energy_mood: [from: 0, to: 30]]]]]]]
+    assert query == [query: [bool: [must: [[match: [artist: [query: "Madonna", operator: "and"]]],[match: [title: [query: "My", operator: "and"]]],[match: [color_tune: [query: "red,orange"]]],[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]],[range: [release_year: [from: 1950, to: 2013]]],[range: [energy_mood: [from: 0, to: 30]]]], should: [[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]],[range: [release_year: [from: 1950, to: 2013]]]], must_not: [[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]]]]]]
+    # IO.puts inspect(do_query(settings, @url, query))
   end
-
 end

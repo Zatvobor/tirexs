@@ -5,40 +5,25 @@ defmodule Tirexs.Query.Bool do
   import Tirexs.Helpers
 
   defmacro __using__(_) do
-    quote do
-      import unquote(Tirexs.Query.Bool)
+      quote do
+        import unquote(Tirexs.Query.Bool)
+      end
     end
-  end
 
   defmacro bool([do: block]) do
-    quote do
-      [bool: unquote(block)]
-    end
+    [bool: convert_bool_query(scoped_query(block))]
   end
 
-  defmacro must([do: block]) do
-    res = Enum.map get_clear_block(block), fn(block_item) ->
-      case block_item do
-        {:match, _, params} -> match(params)
-        {:range, _, params} -> range(params)
-      end
-    end
-    [must: res]
+  def must(block) do
+    [must: scoped_query(block)]
   end
 
-  defmacro should([do: block]) do
-    res = Enum.map get_clear_block(block), fn(block_item) ->
-      case block_item do
-        {:should, _, params} -> match(params)
-      end
-    end
-    [should: res]
+  def should(block) do
+    [should: scoped_query(block)]
   end
 
-  defmacro must_not([do: block]) do
-    quote do
-      unquote(block)
-    end
+  def must_not(block) do
+    [must_not: scoped_query(block)]
   end
 
 end
