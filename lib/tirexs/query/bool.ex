@@ -10,8 +10,8 @@ defmodule Tirexs.Query.Bool do
       end
     end
 
-  defmacro bool([do: block]) do
-    [bool: convert_bool_query(scoped_query(block))]
+  def bool(block) do
+    [bool: extract_array(scoped_query(block))]
   end
 
   def must(block) do

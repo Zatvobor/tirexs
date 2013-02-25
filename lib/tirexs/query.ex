@@ -15,9 +15,7 @@ defmodule Tirexs.Query do
   end
 
   defmacro query([do: block]) do
-    quote do
-      [query: unquote(block)]
-    end
+    [query: extract_array(scoped_query(block))]
   end
 
   def match(options) do
@@ -30,11 +28,9 @@ defmodule Tirexs.Query do
     [range: Dict.put([], to_atom(field), value)]
   end
 
-  defmacro multi_match(fields, value, options) do
-    quote do
-      [fields, value, options] = [unquote(fields), unquote(value), unquote(options)]
-      IO.puts fields
-    end
+  def multi_match(options) do
+    [query, fields, options] = extract_options(options)
+    [multi_match: [query: query, fields: fields]]
   end
 
   defmacro text(field, value, options) do
