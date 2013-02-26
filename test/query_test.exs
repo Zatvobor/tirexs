@@ -98,5 +98,13 @@ defmodule QueryTest do
     # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
+  test :flt do
+    query = query do
+      flt "text like this one", ["name.first", "name.last"], max_query_terms: 12
+    end
+
+    assert query == [query: [fuzzy_like_this: [like_text: "text like this one", fields: ["name.first","name.last"], max_query_terms: 12]]]
+  end
+
 
 end

@@ -1,6 +1,6 @@
 defmodule Tirexs.Query do
 
-  #Missing query type: [dis_max]
+  #Missing query type: [filtered]
 
   import Tirexs.Query.Helpers
   import Tirexs.Helpers
@@ -43,13 +43,6 @@ defmodule Tirexs.Query do
       options = extract_do(options, 1)
     end
     [boosting: scoped_query(options) ++ boosting_opts]
-  end
-
-  defmacro text(field, value, options) do
-    quote do
-      [field, value, options] = [unquote(field), unquote(value), unquote(options)]
-      IO.puts field
-    end
   end
 
   def ids(options) do
@@ -102,6 +95,11 @@ defmodule Tirexs.Query do
   def field(options) do
     [field, values, _] = extract_options(options)
     [field: Dict.put([], to_atom(field), values)]
+  end
+
+  def flt(options) do
+    [value, fields, options] = extract_options(options)
+    [fuzzy_like_this: [like_text: value, fields: fields] ++ options]
   end
 
 
