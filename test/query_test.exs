@@ -94,8 +94,6 @@ defmodule QueryTest do
     end
 
     assert query == [query: [field: ["name.first": [query: "+something -else", boost: 2.0, enable_position_increments: false]]]]
-    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
-    # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
   test :flt do
@@ -104,6 +102,16 @@ defmodule QueryTest do
     end
 
     assert query == [query: [fuzzy_like_this: [like_text: "text like this one", fields: ["name.first","name.last"], max_query_terms: 12]]]
+  end
+
+  test :flt_field do
+    query = query do
+      flt_field "name.first", [like_text: "text like this one", max_query_terms: 12]
+    end
+
+    assert query == [query: [fuzzy_like_this_field: ["name.first": [like_text: "text like this one", max_query_terms: 12]]]]
+    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
+    # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
 
