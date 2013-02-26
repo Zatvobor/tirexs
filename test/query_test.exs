@@ -126,8 +126,6 @@ defmodule QueryTest do
     end
 
     assert query == [query: [fuzzy: [user: [value: "ki", boost: 1.0, min_similarity: 0.5, prefix_length: 0]]]]
-    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
-    # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
   test :has_child do
@@ -152,6 +150,24 @@ defmodule QueryTest do
     end
 
     assert query == [query: [has_parent: [query: [term: [tag: "something"]], parent_type: "blog", score_type: "score"]]]
+  end
+
+  test :match_all do
+    query = query do
+      match_all
+    end
+
+    assert query == [query: [match_all: []]]
+  end
+
+  test :match_all_with_options do
+    query = query do
+      match_all norms_field: "my_field", boost: 1.2
+    end
+
+    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
+    # IO.puts inspect(do_query(settings, "labeled/track", query))
+    assert query == [query: [match_all: [norms_field: "my_field", boost: 1.2]]]
   end
 
 

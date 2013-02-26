@@ -77,8 +77,10 @@ defmodule Tirexs.Query.Helpers do
         {:query, _, [params]}               -> Tirexs.Query._query(params[:do])
         {:has_child, _, [params]}           -> Tirexs.Query.has_child(params[:do])
         {:has_child, _, options}            -> Tirexs.Query.has_child(options)
-        {:has_parent, _, [params]}           -> Tirexs.Query.has_parent(params[:do])
-        {:has_parent, _, options}            -> Tirexs.Query.has_parent(options)
+        {:has_parent, _, [params]}          -> Tirexs.Query.has_parent(params[:do])
+        {:has_parent, _, options}           -> Tirexs.Query.has_parent(options)
+        {:match_all, _, nil}                -> Tirexs.Query.match_all([])
+        {:match_all, _, [params]}             -> Tirexs.Query.match_all(params)
         _ -> IO.puts inspect(block)
       end
   end

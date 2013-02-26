@@ -128,5 +128,10 @@ defmodule Tirexs.Query do
     [has_parent: scoped_query(options) ++ has_parent_opts]
   end
 
+  def match_all(options) do
+    IO.puts inspect(options)
+    Dict.put([], :match_all,  options)
+  end
+
 
 end
