@@ -277,5 +277,13 @@ defmodule QueryTest do
     # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
+  test :wildcard do
+    query = query do
+      wildcard "user", "ki*y"
+    end
+
+    assert query == [query: [wildcard: [user: "ki*y"]]]
+  end
+
 
 end

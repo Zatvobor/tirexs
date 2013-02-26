@@ -99,6 +99,7 @@ defmodule Tirexs.Query.Helpers do
         {:terms, _, params}                 -> Tirexs.Query.terms(params)
         {:top_children, _, [params]}        -> Tirexs.Query.top_children(params)
         {:top_children, _, options}         -> Tirexs.Query.top_children(options)
+        {:wildcard, _, params}              -> Tirexs.Query.wildcard(params)
         _ -> IO.puts inspect(block)
       end
   end

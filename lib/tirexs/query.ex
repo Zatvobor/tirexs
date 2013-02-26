@@ -203,4 +203,9 @@ defmodule Tirexs.Query do
     [top_children: scoped_query(options) ++ top_children_opts]
   end
 
+  def wildcard(options) do
+    [field, options, _] = extract_options(options)
+    [wildcard: Dict.put([], to_atom(field), options)]
+  end
+
 end
