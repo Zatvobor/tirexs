@@ -165,9 +165,59 @@ defmodule QueryTest do
       match_all norms_field: "my_field", boost: 1.2
     end
 
+    assert query == [query: [match_all: [norms_field: "my_field", boost: 1.2]]]
+  end
+
+  test :mlt do
+    query = query do
+      mlt "text like this one", ["name.first", "name.last"], min_term_freq: 1
+    end
+
+    assert query == [query: [more_like_this: [like_text: "text like this one", fields: ["name.first","name.last"], min_term_freq: 1]]]
+  end
+
+  test :mlt_field do
+    query = query do
+      mlt_field "name.first", [like_text: "text like this one", min_term_freq: 1]
+    end
+
+    assert query == [query: [more_like_this_field: ["name.first": [like_text: "text like this one", min_term_freq: 1]]]]
+  end
+
+  test :prefix do
+    query = query do
+      prefix "user", "ki"
+    end
+
+    assert query == [query: [prefix: [user: "ki"]]]
+  end
+
+  test :span_first do
+    query = query do
+      span_first  [end: 3] do
+        match do
+          span_term "user", "kimchy"
+        end
+      end
+    end
+
+    assert query == [query: [span_first: [match: [span_term: [user: "kimchy"]], end: 3]]]
+  end
+
+  test :span_near do
+    query = query do
+      span_near [slop: 12, in_order: false, collect_payloads: false] do
+        clauses do
+          span_term "field", "value1"
+          span_term "field", "value2"
+          span_term "field", "value3"
+        end
+      end
+    end
+
+    assert query == [query: [span_near: [clauses: [[span_term: [field: "value1"]],[span_term: [field: "value2"]],[span_term: [field: "value3"]]], slop: 12, in_order: false, collect_payloads: false]]]
     # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
     # IO.puts inspect(do_query(settings, "labeled/track", query))
-    assert query == [query: [match_all: [norms_field: "my_field", boost: 1.2]]]
   end
 
 

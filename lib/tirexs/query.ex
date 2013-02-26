@@ -23,8 +23,14 @@ defmodule Tirexs.Query do
   end
 
   def match(options) do
-    [field, value, options] = extract_options(options)
-    [match: Dict.put([], to_atom(field), [query: value] ++ options)]
+    case options do
+      [options] -> [match: scoped_query(extract_do([options]))]
+      _ ->
+        [field, value, options] = extract_options(options)
+        [match: Dict.put([], to_atom(field), [query: value] ++ options)]
+    end
+
+
   end
 
   def range(options) do
@@ -129,9 +135,43 @@ defmodule Tirexs.Query do
   end
 
   def match_all(options) do
-    IO.puts inspect(options)
     Dict.put([], :match_all,  options)
   end
 
+  def mlt(options) do
+    [value, fields, options] = extract_options(options)
+    [more_like_this: [like_text: value, fields: fields] ++ options]
+  end
+
+  def mlt_field(options) do
+    [field, options, _] = extract_options(options)
+    [more_like_this_field: Dict.put([], to_atom(field), options)]
+  end
+
+  def prefix(options) do
+    [field, values, _] = extract_options(options)
+    [prefix: Dict.put([], to_atom(field), values)]
+  end
+
+  def span_first(options, span_first_opts//[]) do
+    if is_list(options) do
+      span_first_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [span_first: scoped_query(options) ++ span_first_opts]
+  end
+
+  def span_term(options) do
+    [field, values, _] = extract_options(options)
+    [span_term: Dict.put([], to_atom(field), values)]
+  end
+
+  def span_near(options, span_near_opts//[]) do
+    if is_list(options) do
+      span_near_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [span_near: scoped_query(options) ++ span_near_opts]
+  end
 
 end

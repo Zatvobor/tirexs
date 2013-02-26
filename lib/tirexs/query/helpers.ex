@@ -80,7 +80,16 @@ defmodule Tirexs.Query.Helpers do
         {:has_parent, _, [params]}          -> Tirexs.Query.has_parent(params[:do])
         {:has_parent, _, options}           -> Tirexs.Query.has_parent(options)
         {:match_all, _, nil}                -> Tirexs.Query.match_all([])
-        {:match_all, _, [params]}             -> Tirexs.Query.match_all(params)
+        {:match_all, _, [params]}           -> Tirexs.Query.match_all(params)
+        {:mlt, _, params}                   -> Tirexs.Query.mlt(params)
+        {:mlt_field, _, params}             -> Tirexs.Query.mlt_field(params)
+        {:prefix, _, params}                -> Tirexs.Query.prefix(params)
+        {:span_first, _, [params]}          -> Tirexs.Query.span_first(params[:do])
+        {:span_first, _, options}           -> Tirexs.Query.span_first(options)
+        {:span_term, _, params}             -> Tirexs.Query.span_term(params)
+        {:span_near, _, [params]}           -> Tirexs.Query.span_near(params)
+        {:span_near, _, options}            -> Tirexs.Query.span_near(options)
+        {:clauses, _, [params]}             -> Tirexs.Query.SpanNear.clauses(params[:do])
         _ -> IO.puts inspect(block)
       end
   end
