@@ -15,7 +15,6 @@ defmodule Tirexs.Query.Bool do
   end
 
   def must(block) do
-    # IO.puts inspect to_bool_array(scoped_query(block))
     [must: to_array(scoped_query(block))]
   end
 

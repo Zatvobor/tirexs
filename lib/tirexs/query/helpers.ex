@@ -33,11 +33,11 @@ defmodule Tirexs.Query.Helpers do
   end
 
   defp scoped_query([h|t], acc) do
-    scoped_query(get_clear_block(t), acc ++ cast_block(h))
+    scoped_query(get_clear_block(t), acc ++ routers(h))
   end
 
   defp scoped_query(item, acc) do
-    acc ++ cast_block(item)
+    acc ++ routers(item)
   end
 
   def extract_do(block, position//0) do
@@ -45,7 +45,7 @@ defmodule Tirexs.Query.Helpers do
   end
 
 
-  defp cast_block(block) do
+  defp routers(block) do
       case block do
         {:bool, _, [params]}                -> Tirexs.Query.Bool.bool(params[:do])
         {:must, _, [params]}                -> Tirexs.Query.Bool.must(params[:do])
@@ -108,8 +108,8 @@ defmodule Tirexs.Query.Helpers do
         {:text_phrase_prefix, _, params}    -> Tirexs.Query.Text.text_phrase_prefix(params)
         {:geo_shape, _, [params]}           -> Tirexs.Query.geo_shape(params[:do])
         {:geo_shape, _, options}            -> Tirexs.Query.geo_shape(options)
-        {:location, _, params}            -> Tirexs.Query.GeoShare.location(params)
-        {:shape, _, [params]}                 -> Tirexs.Query.GeoShare.shape(params)
+        {:location, _, params}              -> Tirexs.Query.GeoShare.location(params)
+        {:shape, _, [params]}               -> Tirexs.Query.GeoShare.shape(params)
 
         _ -> IO.puts inspect(block)
       end
