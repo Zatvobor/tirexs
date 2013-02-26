@@ -110,6 +110,22 @@ defmodule QueryTest do
     end
 
     assert query == [query: [fuzzy_like_this_field: ["name.first": [like_text: "text like this one", max_query_terms: 12]]]]
+  end
+
+  test :fuzzy do
+    query = query do
+      fuzzy "user", "ki"
+    end
+
+    assert query == [query: [fuzzy: [user: "ki"]]]
+  end
+
+  test :fuzzy_with_opts do
+    query = query do
+      fuzzy "user", [value: "ki", boost: 1.0, min_similarity: 0.5, prefix_length: 0]
+    end
+
+    assert query == [query: [fuzzy: [user: [value: "ki", boost: 1.0, min_similarity: 0.5, prefix_length: 0]]]]
     # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
     # IO.puts inspect(do_query(settings, "labeled/track", query))
   end

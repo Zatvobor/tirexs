@@ -107,6 +107,10 @@ defmodule Tirexs.Query do
     [fuzzy_like_this_field: Dict.put([], to_atom(field), options)]
   end
 
+  def fuzzy(options) do
+    [field, values, _] = extract_options(options)
+    [fuzzy: Dict.put([], to_atom(field), values)]
+  end
 
 
 end
