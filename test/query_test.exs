@@ -130,5 +130,17 @@ defmodule QueryTest do
     # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
+  test :has_child do
+    query = query do
+      has_child [type: "blog_tag", score_type: "sum"] do
+        query do
+          term "tag", "something"
+        end
+      end
+    end
+
+    assert query == [query: [has_child: [query: [term: [tag: "something"]], type: "blog_tag", score_type: "sum"]]]
+  end
+
 
 end

@@ -112,5 +112,13 @@ defmodule Tirexs.Query do
     [fuzzy: Dict.put([], to_atom(field), values)]
   end
 
+  def has_child(options, has_child_opts//[]) do
+    if is_list(options) do
+      has_child_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [has_child: scoped_query(options) ++ has_child_opts]
+  end
+
 
 end

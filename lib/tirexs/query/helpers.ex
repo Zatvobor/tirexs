@@ -75,6 +75,8 @@ defmodule Tirexs.Query.Helpers do
         {:flt_field, _, params}             -> Tirexs.Query.flt_field(params)
         {:fuzzy, _, params}                 -> Tirexs.Query.fuzzy(params)
         {:query, _, [params]}               -> Tirexs.Query._query(params[:do])
+        {:has_child, _, [params]}           -> Tirexs.Query.has_child(params[:do])
+        {:has_child, _, options}            -> Tirexs.Query.has_child(options)
         _ -> IO.puts inspect(block)
       end
   end
