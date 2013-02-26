@@ -1,7 +1,7 @@
 defmodule Tirexs.Query.DisMax do
-  defmacro __using__(_) do
-    quote do
-      import unquote(Tirexs.Query.DisMax)
-    end
+  import Tirexs.Query.Helpers
+
+  def queries(options) do
+    [queries: to_array(scoped_query(options))]
   end
 end
