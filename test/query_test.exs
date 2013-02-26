@@ -55,5 +55,35 @@ defmodule QueryTest do
     assert query == [query: [custom_score: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], script: "_score * doc[\"type\"].value"]]]
   end
 
+  test :custom_boost_factor do
+    query = query do
+      custom_boost_factor [boost_factor: 5.2] do
+        query do
+          query_string "this AND that OR thus", [default_field: "artist_name"]
+        end
+      end
+    end
+    assert query == [query: [custom_boost_factor: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], boost_factor: 5.2]]]
+
+    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
+    # do_query(settings, "labeled/track", query)
+  end
+
+  test :constant_score do
+    query = query do
+      constant_score [boost: 1.2] do
+        query do
+          query_string "this AND that OR thus", [default_field: "artist_name"]
+        end
+      end
+    end
+
+    assert query == [query: [constant_score: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], boost: 1.2]]]
+
+    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
+    # IO.puts inspect(do_query(settings, "labeled/track", query))
+
+  end
+
 
 end

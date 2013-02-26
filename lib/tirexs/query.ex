@@ -1,6 +1,6 @@
 defmodule Tirexs.Query do
 
-  #Missing query type: [boosting custom_boost_factor]
+  #Missing query type: [dis_max]
 
   import Tirexs.Query.Helpers
   import Tirexs.Helpers
@@ -70,11 +70,20 @@ defmodule Tirexs.Query do
     [custom_score: scoped_query(options) ++ custom_score_opts]
   end
 
-  defmacro constant_score(options, [do: block]) do
-    quote do
-      options = unquote(options)
-      unquote(block)
+  def custom_boost_factor(options) do
+    if is_list(options) do
+      custom_boost_factor_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
     end
+    [custom_boost_factor: scoped_query(options) ++ custom_boost_factor_opts]
+  end
+
+  def constant_score(options) do
+    if is_list(options) do
+      constant_score_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [constant_score: scoped_query(options) ++ constant_score_opts]
   end
 
   defmacro dis_max(options, [do: block]) do
