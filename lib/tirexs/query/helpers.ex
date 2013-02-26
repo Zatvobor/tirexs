@@ -97,6 +97,8 @@ defmodule Tirexs.Query.Helpers do
         {:span_or, _, [params]}             -> Tirexs.Query.span_or(params[:do])
         {:span_or, _, options}              -> Tirexs.Query.span_or(options)
         {:terms, _, params}                 -> Tirexs.Query.terms(params)
+        {:top_children, _, [params]}        -> Tirexs.Query.top_children(params)
+        {:top_children, _, options}         -> Tirexs.Query.top_children(options)
         _ -> IO.puts inspect(block)
       end
   end

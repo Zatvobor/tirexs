@@ -265,5 +265,17 @@ defmodule QueryTest do
     assert query == [query: [terms: [tags: ["blue","pill"], minimum_match: 1]]]
   end
 
+  test :top_children do
+    query = query do
+      top_children [type: "blog_tag", score: "max", factor: 5, incremental_factor: 2] do
+        query do
+          term "tag", "something"
+        end
+      end
+    end
+
+    assert query == []
+  end
+
 
 end

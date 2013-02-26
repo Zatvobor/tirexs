@@ -195,4 +195,12 @@ defmodule Tirexs.Query do
     [terms: Dict.put([], to_atom(field), value) ++ options]
   end
 
+  def top_children(options, top_children_opts//[]) do
+    if is_list(options) do
+      top_children_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [top_children: scoped_query(options) ++ top_children_opts]
+  end
+
 end
