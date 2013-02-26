@@ -3,6 +3,7 @@ defmodule QueryTest do
   use ExUnit.Case
   import Tirexs
   use Tirexs.Query
+  use Tirexs.ElasticSettings
 
   test :match_query do
     query = query do
@@ -27,6 +28,31 @@ defmodule QueryTest do
       multi_match "this is a test", ["subject", "message"]
     end
     assert query == [query: [multi_match: [query: "this is a test", fields: ["subject","message"]]]]
+  end
+
+  test :ids do
+    query = query do
+      ids "my_type", ["1", "4", "100"]
+    end
+    assert query == [query: [ids: [type: "my_type", values: ["1","4","100"]]]]
+  end
+
+  test :query_string do
+    query = query do
+      query_string "this AND that OR thus", [default_field: "content"]
+    end
+    assert query == [query: [query_string: [query: "this AND that OR thus", default_field: "content"]]]
+  end
+
+  test :custom_score do
+    query = query do
+      custom_score [script: "_score * doc[\"type\"].value"] do
+        query do
+          query_string "this AND that OR thus", [default_field: "artist_name"]
+        end
+      end
+    end
+    assert query == [query: [custom_score: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], script: "_score * doc[\"type\"].value"]]]
   end
 
 

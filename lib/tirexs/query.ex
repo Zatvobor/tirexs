@@ -18,6 +18,10 @@ defmodule Tirexs.Query do
     [query: scoped_query(block)]
   end
 
+  def _query(options) do
+    [query: scoped_query(options)]
+  end
+
   def match(options) do
     [field, value, options] = extract_options(options)
     [match: Dict.put([], to_atom(field), [query: value] ++ options)]
@@ -48,17 +52,22 @@ defmodule Tirexs.Query do
     end
   end
 
-  defmacro ids(type, values) do
-    quote do
-      [type, values] = [unquote(type), unquote(values)]
-    end
+  def ids(options) do
+    [type, values, _] = extract_options(options)
+    [ids: [type: type, values: values]]
   end
 
-  defmacro custom_score(options, [do: block]) do
-    quote do
-      options = unquote(options)
-      unquote(block)
+  def query_string(options) do
+    [query, options, _] = extract_options(options)
+    [query_string: [query: query] ++ options]
+  end
+
+  def custom_score(options) do
+    if is_list(options) do
+      custom_score_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
     end
+    [custom_score: scoped_query(options) ++ custom_score_opts]
   end
 
   defmacro constant_score(options, [do: block]) do

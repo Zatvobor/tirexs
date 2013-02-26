@@ -46,19 +46,23 @@ defmodule Tirexs.Query.Helpers do
 
 
   defp cast_block(block) do
-    # IO.puts inspect(block)
       case block do
-        {:bool, _, [params]}      -> Tirexs.Query.Bool.bool(params[:do])
-        {:must, _, [params]}      -> Tirexs.Query.Bool.must(params[:do])
-        {:should, _, [params]}    -> Tirexs.Query.Bool.should(params[:do])
-        {:must_not, _, [params]}  -> Tirexs.Query.Bool.must_not(params[:do])
-        {:match, _, params}       -> Tirexs.Query.match(params)
-        {:multi_match, _, params} -> Tirexs.Query.multi_match(params)
-        {:range, _, params}       -> Tirexs.Query.range(params)
-        {:boosting, _, [params]}  -> Tirexs.Query.boosting(params[:do])
-        {:boosting, _, options}   -> Tirexs.Query.boosting(options)
-        {:positive, _, params}    -> Tirexs.Query.Bootstring.positive(params)
-        {:negative, _, params}    -> Tirexs.Query.Bootstring.negative(params)
+        {:bool, _, [params]}          -> Tirexs.Query.Bool.bool(params[:do])
+        {:must, _, [params]}          -> Tirexs.Query.Bool.must(params[:do])
+        {:should, _, [params]}        -> Tirexs.Query.Bool.should(params[:do])
+        {:must_not, _, [params]}      -> Tirexs.Query.Bool.must_not(params[:do])
+        {:match, _, params}           -> Tirexs.Query.match(params)
+        {:multi_match, _, params}     -> Tirexs.Query.multi_match(params)
+        {:query_string, _, params}    -> Tirexs.Query.query_string(params)
+        {:ids, _, params}             -> Tirexs.Query.ids(params)
+        {:range, _, params}           -> Tirexs.Query.range(params)
+        {:boosting, _, [params]}      -> Tirexs.Query.boosting(params[:do])
+        {:boosting, _, options}       -> Tirexs.Query.boosting(options)
+        {:positive, _, params}        -> Tirexs.Query.Bootstring.positive(params)
+        {:negative, _, params}        -> Tirexs.Query.Bootstring.negative(params)
+        {:custom_score, _, [params]}  -> Tirexs.Query.custom_score(params[:do])
+        {:custom_score, _, options}   -> Tirexs.Query.custom_score(options)
+        {:query, _, [params]}         -> Tirexs.Query._query(params[:do])
         _ -> IO.puts inspect(block)
       end
   end
