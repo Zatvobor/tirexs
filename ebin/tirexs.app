@@ -22,7 +22,8 @@
                         'Elixir-Tirexs-Query-DisMax',
                         'Elixir-Tirexs-Query-Filtered',
                         'Elixir-Tirexs-Query-Helpers',
-                        'Elixir-Tirexs-Query-SpanNear','Elixir-Tirexs-Query',
+                        'Elixir-Tirexs-Query-SpanNear',
+                        'Elixir-Tirexs-Query-SpanNot','Elixir-Tirexs-Query',
                         'Elixir-Tirexs-River-Couchdb','Elixir-Tirexs-River',
                         'Elixir-Tirexs']},
               {applications,[kernel,stdlib,elixir]}]}.

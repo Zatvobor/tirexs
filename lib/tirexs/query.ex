@@ -174,4 +174,12 @@ defmodule Tirexs.Query do
     [span_near: scoped_query(options) ++ span_near_opts]
   end
 
+  def span_not(options, span_not_opts//[]) do
+    if is_list(options) do
+      span_not_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [span_not: scoped_query(options) ++ span_not_opts]
+  end
+
 end

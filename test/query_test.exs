@@ -216,6 +216,21 @@ defmodule QueryTest do
     end
 
     assert query == [query: [span_near: [clauses: [[span_term: [field: "value1"]],[span_term: [field: "value2"]],[span_term: [field: "value3"]]], slop: 12, in_order: false, collect_payloads: false]]]
+  end
+
+  test :span_not do
+    query = query do
+      span_not do
+        include do
+          span_term "field", "value1"
+        end
+        exclude do
+          span_term "field", "value2"
+        end
+      end
+    end
+
+    assert query == [query: [span_not: [include: [span_term: [field: "value1"]], exclude: [span_term: [field: "value2"]]]]]
     # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
     # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
