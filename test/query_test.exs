@@ -249,5 +249,13 @@ defmodule QueryTest do
     assert query == [query: [span_or: [clauses: [[span_term: [field: "value1"]],[span_term: [field: "value2"]],[span_term: [field: "value3"]]]]]]
   end
 
+  test :span_term do
+    query = query do
+      span_term "field", [value: "value1", boost: 2.0]
+    end
+
+    assert query == [query: [span_term: [field: [value: "value1", boost: 2.0]]]]
+  end
+
 
 end

@@ -162,8 +162,8 @@ defmodule Tirexs.Query do
   end
 
   def span_term(options) do
-    [field, values, _] = extract_options(options)
-    [span_term: Dict.put([], to_atom(field), values)]
+    [field, options, _] = extract_options(options)
+    [span_term: Dict.put([], to_atom(field), options)]
   end
 
   def span_near(options, span_near_opts//[]) do
