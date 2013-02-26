@@ -257,5 +257,13 @@ defmodule QueryTest do
     assert query == [query: [span_term: [field: [value: "value1", boost: 2.0]]]]
   end
 
+  test :terms do
+    query = query do
+      terms "tags", ["blue", "pill"], minimum_match: 1
+    end
+
+    assert query == [query: [terms: [tags: ["blue","pill"], minimum_match: 1]]]
+  end
+
 
 end

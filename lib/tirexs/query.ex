@@ -190,4 +190,9 @@ defmodule Tirexs.Query do
     [span_or: scoped_query(options) ++ span_or_opts]
   end
 
+  def terms(options) do
+    [field, value, options] = extract_options(options)
+    [terms: Dict.put([], to_atom(field), value) ++ options]
+  end
+
 end
