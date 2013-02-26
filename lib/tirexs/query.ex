@@ -120,5 +120,13 @@ defmodule Tirexs.Query do
     [has_child: scoped_query(options) ++ has_child_opts]
   end
 
+  def has_parent(options, has_parent_opts//[]) do
+    if is_list(options) do
+      has_parent_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [has_parent: scoped_query(options) ++ has_parent_opts]
+  end
+
 
 end

@@ -142,5 +142,17 @@ defmodule QueryTest do
     assert query == [query: [has_child: [query: [term: [tag: "something"]], type: "blog_tag", score_type: "sum"]]]
   end
 
+  test :has_parent do
+    query = query do
+      has_parent [parent_type: "blog", score_type: "score"] do
+        query do
+          term "tag", "something"
+        end
+      end
+    end
+
+    assert query == [query: [has_parent: [query: [term: [tag: "something"]], parent_type: "blog", score_type: "score"]]]
+  end
+
 
 end
