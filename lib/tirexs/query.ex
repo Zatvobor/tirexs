@@ -182,4 +182,12 @@ defmodule Tirexs.Query do
     [span_not: scoped_query(options) ++ span_not_opts]
   end
 
+  def span_or(options, span_or_opts//[]) do
+    if is_list(options) do
+      span_or_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [span_or: scoped_query(options) ++ span_or_opts]
+  end
+
 end

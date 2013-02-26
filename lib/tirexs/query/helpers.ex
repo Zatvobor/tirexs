@@ -92,8 +92,10 @@ defmodule Tirexs.Query.Helpers do
         {:clauses, _, [params]}             -> Tirexs.Query.SpanNear.clauses(params[:do])
         {:span_not, _, [params]}            -> Tirexs.Query.span_not(params[:do])
         {:span_not, _, options}             -> Tirexs.Query.span_not(options)
-        {:include, _, [params]}               -> Tirexs.Query.SpanNot.include(params)
-        {:exclude, _, [params]}               -> Tirexs.Query.SpanNot.exclude(params)
+        {:include, _, [params]}             -> Tirexs.Query.SpanNot.include(params)
+        {:exclude, _, [params]}             -> Tirexs.Query.SpanNot.exclude(params)
+        {:span_or, _, [params]}             -> Tirexs.Query.span_or(params[:do])
+        {:span_or, _, options}              -> Tirexs.Query.span_or(options)
         _ -> IO.puts inspect(block)
       end
   end

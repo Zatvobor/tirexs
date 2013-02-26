@@ -6,7 +6,6 @@ defmodule Tirexs.Query.SpanNot do
   end
 
   def exclude(options) do
-    IO.puts inspect(options)
     [exclude: scoped_query(options[:do])]
   end
 end
