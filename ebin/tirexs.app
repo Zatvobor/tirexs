@@ -21,10 +21,12 @@
                         'Elixir-Tirexs-Query-Bootstring',
                         'Elixir-Tirexs-Query-DisMax',
                         'Elixir-Tirexs-Query-Filtered',
+                        'Elixir-Tirexs-Query-GeoShare',
                         'Elixir-Tirexs-Query-Helpers',
                         'Elixir-Tirexs-Query-Indeces',
                         'Elixir-Tirexs-Query-SpanNear',
-                        'Elixir-Tirexs-Query-SpanNot','Elixir-Tirexs-Query',
+                        'Elixir-Tirexs-Query-SpanNot',
+                        'Elixir-Tirexs-Query-Text','Elixir-Tirexs-Query',
                         'Elixir-Tirexs-River-Couchdb','Elixir-Tirexs-River',
                         'Elixir-Tirexs']},
               {applications,[kernel,stdlib,elixir]}]}.

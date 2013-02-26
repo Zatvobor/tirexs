@@ -216,4 +216,17 @@ defmodule Tirexs.Query do
     [indices: scoped_query(options) ++ indices_opts]
   end
 
+  def text(options) do
+    [field, values, _] = extract_options(options)
+    [text: Dict.put([], to_atom(field), values)]
+  end
+
+  def geo_shape(options, geo_shape_opts//[]) do
+    if is_list(options) do
+      geo_shape_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [geo_shape: scoped_query(options) ++ geo_shape_opts]
+  end
+
 end

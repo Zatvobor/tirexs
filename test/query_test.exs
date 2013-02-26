@@ -316,5 +316,41 @@ defmodule QueryTest do
     assert query == [query: [indices: [query: [term: [tag: "wow"]], no_match_query: "none", indices: ["index1","index2"]]]]
   end
 
+  test :text do
+    query = query do
+      text "message", "this is a test"
+    end
+
+    assert query == [query: [text: [message: "this is a test"]]]
+  end
+
+  test :text_phrase do
+    query = query do
+      text_phrase "message", "this is a test"
+    end
+
+    assert query == [query: [text_phrase: [message: "this is a test"]]]
+  end
+
+  test :text_phrase_prefix do
+    query = query do
+      text_phrase_prefix "message", [query: "this is a test", max_expansions: 10]
+    end
+
+    assert query == [query: [text_phrase_prefix: [message: [query: "this is a test", max_expansions: 10]]]]
+  end
+
+  test :geo_shape do
+    query = query do
+      geo_shape do
+        location [relation: "contains"] do
+          shape [type: "type", coordinates: [[-45.0, 45.0], [45.0, -45.0]]]
+        end
+      end
+    end
+
+    assert query == [query: [geo_shape: [location: [shape: [type: "type", coordinates: [[-45.0,45.0],[45.0,-45.0]]], relation: "contains"]]]]
+  end
+
 
 end
