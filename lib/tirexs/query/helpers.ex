@@ -70,6 +70,7 @@ defmodule Tirexs.Query.Helpers do
         {:dis_max, _, [params]}             -> Tirexs.Query.dis_max(params[:do])
         {:dis_max, _, options}              -> Tirexs.Query.dis_max(options)
         {:queries, _, [params]}             -> Tirexs.Query.DisMax.queries(params[:do])
+        {:field, _, params}                 -> Tirexs.Query.field(params)
         {:query, _, [params]}               -> Tirexs.Query._query(params[:do])
         _ -> IO.puts inspect(block)
       end

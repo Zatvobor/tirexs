@@ -9,6 +9,7 @@ defmodule QueryTest do
     query = query do
       match "message", "this is a test", operator: "and"
     end
+
     assert query == [query: [match: [message: [query: "this is a test", operator: "and"]]]]
   end
 
@@ -20,6 +21,7 @@ defmodule QueryTest do
                    include_upper: false,
                    boost: 2.0
     end
+
     assert query == [query: [range: [age: [from: 10, to: 20, include_lower: true, include_upper: false, boost: 2.0]]]]
   end
 
@@ -27,6 +29,7 @@ defmodule QueryTest do
     query = query do
       multi_match "this is a test", ["subject", "message"]
     end
+
     assert query == [query: [multi_match: [query: "this is a test", fields: ["subject","message"]]]]
   end
 
@@ -34,6 +37,7 @@ defmodule QueryTest do
     query = query do
       ids "my_type", ["1", "4", "100"]
     end
+
     assert query == [query: [ids: [type: "my_type", values: ["1","4","100"]]]]
   end
 
@@ -41,6 +45,7 @@ defmodule QueryTest do
     query = query do
       query_string "this AND that OR thus", [default_field: "content"]
     end
+
     assert query == [query: [query_string: [query: "this AND that OR thus", default_field: "content"]]]
   end
 
@@ -52,6 +57,7 @@ defmodule QueryTest do
         end
       end
     end
+
     assert query == [query: [custom_score: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], script: "_score * doc[\"type\"].value"]]]
   end
 
@@ -63,6 +69,7 @@ defmodule QueryTest do
         end
       end
     end
+
     assert query == [query: [custom_boost_factor: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], boost_factor: 5.2]]]
 
     # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
@@ -79,10 +86,16 @@ defmodule QueryTest do
     end
 
     assert query == [query: [constant_score: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], boost: 1.2]]]
+  end
 
+  test :field do
+    query = query do
+      field "name.first", [query: "+something -else", boost: 2.0, enable_position_increments: false]
+    end
+
+    assert query == [query: [field: ["name.first": [query: "+something -else", boost: 2.0, enable_position_increments: false]]]]
     # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
     # IO.puts inspect(do_query(settings, "labeled/track", query))
-
   end
 
 

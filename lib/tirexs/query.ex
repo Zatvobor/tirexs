@@ -99,11 +99,9 @@ defmodule Tirexs.Query do
     [term: Dict.put([], to_atom(field), values)]
   end
 
-  defmacro field(field, value) do
-    #note value can be a dict or string =)
-    quote do
-      [field, value] = [unquote(field), unquote(value)]
-    end
+  def field(options) do
+    [field, values, _] = extract_options(options)
+    [field: Dict.put([], to_atom(field), values)]
   end
 
 
