@@ -1,6 +1,6 @@
 defmodule Tirexs.Query do
 
-  #Missing query type: [filtered]
+  #Missing query type: [filtered, nested, custom_filters_score]
 
   import Tirexs.Query.Helpers
   import Tirexs.Helpers
@@ -206,6 +206,14 @@ defmodule Tirexs.Query do
   def wildcard(options) do
     [field, options, _] = extract_options(options)
     [wildcard: Dict.put([], to_atom(field), options)]
+  end
+
+  def indices(options, indices_opts//[]) do
+    if is_list(options) do
+      indices_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [indices: scoped_query(options) ++ indices_opts]
   end
 
 end

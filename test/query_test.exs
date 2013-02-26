@@ -285,5 +285,36 @@ defmodule QueryTest do
     assert query == [query: [wildcard: [user: "ki*y"]]]
   end
 
+  test :indices do
+    query = query do
+      indices [indices: ["index1", "index2"]] do
+        query do
+          term "tag", "wow"
+        end
+        no_match_query do
+          term "tag", "kow"
+        end
+      end
+    end
+    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
+    # IO.puts inspect(do_query(settings, "labeled/track", query))
+    assert query == [query: [indices: [query: [term: [tag: "wow"]], no_match_query: [term: [tag: "kow"]], indices: ["index1","index2"]]]]
+  end
+
+  test :indices_with_default do
+    query = query do
+      indices [indices: ["index1", "index2"]] do
+        query do
+          term "tag", "wow"
+        end
+        no_match_query do
+          "none"
+        end
+      end
+    end
+
+    assert query == [query: [indices: [query: [term: [tag: "wow"]], no_match_query: "none", indices: ["index1","index2"]]]]
+  end
+
 
 end
