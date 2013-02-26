@@ -9,7 +9,7 @@ defmodule Tirexs.Query do
     quote do
       import unquote(Tirexs.Query)
       use unquote(Tirexs.Query.Bool)
-      use unquote(Tirexs.Query.DisMax)
+      import unquote(Tirexs.Query.DisMax)
       use unquote(Tirexs.Query.Filtered)
     end
   end
@@ -62,7 +62,7 @@ defmodule Tirexs.Query do
     [query_string: [query: query] ++ options]
   end
 
-  def custom_score(options) do
+  def custom_score(options, custom_score_opts//[]) do
     if is_list(options) do
       custom_score_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
@@ -70,7 +70,7 @@ defmodule Tirexs.Query do
     [custom_score: scoped_query(options) ++ custom_score_opts]
   end
 
-  def custom_boost_factor(options) do
+  def custom_boost_factor(options, custom_boost_factor_opts//[]) do
     if is_list(options) do
       custom_boost_factor_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
@@ -78,7 +78,7 @@ defmodule Tirexs.Query do
     [custom_boost_factor: scoped_query(options) ++ custom_boost_factor_opts]
   end
 
-  def constant_score(options) do
+  def constant_score(options, constant_score_opts//[]) do
     if is_list(options) do
       constant_score_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
@@ -86,11 +86,17 @@ defmodule Tirexs.Query do
     [constant_score: scoped_query(options) ++ constant_score_opts]
   end
 
-  defmacro dis_max(options, [do: block]) do
-    quote do
-      options = unquote(options)
-      unquote(block)
+  def dis_max(options, dis_max_opts//[]) do
+    if is_list(options) do
+      dis_max_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
     end
+    [dis_max: scoped_query(options) ++ dis_max_opts]
+  end
+
+  def term(options) do
+    [field, values, _] = extract_options(options)
+    [term: Dict.put([], to_atom(field), values)]
   end
 
   defmacro field(field, value) do

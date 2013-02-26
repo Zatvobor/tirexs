@@ -56,6 +56,7 @@ defmodule Tirexs.Query.Helpers do
         {:query_string, _, params}          -> Tirexs.Query.query_string(params)
         {:ids, _, params}                   -> Tirexs.Query.ids(params)
         {:range, _, params}                 -> Tirexs.Query.range(params)
+        {:term, _, params}                  -> Tirexs.Query.term(params)
         {:boosting, _, [params]}            -> Tirexs.Query.boosting(params[:do])
         {:boosting, _, options}             -> Tirexs.Query.boosting(options)
         {:positive, _, params}              -> Tirexs.Query.Bootstring.positive(params)
@@ -66,9 +67,25 @@ defmodule Tirexs.Query.Helpers do
         {:custom_boost_factor, _, options}  -> Tirexs.Query.custom_boost_factor(options)
         {:constant_score, _, [params]}      -> Tirexs.Query.constant_score(params[:do])
         {:constant_score, _, options}       -> Tirexs.Query.constant_score(options)
+        {:dis_max, _, [params]}             -> Tirexs.Query.dis_max(params[:do])
+        {:dis_max, _, options}              -> Tirexs.Query.dis_max(options)
+        {:queries, _, [params]}             -> Tirexs.Query.DisMax.queries(params[:do])
         {:query, _, [params]}               -> Tirexs.Query._query(params[:do])
         _ -> IO.puts inspect(block)
       end
+  end
+
+
+  def to_array(dict) do
+    to_array(dict, [])
+  end
+
+  def to_array([], acc) do
+    acc
+  end
+
+  def to_array([h|t], acc) do
+    to_array(t, acc ++ [[h]])
   end
 
 end
