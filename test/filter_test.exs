@@ -198,15 +198,15 @@ defmodule FilterTest do
   end
 
   test :has_child do
-    query = filter [type: "blog_tag"] do
-      has_child do
+    query = filter do
+      has_child [type: "blog_tag"] do
         query do
           term "tag", "something"
         end
       end
     end
 
-    assert query == []
+    assert query == [filter: [has_child: [query: [term: [tag: "something"]], type: "blog_tag"]]]
   end
 
 end
