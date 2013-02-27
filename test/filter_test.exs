@@ -91,9 +91,6 @@ defmodule FilterTest do
     end
 
     assert query == [query: [filtered: [query: [match_all: []], filter: [geo_bounding_box: ["pin.location": [top_left: [lat: 40.73, lon: -74.1], bottom_right: [lat: 40.717, lon: -73.99]]]]]]]
-
-    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
-    # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
   test :filter_with_opts do
@@ -235,6 +232,44 @@ defmodule FilterTest do
     end
 
     assert query == [filter: [missing: [field: "user", existence: true, null_value: true]]]
+  end
+
+  test :not do
+    query = query do
+      filtered do
+        query do
+          term "name.first", "shay"
+        end
+        filter do
+          _not do
+            range "postDate", [from: "2010-03-01", to: "2010-04-01"]
+          end
+        end
+      end
+    end
+
+    assert query == [query: [filtered: [query: [term: ["name.first": "shay"]], filter: [not: [range: [postDate: [from: "2010-03-01", to: "2010-04-01"]]]]]]]
+  end
+
+  test :not_with_params do
+    query = query do
+      filtered do
+        query do
+          term "name.first", "shay"
+        end
+        filter do
+          _not [_cache: true] do
+            filter do
+              range "postDate", [from: "2010-03-01", to: "2010-04-01"]
+            end
+          end
+        end
+      end
+    end
+
+    assert query == [query: [filtered: [query: [term: ["name.first": "shay"]], filter: [not: [filter: [range: [postDate: [from: "2010-03-01", to: "2010-04-01"]]], _cache: true]]]]]
+    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
+    # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
 end

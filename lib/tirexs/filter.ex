@@ -44,4 +44,12 @@ defmodule Tirexs.Filter do
     [value, options, _] = extract_options(options)
     [missing: [field: value] ++ options]
   end
+
+  def _not(options, not_opts//[]) do
+    if is_list(options) do
+      not_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [not: scoped_query(options) ++ not_opts]
+  end
 end

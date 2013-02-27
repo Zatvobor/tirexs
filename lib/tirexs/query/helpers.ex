@@ -127,6 +127,8 @@ defmodule Tirexs.Query.Helpers do
         {:geo_distance, _, params}          -> Tirexs.Filter.Geo.geo_distance(params)
         {:geo_distance_range, _, params}    -> Tirexs.Filter.Geo.geo_distance_range(params)
         {:geo_polygon, _, params}           -> Tirexs.Filter.Geo.geo_polygon(params)
+        {:_not, _, [params]}                -> Tirexs.Filter._not(params[:do])
+        {:_not, _, options}                 -> Tirexs.Filter._not(options)
 
         _ -> IO.puts inspect(block)
       end
