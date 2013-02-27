@@ -384,8 +384,6 @@ defmodule FiltersTest do
     end
 
     assert query == [query: [filtered: [query: [term: ["name.first": "shay"]], filter: [and: [filters: [[range: [postDate: [from: "2010-03-01", to: "2010-04-01"]]],[prefix: ["name.second": "ba"]]], _cache: true]]]]]
-    # settings = elastic_settings.new([uri: "localhost"])
-    # IO.puts inspect(do_query(settings, "top_club_places", query))
   end
 
   test :or do
@@ -406,7 +404,9 @@ defmodule FiltersTest do
       end
     end
 
-    assert query == []
+    assert query == [query: [filtered: [query: [term: ["name.first": "shay"]], filter: [or: [filters: [[range: [postDate: [from: "2010-03-01", to: "2010-04-01"]]],[prefix: ["name.second": "ba"]]], _cache: true]]]]]
+    # settings = elastic_settings.new([uri: "localhost"])
+    # IO.puts inspect(do_query(settings, "top_club_places", query))
   end
 
 end
