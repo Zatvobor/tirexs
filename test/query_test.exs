@@ -352,5 +352,20 @@ defmodule QueryTest do
     assert query == [query: [geo_shape: [location: [shape: [type: "type", coordinates: [[-45.0,45.0],[45.0,-45.0]]], relation: "contains"]]]]
   end
 
+  test :filtered do
+    query = query do
+      filtered do
+        query do
+          term "tag", "wow"
+        end
+        filter do
+          range "age", [from: 10, to: 20]
+        end
+      end
+    end
+
+    assert query == [query: [filtered: [query: [term: [tag: "wow"]], filter: [range: [age: [from: 10, to: 20]]]]]]
+  end
+
 
 end

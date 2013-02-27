@@ -17,11 +17,7 @@ defmodule Tirexs.Filter do
     [filter: scoped_query(options)]
   end
 
-  defmacro filtered([do: block]) do
-    [filtered: scoped_query(block)]
-  end
-
-  def _filtered(options) do
+  def filtered(options) do
     [filtered: scoped_query(options)]
   end
 

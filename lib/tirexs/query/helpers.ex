@@ -80,7 +80,7 @@ defmodule Tirexs.Query.Helpers do
         {:fuzzy, _, params}                 -> Tirexs.Query.fuzzy(params)
         {:query, _, [params]}               -> Tirexs.Query._query(params[:do])
         {:filter, _, [params]}              -> Tirexs.Filter._filter(params[:do])
-        {:filtered, _, [params]}            -> Tirexs.Filter._filtered(params[:do])
+        {:filtered, _, [params]}            -> Tirexs.Filter.filtered(params[:do])
         {:has_child, _, [params]}           -> Tirexs.Query.has_child(params[:do])
         {:has_child, _, options}            -> Tirexs.Query.has_child(options)
         {:has_parent, _, [params]}          -> Tirexs.Query.has_parent(params[:do])

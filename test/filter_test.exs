@@ -22,27 +22,29 @@ defmodule FilterTest do
   end
 
   test :filtered do
-    query = filtered do
-      query do
-        query_string "elasticsearch", default_field: "message"
-      end
-      filter do
-        bool do
-          must do
-            term "tag", "wow"
-          end
-          must_not do
-            range "age", [from: 10, to: 20]
-          end
-          should do
-            term "tag", "sometag"
-            term "tag", "sometagtag"
+    query = filter do
+      filtered do
+        query do
+          query_string "elasticsearch", default_field: "message"
+        end
+        filter do
+          bool do
+            must do
+              term "tag", "wow"
+            end
+            must_not do
+              range "age", [from: 10, to: 20]
+            end
+            should do
+              term "tag", "sometag"
+              term "tag", "sometagtag"
+            end
           end
         end
       end
     end
 
-    assert query == [filtered: [query: [query_string: [query: "elasticsearch", default_field: "message"]], filter: [bool: [must: [[term: [tag: "wow"]]], must_not: [[range: [age: [from: 10, to: 20]]]], should: [[term: [tag: "sometag"]],[term: [tag: "sometagtag"]]]]]]]
+    assert query == [filter: [filtered: [query: [query_string: [query: "elasticsearch", default_field: "message"]], filter: [bool: [must: [[term: [tag: "wow"]]], must_not: [[range: [age: [from: 10, to: 20]]]], should: [[term: [tag: "sometag"]],[term: [tag: "sometagtag"]]]]]]]]
   end
 
 end
