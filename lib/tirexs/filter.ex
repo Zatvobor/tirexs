@@ -13,6 +13,18 @@ defmodule Tirexs.Filter do
     [filter: scoped_query(block)]
   end
 
+  def _filter(options) do
+    [filter: scoped_query(options)]
+  end
+
+  defmacro filtered([do: block]) do
+    [filtered: scoped_query(block)]
+  end
+
+  def _filtered(options) do
+    [filtered: scoped_query(options)]
+  end
+
   def exists(options) do
     [value, _, _] = extract_options(options)
     [exists: [field: value]]
