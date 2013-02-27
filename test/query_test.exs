@@ -293,8 +293,7 @@ defmodule QueryTest do
         end
       end
     end
-    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
-    # IO.puts inspect(do_query(settings, "labeled/track", query))
+
     assert query == [query: [indices: [query: [term: [tag: "wow"]], no_match_query: [term: [tag: "kow"]], indices: ["index1","index2"]]]]
   end
 

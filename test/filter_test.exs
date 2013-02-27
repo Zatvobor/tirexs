@@ -3,6 +3,7 @@ defmodule FilterTest do
   use ExUnit.Case
   import Tirexs
   use Tirexs.Filter
+  use Tirexs.Query
   use Tirexs.ElasticSettings
 
   test :filter do
@@ -22,7 +23,7 @@ defmodule FilterTest do
   end
 
   test :filtered do
-    query = filter do
+    query = query do
       filtered do
         query do
           query_string "elasticsearch", default_field: "message"
@@ -44,7 +45,7 @@ defmodule FilterTest do
       end
     end
 
-    assert query == [filter: [filtered: [query: [query_string: [query: "elasticsearch", default_field: "message"]], filter: [bool: [must: [[term: [tag: "wow"]]], must_not: [[range: [age: [from: 10, to: 20]]]], should: [[term: [tag: "sometag"]],[term: [tag: "sometagtag"]]]]]]]]
+    assert query == [query: [filtered: [query: [query_string: [query: "elasticsearch", default_field: "message"]], filter: [bool: [must: [[term: [tag: "wow"]]], must_not: [[range: [age: [from: 10, to: 20]]]], should: [[term: [tag: "sometag"]],[term: [tag: "sometagtag"]]]]]]]]
   end
 
   test :ids do
@@ -55,7 +56,7 @@ defmodule FilterTest do
   end
 
   test :limit do
-    query = filter do
+    query = query do
       filtered do
         filter do
           limit 100
@@ -66,7 +67,48 @@ defmodule FilterTest do
       end
     end
 
-    assert query == [filter: [filtered: [filter: [limit: [value: 100]], query: [term: ["name.first": "shay"]]]]]
+    assert query == [query: [filtered: [filter: [limit: [value: 100]], query: [term: ["name.first": "shay"]]]]]
+  end
+
+  test :type do
+    query = filter do
+      type "my_type"
+    end
+
+    assert query == [filter: [type: [value: "my_type"]]]
+  end
+
+  test :geo_bbox do
+    query = query do
+      filtered do
+        query do
+          match_all
+        end
+        filter do
+          geo_bounding_box "pin.location", [top_left: [lat: 40.73, lon: -74.1], bottom_right: [lat: 40.717, lon: -73.99]]
+        end
+      end
+    end
+
+    assert query == [query: [filtered: [query: [match_all: []], filter: [geo_bounding_box: ["pin.location": [top_left: [lat: 40.73, lon: -74.1], bottom_right: [lat: 40.717, lon: -73.99]]]]]]]
+
+    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
+    # IO.puts inspect(do_query(settings, "labeled/track", query))
+  end
+
+  test :filter_with_opts do
+      query = query do
+        filtered do
+          query do
+            match_all
+          end
+          filter [type: "indexed"] do
+            geo_bounding_box "pin.location", [top_left: [lat: 40.73, lon: -74.1], bottom_right: [lat: 40.717, lon: -73.99]]
+          end
+        end
+      end
+
+      assert query == [query: [filtered: [query: [match_all: []], filter: [geo_bounding_box: ["pin.location": [top_left: [lat: 40.73, lon: -74.1], bottom_right: [lat: 40.717, lon: -73.99]]], type: "indexed"]]]]
   end
 
 end

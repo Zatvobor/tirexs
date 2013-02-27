@@ -80,6 +80,7 @@ defmodule Tirexs.Query.Helpers do
         {:fuzzy, _, params}                 -> Tirexs.Query.fuzzy(params)
         {:query, _, [params]}               -> Tirexs.Query._query(params[:do])
         {:filter, _, [params]}              -> Tirexs.Filter._filter(params[:do])
+        {:filter, _, options}               -> Tirexs.Filter._filter(options)
         {:filtered, _, [params]}            -> Tirexs.Filter.filtered(params[:do])
         {:has_child, _, [params]}           -> Tirexs.Query.has_child(params[:do])
         {:has_child, _, options}            -> Tirexs.Query.has_child(options)
@@ -118,6 +119,8 @@ defmodule Tirexs.Query.Helpers do
         {:shape, _, [params]}               -> Tirexs.Query.GeoShare.shape(params)
         {:exists, _, params}                -> Tirexs.Filter.exists(params)
         {:limit, _, params}                 -> Tirexs.Filter.limit(params)
+        {:type, _, params}                  -> Tirexs.Filter.type(params)
+        {:geo_bounding_box, _, params}      -> Tirexs.Filter.Geo.geo_bounding_box(params)
 
         _ -> IO.puts inspect(block)
       end
