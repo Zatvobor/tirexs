@@ -13,4 +13,8 @@ defmodule Tirexs.Query.GeoShare do
   def shape(options) do
     [shape: options]
   end
+
+  def indexed_shape(options) do
+    [indexed_shape: options]
+  end
 end
