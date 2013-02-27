@@ -1,2 +1,4 @@
 [ "erlson": {:git,"https://github.com/alavrik/erlson.git","c338f9d8c435d1d53b53dc90c293da651340f4e3",[branch: "master"]},
+  "jsonex": {:git,"git://github.com/devinus/jsonex.git","3582168972c88413bb0844ccccffa246768c3bab",[]},
+  "jsx": {:git,"git@github.com:talentdeficit/jsx.git","cb14b92a228e51f7bdcaa7eb17f035e4a5c0b47d",[]},
   "mochiweb": {:git,"https://github.com/mochi/mochiweb.git","edb954a15c4343d56345776e3f5c69e201714153",[]} ]
