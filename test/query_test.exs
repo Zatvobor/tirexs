@@ -71,9 +71,6 @@ defmodule QueryTest do
     end
 
     assert query == [query: [custom_boost_factor: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], boost_factor: 5.2]]]
-
-    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
-    # do_query(settings, "labeled/track", query)
   end
 
   test :constant_score do

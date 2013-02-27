@@ -117,6 +117,7 @@ defmodule Tirexs.Query.Helpers do
         {:location, _, params}              -> Tirexs.Query.GeoShare.location(params)
         {:shape, _, [params]}               -> Tirexs.Query.GeoShare.shape(params)
         {:exists, _, params}                -> Tirexs.Filter.exists(params)
+        {:limit, _, params}                 -> Tirexs.Filter.limit(params)
 
         _ -> IO.puts inspect(block)
       end

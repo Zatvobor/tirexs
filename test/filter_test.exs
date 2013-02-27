@@ -47,4 +47,26 @@ defmodule FilterTest do
     assert query == [filter: [filtered: [query: [query_string: [query: "elasticsearch", default_field: "message"]], filter: [bool: [must: [[term: [tag: "wow"]]], must_not: [[range: [age: [from: 10, to: 20]]]], should: [[term: [tag: "sometag"]],[term: [tag: "sometagtag"]]]]]]]]
   end
 
+  test :ids do
+    query = filter do
+      ids "my_type", ["1", "4", "100"]
+    end
+    assert query == [filter: [ids: [type: "my_type", values: ["1","4","100"]]]]
+  end
+
+  test :limit do
+    query = filter do
+      filtered do
+        filter do
+          limit 100
+        end
+        query do
+          term "name.first", "shay"
+        end
+      end
+    end
+
+    assert query == [filter: [filtered: [filter: [limit: [value: 100]], query: [term: ["name.first": "shay"]]]]]
+  end
+
 end

@@ -1,6 +1,6 @@
 defmodule Tirexs.Query do
 
-  #Missing query type: [filtered, nested, custom_filters_score]
+  #Missing query type: [nested, custom_filters_score]
 
   import Tirexs.Query.Helpers
   import Tirexs.Helpers

@@ -25,4 +25,9 @@ defmodule Tirexs.Filter do
     [value, _, _] = extract_options(options)
     [exists: [field: value]]
   end
+
+  def limit(options) do
+   [value, _, _] = extract_options(options)
+   [limit: [value: value]]
+  end
 end
