@@ -52,4 +52,17 @@ defmodule Tirexs.Filter do
     end
     [not: scoped_query(options) ++ not_opts]
   end
+
+  def numeric_range(options) do
+    [field, value, _] = extract_options(options)
+    [numeric_range: Dict.put([], to_atom(field), value)]
+  end
+
+  def fquery(options, fquery_opts//[]) do
+    if is_list(options) do
+      fquery_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [fquery: scoped_query(options) ++ fquery_opts]
+  end
 end

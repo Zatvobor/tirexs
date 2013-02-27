@@ -272,4 +272,35 @@ defmodule FilterTest do
     # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
+  test :numeric_range do
+    query = filter do
+      numeric_range "age", [from: "10",
+                            to: "20",
+                            include_lower: true,
+                            include_upper: false]
+    end
+
+    assert query == [filter: [numeric_range: [age: [from: "10", to: "20", include_lower: true, include_upper: false]]]]
+  end
+
+  test :prefix do
+    query = filter do
+      prefix "user", "ki"
+    end
+
+    assert query == [filter: [prefix: [user: "ki"]]]
+  end
+
+  test :query do
+    query = filter do
+      fquery [_cache: true] do
+        query do
+          query_string "elasticsearch", default_field: "message"
+        end
+      end
+    end
+
+    assert query == [filter: [fquery: [query: [query_string: [query: "elasticsearch", default_field: "message"]], _cache: true]]]
+  end
+
 end
