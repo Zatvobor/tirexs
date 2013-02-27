@@ -130,6 +130,8 @@ defmodule Tirexs.Query.Helpers do
         {:geo_polygon, _, params}             -> Tirexs.Filter.Geo.geo_polygon(params)
         {:_not, _, [params]}                  -> Tirexs.Filter._not(params[:do])
         {:_not, _, options}                   -> Tirexs.Filter._not(options)
+        {:_and, _, [params]}                  -> Tirexs.Filter._and(params[:do])
+        {:_and, _, options}                   -> Tirexs.Filter._and(options)
         {:numeric_range, _, params}           -> Tirexs.Filter.numeric_range(params)
         {:fquery, _, [params]}                -> Tirexs.Filter.fquery(params[:do])
         {:fquery, _, options}                 -> Tirexs.Filter.fquery(options)

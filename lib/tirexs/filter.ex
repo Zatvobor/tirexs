@@ -75,4 +75,12 @@ defmodule Tirexs.Filter do
     [filters: to_array(scoped_query(block))]
   end
 
+  def _and(options, and_opts//[]) do
+    if is_list(options) do
+      and_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [and: scoped_query(options) ++ and_opts]
+  end
+
 end
