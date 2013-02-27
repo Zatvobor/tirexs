@@ -132,6 +132,8 @@ defmodule Tirexs.Query.Helpers do
         {:_not, _, options}                   -> Tirexs.Filter._not(options)
         {:_and, _, [params]}                  -> Tirexs.Filter._and(params[:do])
         {:_and, _, options}                   -> Tirexs.Filter._and(options)
+        {:_or, _, [params]}                  -> Tirexs.Filter._or(params[:do])
+        {:_or, _, options}                   -> Tirexs.Filter._or(options)
         {:numeric_range, _, params}           -> Tirexs.Filter.numeric_range(params)
         {:fquery, _, [params]}                -> Tirexs.Filter.fquery(params[:do])
         {:fquery, _, options}                 -> Tirexs.Filter.fquery(options)

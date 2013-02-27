@@ -83,4 +83,12 @@ defmodule Tirexs.Filter do
     [and: scoped_query(options) ++ and_opts]
   end
 
+  def _or(options, or_opts//[]) do
+    if is_list(options) do
+      or_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [or: scoped_query(options) ++ or_opts]
+  end
+
 end
