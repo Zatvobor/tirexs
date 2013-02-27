@@ -197,4 +197,16 @@ defmodule FilterTest do
     assert query == [query: [filtered: [query: [match_all: []], filter: [geo_shape: [location: [indexed_shape: [id: "New Zealand", type: "countries", index: "shapes", shape_field_name: "shape"], relation: "within"]]]]]]
   end
 
+  test :has_child do
+    query = filter [type: "blog_tag"] do
+      has_child do
+        query do
+          term "tag", "something"
+        end
+      end
+    end
+
+    assert query == []
+  end
+
 end
