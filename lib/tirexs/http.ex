@@ -64,7 +64,8 @@ defmodule Tirexs.HTTP do
   end
 
   defp from_json(text) do
-    :erlson.from_json(text)
+    JSON.decode(JSON.encode(text))
+    # :erlson.from_json(text)
     # :mochijson.decode(text)
   end
 

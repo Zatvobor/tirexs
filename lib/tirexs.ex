@@ -21,19 +21,18 @@ defmodule Tirexs do
 
   def get_json_mapping(index) do
     json_dict = to_json_proplist(index, :mapping)
-    json_proplist = :erlson.from_nested_proplist(json_dict)
-    :erlson.to_json(json_proplist)
+    JSON.encode(json_dict)
+    # json_proplist = :erlson.from_nested_proplist(json_dict)
+    # :erlson.to_json(json_proplist)
   end
 
   def get_json_settings(index) do
-    json_proplist = :erlson.from_nested_proplist([settings: index[:settings]])
-    :erlson.to_json(json_proplist)
+    JSON.encode([settings: index[:settings]])
   end
 
   def get_json_river(river) do
     river = Dict.delete(river, :name)
-    json_proplist = :erlson.from_nested_proplist(river)
-    :erlson.to_json(json_proplist)
+    json = JSON.encode(river)
   end
 
   def create_index(settings, url) do
@@ -60,10 +59,8 @@ defmodule Tirexs do
   end
 
   def do_query(settings, url, params) do
-    json_proplist = :erlson.from_nested_proplist(params)
-    json = :erlson.to_json(json_proplist)
+    json = JSON.encode(params)
     url = "#{url}/_search"
-    IO.puts(json)
     post(settings, url, json)
   end
 

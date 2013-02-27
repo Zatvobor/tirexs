@@ -409,4 +409,5 @@ defmodule FiltersTest do
     # IO.puts inspect(do_query(settings, "top_club_places", query))
   end
 
+
 end
