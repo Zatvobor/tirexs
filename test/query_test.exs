@@ -363,5 +363,49 @@ defmodule QueryTest do
     assert query == [query: [filtered: [query: [term: [tag: "wow"]], filter: [range: [age: [from: 10, to: 20]]]]]]
   end
 
+  test :nested do
+    query = query do
+      nested [path: "obj1", _cache: true] do
+        query do
+          bool do
+            must do
+              match "obj1.name", "blue"
+              range "obj1.count", [gt: 5]
+            end
+          end
+        end
+      end
+    end
+    assert query == [query: [nested: [query: [bool: [must: [[match: ["obj1.name": [query: "blue"]]],[range: ["obj1.count": [gt: 5]]]]]], path: "obj1", _cache: true]]]
+  end
+
+  # test :custom_filters_score do
+  #   query = query do
+  #     custom_filters_score [score_mode: "first"] do
+  #       query do
+  #         match_all
+  #       end
+  #       filters do
+  #         object [boost: 1] do
+  #           filter do
+  #             range "age", [from: 0, to: 10]
+  #           end
+  #         end
+  #         object [boost: 2] do
+  #           filter do
+  #             range "age", [from: 0, to: 10]
+  #           end
+  #        end
+  #       end
+  #     end
+  #   end
+  #
+  #
+  #   settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
+  #   IO.puts inspect(do_query(settings, "labeled/track", query))
+  #   assert query == [query: [custom_filters_score: [query: [match_all: []], filters: [[[filter: [range: [age: [from: 0, to: 10]]], boost: 1]],[[filter: [range: [age: [from: 0, to: 10]]], boost: 2]]], score_mode: "first"]]]
+  #
+  # end
+
 
 end

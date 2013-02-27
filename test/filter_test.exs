@@ -1,5 +1,5 @@
 Code.require_file "../test_helper.exs", __FILE__
-defmodule FilterTest do
+defmodule FiltersTest do
   use ExUnit.Case
   import Tirexs
   use Tirexs.Filter
@@ -268,8 +268,6 @@ defmodule FilterTest do
     end
 
     assert query == [query: [filtered: [query: [term: ["name.first": "shay"]], filter: [not: [filter: [range: [postDate: [from: "2010-03-01", to: "2010-04-01"]]], _cache: true]]]]]
-    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
-    # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
   test :numeric_range do

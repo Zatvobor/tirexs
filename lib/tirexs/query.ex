@@ -237,4 +237,26 @@ defmodule Tirexs.Query do
     [nested: scoped_query(options) ++ nested_opts]
   end
 
+  # def custom_filters_score(options, custom_filters_score_opts//[]) do
+  #   if is_list(options) do
+  #     custom_filters_score_opts = Enum.at!(options, 0)
+  #     options = extract_do(options, 1)
+  #   end
+  #   [custom_filters_score: scoped_query(options) ++ custom_filters_score_opts]
+  # end
+  #
+  # def boost(options) do
+  #   [value, _, _] = extract_options(options)
+  #   [boost: value]
+  # end
+  #
+  # def object(options, object_opts//[]) do
+  #   if is_list(options) do
+  #     object_opts = Enum.at!(options, 0)
+  #     options = extract_do(options, 1)
+  #   end
+  #   scoped_query(options) ++ object_opts
+  # end
+
+
 end

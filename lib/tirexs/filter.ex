@@ -71,4 +71,8 @@ defmodule Tirexs.Filter do
     [script: [script: script, params: params]]
   end
 
+  def filters(block) do
+    [filters: to_array(scoped_query(block))]
+  end
+
 end
