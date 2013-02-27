@@ -70,9 +70,7 @@ defmodule HTTPTest do
       end
 
     json_dict = to_json_proplist(index, :mapping)
-    json = :erlson.from_nested_proplist(json_dict)
-    json  = :erlson.to_json(json)
-
+    json = JSON.encode(json_dict)
     put(settings, "bear_test", [])
     new_mapping = put(settings, "bear_test/test_type/_mapping", json)
     body = ParserResponse.get_body_json(new_mapping)

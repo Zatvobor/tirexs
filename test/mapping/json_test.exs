@@ -59,9 +59,9 @@ defmodule MappingJsonTest do
 
     json_dict = to_json_proplist(index, :mapping)
 
-    json = :erlson.from_nested_proplist(json_dict)
+    json = JSON.encode(json_dict)
 
-    from_json = :erlson.from_json(:erlson.to_json(json))
+    from_json = JSON.decode(json)
 
     assert Dict.size(json_dict) == Dict.size(from_json)
 
