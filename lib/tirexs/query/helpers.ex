@@ -21,7 +21,11 @@ defmodule Tirexs.Query.Helpers do
   end
 
   def extract_options(params) do
-    [Enum.at!(params, 0), Enum.at!(params, 1), get_options(params)]
+    if Dict.size(params) > 1 do
+      [Enum.at!(params, 0), Enum.at!(params, 1), get_options(params)]
+    else
+      [Enum.at!(params, 0), [],[]]
+    end
   end
 
   def scoped_query(block) do
@@ -110,6 +114,7 @@ defmodule Tirexs.Query.Helpers do
         {:geo_shape, _, options}            -> Tirexs.Query.geo_shape(options)
         {:location, _, params}              -> Tirexs.Query.GeoShare.location(params)
         {:shape, _, [params]}               -> Tirexs.Query.GeoShare.shape(params)
+        {:exists, _, params}                -> Tirexs.Filter.exists(params)
 
         _ -> IO.puts inspect(block)
       end
