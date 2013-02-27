@@ -1,9 +1,8 @@
 defmodule Tirexs do
   import Tirexs.HTTP
-  import Tirexs.Mapping.Json
 
   def init_index(type_name_list) do
-    HashDict.new(type_name_list)
+    type_name_list
   end
 
   def put_mapping(settings, index) do
@@ -11,19 +10,17 @@ defmodule Tirexs do
     case index[:type] do
       nil ->
         url = "#{index_name}/_mapping"
-        put(settings, url, get_json_mapping(index))
+        put(settings, url, get_json_mapping(index, index_name))
       type ->
         create_index(settings, index_name)
         url = "#{index_name}/#{index[:type]}/_mapping"
-        put(settings, url, get_json_mapping(index))
+        put(settings, url, get_json_mapping(index, type))
     end
   end
 
-  def get_json_mapping(index) do
-    json_dict = to_json_proplist(index, :mapping)
+  def get_json_mapping(index, name) do
+    json_dict = Dict.put([], name, index[:mapping])
     JSON.encode(json_dict)
-    # json_proplist = :erlson.from_nested_proplist(json_dict)
-    # :erlson.to_json(json_proplist)
   end
 
   def get_json_settings(index) do

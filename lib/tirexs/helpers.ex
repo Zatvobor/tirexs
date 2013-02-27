@@ -1,4 +1,5 @@
 defmodule Tirexs.Helpers do
+
   def to_atom(value) when is_atom(value) do
     value
   end
@@ -15,10 +16,10 @@ defmodule Tirexs.Helpers do
     is_record(dict, Dict) || false
   end
 
+
   def get_clear_block([]) do
     []
   end
-
 
   def get_clear_block(block) do
     case block do

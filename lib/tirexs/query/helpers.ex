@@ -2,6 +2,22 @@ defmodule Tirexs.Query.Helpers do
 
   import Tirexs.Helpers
 
+  def extract(block) do
+    extract(get_clear_block(block), [])
+  end
+
+  defp extract([], acc) do
+    acc
+  end
+
+  defp extract([h|t], acc) do
+    extract(get_clear_block(t), acc ++ routers(h))
+  end
+
+  defp extract(item, acc) do
+    acc ++ routers(item)
+  end
+
   defp routers(block) do
       case block do
         {:bool, _, [params]}                  -> Tirexs.Query.Bool.bool(params[:do])
@@ -101,22 +117,6 @@ defmodule Tirexs.Query.Helpers do
 
         _ -> IO.puts inspect(block)
       end
-  end
-
-  def scoped_query(block) do
-    scoped_query(get_clear_block(block), [])
-  end
-
-  defp scoped_query([], acc) do
-    acc
-  end
-
-  defp scoped_query([h|t], acc) do
-    scoped_query(get_clear_block(t), acc ++ routers(h))
-  end
-
-  defp scoped_query(item, acc) do
-    acc ++ routers(item)
   end
 
 end

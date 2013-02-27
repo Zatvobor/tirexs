@@ -49,7 +49,7 @@ defmodule HTTPTest do
   test :create_type_mapping do
     settings = elastic_settings.new([uri: "localhost"])
     index = init_index([name: "bear_test", type: "bear_type"]) #important index varible are using in dsl!
-      mappings do
+      index = mappings do
         indexes "mn_opts_", [type: "nested"] do
           indexes "uk", [type: "nested"] do
             indexes "credentials", [type: "nested"] do
@@ -69,10 +69,8 @@ defmodule HTTPTest do
         indexes "rev_history_", type: "nested"
       end
 
-    json_dict = to_json_proplist(index, :mapping)
-    json = JSON.encode(json_dict)
-    put(settings, "bear_test", [])
-    new_mapping = put(settings, "bear_test/test_type/_mapping", json)
+    new_mapping = put_mapping(settings, index)
+
     body = ParserResponse.get_body_json(new_mapping)
     assert body["acknowledged"] == true
 

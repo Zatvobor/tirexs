@@ -5,7 +5,7 @@ defmodule Tirexs.Query.Indeces do
   def no_match_query(options) do
     case is_binary(options) do
       true -> [no_match_query: options]
-      false -> [no_match_query: scoped_query(options)]
+      false -> [no_match_query: extract(options)]
     end
 
   end

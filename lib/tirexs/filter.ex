@@ -10,7 +10,7 @@ defmodule Tirexs.Filter do
   end
 
   defmacro filter([do: block]) do
-    [filter: scoped_query(block)]
+    [filter: extract(block)]
   end
 
   def _filter(options, filter_opts//[]) do
@@ -18,11 +18,11 @@ defmodule Tirexs.Filter do
       filter_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [filter: scoped_query(options) ++ filter_opts]
+    [filter: extract(options) ++ filter_opts]
   end
 
   def filtered(options) do
-    [filtered: scoped_query(options)]
+    [filtered: extract(options)]
   end
 
   def exists(options) do
@@ -50,7 +50,7 @@ defmodule Tirexs.Filter do
       not_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [not: scoped_query(options) ++ not_opts]
+    [not: extract(options) ++ not_opts]
   end
 
   def numeric_range(options) do
@@ -63,7 +63,7 @@ defmodule Tirexs.Filter do
       fquery_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [fquery: scoped_query(options) ++ fquery_opts]
+    [fquery: extract(options) ++ fquery_opts]
   end
 
   def script(options) do
@@ -72,7 +72,7 @@ defmodule Tirexs.Filter do
   end
 
   def filters(block) do
-    [filters: to_array(scoped_query(block))]
+    [filters: to_array(extract(block))]
   end
 
   def _and(options, and_opts//[]) do
@@ -80,7 +80,7 @@ defmodule Tirexs.Filter do
       and_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [and: scoped_query(options) ++ and_opts]
+    [and: extract(options) ++ and_opts]
   end
 
   def _or(options, or_opts//[]) do
@@ -88,7 +88,7 @@ defmodule Tirexs.Filter do
       or_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [or: scoped_query(options) ++ or_opts]
+    [or: extract(options) ++ or_opts]
   end
 
 end
