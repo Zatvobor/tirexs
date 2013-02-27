@@ -1,53 +1,6 @@
 defmodule Tirexs.Query.Helpers do
 
-  def get_clear_block([]) do
-    []
-  end
-
-
-  def get_clear_block(block) do
-    case block do
-      {:__block__, _, block_list} -> block_list
-      _ -> block
-    end
-  end
-
-  def get_options(options) do
-    if Dict.size(options) > 2 do
-      Enum.at!(options, 2)
-    else
-      []
-    end
-  end
-
-  def extract_options(params) do
-    if Dict.size(params) > 1 do
-      [Enum.at!(params, 0), Enum.at!(params, 1), get_options(params)]
-    else
-      [Enum.at!(params, 0), [],[]]
-    end
-  end
-
-  def scoped_query(block) do
-    scoped_query(get_clear_block(block), [])
-  end
-
-  defp scoped_query([], acc) do
-    acc
-  end
-
-  defp scoped_query([h|t], acc) do
-    scoped_query(get_clear_block(t), acc ++ routers(h))
-  end
-
-  defp scoped_query(item, acc) do
-    acc ++ routers(item)
-  end
-
-  def extract_do(block, position//0) do
-    Enum.at!(block, position)[:do]
-  end
-
+  import Tirexs.Helpers
 
   defp routers(block) do
       case block do
@@ -150,17 +103,20 @@ defmodule Tirexs.Query.Helpers do
       end
   end
 
-
-  def to_array(dict) do
-    to_array(dict, [])
+  def scoped_query(block) do
+    scoped_query(get_clear_block(block), [])
   end
 
-  def to_array([], acc) do
+  defp scoped_query([], acc) do
     acc
   end
 
-  def to_array([h|t], acc) do
-    to_array(t, acc ++ [[h]])
+  defp scoped_query([h|t], acc) do
+    scoped_query(get_clear_block(t), acc ++ routers(h))
+  end
+
+  defp scoped_query(item, acc) do
+    acc ++ routers(item)
   end
 
 end

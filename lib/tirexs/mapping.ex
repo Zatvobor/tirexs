@@ -1,4 +1,7 @@
 defmodule Tirexs.Mapping do
+  import Tirexs.Query.Helpers
+  import Tirexs.Helpers
+
   defmacro __using__(_) do
     quote do
       import unquote(Tirexs.Mapping)
@@ -9,10 +12,11 @@ defmodule Tirexs.Mapping do
   end
 
   defmacro mappings([do: block]) do
-    quote do
-      var!(index) = HashDict.put(var!(index), :mappings, [])
-      unquote(block)
-    end
+
+    # quote do
+      # var!(index) = HashDict.put(var!(index), :mappings, [])
+      # unquote(block)
+    # end
   end
 
   defmacro indexes(name, [do: block]) do
