@@ -115,12 +115,17 @@ defmodule Tirexs.Query.Helpers do
         {:text_phrase_prefix, _, params}    -> Tirexs.Query.Text.text_phrase_prefix(params)
         {:geo_shape, _, [params]}           -> Tirexs.Query.geo_shape(params[:do])
         {:geo_shape, _, options}            -> Tirexs.Query.geo_shape(options)
-        {:location, _, params}              -> Tirexs.Query.GeoShare.location(params)
+        {:location, _, [params]}            -> Tirexs.Query.GeoShare.location(params[:do])
+        {:location, _, options}             -> Tirexs.Query.GeoShare.location(options)
         {:shape, _, [params]}               -> Tirexs.Query.GeoShare.shape(params)
+        {:indexed_shape, _, [params]}       -> Tirexs.Query.GeoShare.indexed_shape(params)
         {:exists, _, params}                -> Tirexs.Filter.exists(params)
         {:limit, _, params}                 -> Tirexs.Filter.limit(params)
         {:type, _, params}                  -> Tirexs.Filter.type(params)
         {:geo_bounding_box, _, params}      -> Tirexs.Filter.Geo.geo_bounding_box(params)
+        {:geo_distance, _, params}          -> Tirexs.Filter.Geo.geo_distance(params)
+        {:geo_distance_range, _, params}    -> Tirexs.Filter.Geo.geo_distance_range(params)
+        {:geo_polygon, _, params}           -> Tirexs.Filter.Geo.geo_polygon(params)
 
         _ -> IO.puts inspect(block)
       end

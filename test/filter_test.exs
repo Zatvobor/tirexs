@@ -111,4 +111,90 @@ defmodule FilterTest do
       assert query == [query: [filtered: [query: [match_all: []], filter: [geo_bounding_box: ["pin.location": [top_left: [lat: 40.73, lon: -74.1], bottom_right: [lat: 40.717, lon: -73.99]]], type: "indexed"]]]]
   end
 
+  test :geo_distance do
+    query = query do
+      filtered do
+        query do
+          match_all
+        end
+        filter do
+          geo_distance "pin.location", "40,-70", distance: "12km"
+        end
+      end
+    end
+
+    assert query == [query: [filtered: [query: [match_all: []], filter: [geo_distance: ["pin.location": "40,-70", distance: "12km"]]]]]
+  end
+
+  test :geo_distance_range do
+    query = query do
+      filtered do
+        query do
+          match_all
+        end
+        filter do
+          geo_distance_range "pin.location", [lat: 40, lon: -70], [from: "200km", to: "400km"]
+        end
+      end
+    end
+
+    assert query == [query: [filtered: [query: [match_all: []], filter: [geo_distance_range: ["pin.location": [lat: 40, lon: -70], from: "200km", to: "400km"]]]]]
+  end
+
+  test :geo_polygon do
+    query = query do
+      filtered do
+        query do
+          match_all
+        end
+        filter do
+          geo_polygon "person.location", [[lat: 40, lon: -70], [lat: 30, lon: -80], [lat: 20, lon: -90]]
+        end
+      end
+    end
+
+    assert query == [query: [filtered: [query: [match_all: []], filter: [geo_polygon: ["person.location": [points: [[lat: 40, lon: -70],[lat: 30, lon: -80],[lat: 20, lon: -90]]]]]]]]
+  end
+
+  test :geo_shape do
+    query = query do
+      filtered do
+        query do
+          match_all
+        end
+        filter do
+          geo_shape do
+            location do
+              shape type: "envelope", coordinates: [[-45,45],[45,-45]]
+            end
+          end
+        end
+      end
+    end
+
+    assert query == [query: [filtered: [query: [match_all: []], filter: [geo_shape: [location: [shape: [type: "envelope", coordinates: [[-45,45],[45,-45]]]]]]]]]
+  end
+
+  test :geo_shape_indexed_shape do
+    query = query do
+      filtered do
+        query do
+          match_all
+        end
+        filter do
+          geo_shape do
+            location [relation: "within"] do
+              indexed_shape [id: "New Zealand",
+                            type: "countries",
+                            index: "shapes",
+                            shape_field_name: "shape"]
+            end
+          end
+        end
+      end
+    end
+
+    assert query == [query: [filtered: [query: [match_all: []], filter: [geo_shape: [location: [indexed_shape: [id: "New Zealand", type: "countries", index: "shapes", shape_field_name: "shape"], relation: "within"]]]]]]
+  end
+
 end
