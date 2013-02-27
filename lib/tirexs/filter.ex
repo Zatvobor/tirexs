@@ -39,4 +39,9 @@ defmodule Tirexs.Filter do
     [value, _, _] = extract_options(options)
     [type: [value: value]]
   end
+
+  def missing(options) do
+    [value, options, _] = extract_options(options)
+    [missing: [field: value] ++ options]
+  end
 end

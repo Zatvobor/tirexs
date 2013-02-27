@@ -122,6 +122,7 @@ defmodule Tirexs.Query.Helpers do
         {:exists, _, params}                -> Tirexs.Filter.exists(params)
         {:limit, _, params}                 -> Tirexs.Filter.limit(params)
         {:type, _, params}                  -> Tirexs.Filter.type(params)
+        {:missing, _, params}               -> Tirexs.Filter.missing(params)
         {:geo_bounding_box, _, params}      -> Tirexs.Filter.Geo.geo_bounding_box(params)
         {:geo_distance, _, params}          -> Tirexs.Filter.Geo.geo_distance(params)
         {:geo_distance_range, _, params}    -> Tirexs.Filter.Geo.geo_distance_range(params)

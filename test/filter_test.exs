@@ -209,4 +209,32 @@ defmodule FilterTest do
     assert query == [filter: [has_child: [query: [term: [tag: "something"]], type: "blog_tag"]]]
   end
 
+  test :has_parent do
+    query = filter do
+      has_parent [type: "blog"] do
+        query do
+          term "tag", "something"
+        end
+      end
+    end
+
+    assert query == [filter: [has_parent: [query: [term: [tag: "something"]], type: "blog"]]]
+  end
+
+  test :match_all do
+    query = filter do
+        match_all
+    end
+
+    assert query == [filter: [match_all: []]]
+  end
+
+  test :missing do
+    query = filter do
+      missing "user", [existence: true, null_value: true]
+    end
+
+    assert query == [filter: [missing: [field: "user", existence: true, null_value: true]]]
+  end
+
 end
