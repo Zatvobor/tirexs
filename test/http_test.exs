@@ -5,7 +5,6 @@ defmodule HTTPTest do
   import Tirexs
   use Tirexs.Mapping
   use Tirexs.ElasticSettings
-  import Tirexs.Mapping.Json
   import Tirexs.HTTP
 
   test :get_elastic_search_server do
@@ -69,10 +68,8 @@ defmodule HTTPTest do
         indexes "rev_history_", type: "nested"
       end
 
-    json_dict = to_json_proplist(index, :mapping)
-    json = JSON.encode(json_dict)
-    put(settings, "bear_test", [])
-    new_mapping = put(settings, "bear_test/test_type/_mapping", json)
+    new_mapping = put_mapping(settings, index)
+
     body = ParserResponse.get_body_json(new_mapping)
     assert body["acknowledged"] == true
 

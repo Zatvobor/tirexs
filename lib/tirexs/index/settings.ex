@@ -16,7 +16,7 @@ defmodule Tirexs.Index.Settings do
 
   defmacro settings([do: block]) do
     quote do
-      var!(index) = HashDict.put(var!(index), :settings, [])
+      var!(index) = Dict.put(var!(index), :settings, [])
       var!(index) = put_setting(var!(index), :index)
       unquote(block)
     end

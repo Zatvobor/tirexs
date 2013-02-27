@@ -7,7 +7,7 @@ defmodule Tirexs.Query.GeoShare do
       location_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [location: scoped_query(options) ++ location_opts]
+    [location: extract(options) ++ location_opts]
   end
 
   def shape(options) do
