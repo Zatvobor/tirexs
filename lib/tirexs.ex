@@ -29,7 +29,7 @@ defmodule Tirexs do
 
   def get_json_river(river) do
     river = Dict.delete(river, :name)
-    json = JSON.encode(river)
+    JSON.encode(river)
   end
 
   def create_index(settings, url) do

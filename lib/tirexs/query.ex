@@ -10,7 +10,6 @@ defmodule Tirexs.Query do
       import unquote(Tirexs.Query)
       use unquote(Tirexs.Query.Bool)
       import unquote(Tirexs.Query.DisMax)
-      use unquote(Tirexs.Query.Filtered)
     end
   end
 
@@ -37,7 +36,7 @@ defmodule Tirexs.Query do
   end
 
   def multi_match(options) do
-    [query, fields, options] = extract_options(options)
+    [query, fields, _] = extract_options(options)
     [multi_match: [query: query, fields: fields]]
   end
 

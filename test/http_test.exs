@@ -5,7 +5,6 @@ defmodule HTTPTest do
   import Tirexs
   use Tirexs.Mapping
   use Tirexs.ElasticSettings
-  import Tirexs.Mapping.Json
   import Tirexs.HTTP
 
   test :get_elastic_search_server do
@@ -49,7 +48,7 @@ defmodule HTTPTest do
   test :create_type_mapping do
     settings = elastic_settings.new([uri: "localhost"])
     index = init_index([name: "bear_test", type: "bear_type"]) #important index varible are using in dsl!
-      index = mappings do
+      mappings do
         indexes "mn_opts_", [type: "nested"] do
           indexes "uk", [type: "nested"] do
             indexes "credentials", [type: "nested"] do
