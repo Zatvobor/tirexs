@@ -303,4 +303,68 @@ defmodule FilterTest do
     assert query == [filter: [fquery: [query: [query_string: [query: "elasticsearch", default_field: "message"]], _cache: true]]]
   end
 
+  test :range do
+    query = filter do
+      range "age", [from: "10",
+                    to: "20",
+                    include_lower: true,
+                    include_upper: false]
+    end
+
+    assert query == [filter: [range: [age: [from: "10", to: "20", include_lower: true, include_upper: false]]]]
+  end
+
+  test :script do
+    query = query do
+      filtered do
+        query do
+          match_all
+        end
+        filter do
+          script "doc['num1'].value > param1", [param1: 1]
+        end
+      end
+    end
+
+    assert query == [query: [filtered: [query: [match_all: []], filter: [script: [script: "doc['num1'].value > param1", params: [param1: 1]]]]]]
+  end
+
+  test :term do
+    query = filter do
+      term "user", "kimchy", _cache: false
+    end
+
+    assert query == [filter: [term: [user: "kimchy", _cache: false]]]
+  end
+
+  test :terms do
+    query = filter do
+      terms "user", ["kimchy", "elasticsearch"], execution: "bool", _cache: true
+    end
+    assert query == [filter: [terms: [user: ["kimchy","elasticsearch"], execution: "bool", _cache: true]]]
+  end
+
+  test :nested do
+    query = query do
+      filtered do
+        query do
+          match_all
+        end
+        filter do
+          nested [path: "obj1", _cache: true] do
+            query do
+              bool do
+                must do
+                  match "obj1.name", "blue"
+                  range "obj1.count", [gt: 5]
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+    assert query == [query: [filtered: [query: [match_all: []], filter: [nested: [query: [bool: [must: [[match: ["obj1.name": [query: "blue"]]],[range: ["obj1.count": [gt: 5]]]]]], path: "obj1", _cache: true]]]]]
+  end
+
 end

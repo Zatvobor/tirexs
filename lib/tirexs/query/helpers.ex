@@ -132,6 +132,9 @@ defmodule Tirexs.Query.Helpers do
         {:numeric_range, _, params}         -> Tirexs.Filter.numeric_range(params)
         {:fquery, _, [params]}              -> Tirexs.Filter.fquery(params[:do])
         {:fquery, _, options}               -> Tirexs.Filter.fquery(options)
+        {:script, _, params}                -> Tirexs.Filter.script(params)
+        {:nested, _, [params]}              -> Tirexs.Query.nested(params[:do])
+        {:nested, _, options}               -> Tirexs.Query.nested(options)
 
         _ -> IO.puts inspect(block)
       end

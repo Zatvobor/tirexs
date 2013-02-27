@@ -65,4 +65,10 @@ defmodule Tirexs.Filter do
     end
     [fquery: scoped_query(options) ++ fquery_opts]
   end
+
+  def script(options) do
+    [script, params, _] = extract_options(options)
+    [script: [script: script, params: params]]
+  end
+
 end

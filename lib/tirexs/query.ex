@@ -1,6 +1,6 @@
 defmodule Tirexs.Query do
 
-  #Missing query type: [nested, custom_filters_score]
+  #Missing query type: [custom_filters_score]
 
   import Tirexs.Query.Helpers
   import Tirexs.Helpers
@@ -94,8 +94,8 @@ defmodule Tirexs.Query do
   end
 
   def term(options) do
-    [field, values, _] = extract_options(options)
-    [term: Dict.put([], to_atom(field), values)]
+    [field, values, options] = extract_options(options)
+    [term: Dict.put(options, to_atom(field), values)]
   end
 
   def field(options) do
@@ -227,6 +227,14 @@ defmodule Tirexs.Query do
       options = extract_do(options, 1)
     end
     [geo_shape: scoped_query(options) ++ geo_shape_opts]
+  end
+
+  def nested(options, nested_opts//[]) do
+    if is_list(options) do
+      nested_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [nested: scoped_query(options) ++ nested_opts]
   end
 
 end
