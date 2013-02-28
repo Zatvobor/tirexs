@@ -16,7 +16,7 @@ defmodule Tirexs.Mixfile do
   # { :foobar, "0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
     [
-    {:jsonex, git: "git://github.com/devinus/jsonex.git"}
+    {:jsonex, git: "git://github.com/OpakAlex/jsonex.git"}
     ]
   end
 end
