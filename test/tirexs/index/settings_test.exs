@@ -37,7 +37,6 @@ defmodule SettingsTest do
   end
 
   test :real_settings do
-    settings = elastic_settings.new([uri: "127.0.0.1"])
     index = init_index([name: "bear_test"])
 
     settings do
