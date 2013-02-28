@@ -30,7 +30,6 @@ defmodule Tirexs do
   def get_json_river(river) do
     river = Dict.delete(river, :name)
     river = Dict.delete(river, :river)
-    IO.puts inspect(river)
     JSON.encode(river)
   end
 
