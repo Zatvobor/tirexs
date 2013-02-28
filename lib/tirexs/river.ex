@@ -8,6 +8,7 @@ defmodule Tirexs.River do
 
   defmacro river([do: block]) do
     quote do
+      var!(river) = var!(river) ++ [river: true]
       unquote(block)
     end
   end

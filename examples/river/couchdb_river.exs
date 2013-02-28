@@ -1,6 +1,6 @@
 use Tirexs.River
 
-Tirexs.DSL.river [name: "tets_river_dsl"], fn(river, elastic_settings) ->
+Tirexs.DSL.create [name: "tets_river_dsl"], fn(river, elastic_settings) ->
   river do
     type "couchdb"
 
