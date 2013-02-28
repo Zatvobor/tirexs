@@ -10,27 +10,24 @@ defmodule Tirexs.Query do
       import unquote(Tirexs.Query)
       use unquote(Tirexs.Query.Bool)
       import unquote(Tirexs.Query.DisMax)
-      use unquote(Tirexs.Query.Filtered)
     end
   end
 
   defmacro query([do: block]) do
-    [query: scoped_query(block)]
+    [query: extract(block)]
   end
 
   def _query(options) do
-    [query: scoped_query(options)]
+    [query: extract(options)]
   end
 
   def match(options) do
     case options do
-      [options] -> [match: scoped_query(extract_do([options]))]
+      [options] -> [match: extract(extract_do([options]))]
       _ ->
         [field, value, options] = extract_options(options)
         [match: Dict.put([], to_atom(field), [query: value] ++ options)]
     end
-
-
   end
 
   def range(options) do
@@ -39,7 +36,7 @@ defmodule Tirexs.Query do
   end
 
   def multi_match(options) do
-    [query, fields, options] = extract_options(options)
+    [query, fields, _] = extract_options(options)
     [multi_match: [query: query, fields: fields]]
   end
 
@@ -48,7 +45,7 @@ defmodule Tirexs.Query do
       boosting_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [boosting: scoped_query(options) ++ boosting_opts]
+    [boosting: extract(options) ++ boosting_opts]
   end
 
   def ids(options) do
@@ -66,7 +63,7 @@ defmodule Tirexs.Query do
       custom_score_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [custom_score: scoped_query(options) ++ custom_score_opts]
+    [custom_score: extract(options) ++ custom_score_opts]
   end
 
   def custom_boost_factor(options, custom_boost_factor_opts//[]) do
@@ -74,7 +71,7 @@ defmodule Tirexs.Query do
       custom_boost_factor_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [custom_boost_factor: scoped_query(options) ++ custom_boost_factor_opts]
+    [custom_boost_factor: extract(options) ++ custom_boost_factor_opts]
   end
 
   def constant_score(options, constant_score_opts//[]) do
@@ -82,7 +79,7 @@ defmodule Tirexs.Query do
       constant_score_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [constant_score: scoped_query(options) ++ constant_score_opts]
+    [constant_score: extract(options) ++ constant_score_opts]
   end
 
   def dis_max(options, dis_max_opts//[]) do
@@ -90,7 +87,7 @@ defmodule Tirexs.Query do
       dis_max_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [dis_max: scoped_query(options) ++ dis_max_opts]
+    [dis_max: extract(options) ++ dis_max_opts]
   end
 
   def term(options) do
@@ -123,7 +120,7 @@ defmodule Tirexs.Query do
       has_child_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [has_child: scoped_query(options) ++ has_child_opts]
+    [has_child: extract(options) ++ has_child_opts]
   end
 
   def has_parent(options, has_parent_opts//[]) do
@@ -131,7 +128,7 @@ defmodule Tirexs.Query do
       has_parent_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [has_parent: scoped_query(options) ++ has_parent_opts]
+    [has_parent: extract(options) ++ has_parent_opts]
   end
 
   def match_all(options) do
@@ -158,7 +155,7 @@ defmodule Tirexs.Query do
       span_first_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [span_first: scoped_query(options) ++ span_first_opts]
+    [span_first: extract(options) ++ span_first_opts]
   end
 
   def span_term(options) do
@@ -171,7 +168,7 @@ defmodule Tirexs.Query do
       span_near_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [span_near: scoped_query(options) ++ span_near_opts]
+    [span_near: extract(options) ++ span_near_opts]
   end
 
   def span_not(options, span_not_opts//[]) do
@@ -179,7 +176,7 @@ defmodule Tirexs.Query do
       span_not_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [span_not: scoped_query(options) ++ span_not_opts]
+    [span_not: extract(options) ++ span_not_opts]
   end
 
   def span_or(options, span_or_opts//[]) do
@@ -187,7 +184,7 @@ defmodule Tirexs.Query do
       span_or_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [span_or: scoped_query(options) ++ span_or_opts]
+    [span_or: extract(options) ++ span_or_opts]
   end
 
   def terms(options) do
@@ -200,7 +197,7 @@ defmodule Tirexs.Query do
       top_children_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [top_children: scoped_query(options) ++ top_children_opts]
+    [top_children: extract(options) ++ top_children_opts]
   end
 
   def wildcard(options) do
@@ -213,7 +210,7 @@ defmodule Tirexs.Query do
       indices_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [indices: scoped_query(options) ++ indices_opts]
+    [indices: extract(options) ++ indices_opts]
   end
 
   def text(options) do
@@ -226,7 +223,7 @@ defmodule Tirexs.Query do
       geo_shape_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [geo_shape: scoped_query(options) ++ geo_shape_opts]
+    [geo_shape: extract(options) ++ geo_shape_opts]
   end
 
   def nested(options, nested_opts//[]) do
@@ -234,7 +231,7 @@ defmodule Tirexs.Query do
       nested_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [nested: scoped_query(options) ++ nested_opts]
+    [nested: extract(options) ++ nested_opts]
   end
 
   # def custom_filters_score(options, custom_filters_score_opts//[]) do

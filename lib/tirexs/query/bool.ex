@@ -11,19 +11,19 @@ defmodule Tirexs.Query.Bool do
     end
 
   def bool(block) do
-    [bool: scoped_query(block)]
+    [bool: extract(block)]
   end
 
   def must(block) do
-    [must: to_array(scoped_query(block))]
+    [must: to_array(extract(block))]
   end
 
   def should(block) do
-    [should: to_array(scoped_query(block))]
+    [should: to_array(extract(block))]
   end
 
   def must_not(block) do
-    [must_not: to_array(scoped_query(block))]
+    [must_not: to_array(extract(block))]
   end
 
 end

@@ -4,7 +4,6 @@ defmodule TirexsTest do
   use ExUnit.Case
   import Tirexs
   import Tirexs.HTTP
-  import Tirexs.Mapping.Json
   use Tirexs.Mapping
   use Tirexs.ElasticSettings
 

@@ -17,6 +17,5 @@ Tirexs.DSL.mapping [type: "dsl", name: "test_dsl_index"], fn(index, elastic_sett
 
      indexes "rev_history_", type: "nested"
    end
-
    [index, elastic_settings]
 end
