@@ -15,7 +15,7 @@ defmodule Tirexs.Mixfile do
   # Returns the list of dependencies in the format:
   # { :foobar, "0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
-    [{ :mochiweb, "2.4.2", git: "https://github.com/mochi/mochiweb.git"},
+    [
     {:jsonex, git: "git://github.com/devinus/jsonex.git"}
     ]
   end

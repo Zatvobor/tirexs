@@ -8,7 +8,7 @@ defmodule TirexsTest do
   use Tirexs.ElasticSettings
 
   test :put_mapping do
-    settings = elastic_settings.new([uri: "localhost"])
+    settings = elastic_settings.new([uri: "127.0.0.1"])
     index = init_index([name: "bear_test", type: "bear_type"]) #important index varible are using in dsl!
     mappings do
       indexes "mn_opts_", [type: "nested"] do

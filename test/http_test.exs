@@ -8,7 +8,7 @@ defmodule HTTPTest do
   import Tirexs.HTTP
 
   test :get_elastic_search_server do
-    settings = elastic_settings.new([uri: "localhost"])
+    settings = elastic_settings.new([uri: "127.0.0.1"])
     [body, _, _] = get(settings, "missing_index")
 
     assert body == :error
@@ -21,7 +21,7 @@ defmodule HTTPTest do
   end
 
   test :create_index do
-    settings = elastic_settings.new([uri: "localhost"])
+    settings = elastic_settings.new([uri: "127.0.0.1"])
     delete(settings, "bear_test")
     new_index = put(settings, "bear_test", [])
     body = ParserResponse.get_body_json(new_index)
@@ -29,7 +29,7 @@ defmodule HTTPTest do
   end
 
   test :delete_index do
-    settings = elastic_settings.new([uri: "localhost"])
+    settings = elastic_settings.new([uri: "127.0.0.1"])
     put(settings, "bear_test", [])
     deleted_index = delete(settings, "bear_test")
     body = ParserResponse.get_body_json(deleted_index)
@@ -38,7 +38,7 @@ defmodule HTTPTest do
 
 
   test :head do
-    settings = elastic_settings.new([uri: "localhost"])
+    settings = elastic_settings.new([uri: "127.0.0.1"])
     assert exist?(settings, "bear_test") == false
     put(settings, "bear_test", [])
     assert exist?(settings, "bear_test") == true
@@ -46,7 +46,7 @@ defmodule HTTPTest do
   end
 
   test :create_type_mapping do
-    settings = elastic_settings.new([uri: "localhost"])
+    settings = elastic_settings.new([uri: "127.0.0.1"])
     index = init_index([name: "bear_test", type: "bear_type"]) #important index varible are using in dsl!
       mappings do
         indexes "mn_opts_", [type: "nested"] do

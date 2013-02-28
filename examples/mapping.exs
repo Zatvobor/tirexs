@@ -1,9 +1,9 @@
 use Tirexs.Mapping
 
-Tirexs.DSL.mapping [type: "dsl", name: "test_dsl_index"], fn(index, elastic_settings) ->
+Tirexs.DSL.create [type: "dsl", name: "test_dsl_index"], fn(index, elastic_settings) ->
   #for delete exist mapping use
   # delete(elastic_settings, "test_dsl_index/dsl")
-  elastic_settings = elastic_settings.new([uri: "localhost", user: "new_user"])
+  elastic_settings = elastic_settings.new([uri: "127.0.0.1", user: "new_user"])
    mappings do
      indexes "mn_opts_", [type: "nested"] do
        indexes "uk", [type: "nested"] do
