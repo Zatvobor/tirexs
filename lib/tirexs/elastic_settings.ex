@@ -2,7 +2,7 @@ defmodule Tirexs.ElasticSettings do
 
   defmacro __using__(_) do
     quote do
-      defrecordp :elastic_settings,  [port: 9200, uri: "localhost", user: nil, pass: nil]
+      defrecordp :elastic_settings,  [port: 9200, uri: "127.0.0.1", user: nil, pass: nil]
 
       def port(elastic_settings(port: port)) do
         port

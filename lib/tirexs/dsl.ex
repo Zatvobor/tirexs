@@ -1,20 +1,12 @@
 defmodule Tirexs.DSL do
   use Tirexs.ElasticSettings
 
-  def mapping(settings, mapping) do
+  def create(settings, resource) do
     index = create_new_index(settings)
     elastic_settings = elastic_settings.new()
-    case mapping.(index, elastic_settings) do
-      [index, settings] -> Tirexs.put_mapping(settings, index)
-      _ -> raise "Shit happens!"
-    end
-  end
+    case resource.(index, elastic_settings) do
+      [index, settings] -> create_resource(index, settings)
 
-  def setting(settings, index_settings) do
-    elastic_settings = elastic_settings.new()
-    index = create_new_index(settings)
-    case index_settings.(index, elastic_settings) do
-      [index, settings] -> Tirexs.create_index_settings(settings, index)
       _ -> raise "Shit happens!"
     end
   end
@@ -39,4 +31,15 @@ defmodule Tirexs.DSL do
   def load(file) do
     to_binary(file) |> Code.load_file
   end
+
+  defp create_resource(type, settings) do
+    case [type[:settings], type[:mapping], type[:river]] do
+
+      [_type, nil, nil] -> Tirexs.create_index_settings(settings, type)
+      [nil, _type, nil] -> Tirexs.put_mapping(settings, type)
+      [nil, nil, _type] -> Tirexs.create_river(settings, type)
+      _                 -> raise "Shit happens!"
+    end
+  end
+
 end
