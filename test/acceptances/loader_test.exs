@@ -1,6 +1,6 @@
 Code.require_file "../../test_helper.exs", __FILE__
 
-defmodule Tirexs.DslTest do
+defmodule Tirexs.LoaderTest do
   use ExUnit.Case
 
   import Tirexs
@@ -9,14 +9,13 @@ defmodule Tirexs.DslTest do
   @path Path.join([File.cwd!, "examples"])
 
    test :load_dsl_file do
-
-     Tirexs.DSL.load_all(@path)
-
      settings = Tirexs.ElasticSearch.Config.new()
+
+     Tirexs.Loader.load_all(@path)
+
      assert exist?(settings, "test_dsl_index") == true
      delete(settings, "test_dsl_index")
      assert exist?(settings, "test_dsl_index") == false
-
      assert exist?(settings, "test_dsl_setting") == true
      delete(settings, "test_dsl_setting")
      assert exist?(settings, "test_dsl_setting") == false
@@ -24,13 +23,12 @@ defmodule Tirexs.DslTest do
 
    test :river_dsl do
     river_path = Path.join([File.cwd!, "examples", "river"])
-    Tirexs.DSL.load_all(river_path)
-
     settings = Tirexs.ElasticSearch.Config.new()
+
+    Tirexs.Loader.load_all(river_path)
 
     assert exist?(settings, "_river/tets_river_dsl/_meta") == true
     delete(settings, "_river/tets_river_dsl")
-
     assert exist?(settings, "_river/tets_river_dsl/_meta") == false
    end
 end

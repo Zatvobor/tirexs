@@ -15,7 +15,7 @@
                         'Elixir-Tirexs-Index-Merge',
                         'Elixir-Tirexs-Index-Settings',
                         'Elixir-Tirexs-Index-Tokenizer',
-                        'Elixir-Tirexs-Index-Translog',
+                        'Elixir-Tirexs-Index-Translog','Elixir-Tirexs-Loader',
                         'Elixir-Tirexs-Mapping-Helpers',
                         'Elixir-Tirexs-Mapping','Elixir-Tirexs-Query-Bool',
                         'Elixir-Tirexs-Query-Bootstring',
