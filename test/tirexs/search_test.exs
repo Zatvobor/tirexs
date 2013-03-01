@@ -1,0 +1,83 @@
+Code.require_file "../../test_helper.exs", __FILE__
+defmodule SearchTest do
+  use ExUnit.Case
+  import Tirexs
+  use Tirexs.Search
+
+  test :search_with_query_and_filter do
+    search = search do
+      query do
+        term "tag", "wow"
+      end
+
+      filter do
+        term "filter_tag", "wwoww"
+      end
+    end
+
+    assert search == [search: [query: [term: [tag: "wow"]], filter: [term: [filter_tag: "wwoww"]]]]
+  end
+
+  test :search_with_facets do
+    search = search do
+      query do
+        term "tag", "wow"
+      end
+
+      filter do
+        term "filter_tag", "wwoww"
+      end
+
+      facets do
+        tagFacet do
+          terms field: "tag", size: 10, order: "term"
+        end
+        keywordFacet do
+          terms field: "keywords", all_terms: true
+        end
+      end
+    end
+
+    assert search == [search: [query: [term: [tag: "wow"]], filter: [term: [filter_tag: "wwoww"]], facets: [tagFacet: [terms: [field: "tag", size: 10, order: "term"]], keywordFacet: [terms: [field: "keywords", all_terms: true]]]]]
+  end
+
+  test :complete_search do
+    search = search do
+      query do
+        term "tag", "wow"
+      end
+
+      filter do
+        term "filter_tag", "wwoww"
+      end
+
+      facets do
+        tagFacet do
+          terms field: "tag", size: 10, order: "term"
+        end
+        keywordFacet do
+          terms field: "keywords", all_terms: true
+        end
+      end
+
+      highlight do
+        [
+          number_of_fragments: 3,
+          fragment_size: 150,
+          tag_schema: "styled"
+        ]
+      end
+
+      sort do
+        [
+          [post_date: [reverse: true]],
+          [name: "desc"],
+          [age: "desc"]
+        ]
+      end
+
+    end
+
+      assert search == [search: [query: [term: [tag: "wow"]], filter: [term: [filter_tag: "wwoww"]], facets: [tagFacet: [terms: [field: "tag", size: 10, order: "term"]], keywordFacet: [terms: [field: "keywords", all_terms: true]]], highlight: [number_of_fragments: 3, fragment_size: 150, tag_schema: "styled"], sort: [[post_date: [reverse: true]],[name: "desc"],[age: "desc"]]]]
+  end
+end

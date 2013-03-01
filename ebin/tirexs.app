@@ -28,5 +28,7 @@
                         'Elixir-Tirexs-Query-SpanNot',
                         'Elixir-Tirexs-Query-Text','Elixir-Tirexs-Query',
                         'Elixir-Tirexs-River-Couchdb','Elixir-Tirexs-River',
-                        'Elixir-Tirexs-Search-Highlight','Elixir-Tirexs']},
+                        'Elixir-Tirexs-Search-Helpers',
+                        'Elixir-Tirexs-Search-Highlight',
+                        'Elixir-Tirexs-Search','Elixir-Tirexs']},
               {applications,[kernel,stdlib,elixir]}]}.
