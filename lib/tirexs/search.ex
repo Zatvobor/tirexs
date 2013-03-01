@@ -20,4 +20,9 @@ defmodule Tirexs.Search do
   def sort([do: block]) do
     [sort: block]
   end
+
+  def rescore([do: block]) do
+    IO.puts inspect(block)
+    [rescore: extract(block)]
+  end
 end

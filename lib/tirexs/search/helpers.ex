@@ -27,6 +27,8 @@ defmodule Tirexs.Search.Helpers do
       {:facets, _, [params]}    -> Tirexs.Facets._facets(params[:do])
       {:highlight, _, [params]} -> Tirexs.Search.highlight(params)
       {:sort, _, [params]}      -> Tirexs.Search.sort(params)
+      {:rescore, _, [params]}   -> Tirexs.Rescore._rescore(params[:do])
+      {:rescore, _, options}   -> Tirexs.Rescore._rescore(options)
     end
   end
 

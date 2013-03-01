@@ -76,8 +76,16 @@ defmodule SearchTest do
         ]
       end
 
+      rescore [window_size: 50] do
+        query [query_weight: 0.7, rescore_query_weight: 1.2] do
+          rescore_query do
+            match "field1", "the quick brown", [type: "phrase", slop: 2]
+          end
+        end
+      end
+
     end
 
-      assert search == [search: [query: [term: [tag: "wow"]], filter: [term: [filter_tag: "wwoww"]], facets: [tagFacet: [terms: [field: "tag", size: 10, order: "term"]], keywordFacet: [terms: [field: "keywords", all_terms: true]]], highlight: [number_of_fragments: 3, fragment_size: 150, tag_schema: "styled"], sort: [[post_date: [reverse: true]],[name: "desc"],[age: "desc"]]]]
+      assert search == [search: [query: [term: [tag: "wow"]], filter: [term: [filter_tag: "wwoww"]], facets: [tagFacet: [terms: [field: "tag", size: 10, order: "term"]], keywordFacet: [terms: [field: "keywords", all_terms: true]]], highlight: [number_of_fragments: 3, fragment_size: 150, tag_schema: "styled"], sort: [[post_date: [reverse: true]],[name: "desc"],[age: "desc"]], rescore: [query: [rescore_query: [match: [field1: [query: "the quick brown", type: "phrase", slop: 2]]], query_weight: 0.7, rescore_query_weight: 1.2], window_size: 50]]]
   end
 end
