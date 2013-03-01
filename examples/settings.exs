@@ -16,5 +16,5 @@ Tirexs.DSL.define [name: "test_dsl_setting"], fn(index, elastic_settings) ->
     blocks   write: true
   end
 
-  [index, elastic_settings]
+  { index, elastic_settings }
 end

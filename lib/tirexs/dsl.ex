@@ -1,5 +1,8 @@
 defmodule Tirexs.DSL do
-  @moduledoc false
+  @moduledoc """
+  This module represents a main entry point for defining DSL scenarios.
+  Check an `examples` directory which consists a DSL tempaltes for `mapping`, `settings`, `query` and `river`.
+  """
 
   @doc false
   def define(settings, resource) do
@@ -7,7 +10,7 @@ defmodule Tirexs.DSL do
     elastic_settings = Tirexs.ElasticSearch.Config.new()
 
     case resource.(index, elastic_settings) do
-      [index, settings] -> create_resource(index, settings)
+      { index, settings } -> create_resource(index, settings)
     end
   end
 
