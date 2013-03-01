@@ -31,4 +31,9 @@ defmodule Tirexs.LoaderTest do
     delete(settings, "_river/tets_river_dsl")
     assert exist?(settings, "_river/tets_river_dsl/_meta") == false
    end
+
+   test :search_dsl do
+     search_file_path = Path.join([File.cwd!, "examples"])
+     Tirexs.Loader.load(search_file_path <> "/search.exs")
+   end
 end
