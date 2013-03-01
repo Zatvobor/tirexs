@@ -1,4 +1,3 @@
-!ebin/Elixir-Mix-Tasks-Travis.beam
 ebin/*.beam
 /deps
 erl_crash.dump
