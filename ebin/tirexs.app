@@ -5,6 +5,7 @@
               {modules,['Elixir-Mix-Tasks-Travis','Elixir-Tirexs-DSL',
                         'Elixir-Tirexs-ElasticSearch-Config',
                         'Elixir-Tirexs-ElasticSearch',
+                        'Elixir-Tirexs-Facets-Helpers','Elixir-Tirexs-Facets',
                         'Elixir-Tirexs-Filter-Geo','Elixir-Tirexs-Filter',
                         'Elixir-Tirexs-HTTP','Elixir-Tirexs-Helpers',
                         'Elixir-Tirexs-Index-Analyzer',
