@@ -17,8 +17,12 @@ defmodule Tirexs.Query do
     [query: extract(block)]
   end
 
-  def _query(options) do
-    [query: extract(options)]
+  def _query(options, query_opts//[]) do
+    if is_list(options) do
+      query_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [query: extract(options) ++ query_opts]
   end
 
   def match(options) do
@@ -232,6 +236,14 @@ defmodule Tirexs.Query do
       options = extract_do(options, 1)
     end
     [nested: extract(options) ++ nested_opts]
+  end
+
+  def rescore_query(options, nested_opts//[]) do
+    if is_list(options) do
+      nested_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [rescore_query: extract(options) ++ nested_opts]
   end
 
   # def custom_filters_score(options, custom_filters_score_opts//[]) do

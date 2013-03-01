@@ -12,9 +12,12 @@ defmodule Tirexs.Facets do
     [facets: extract(block)]
   end
 
+  def _facets(block) do
+    [facets: extract(block)]
+  end
+
   def make_facet(name, options) do
     routers(name, options)
-    # Dict.put([], to_atom(name), routers(options))
   end
 
   def terms(options) do
