@@ -6,8 +6,7 @@ defmodule River.CouchDb.Test do
 
   test :river do
     river = init_river(name: "test_river")
-    river do
-      type "couchdb"
+    river [type: "couchdb"] do
 
       couchdb do
         [

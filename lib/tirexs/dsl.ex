@@ -11,16 +11,6 @@ defmodule Tirexs.DSL do
     end
   end
 
-  @doc false
-  # def river(settings, river_settings) do
-  #   elastic_settings = Tirexs.ElasticSearch.Config.new()
-  #   river = Tirexs.River.init_river(settings)
-  #
-  #   case river_settings.(river, elastic_settings) do
-  #     [river, settings] -> Tirexs.create_river(settings, river)
-  #   end
-  # end
-
 
   defp create_resource(type, settings) do
     case [type[:settings], type[:mapping], type[:river]] do

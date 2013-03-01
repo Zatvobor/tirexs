@@ -6,16 +6,10 @@ defmodule Tirexs.River do
     end
   end
 
-  defmacro river([do: block]) do
+  defmacro river(options, [do: block]) do
     quote do
-      var!(river) = var!(river) ++ [river: true]
+      var!(river) = var!(river) ++ [river: true] ++ unquote(options)
       unquote(block)
-    end
-  end
-
-  defmacro type(value) do
-    quote do
-      var!(river) = var!(river) ++ [type: unquote(value)]
     end
   end
 
