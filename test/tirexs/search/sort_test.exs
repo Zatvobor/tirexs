@@ -23,6 +23,8 @@ defmodule SortTest do
         order: "asc"
       ]
     end
+
+    assert sort == [sort: [_script: [script: "doc['field_name'].value * factor", type: "number", params: [factor: 1.1]], order: "asc"]]
   end
 
   test :_geo_distance_sort do
