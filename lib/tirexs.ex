@@ -1,5 +1,4 @@
 defmodule Tirexs do
-  import Tirexs.HTTP
 
   def init_index(type_name_list) do
     type_name_list
@@ -10,11 +9,11 @@ defmodule Tirexs do
     case index[:type] do
       nil ->
         url = "#{index_name}/_mapping"
-        put(settings, url, get_json_mapping(index, index_name))
+        Tirexs.HTTP.put(settings, url, get_json_mapping(index, index_name))
       type ->
         create_index(settings, index_name)
         url = "#{index_name}/#{index[:type]}/_mapping"
-        put(settings, url, get_json_mapping(index, type))
+        Tirexs.HTTP.put(settings, url, get_json_mapping(index, type))
     end
   end
 
@@ -35,35 +34,35 @@ defmodule Tirexs do
 
   def create_index(settings, url) do
     unless exist?(settings, url) do
-      put(settings, url)
+      Tirexs.HTTP.put(settings, url)
     end
   end
 
   def create_index_settings(settings, index) do
     url = index[:name]
     if exist?(settings, url) do
-      delete(settings, url)
+      Tirexs.HTTP.delete(settings, url)
     end
-    post(settings, url, get_json_settings(index))
+    Tirexs.HTTP.post(settings, url, get_json_settings(index))
   end
 
   def create_river(settings, river) do
     url = "_river/#{river[:name]}"
     if exist?(settings, url) do
-      delete(settings, url)
+      Tirexs.HTTP.delete(settings, url)
     end
     url = "#{url}/_meta"
-    put(settings, url, get_json_river(river))
+    Tirexs.HTTP.put(settings, url, get_json_river(river))
   end
 
   def do_query(settings, url, params) do
     json = JSON.encode(params)
     url = "#{url}/_search"
-    post(settings, url, json)
+    Tirexs.HTTP.post(settings, url, json)
   end
 
   def exist?(settings, url) do
-    case head(settings, url) do
+    case Tirexs.HTTP.head(settings, url) do
       [:error, _, _] -> false
       _ -> true
     end

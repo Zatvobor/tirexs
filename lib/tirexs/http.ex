@@ -1,36 +1,39 @@
 defmodule Tirexs.HTTP do
+  @moduledoc """
+  This module implements functions for doing a `HTTP` request to `ElasticSearch` directly.
+  """
 
+  @doc false
   def get(settings, query_url) do
     do_request(composed_url(settings, query_url), :get)
   end
 
+  @doc false
   def put(settings, query_url, body//[]) do
-    unless body == [] do
-      body = to_binary(body)
-    end
+    unless body == [], do: body = to_binary(body)
     do_request(composed_url(settings, query_url), :put, body)
   end
 
+  @doc false
   def delete(settings, query_url) do
     do_request(composed_url(settings, query_url), :delete)
   end
 
+  @doc false
   def head(settings, query_url) do
     do_request(composed_url(settings, query_url), :head)
   end
 
+  @doc false
   def post(settings, query_url, body//[]) do
-    unless body == [] do
-      body = to_binary(body)
-    end
+    unless body == [], do: body = to_binary(body)
     do_request(composed_url(settings, query_url), :post, body)
   end
 
+  @doc false
   def do_request(url, method, body//[]) do
-    start()
-    url = binary_to_list(url)
-    content_type = 'application/json'
-    options = [{:body_format, :binary}]
+    :inets.start()
+    { url, content_type, options } = { binary_to_list(url), 'application/json', [{:body_format, :binary}] }
 
     case method do
       :get -> response(:httpc.request(method, {url, [make_headers]}, [], []))
@@ -41,12 +44,6 @@ defmodule Tirexs.HTTP do
     end
   end
 
-  defp start do
-    case :inets.start() do
-      {:error, _ } -> :error
-      :ok -> :ok
-    end
-  end
 
   defp response(req) do
     case req do
@@ -63,15 +60,9 @@ defmodule Tirexs.HTTP do
     end
   end
 
-  defp from_json(text) do
-    JSON.decode(JSON.encode(text))
-    # :erlson.from_json(text)
-    # :mochijson.decode(text)
-  end
+  defp from_json(text), do: JSON.decode(JSON.encode(text))
 
-  defp make_headers do
-     [{'Content-Type', 'application/json'}]
-  end
+  defp make_headers, do: [{'Content-Type', 'application/json'}]
 
   defp composed_url(settings, query_url) do
     if settings.port == nil || settings.port == 80 do
@@ -80,5 +71,4 @@ defmodule Tirexs.HTTP do
       "http://#{settings.uri}:#{settings.port}/#{query_url}"
     end
   end
-
 end
