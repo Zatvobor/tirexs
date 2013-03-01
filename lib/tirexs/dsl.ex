@@ -14,6 +14,16 @@ defmodule Tirexs.DSL do
     end
   end
 
+  @doc false
+  def search(settings, resource) do
+    index = Tirexs.init_index(settings)
+    elastic_settings = Tirexs.ElasticSearch.Config.new()
+    case resource.(index, elastic_settings) do
+      { search, settings } -> search
+    end
+  end
+
+
 
   defp create_resource(type, settings) do
     cond do
