@@ -1,7 +1,7 @@
 {application,tirexs,
              [{registered,[]},
               {description,"tirexs"},
-              {vsn,"0.0.1"},
+              {vsn,"0.1"},
               {modules,['Elixir-Mix-Tasks-Travis','Elixir-Tirexs-DSL',
                         'Elixir-Tirexs-ElasticSearch-Config',
                         'Elixir-Tirexs-ElasticSearch',
