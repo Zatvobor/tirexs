@@ -84,8 +84,15 @@ defmodule SearchTest do
         end
       end
 
+      script_fields do
+        [
+          test1: [script: "doc['my_field_name'].value * 2"],
+          test2: [script: "doc['my_field_name'].value * factor", params: [factor: 2]]
+        ]
+      end
+
     end
 
-      assert search == [search: [query: [term: [tag: "wow"]], filter: [term: [filter_tag: "wwoww"]], facets: [tagFacet: [terms: [field: "tag", size: 10, order: "term"]], keywordFacet: [terms: [field: "keywords", all_terms: true]]], highlight: [number_of_fragments: 3, fragment_size: 150, tag_schema: "styled"], sort: [[post_date: [reverse: true]],[name: "desc"],[age: "desc"]], rescore: [query: [rescore_query: [match: [field1: [query: "the quick brown", type: "phrase", slop: 2]]], query_weight: 0.7, rescore_query_weight: 1.2], window_size: 50]]]
+      assert search == [search: [query: [term: [tag: "wow"]], filter: [term: [filter_tag: "wwoww"]], facets: [tagFacet: [terms: [field: "tag", size: 10, order: "term"]], keywordFacet: [terms: [field: "keywords", all_terms: true]]], highlight: [number_of_fragments: 3, fragment_size: 150, tag_schema: "styled"], sort: [[post_date: [reverse: true]],[name: "desc"],[age: "desc"]], rescore: [query: [rescore_query: [match: [field1: [query: "the quick brown", type: "phrase", slop: 2]]], query_weight: 0.7, rescore_query_weight: 1.2], window_size: 50], script_fields: [test1: [script: "doc['my_field_name'].value * 2"], test2: [script: "doc['my_field_name'].value * factor", params: [factor: 2]]]]]
   end
 end

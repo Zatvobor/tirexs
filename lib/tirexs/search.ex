@@ -21,8 +21,8 @@ defmodule Tirexs.Search do
     [sort: block]
   end
 
-  def rescore([do: block]) do
-    IO.puts inspect(block)
-    [rescore: extract(block)]
+  def script_fields([do: block]) do
+    [script_fields: block]
   end
+
 end
