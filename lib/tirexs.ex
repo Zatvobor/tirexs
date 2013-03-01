@@ -60,4 +60,12 @@ defmodule Tirexs do
     url = "#{url}/_search"
     Tirexs.ElasticSearch.post(url, json, settings)
   end
+
+  def do_search(settings, search) do
+    url = case search[:type] do
+      nil -> "#{search[:name]}/_search"
+      type -> "#{search[:name]}/#{type}/_search"
+    end
+    do_query(settings, url, search[:search])
+  end
 end
