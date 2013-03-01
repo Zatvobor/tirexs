@@ -1,18 +1,20 @@
 Code.require_file "../../test_helper.exs", __FILE__
 
-defmodule HTTPTest do
+defmodule ElasticSearchTest do
+
   use ExUnit.Case
   import Tirexs
   use Tirexs.Mapping
-  import Tirexs.HTTP
+  import Tirexs.ElasticSearch
+
 
   test :get_elastic_search_server do
     settings = Tirexs.ElasticSearch.Config.new()
-    [body, _, _] = get(settings, "missing_index")
+    [body, _, _] = get("missing_index", settings)
 
     assert body == :error
 
-    body = get(settings, "/")
+    body = get("/", settings)
     body = ParserResponse.get_body_json(body)
 
     assert body["tagline"] == "You Know, for Search"
@@ -21,16 +23,16 @@ defmodule HTTPTest do
 
   test :create_index do
     settings = Tirexs.ElasticSearch.Config.new()
-    delete(settings, "bear_test")
-    new_index = put(settings, "bear_test", [])
+    delete("bear_test", settings)
+    new_index = put("bear_test", settings)
     body = ParserResponse.get_body_json(new_index)
     assert body["acknowledged"] == true
   end
 
   test :delete_index do
     settings = Tirexs.ElasticSearch.Config.new()
-    put(settings, "bear_test", [])
-    deleted_index = delete(settings, "bear_test")
+    put("bear_test", settings)
+    deleted_index = delete("bear_test", settings)
     body = ParserResponse.get_body_json(deleted_index)
     assert body["acknowledged"] == true
   end
@@ -38,10 +40,10 @@ defmodule HTTPTest do
 
   test :head do
     settings = Tirexs.ElasticSearch.Config.new()
-    assert exist?(settings, "bear_test") == false
-    put(settings, "bear_test", [])
-    assert exist?(settings, "bear_test") == true
-    delete(settings, "bear_test")
+    assert exist?("bear_test", settings) == false
+    put("bear_test", settings)
+    assert exist?("bear_test", settings) == true
+    delete("bear_test", settings)
   end
 
   test :create_type_mapping do
@@ -72,7 +74,7 @@ defmodule HTTPTest do
     body = ParserResponse.get_body_json(new_mapping)
     assert body["acknowledged"] == true
 
-    delete(settings, "bear_test")
+    delete("bear_test", settings)
   end
 
 end

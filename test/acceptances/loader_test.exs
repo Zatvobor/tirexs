@@ -3,8 +3,7 @@ Code.require_file "../../test_helper.exs", __FILE__
 defmodule Tirexs.LoaderTest do
   use ExUnit.Case
 
-  import Tirexs
-  import Tirexs.HTTP
+  import Tirexs.ElasticSearch
 
   @path Path.join([File.cwd!, "examples"])
 
@@ -13,12 +12,12 @@ defmodule Tirexs.LoaderTest do
 
      Tirexs.Loader.load_all(@path)
 
-     assert exist?(settings, "test_dsl_index") == true
-     delete(settings, "test_dsl_index")
-     assert exist?(settings, "test_dsl_index") == false
-     assert exist?(settings, "test_dsl_setting") == true
-     delete(settings, "test_dsl_setting")
-     assert exist?(settings, "test_dsl_setting") == false
+     assert exist?("test_dsl_index", settings) == true
+     delete("test_dsl_index", settings)
+     assert exist?("test_dsl_index", settings) == false
+     assert exist?("test_dsl_setting", settings) == true
+     delete("test_dsl_setting", settings)
+     assert exist?("test_dsl_setting", settings) == false
    end
 
    test :river_dsl do
@@ -27,8 +26,8 @@ defmodule Tirexs.LoaderTest do
 
     Tirexs.Loader.load_all(river_path)
 
-    assert exist?(settings, "_river/tets_river_dsl/_meta") == true
-    delete(settings, "_river/tets_river_dsl")
-    assert exist?(settings, "_river/tets_river_dsl/_meta") == false
+    assert exist?("_river/tets_river_dsl/_meta", settings) == true
+    delete("_river/tets_river_dsl", settings)
+    assert exist?("_river/tets_river_dsl/_meta", settings) == false
    end
 end

@@ -3,7 +3,6 @@ Code.require_file "../../../test_helper.exs", __FILE__
 defmodule SettingsTest do
   use ExUnit.Case
   import Tirexs
-  import Tirexs.HTTP
   use Tirexs.Index.Settings
 
   test :simpe_index_settings do

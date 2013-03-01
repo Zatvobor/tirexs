@@ -9,11 +9,11 @@ defmodule Tirexs do
     case index[:type] do
       nil ->
         url = "#{index_name}/_mapping"
-        Tirexs.HTTP.put(settings, url, get_json_mapping(index, index_name))
+        Tirexs.ElasticSearch.put(url, get_json_mapping(index, index_name), settings)
       type ->
         create_index(settings, index_name)
         url = "#{index_name}/#{index[:type]}/_mapping"
-        Tirexs.HTTP.put(settings, url, get_json_mapping(index, type))
+        Tirexs.ElasticSearch.put(url, get_json_mapping(index, type), settings)
     end
   end
 
@@ -33,38 +33,31 @@ defmodule Tirexs do
   end
 
   def create_index(settings, url) do
-    unless exist?(settings, url) do
-      Tirexs.HTTP.put(settings, url)
+    unless Tirexs.ElasticSearch.exist?(url, settings) do
+      Tirexs.ElasticSearch.put(url, settings)
     end
   end
 
   def create_index_settings(settings, index) do
     url = index[:name]
-    if exist?(settings, url) do
-      Tirexs.HTTP.delete(settings, url)
+    if Tirexs.ElasticSearch.exist?(url, settings) do
+      Tirexs.ElasticSearch.delete(url, settings)
     end
-    Tirexs.HTTP.post(settings, url, get_json_settings(index))
+    Tirexs.ElasticSearch.post(url, get_json_settings(index), settings)
   end
 
   def create_river(settings, river) do
     url = "_river/#{river[:name]}"
-    if exist?(settings, url) do
-      Tirexs.HTTP.delete(settings, url)
+    if Tirexs.ElasticSearch.exist?(url, settings) do
+      Tirexs.ElasticSearch.delete(url, settings)
     end
     url = "#{url}/_meta"
-    Tirexs.HTTP.put(settings, url, get_json_river(river))
+    Tirexs.ElasticSearch.put(url, get_json_river(river), settings)
   end
 
   def do_query(settings, url, params) do
     json = JSON.encode(params)
     url = "#{url}/_search"
-    Tirexs.HTTP.post(settings, url, json)
-  end
-
-  def exist?(settings, url) do
-    case Tirexs.HTTP.head(settings, url) do
-      [:error, _, _] -> false
-      _ -> true
-    end
+    Tirexs.ElasticSearch.post(url, json, settings)
   end
 end

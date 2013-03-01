@@ -5,7 +5,6 @@ defmodule Tirexs.Mapping do
   defmacro __using__(_) do
     quote do
       import unquote(Tirexs.Mapping)
-      import unquote(Tirexs.HTTP)
     end
   end
 
