@@ -13,10 +13,10 @@ defmodule Tirexs.DSL do
 
 
   defp create_resource(type, settings) do
-    case [type[:settings], type[:mapping], type[:river]] do
-      [_type, nil, nil] -> Tirexs.create_index_settings(settings, type)
-      [nil, _type, nil] -> Tirexs.put_mapping(settings, type)
-      [nil, nil, _type] -> Tirexs.create_river(settings, type)
+    cond do
+      type[:settings] -> Tirexs.create_index_settings(settings, type)
+      type[:mapping]  -> Tirexs.put_mapping(settings, type)
+      type[:river]    -> Tirexs.create_river(settings, type)
     end
   end
 end
