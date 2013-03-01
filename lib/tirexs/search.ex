@@ -13,6 +13,10 @@ defmodule Tirexs.Search do
     [search: extract(block)]
   end
 
+  defmacro search(options, [do: block]) do
+    [search: extract(block) ++ options]
+  end
+
   def highlight([do: block]) do
     [highlight: block]
   end
