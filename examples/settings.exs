@@ -1,5 +1,7 @@
 use Tirexs.Index.Settings
-Tirexs.DSL.create [name: "test_dsl_setting"], fn(index, elastic_settings) ->
+
+Tirexs.DSL.define [name: "test_dsl_setting"], fn(index, elastic_settings) ->
+
   settings do
     analysis do
       analyzer "msg_search_analyzer", [tokenizer: "keyword", filter: ["lowercase"]]
@@ -8,12 +10,11 @@ Tirexs.DSL.create [name: "test_dsl_setting"], fn(index, elastic_settings) ->
       tokenizer "dot-tokenizer", [type: "path_hierarchy", delimiter: "."]
     end
 
-    cache max_size: -1
-
+    cache    max_size: -1
     translog disable_flush: false
-
-    set number_of_replicas: 3
-    blocks write: true
+    set      number_of_replicas: 3
+    blocks   write: true
   end
+
   [index, elastic_settings]
 end

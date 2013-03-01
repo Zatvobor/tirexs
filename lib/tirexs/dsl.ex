@@ -2,7 +2,7 @@ defmodule Tirexs.DSL do
   @moduledoc false
 
   @doc false
-  def create(settings, resource) do
+  def define(settings, resource) do
     index = Tirexs.init_index(settings)
     elastic_settings = Tirexs.ElasticSearch.Config.new()
 
@@ -12,14 +12,14 @@ defmodule Tirexs.DSL do
   end
 
   @doc false
-  def river(settings, river_settings) do
-    elastic_settings = Tirexs.ElasticSearch.Config.new()
-    river = Tirexs.River.init_river(settings)
-
-    case river_settings.(river, elastic_settings) do
-      [river, settings] -> Tirexs.create_river(settings, river)
-    end
-  end
+  # def river(settings, river_settings) do
+  #   elastic_settings = Tirexs.ElasticSearch.Config.new()
+  #   river = Tirexs.River.init_river(settings)
+  #
+  #   case river_settings.(river, elastic_settings) do
+  #     [river, settings] -> Tirexs.create_river(settings, river)
+  #   end
+  # end
 
 
   defp create_resource(type, settings) do
