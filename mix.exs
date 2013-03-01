@@ -3,20 +3,15 @@ defmodule Tirexs.Mixfile do
 
   def project do
     [ app: :tirexs,
-      version: "0.0.1",
+      version: "0.2.dev",
       deps: deps ]
   end
 
-  # Configuration for the OTP application
-  def application do
-    []
-  end
+  def application, do: []
 
-  # Returns the list of dependencies in the format:
-  # { :foobar, "0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
     [
-    {:jsonex, git: "git://github.com/devinus/jsonex.git"}
+      {:jsonex, git: "git://github.com/devinus/jsonex.git"}
     ]
   end
 end
