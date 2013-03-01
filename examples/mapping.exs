@@ -18,5 +18,5 @@ Tirexs.DSL.define [type: "dsl", name: "test_dsl_index"], fn(index, _elastic_sett
      indexes "rev_history_", type: "nested"
    end
 
-   [index, elastic_settings]
+   { index, elastic_settings }
 end

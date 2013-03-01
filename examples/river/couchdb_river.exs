@@ -25,5 +25,5 @@ Tirexs.DSL.define [name: "tets_river_dsl"], fn(river, elastic_settings) ->
 
   end
 
-  [river, elastic_settings]
+  { river, elastic_settings }
 end
