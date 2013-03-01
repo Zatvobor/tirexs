@@ -5,7 +5,6 @@ defmodule SettingsTest do
   import Tirexs
   import Tirexs.HTTP
   use Tirexs.Index.Settings
-  use Tirexs.ElasticSettings
 
   test :simpe_index_settings do
     index = init_index([name: "bear_test"])

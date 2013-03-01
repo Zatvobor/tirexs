@@ -3,7 +3,6 @@ defmodule Query.Bool.Test do
   use ExUnit.Case
   import Tirexs
   use Tirexs.Query
-  use Tirexs.ElasticSettings
 
   @url "labeled/track"
 

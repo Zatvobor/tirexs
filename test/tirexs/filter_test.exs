@@ -4,7 +4,6 @@ defmodule FiltersTest do
   import Tirexs
   use Tirexs.Filter
   use Tirexs.Query
-  use Tirexs.ElasticSettings
 
   test :filter do
     query = filter do

@@ -3,7 +3,6 @@ defmodule Query.Bool.DisMax.Test do
   use ExUnit.Case
   import Tirexs
   use Tirexs.Query
-  use Tirexs.ElasticSettings
 
   test :dis_max do
     query = query do

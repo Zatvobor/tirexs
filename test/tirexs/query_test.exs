@@ -3,7 +3,6 @@ defmodule QueryTest do
   use ExUnit.Case
   import Tirexs
   use Tirexs.Query
-  use Tirexs.ElasticSettings
 
   test :match_query do
     query = query do
