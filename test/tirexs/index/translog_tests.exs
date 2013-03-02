@@ -2,11 +2,10 @@ Code.require_file "../../../test_helper.exs", __FILE__
 
 defmodule TranslogTest do
   use ExUnit.Case
-  import Tirexs
   use Tirexs.Index.Settings
 
   test :blocks_settings do
-    index = init_index([name: "bear_test"])
+    index = [name: "bear_test"]
 
     settings do
       translog flush_threshold_ops: "",

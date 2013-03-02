@@ -31,5 +31,5 @@
                         'Elixir-Tirexs-Rescore-Helpers',
                         'Elixir-Tirexs-Rescore','Elixir-Tirexs-River-Couchdb',
                         'Elixir-Tirexs-River','Elixir-Tirexs-Search-Helpers',
-                        'Elixir-Tirexs-Search','Elixir-Tirexs']},
+                        'Elixir-Tirexs-Search']},
               {applications,[kernel,stdlib,elixir]}]}.

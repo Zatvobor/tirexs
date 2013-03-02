@@ -1,7 +1,6 @@
 Code.require_file "../../../test_helper.exs", __FILE__
 defmodule HighlightTest do
   use ExUnit.Case
-  import Tirexs
   import Tirexs.Search
 
   test :highlight do

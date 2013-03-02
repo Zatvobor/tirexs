@@ -3,7 +3,6 @@ Code.require_file "../../test_helper.exs", __FILE__
 defmodule ElasticSearchTest do
 
   use ExUnit.Case
-  import Tirexs
   use Tirexs.Mapping
   import Tirexs.ElasticSearch
 
@@ -48,7 +47,7 @@ defmodule ElasticSearchTest do
 
   test :create_type_mapping do
     settings = Tirexs.ElasticSearch.Config.new()
-    index = init_index([name: "bear_test", type: "bear_type"]) #important index varible are using in dsl!
+    index = [name: "bear_test", type: "bear_type"]
       mappings do
         indexes "mn_opts_", [type: "nested"] do
           indexes "uk", [type: "nested"] do

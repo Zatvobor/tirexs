@@ -1,7 +1,6 @@
 Code.require_file "../../test_helper.exs", __FILE__
 defmodule RescoreTest do
   use ExUnit.Case
-  import Tirexs
   use Tirexs.Rescore
 
   test :rescore do

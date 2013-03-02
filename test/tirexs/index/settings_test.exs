@@ -2,11 +2,10 @@ Code.require_file "../../../test_helper.exs", __FILE__
 
 defmodule SettingsTest do
   use ExUnit.Case
-  import Tirexs
   use Tirexs.Index.Settings
 
   test :simpe_index_settings do
-    index = init_index([name: "bear_test"])
+    index = [name: "bear_test"]
 
     settings do
 
@@ -24,7 +23,7 @@ defmodule SettingsTest do
   end
 
   test :set_settings do
-    index = init_index([name: "bear_test"])
+    index = [name: "bear_test"]
 
     settings do
       set number_of_replicas: 3,
@@ -35,7 +34,7 @@ defmodule SettingsTest do
   end
 
   test :real_settings do
-    index = init_index([name: "bear_test"])
+    index = [name: "bear_test"]
 
     settings do
       analysis do

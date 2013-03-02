@@ -2,11 +2,10 @@ Code.require_file "../../../test_helper.exs", __FILE__
 
 defmodule FilterTest do
   use ExUnit.Case
-  import Tirexs
   use Tirexs.Index.Settings
 
   test :filter_settings do
-    index = init_index([name: "bear_test"])
+    index = [name: "bear_test"]
 
     settings do
       analysis do

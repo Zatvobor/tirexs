@@ -1,7 +1,6 @@
 Code.require_file "../../../test_helper.exs", __FILE__
 defmodule Query.Bool.Boosting.Test do
   use ExUnit.Case
-  import Tirexs
   use Tirexs.Query
 
 

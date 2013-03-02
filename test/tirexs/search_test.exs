@@ -1,7 +1,6 @@
 Code.require_file "../../test_helper.exs", __FILE__
 defmodule SearchTest do
   use ExUnit.Case
-  import Tirexs
   use Tirexs.Search
 
   test :search_with_query_and_filter do

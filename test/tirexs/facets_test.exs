@@ -1,7 +1,6 @@
 Code.require_file "../../test_helper.exs", __FILE__
 defmodule FacetsTest do
   use ExUnit.Case
-  import Tirexs
   use Tirexs.Facets
 
   test :simple_facets_dsl do

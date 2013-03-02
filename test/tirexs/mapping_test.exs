@@ -3,11 +3,10 @@ Code.require_file "../../test_helper.exs", __FILE__
 defmodule MappingsTest do
   use ExUnit.Case
 
-  import Tirexs
   use Tirexs.Mapping
 
   test :simpe_dsl do
-    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = [name: "bear_test"]
     mappings do
       indexes "id", [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100],
                                                   exact: [type: "string", index: "not_analyzed"]]]
@@ -17,7 +16,7 @@ defmodule MappingsTest do
   end
 
   test :nested_two_level_index_dsl do
-    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = [name: "bear_test"]
     mappings do
       indexes "id", [type: "string", boost: 5, analizer: "good"]
       indexes "title", [type: "nested"] do
@@ -32,7 +31,7 @@ defmodule MappingsTest do
   end
 
   test :default_type do
-    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = [name: "bear_test"]
     mappings do
       indexes "id", [type: "string", boost: 5, analizer: "good"]
       indexes "title" do
@@ -47,7 +46,7 @@ defmodule MappingsTest do
   end
 
   test :nested_deep_index_dsl do
-    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = [name: "bear_test"]
     mappings do
       indexes "id", [type: "string", boost: 5]
       indexes "title", [type: "nested"] do
@@ -64,7 +63,7 @@ defmodule MappingsTest do
 
 
   test :real_simpe_example do
-    index = init_index([name: "bear_test"]) #important index varible are using in dsl!
+    index = [name: "bear_test"]
     mappings do
       indexes "mn_opts_", [type: "nested"] do
         indexes "uk", [type: "nested"] do
@@ -89,7 +88,7 @@ defmodule MappingsTest do
   end
 
   test :real_advance_exampe do
-      index = init_index([name: "bear_test"]) #important index varible are using in dsl!
+      index = [name: "bear_test"]
       mappings do
         indexes "mn_opts_", [type: "nested"] do
           indexes "uk", [type: "nested"] do

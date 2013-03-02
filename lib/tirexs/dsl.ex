@@ -5,12 +5,11 @@ defmodule Tirexs.DSL do
   """
 
   @doc false
-  def define(settings, resource) do
-    index = Tirexs.init_index(settings)
+  def define(type, resource) do
     elastic_settings = Tirexs.ElasticSearch.Config.new()
 
-    case resource.(index, elastic_settings) do
-      { index, settings } -> create_resource(index, settings)
+    case resource.(type, elastic_settings) do
+      { type, elastic_settings } -> create_resource(type, elastic_settings)
     end
   end
 
