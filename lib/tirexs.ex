@@ -4,34 +4,10 @@ defmodule Tirexs do
     type_name_list
   end
 
-  def put_mapping(settings, index) do
-    index_name = index[:name]
-    case index[:type] do
-      nil ->
-        url = "#{index_name}/_mapping"
-        Tirexs.ElasticSearch.put(url, get_json_mapping(index, index_name), settings)
-      type ->
-        create_index(settings, index_name)
-        url = "#{index_name}/#{index[:type]}/_mapping"
-        Tirexs.ElasticSearch.put(url, get_json_mapping(index, type), settings)
-    end
-  end
-
-  def get_json_mapping(index, name) do
-    json_dict = Dict.put([], name, index[:mapping])
-    JSON.encode(json_dict)
-  end
-
   def get_json_river(river) do
     river = Dict.delete(river, :name)
     river = Dict.delete(river, :river)
     JSON.encode(river)
-  end
-
-  def create_index(settings, url) do
-    unless Tirexs.ElasticSearch.exist?(url, settings) do
-      Tirexs.ElasticSearch.put(url, settings)
-    end
   end
 
   def create_river(settings, river) do

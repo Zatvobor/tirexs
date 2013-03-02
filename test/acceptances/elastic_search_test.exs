@@ -69,7 +69,7 @@ defmodule ElasticSearchTest do
         indexes "rev_history_", type: "nested"
       end
 
-    new_mapping = put_mapping(settings, index)
+    new_mapping = Tirexs.Mapping.create_resource(index, settings)
 
     body = ParserResponse.get_body_json(new_mapping)
     assert body["acknowledged"] == true

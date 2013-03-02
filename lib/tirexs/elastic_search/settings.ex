@@ -9,8 +9,8 @@ defmodule Tirexs.ElasticSearch.Settings do
     post(opts[:name], to_resource_json(definition), opts)
   end
 
-
-  defp to_resource_json(definition) do
+  @doc false
+  def to_resource_json(definition) do
     JSON.encode [settings: definition[:settings]]
   end
 end
