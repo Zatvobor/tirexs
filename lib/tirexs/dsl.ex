@@ -19,7 +19,7 @@ defmodule Tirexs.DSL do
     cond do
       type[:settings] -> Tirexs.ElasticSearch.Settings.create_resource(type, settings)
       type[:mapping]  -> Tirexs.Mapping.create_resource(type, settings)
-      type[:river]    -> Tirexs.create_river(settings, type)
+      type[:river]    -> Tirexs.River.create_resource(type, settings)
       type[:search]   -> Tirexs.do_search(settings, type)
     end
   end
