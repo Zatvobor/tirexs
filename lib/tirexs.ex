@@ -22,10 +22,6 @@ defmodule Tirexs do
     JSON.encode(json_dict)
   end
 
-  def get_json_settings(index) do
-    JSON.encode([settings: index[:settings]])
-  end
-
   def get_json_river(river) do
     river = Dict.delete(river, :name)
     river = Dict.delete(river, :river)
@@ -36,14 +32,6 @@ defmodule Tirexs do
     unless Tirexs.ElasticSearch.exist?(url, settings) do
       Tirexs.ElasticSearch.put(url, settings)
     end
-  end
-
-  def create_index_settings(settings, index) do
-    url = index[:name]
-    if Tirexs.ElasticSearch.exist?(url, settings) do
-      Tirexs.ElasticSearch.delete(url, settings)
-    end
-    Tirexs.ElasticSearch.post(url, get_json_settings(index), settings)
   end
 
   def create_river(settings, river) do

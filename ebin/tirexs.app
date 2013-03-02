@@ -4,6 +4,7 @@
               {vsn,"0.2.dev"},
               {modules,['Elixir-Mix-Tasks-Travis','Elixir-Tirexs-DSL',
                         'Elixir-Tirexs-ElasticSearch-Config',
+                        'Elixir-Tirexs-ElasticSearch-Settings',
                         'Elixir-Tirexs-ElasticSearch',
                         'Elixir-Tirexs-Facets-Helpers','Elixir-Tirexs-Facets',
                         'Elixir-Tirexs-Filter-Geo','Elixir-Tirexs-Filter',
