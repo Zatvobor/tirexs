@@ -17,6 +17,10 @@ defmodule Tirexs.Search do
     [search: extract(block) ++ options]
   end
 
+  def filters(params, opts) do
+    [filter: params]
+  end
+
   def highlight([do: block]) do
     [highlight: block]
   end

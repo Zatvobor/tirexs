@@ -29,6 +29,7 @@ defmodule Tirexs.Search.Helpers do
       {:script_fields, _, [params]} -> Tirexs.Search.script_fields(params)
       {:rescore, _, [params]}       -> Tirexs.Rescore._rescore(params[:do])
       {:rescore, _, options}        -> Tirexs.Rescore._rescore(options)
+      {:filters, _, [options]}      -> Tirexs.Search.filters(options, [])
     end
   end
 

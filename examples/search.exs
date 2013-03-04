@@ -1,7 +1,6 @@
 use Tirexs.Search
 
 Tirexs.DSL.define [name: "tets_index"], fn(_search, _elastic_settings) ->
-
   search = search do
     filter do
       nested [path: "dna"] do
