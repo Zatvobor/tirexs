@@ -25,6 +25,7 @@
                         'Elixir-Tirexs-Query-GeoShare',
                         'Elixir-Tirexs-Query-Helpers',
                         'Elixir-Tirexs-Query-Indeces',
+                        'Elixir-Tirexs-Query-Indices',
                         'Elixir-Tirexs-Query-SpanNear',
                         'Elixir-Tirexs-Query-SpanNot',
                         'Elixir-Tirexs-Query-Text','Elixir-Tirexs-Query',

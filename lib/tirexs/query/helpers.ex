@@ -77,7 +77,7 @@ defmodule Tirexs.Query.Helpers do
         {:top_children, _, [params]}          -> Tirexs.Query.top_children(params)
         {:top_children, _, options}           -> Tirexs.Query.top_children(options)
         {:wildcard, _, params}                -> Tirexs.Query.wildcard(params)
-        {:no_match_query, _, [params]}        -> Tirexs.Query.Indeces.no_match_query(params[:do])
+        {:no_match_query, _, [params]}        -> Tirexs.Query.Indices.no_match_query(params[:do])
         {:indices, _, [params]}               -> Tirexs.Query.indices(params[:do])
         {:indices, _, params}                 -> Tirexs.Query.indices(params)
         {:text, _, params}                    -> Tirexs.Query.text(params)
