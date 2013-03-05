@@ -5,12 +5,12 @@ defmodule FacetsTest do
 
   test :simple_facets_dsl do
     facets = facets do
-      tagFacet do
+      tagFacet [path: "nested"] do
         terms field: "tag", size: 10, order: "term"
       end
     end
 
-    assert facets == [facets: [tagFacet: [terms: [field: "tag", size: 10, order: "term"]]]]
+    assert facets == [facets: [tagFacet: [terms: [field: "tag", size: 10, order: "term"], path: "nested"]]]
   end
 
   test :multi_facets do
@@ -112,6 +112,19 @@ defmodule FacetsTest do
     end
 
     assert facets == [facets: [query: [term: [tag: "wow"]]]]
+  end
+
+  test :facet_filter do
+    facets = facets do
+      facet1 [nested: "obj"] do
+        terms_stats key_field: "name", value_field: "count"
+        facet_filter do
+          term "name", "blue"
+        end
+      end
+    end
+
+    assert facets == [facets: [facet1: [terms_stats: [key_field: "name", value_field: "count"], facet_filter: [term: [name: "blue"]], nested: "obj"]]]
   end
 
 end

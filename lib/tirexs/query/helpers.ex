@@ -111,6 +111,8 @@ defmodule Tirexs.Query.Helpers do
         {:nested, _, options}                 -> Tirexs.Query.nested(options)
         {:rescore_query, _, [params]}         -> Tirexs.Query.rescore_query(params[:do])
         {:rescore_query, _, options}          -> Tirexs.Query.rescore_query(options)
+        {:facet_filter, _, [params]}          -> Tirexs.Query.facet_filter(params[:do])
+        {:facet_filter, _, options}           -> Tirexs.Query.facet_filter(options)
         # {:custom_filters_score, _, [params]}  -> Tirexs.Query.custom_filters_score(params[:do])
         # {:custom_filters_score, _, options}   -> Tirexs.Query.custom_filters_score(options)
         # {:boost, _, params}                   -> Tirexs.Query.boost(params)

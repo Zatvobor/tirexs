@@ -57,6 +57,11 @@ defmodule Tirexs.Helpers do
   end
 
   def extract_do(block, position//0) do
-    Enum.at!(block, position)[:do]
+    element = Enum.at!(block, position)
+    if element[:do] != nil do
+      element[:do]
+    else
+      element
+    end
   end
 end

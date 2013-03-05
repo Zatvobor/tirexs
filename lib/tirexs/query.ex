@@ -274,12 +274,21 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def rescore_query(options, nested_opts//[]) do
+  def rescore_query(options, rescore_opts//[]) do
     if is_list(options) do
-      nested_opts = Enum.at!(options, 0)
+      rescore_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [rescore_query: extract(options) ++ nested_opts]
+    [rescore_query: extract(options) ++ rescore_opts]
+  end
+
+  @doc false
+  def facet_filter(options, facet_opts//[]) do
+    if is_list(options) do
+      facet_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [facet_filter: extract(options) ++ facet_opts]
   end
 
   # def custom_filters_score(options, custom_filters_score_opts//[]) do
