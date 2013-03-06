@@ -1,21 +1,8 @@
 defmodule Tirexs.Facets.Helpers do
   import Tirexs.Helpers
+  use Tirexs.Helpers
 
-  def extract(block) do
-    extract(get_clear_block(block), [])
-  end
-
-  defp extract([], acc) do
-    acc
-  end
-
-  defp extract([h|t], acc) do
-    extract(get_clear_block(t), acc ++ routers(h))
-  end
-
-  defp extract(item, acc) do
-    acc ++ routers(item)
-  end
+  defoverridable [routers: 1]
 
   defp routers(block) do
     case block do

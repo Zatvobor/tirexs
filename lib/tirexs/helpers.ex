@@ -1,4 +1,27 @@
 defmodule Tirexs.Helpers do
+  defmacro __using__(_) do
+    quote do
+      def extract(block) do
+        extract(get_clear_block(block), [])
+      end
+
+      defp extract([], acc) do
+        acc
+      end
+
+      defp extract([h|t], acc) do
+        extract(get_clear_block(t), acc ++ routers(h))
+      end
+
+      defp extract(item, acc) do
+        acc ++ routers(item)
+      end
+
+      defp routers(item) do
+        item
+      end
+    end
+  end
 
   def to_atom(value) when is_atom(value) do
     value
@@ -64,4 +87,5 @@ defmodule Tirexs.Helpers do
       element
     end
   end
+
 end
