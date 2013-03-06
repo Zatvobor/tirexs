@@ -68,7 +68,7 @@ defmodule Tirexs.ElasticSearch do
         else
           case body do
             [] -> [:ok, status, []]
-            _ -> [:ok, status, from_json(body)]
+            _  -> [:ok, status, from_json(body)]
           end
         end
       _ -> :error
