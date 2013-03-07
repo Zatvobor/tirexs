@@ -5,10 +5,10 @@ defmodule Tirexs.Query.Bool do
   import Tirexs.Helpers
 
   defmacro __using__(_) do
-      quote do
-        import unquote(Tirexs.Query.Bool)
-      end
+    quote do
+      import unquote(Tirexs.Query.Bool)
     end
+  end
 
   def bool(block) do
     [bool: extract(block)]
