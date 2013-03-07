@@ -1,5 +1,5 @@
 Code.require_file "../../test_helper.exs", __FILE__
-defmodule ManageTest do
+defmodule AliasesTest do
   use ExUnit.Case
   import Tirexs.Manage
   use Tirexs.Filter
