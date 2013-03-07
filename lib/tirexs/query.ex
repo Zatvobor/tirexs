@@ -311,9 +311,9 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def group(options, object_opts//[]) do
+  def group(options, _object_opts//[]) do
     if is_list(options) do
-      object_opts = Enum.at!(options, 0)
+      _object_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
     [extract(options)]

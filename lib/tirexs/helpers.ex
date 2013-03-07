@@ -92,4 +92,14 @@ defmodule Tirexs.Helpers do
     Enum.first Dict.keys(dict)
   end
 
+  def to_param([], acc) do
+    String.replace(acc, "&", "?", global: false)
+  end
+
+  def to_param([h|t], acc) do
+    {param, value} = h
+    acc = acc <> "&#{param}=#{value}"
+    to_param(t, acc)
+  end
+
 end

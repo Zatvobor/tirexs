@@ -120,7 +120,7 @@ defmodule Tirexs.Query.Helpers do
     without_array(t, acc)
   end
 
-  def without_array(array, acc) do
+  def without_array(_array, acc) do
     acc
   end
 

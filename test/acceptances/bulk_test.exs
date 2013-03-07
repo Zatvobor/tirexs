@@ -8,7 +8,7 @@ defmodule BulkTest do
     settings = Tirexs.ElasticSearch.Config.new()
     Tirexs.ElasticSearch.delete("bear_test", settings)
 
-    Tirexs.Bulk.define [index: "bear_test", refresh: false], settings do
+    Tirexs.Bulk.store [index: "bear_test", refresh: false], settings do
       create id: 1, title: "bar1", description: "foo bar test"
       create id: 2, title: "bar2", description: "foo bar test"
       create id: 3, title: "bar3", description: "foo bar test"
@@ -30,4 +30,5 @@ defmodule BulkTest do
 
     Tirexs.ElasticSearch.delete("bear_test", settings)
   end
+
 end

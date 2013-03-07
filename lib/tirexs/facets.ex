@@ -56,7 +56,7 @@ defmodule Tirexs.Facets do
     [geo_distance: options]
   end
 
-  defp routers(name, options, add_options//[]) do
+  defp routers(name, options, add_options) do
     case options do
       {:filter, _, [params]}        -> Tirexs.Filter._filter(params[:do])
       {:query, _, [params]}         -> Tirexs.Query._query(params[:do])
