@@ -21,11 +21,11 @@ defmodule ManageTest do
 
     aliases = Tirexs.Manage.aliases do
       add index: "bear_test", alias: "my_alias1"
-      add index: "bear_test", alias: "my_alias2", filter: filter
+      add [index: "bear_test", alias: "my_alias2"] ++ filter
       remove index: "bear_test", alias: "my_alias1"
     end
 
-    assert aliases == [actions: [[add: [index: "bear_test", alias: "my_alias1"]],[add: [filter: [term: [user: "kimchy"]], index: "bear_test", alias: "my_alias2"]],[remove: [index: "bear_test", alias: "my_alias1"]]]]
+    assert aliases == [actions: [[add: [index: "bear_test", alias: "my_alias1"]],[add: [index: "bear_test", alias: "my_alias2", filter: [term: [user: "kimchy"]]]],[remove: [index: "bear_test", alias: "my_alias1"]]]]
 
     #create aliases
     # settings = Tirexs.ElasticSearch.Config.new()

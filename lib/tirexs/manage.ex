@@ -11,9 +11,6 @@ defmodule Tirexs.Manage do
   end
 
   def add(options) do
-    unless options[:filter] == nil do
-      options = Dict.put(options, :filter, options[:filter][:filter])
-    end
     [add: options]
   end
 
