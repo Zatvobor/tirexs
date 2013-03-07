@@ -1,21 +1,9 @@
 defmodule Tirexs.Search.Helpers do
   import Tirexs.Helpers
 
-  def extract(block) do
-    extract(get_clear_block(block), [])
-  end
+  use Tirexs.Helpers
 
-  defp extract([], acc) do
-    acc
-  end
-
-  defp extract([h|t], acc) do
-    extract(get_clear_block(t), acc ++ routers(h))
-  end
-
-  defp extract(item, acc) do
-    acc ++ routers(item)
-  end
+  defoverridable [routers: 1]
 
   defp routers(block) do
     case block do
@@ -29,6 +17,7 @@ defmodule Tirexs.Search.Helpers do
       {:script_fields, _, [params]} -> Tirexs.Search.script_fields(params)
       {:rescore, _, [params]}       -> Tirexs.Rescore._rescore(params[:do])
       {:rescore, _, options}        -> Tirexs.Rescore._rescore(options)
+      {:filters, _, [options]}      -> Tirexs.Search.filters(options, [])
     end
   end
 

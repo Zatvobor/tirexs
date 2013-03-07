@@ -16,8 +16,12 @@ defmodule Tirexs.Facets do
     [facets: extract(block)]
   end
 
-  def make_facet(name, options) do
-    routers(name, options)
+  def make_facet(name, options, facet_opts//[]) do
+    if is_list(options) do
+      facet_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    routers(name, options, facet_opts)
   end
 
   def terms(options) do
@@ -52,11 +56,11 @@ defmodule Tirexs.Facets do
     [geo_distance: options]
   end
 
-  defp routers(name, options) do
-    case options[:do] do
-      {:filter, _, [params]} -> Tirexs.Filter._filter(params[:do])
-      {:query, _, [params]} -> Tirexs.Query._query(params[:do])
-      options -> Dict.put([], to_atom(name), options)
+  defp routers(name, options, add_options//[]) do
+    case options do
+      {:filter, _, [params]}        -> Tirexs.Filter._filter(params[:do])
+      {:query, _, [params]}         -> Tirexs.Query._query(params[:do])
+      options                       -> Dict.put([], to_atom(name), extract(options) ++ add_options)
     end
   end
 

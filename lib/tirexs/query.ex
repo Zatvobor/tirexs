@@ -274,34 +274,50 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def rescore_query(options, nested_opts//[]) do
+  def rescore_query(options, rescore_opts//[]) do
     if is_list(options) do
-      nested_opts = Enum.at!(options, 0)
+      rescore_opts = Enum.at!(options, 0)
       options = extract_do(options, 1)
     end
-    [rescore_query: extract(options) ++ nested_opts]
+    [rescore_query: extract(options) ++ rescore_opts]
   end
 
-  # def custom_filters_score(options, custom_filters_score_opts//[]) do
-  #   if is_list(options) do
-  #     custom_filters_score_opts = Enum.at!(options, 0)
-  #     options = extract_do(options, 1)
-  #   end
-  #   [custom_filters_score: scoped_query(options) ++ custom_filters_score_opts]
-  # end
-  #
-  # def boost(options) do
-  #   [value, _, _] = extract_options(options)
-  #   [boost: value]
-  # end
-  #
-  # def object(options, object_opts//[]) do
-  #   if is_list(options) do
-  #     object_opts = Enum.at!(options, 0)
-  #     options = extract_do(options, 1)
-  #   end
-  #   scoped_query(options) ++ object_opts
-  # end
+  @doc false
+  def facet_filter(options, facet_opts//[]) do
+    if is_list(options) do
+      facet_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [facet_filter: extract(options) ++ facet_opts]
+  end
+
+  @doc false
+  def custom_filters_score(options, custom_filters_score_opts//[]) do
+    if is_list(options) do
+      custom_filters_score_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    custom_filters_score = extract(options) ++ custom_filters_score_opts
+    query = [query: custom_filters_score[:query]]
+    filters = custom_filters_score[:filters]
+    query = Dict.put(query, :filters, without_array(filters, []))
+    [custom_filters_score: query ++ custom_filters_score_opts]
+  end
+
+  @doc false
+  def boost(options) do
+    [value, _, _] = extract_options(options)
+    [boost: value]
+  end
+
+  @doc false
+  def group(options, object_opts//[]) do
+    if is_list(options) do
+      object_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [extract(options)]
+  end
 
   @doc false
   def create_resource(definition, opts) do

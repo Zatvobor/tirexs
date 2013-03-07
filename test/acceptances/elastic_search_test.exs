@@ -13,7 +13,7 @@ defmodule ElasticSearchTest do
 
     assert body == :error
 
-    body = get("/", settings)
+    body = get("", settings)
     body = ParserResponse.get_body_json(body)
 
     assert body["tagline"] == "You Know, for Search"
@@ -26,6 +26,7 @@ defmodule ElasticSearchTest do
     new_index = put("bear_test", settings)
     body = ParserResponse.get_body_json(new_index)
     assert body["acknowledged"] == true
+    delete("bear_test", settings)
   end
 
   test :delete_index do

@@ -1,22 +1,9 @@
 defmodule Tirexs.Query.Helpers do
 
   import Tirexs.Helpers
+  use Tirexs.Helpers
 
-  def extract(block) do
-    extract(get_clear_block(block), [])
-  end
-
-  defp extract([], acc) do
-    acc
-  end
-
-  defp extract([h|t], acc) do
-    extract(get_clear_block(t), acc ++ routers(h))
-  end
-
-  defp extract(item, acc) do
-    acc ++ routers(item)
-  end
+  defoverridable [routers: 1]
 
   defp routers(block) do
       case block do
@@ -111,14 +98,30 @@ defmodule Tirexs.Query.Helpers do
         {:nested, _, options}                 -> Tirexs.Query.nested(options)
         {:rescore_query, _, [params]}         -> Tirexs.Query.rescore_query(params[:do])
         {:rescore_query, _, options}          -> Tirexs.Query.rescore_query(options)
-        # {:custom_filters_score, _, [params]}  -> Tirexs.Query.custom_filters_score(params[:do])
-        # {:custom_filters_score, _, options}   -> Tirexs.Query.custom_filters_score(options)
-        # {:boost, _, params}                   -> Tirexs.Query.boost(params)
-        # {:object, _, [params]}                -> Tirexs.Query.object(params[:do])
-        # {:object, _, options}                -> Tirexs.Query.object(options)
+        {:facet_filter, _, [params]}          -> Tirexs.Query.facet_filter(params[:do])
+        {:facet_filter, _, options}           -> Tirexs.Query.facet_filter(options)
+        {:custom_filters_score, _, [params]}  -> Tirexs.Query.custom_filters_score(params[:do])
+        {:custom_filters_score, _, options}   -> Tirexs.Query.custom_filters_score(options)
+        {:boost, _, params}                   -> Tirexs.Query.boost(params)
+        {:group, _, [params]}                 -> Tirexs.Query.group(params[:do])
+        {:group, _, options}                  -> Tirexs.Query.group(options)
 
         _ -> IO.puts inspect(block)
       end
+  end
+
+
+  def without_array([], acc) do
+    acc
+  end
+
+  def without_array([h|t], acc) do
+    acc = acc ++ [Enum.first h]
+    without_array(t, acc)
+  end
+
+  def without_array(array, acc) do
+    acc
   end
 
 end
