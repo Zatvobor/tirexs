@@ -88,4 +88,8 @@ defmodule Tirexs.Helpers do
     end
   end
 
+  def key(dict) do
+    Enum.first Dict.keys(dict)
+  end
+
 end
