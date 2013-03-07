@@ -30,7 +30,7 @@ defmodule Tirexs.Bulk do
     payload = Enum.map documents, fn(document) ->
       action = key(document)
       document = document[action]
-      type = get_type_from_document(document) || "document"
+      type = get_type_from_document(document)
       id   = get_id_from_document(document)
       header = [_index: index, _type: type, _id: id ]
       [document, meta] = meta([:_version, :_routing, :_percolate, :_parent, :_timestamp, :_ttl], document, header)
@@ -59,7 +59,5 @@ defmodule Tirexs.Bulk do
     end
     meta(t, document, acc)
   end
-
-
 
 end

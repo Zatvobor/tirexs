@@ -8,6 +8,6 @@ defmodule Tirexs.Bulk.Helpers do
   end
 
   def get_type_from_document(document) do
-    document[:_type] || document["_type"] || document[:type] || document["type"]
+    document[:_type] || document["_type"] || document[:type] || document["type"] || "document"
   end
 end
