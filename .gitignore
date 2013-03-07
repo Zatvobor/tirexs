@@ -1,4 +1,5 @@
 ebin/*.beam
+ebin/tirexs.app
 /deps
 erl_crash.dump
 local_mapping/
