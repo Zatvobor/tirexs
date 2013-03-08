@@ -76,12 +76,7 @@ defmodule Tirexs.ElasticSearch do
   end
 
   def get_body_json(body) do
-    body = JSON.decode(to_binary(body))
-    case body do
-      [:ok, _, body] -> body
-      [:error, _status,  message] -> message
-      _ -> body
-    end
+    JSON.decode(to_binary(body))
   end
 
   defp make_headers, do: [{'Content-Type', 'application/json'}]
