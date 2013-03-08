@@ -2,7 +2,6 @@ Code.require_file "../../test_helper.exs", __FILE__
 defmodule BulkTest do
   use ExUnit.Case
   import Tirexs.Bulk
-  import ParserResponse
 
   test :create do
     settings = Tirexs.ElasticSearch.Config.new()
@@ -25,7 +24,7 @@ defmodule BulkTest do
     end
 
     :timer.sleep(2_000)
-    body = get_body_json(Tirexs.ElasticSearch.get("bear_test/_count", settings))
+    [_, _, body] = Tirexs.ElasticSearch.get("bear_test/_count", settings)
     assert body["count"] == 11
 
     Tirexs.ElasticSearch.delete("bear_test", settings)

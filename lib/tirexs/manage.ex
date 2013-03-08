@@ -1,21 +1,7 @@
 defmodule Tirexs.Manage do
-  import Tirexs.Helpers
+  import Tirexs.Manage.Aliases
 
-  defmacro aliases([do: block]) do
-    actions = get_clear_block(block)
-    if is_tuple(actions) do
-      [actions: [actions]]
-    else
-      [actions: actions]
-    end
+  def count(options) do
+    Tirexsl.ElasticSearch.post("_count", options)
   end
-
-  def add(options) do
-    [add: options]
-  end
-
-  def remove(options) do
-    [remove: options]
-  end
-
 end

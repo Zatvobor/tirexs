@@ -9,12 +9,11 @@ defmodule ElasticSearchTest do
 
   test :get_elastic_search_server do
     settings = Tirexs.ElasticSearch.Config.new()
-    [body, _, _] = get("missing_index", settings)
+    [status, _, _] = get("missing_index", settings)
 
-    assert body == :error
+    assert status == :error
 
-    body = get("", settings)
-    body = ParserResponse.get_body_json(body)
+    [_, _, body] = get("", settings)
 
     assert body["tagline"] == "You Know, for Search"
 
@@ -23,8 +22,7 @@ defmodule ElasticSearchTest do
   test :create_index do
     settings = Tirexs.ElasticSearch.Config.new()
     delete("bear_test", settings)
-    new_index = put("bear_test", settings)
-    body = ParserResponse.get_body_json(new_index)
+    [_, _, body] = put("bear_test", settings)
     assert body["acknowledged"] == true
     delete("bear_test", settings)
   end
@@ -32,8 +30,7 @@ defmodule ElasticSearchTest do
   test :delete_index do
     settings = Tirexs.ElasticSearch.Config.new()
     put("bear_test", settings)
-    deleted_index = delete("bear_test", settings)
-    body = ParserResponse.get_body_json(deleted_index)
+    [_, _, body] = delete("bear_test", settings)
     assert body["acknowledged"] == true
   end
 
@@ -69,9 +66,8 @@ defmodule ElasticSearchTest do
         indexes "rev_history_", type: "nested"
       end
 
-    new_mapping = Tirexs.Mapping.create_resource(index, settings)
+    [_, _, body] = Tirexs.Mapping.create_resource(index, settings)
 
-    body = ParserResponse.get_body_json(new_mapping)
     assert body["acknowledged"] == true
 
     delete("bear_test", settings)

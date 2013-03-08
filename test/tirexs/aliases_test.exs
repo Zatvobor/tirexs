@@ -1,12 +1,12 @@
 Code.require_file "../../test_helper.exs", __FILE__
 defmodule AliasesTest do
   use ExUnit.Case
-  import Tirexs.Manage
+  import Tirexs.Manage.Aliases
   use Tirexs.Filter
 
 
   test :singl_alias do
-    aliases = Tirexs.Manage.aliases do
+    aliases = aliases do
       add index: "bear_test", alias: "my_alias1"
     end
 
@@ -19,7 +19,7 @@ defmodule AliasesTest do
       term "user", "kimchy"
     end
 
-    aliases = Tirexs.Manage.aliases do
+    aliases = aliases do
       add index: "bear_test", alias: "my_alias1"
       add [index: "bear_test", alias: "my_alias2"] ++ filter
       remove index: "bear_test", alias: "my_alias1"
