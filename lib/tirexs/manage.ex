@@ -12,12 +12,19 @@ defmodule Tirexs.Manage do
     Tirexs.ElasticSearch.delete(make_url("_query", options), settings)
   end
 
+  def more_like_this(options, settings) do
+    Tirexs.ElasticSearch.get(make_url("_mlt", options), settings)
+  end
+
   defp make_url(method, options) do
     index = options[:index] <> "/"
     if options[:type] do
       index = index <> options[:type] <> "/"
     end
-    options = delete_options([:filter, :query, :index, :type], options)
+    if options[:id] do
+      index = index <> to_binary(options[:id]) <> "/"
+    end
+    options = delete_options([:filter, :query, :index, :type, :id], options)
     index <> method <> to_param(options, "")
   end
 
