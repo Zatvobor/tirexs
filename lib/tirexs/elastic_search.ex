@@ -20,7 +20,11 @@ defmodule Tirexs.ElasticSearch do
   end
 
   @doc false
-  def delete(query_url, config) do
+  def delete(query_url, config), do: delete(query_url, [], config)
+
+  @doc false
+  def delete(query_url, body, config) do
+    unless body == [], do: body = to_binary(body)
     do_request(make_url(query_url, config), :delete)
   end
 
@@ -55,7 +59,7 @@ defmodule Tirexs.ElasticSearch do
       :head -> response(:httpc.request(method, {url, []}, [], []))
       :put -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
       :post -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
-      :delete -> response(:httpc.request(method, {url, [make_headers]}, [], []))
+      :delete -> response(:httpc.request(method, {url, make_headers},[],[]))
     end
   end
 

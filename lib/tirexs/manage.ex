@@ -6,6 +6,12 @@ defmodule Tirexs.Manage do
     Tirexs.ElasticSearch.post(make_url("_count", options), body, settings)
   end
 
+  def delete_by_query(options, settings) do
+    _body = JSON.encode(options[:filter] || options[:query] || [])
+    #To do add DELETE with body
+    Tirexs.ElasticSearch.delete(make_url("_query", options), settings)
+  end
+
   defp make_url(method, options) do
     index = options[:index] <> "/"
     if options[:type] do

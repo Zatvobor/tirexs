@@ -6,7 +6,10 @@ defmodule Tirexs.ManageTest do
   import Tirexs.ElasticSearch
   import Tirexs.Manage
 
+  import Tirexs.Bulk
+
   use Tirexs.Query
+  use Tirexs.Mapping
 
   @settings Tirexs.ElasticSearch.Config.new()
 
@@ -26,5 +29,39 @@ defmodule Tirexs.ManageTest do
     [_, _, body] = Tirexs.Manage.count([index: "bear_test"] ++ query, @settings)
     assert body["count"] == 0
     delete("bear_test", @settings)
+  end
+
+  test :delete_by_query do
+    delete("bear_test", @settings)
+    index = [name: "bear_test"]
+    mappings do
+      index "id", type: "integer"
+      index "name", type: "string"
+    end
+    Tirexs.Mapping.create_resource(index, @settings)
+    Tirexs.Bulk.store [index: "bear_test", refresh: false], @settings do
+      create id: 1, name: "bar1", description: "foo bar test"
+      create id: 2, name: "bar2", description: "foo bar test"
+    end
+    :timer.sleep(2_000)
+    [_, _, body] = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
+
+    assert body["count"] == 2
+
+    query = query do
+      term "id", 1
+    end
+
+    Tirexs.Manage.delete_by_query([index: "bear_test", q: "id:1"] ++ query, @settings)
+    [_, _, body] = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
+    assert body["count"] == 1
+
+    delete("bear_test", @settings)
+    # curl localhost:9200/bear_test/_search -d'{
+    #   "query": {
+    #     "term":{ "id": 1}
+    #   }
+    # }'
+
   end
 end

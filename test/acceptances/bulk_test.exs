@@ -27,7 +27,6 @@ defmodule BulkTest do
     [_, _, body] = Tirexs.ElasticSearch.get("bear_test/_count", settings)
     assert body["count"] == 11
 
-    Tirexs.ElasticSearch.delete("bear_test", settings)
   end
 
 end
