@@ -77,7 +77,7 @@ defmodule Tirexs.ManageTest do
     assert body["hits"]["hits"] == []
   end
 
-  test :validate do
+  test :validate_and_explain do
     delete("bear_test", @settings)
     put("bear_test/my_type", @settings)
     doc = [user: "kimchy", post_date: "2009-11-15T14:12:12", message: "trying out Elastic Search"]
@@ -100,7 +100,12 @@ defmodule Tirexs.ManageTest do
 
     [_, _, body] = Tirexs.Manage.validate([index: "bear_test", q: "user:foo"], @settings)
 
-    assert body["valid"] == false
+    assert body["valid"] == true
+
+    [_, _, body] = Tirexs.Manage.explain([index: "bear_test", type: "my_type", id: 1, q: "message:search"], @settings)
+    body = JSON.decode(to_binary(body)) 
+    assert body["matched"] == false
+
     delete("bear_test", @settings)
   end
 
