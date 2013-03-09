@@ -76,4 +76,32 @@ defmodule Tirexs.ManageTest do
     [_, _, body] = Tirexs.Manage.more_like_this([id: 1, type: "my_type", index: "bear_test", mlt_fields: "name,description", min_term_freq: 1], @settings)
     assert body["hits"]["hits"] == []
   end
+
+  test :validate do
+    delete("bear_test", @settings)
+    put("bear_test/my_type", @settings)
+    doc = [user: "kimchy", post_date: "2009-11-15T14:12:12", message: "trying out Elastic Search"]
+    put("bear_test/my_type/1", JSON.encode(doc), @settings)
+
+    query = query do
+      filtered do
+        query do
+          query_string "*:*"
+        end
+        filter do
+          term "user", "kimchy"
+        end
+      end
+    end
+
+    [_, _, body] = Tirexs.Manage.validate([index: "bear_test"] ++ query, @settings)
+
+    assert body["valid"] == true
+
+    [_, _, body] = Tirexs.Manage.validate([index: "bear_test", q: "user:foo"], @settings)
+
+    assert body["valid"] == false
+    delete("bear_test", @settings)
+  end
+
 end

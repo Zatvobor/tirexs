@@ -16,6 +16,15 @@ defmodule Tirexs.Manage do
     Tirexs.ElasticSearch.get(make_url("_mlt", options), settings)
   end
 
+  def validate(options, settings) do
+    body = JSON.encode(options[:filter] || options[:query] || [])
+    if body == "" do
+      Tirexs.ElasticSearch.get(make_url("_validate/query", options), settings)
+    else
+      Tirexs.ElasticSearch.post(make_url("_validate/query", options), body, settings)
+    end
+  end
+
   defp make_url(method, options) do
     index = options[:index] <> "/"
     if options[:type] do
