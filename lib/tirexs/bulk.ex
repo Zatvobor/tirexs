@@ -45,7 +45,7 @@ defmodule Tirexs.Bulk do
     end
     payload = payload ++ [""]
     payload = Enum.join(payload, "\n")
-    Tirexs.ElasticSearch.post("_bulk#{to_param(options, "")}", payload, settings)
+    Tirexs.ElasticSearch.post("_bulk" <> to_param(options, ""), payload, settings)
   end
 
   def meta([], document, acc) do

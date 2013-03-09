@@ -47,23 +47,23 @@ defmodule ElasticSearchTest do
     settings = Tirexs.ElasticSearch.Config.new()
     index = [name: "bear_test", type: "bear_type"]
       mappings do
-        indexes "mn_opts_", [type: "nested"] do
-          indexes "uk", [type: "nested"] do
-            indexes "credentials", [type: "nested"] do
+        indexes "mn_opts_", [type: "object"] do
+          indexes "uk", [type: "object"] do
+            indexes "credentials", [type: "object"] do
               indexes "available_from", type: "long"
-              indexes "buy", type: "nested"
-              indexes "dld", type: "nested"
-              indexes "str", type: "nested"
-              indexes "t2p", type: "nested"
-              indexes "sby", type: "nested"
-              indexes "spl", type: "nested"
-              indexes "spd", type: "nested"
-              indexes "pre", type: "nested"
-              indexes "fst", type: "nested"
+              indexes "buy", type: "object"
+              indexes "dld", type: "object"
+              indexes "str", type: "object"
+              indexes "t2p", type: "object"
+              indexes "sby", type: "object"
+              indexes "spl", type: "object"
+              indexes "spd", type: "object"
+              indexes "pre", type: "object"
+              indexes "fst", type: "object"
             end
           end
         end
-        indexes "rev_history_", type: "nested"
+        indexes "rev_history_", type: "object"
       end
 
     [_, _, body] = Tirexs.Mapping.create_resource(index, settings)

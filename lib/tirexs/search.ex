@@ -5,7 +5,6 @@ defmodule Tirexs.Search do
   defmacro __using__(_) do
     quote do
       import unquote(Tirexs.Search)
-      import unquote(Tirexs.Facets)
     end
   end
 
@@ -17,7 +16,7 @@ defmodule Tirexs.Search do
     [search: extract(block) ++ options]
   end
 
-  def filters(params, opts) do
+  def filters(params, _opts) do
     [filter: params]
   end
 
