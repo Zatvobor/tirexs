@@ -29,6 +29,10 @@ defmodule Tirexs.Manage do
     Tirexs.ElasticSearch.get(make_url("_explain", options), settings)
   end
 
+  def update(options, update_params, settings) do
+    Tirexs.ElasticSearch.post(make_url("_update", options), JSON.encode(update_params), settings)
+  end
+
   defp make_url(method, options) do
     index = options[:index] <> "/"
     if options[:type] do
