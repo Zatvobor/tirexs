@@ -1,7 +1,7 @@
 Code.require_file "../../../test_helper.exs", __FILE__
 defmodule Query.Bool.Test do
   use ExUnit.Case
-  use Tirexs.Query
+  import Tirexs.Query
 
   @url "labeled/track"
 

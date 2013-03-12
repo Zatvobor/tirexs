@@ -2,12 +2,6 @@ defmodule Tirexs.Search do
 
   import Tirexs.Search.Helpers
 
-  defmacro __using__(_) do
-    quote do
-      import unquote(Tirexs.Search)
-    end
-  end
-
   defmacro search([do: block]) do
     [search: extract(block)]
   end

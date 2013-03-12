@@ -8,7 +8,7 @@ defmodule Tirexs.ManageTest do
 
   import Tirexs.Bulk
 
-  use Tirexs.Query
+  import Tirexs.Query
   use Tirexs.Mapping
 
   @settings Tirexs.ElasticSearch.Config.new()

@@ -40,7 +40,7 @@ defmodule Tirexs.Manage do
     Enum.each Dict.keys(warmers), fn(key) ->
       url = make_url(to_binary(key), options)
       body = JSON.encode(warmers[key][:source])
-      Tirexs.ElasticSearch.put(url, settings)
+      Tirexs.ElasticSearch.put(url, body, settings)
     end
   end
 

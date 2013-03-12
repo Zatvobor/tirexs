@@ -1,10 +1,10 @@
 Code.require_file "../../test_helper.exs", __FILE__
 defmodule SearchTest do
   use ExUnit.Case
-  use Tirexs.Search
+  import Tirexs.Search
 
   test :search_with_query_and_filter do
-    search = search do
+    search = Tirexs.Search.search do
       query do
         term "tag", "wow"
       end

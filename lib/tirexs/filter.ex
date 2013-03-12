@@ -3,12 +3,6 @@ defmodule Tirexs.Filter do
   import Tirexs.Query.Helpers
   import Tirexs.Helpers
 
-  defmacro __using__(_) do
-    quote do
-      import unquote(Tirexs.Filter)
-    end
-  end
-
   defmacro filter([do: block]) do
     [filter: extract(block)]
   end

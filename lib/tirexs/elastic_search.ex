@@ -23,8 +23,8 @@ defmodule Tirexs.ElasticSearch do
   def delete(query_url, config), do: delete(query_url, [], config)
 
   @doc false
-  def delete(query_url, body, config) do
-    unless body == [], do: body = to_binary(body)
+  def delete(query_url, _body, config) do
+    unless _body == [], do: _body = to_binary(_body)
     do_request(make_url(query_url, config), :delete)
   end
 

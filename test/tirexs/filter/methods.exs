@@ -1,9 +1,9 @@
 Code.require_file "../../../test_helper.exs", __FILE__
 defmodule Filter.Methods.Test do
   use ExUnit.Case
-  use Tirexs.Filter
+  import Tirexs.Filter
   import Tirexs.Filter.Methods
-  use Tirexs.Search
+  import Tirexs.Search
 
   test :join do
     filters = []

@@ -1,7 +1,7 @@
 Code.require_file "../../test_helper.exs", __FILE__
 defmodule QueryTest do
   use ExUnit.Case
-  use Tirexs.Query
+  import Tirexs.Query
   import Tirexs.Query.Helpers
 
   test :match_query do

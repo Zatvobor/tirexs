@@ -1,7 +1,7 @@
 Code.require_file "../../../test_helper.exs", __FILE__
 defmodule SortTest do
   use ExUnit.Case
-  use Tirexs.Search
+  import Tirexs.Search
 
   test :sort_list do
     sort = sort do

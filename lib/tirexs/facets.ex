@@ -2,12 +2,6 @@ defmodule Tirexs.Facets do
   import Tirexs.Helpers
   import Tirexs.Facets.Helpers
 
-  defmacro __using__(_) do
-    quote do
-      import unquote(Tirexs.Facets)
-    end
-  end
-
   defmacro facets([do: block]) do
     [facets: extract(block)]
   end

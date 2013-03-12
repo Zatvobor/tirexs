@@ -2,12 +2,6 @@ defmodule Tirexs.Rescore do
   import Tirexs.Helpers
   import Tirexs.Rescore.Helpers
 
-  defmacro __using__(_) do
-    quote do
-      import unquote(Tirexs.Rescore)
-    end
-  end
-
   defmacro rescore([do: block]) do
     [rescore: extract(block)]
   end

@@ -1,8 +1,8 @@
 Code.require_file "../../test_helper.exs", __FILE__
 defmodule FiltersTest do
   use ExUnit.Case
-  use Tirexs.Filter
-  use Tirexs.Query
+  import Tirexs.Filter
+  import Tirexs.Query
 
   test :filter do
     query = filter do
@@ -403,8 +403,6 @@ defmodule FiltersTest do
     end
 
     assert query == [query: [filtered: [query: [term: ["name.first": "shay"]], filter: [or: [filters: [[range: [postDate: [from: "2010-03-01", to: "2010-04-01"]]],[prefix: ["name.second": "ba"]]], _cache: true]]]]]
-    # settings = elastic_settings.new([uri: "localhost"])
-    # IO.puts inspect(do_query(settings, "top_club_places", query))
   end
 
 
