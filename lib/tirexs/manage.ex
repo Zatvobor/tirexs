@@ -33,6 +33,17 @@ defmodule Tirexs.Manage do
     Tirexs.ElasticSearch.post(make_url("_update", options), JSON.encode(update_params), settings)
   end
 
+  def create(:warmer, options, settings) do
+    options = options ++ [warmer: true]
+    warmers = options[:warmers]
+    Tirexs.ElasticSearch.put("bear_test/_warmer/warmer_1", settings)
+    Enum.each Dict.keys(warmers), fn(key) ->
+      url = make_url(to_binary(key), options)
+      body = JSON.encode(warmers[key][:source])
+      Tirexs.ElasticSearch.put(url, settings)
+    end
+  end
+
   defp make_url(method, options) do
     index = options[:index] <> "/"
     if options[:type] do
@@ -41,7 +52,12 @@ defmodule Tirexs.Manage do
     if options[:id] do
       index = index <> to_binary(options[:id]) <> "/"
     end
-    options = delete_options([:filter, :query, :index, :type, :id], options)
+
+    if options[:warmer] do
+      index = index <> "_warmer/"
+    end
+
+    options = delete_options([:filter, :query, :index, :type, :id, :warmer, :warmers], options)
     index <> method <> to_param(options, "")
   end
 
