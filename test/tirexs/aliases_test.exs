@@ -2,7 +2,7 @@ Code.require_file "../../test_helper.exs", __FILE__
 defmodule AliasesTest do
   use ExUnit.Case
   import Tirexs.Manage.Aliases
-  import Tirexs.Filter
+  import Tirexs.Query.Filter
 
 
   test :singl_alias do

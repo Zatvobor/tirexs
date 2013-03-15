@@ -70,7 +70,7 @@ defmodule Tirexs.Facets do
 
   defp routers(name, options, add_options) do
     case options do
-      {:filter, _, [params]}        -> Tirexs.Filter._filter(params[:do])
+      {:filter, _, [params]}        -> Tirexs.Query.Filter._filter(params[:do])
       {:query, _, [params]}         -> Tirexs.Query._query(params[:do])
       options                       -> Dict.put([], to_atom(name), extract(options) ++ add_options)
     end

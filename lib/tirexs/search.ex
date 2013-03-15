@@ -7,8 +7,8 @@ defmodule Tirexs.Search do
     case block do
       {:query, _, [params]}         -> Tirexs.Query._query(params[:do])
       {:query, _, options}          -> Tirexs.Query._query(options)
-      {:filter, _, [params]}        -> Tirexs.Filter._filter(params[:do])
-      {:filter, _, options}         -> Tirexs.Filter._filter(options)
+      {:filter, _, [params]}        -> Tirexs.Query.Filter._filter(params[:do])
+      {:filter, _, options}         -> Tirexs.Query.Filter._filter(options)
       {:facets, _, [params]}        -> Tirexs.Facets._facets(params[:do])
       {:highlight, _, [params]}     -> highlight(params)
       {:sort, _, [params]}          -> sort(params)

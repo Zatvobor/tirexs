@@ -414,8 +414,8 @@ defmodule Query.FilterTest do
     filters = filters ++ [query: [term: [id: "1"]]]
     filters = filters ++ [query: [term: [id: "4"]]]
 
-    assert Tirexs.Filter.Methods.join(:and, filters) == [and: [filters: [[query: [term: [id: "1"]]],[query: [term: [id: "4"]]]]]]
-    assert Tirexs.Filter.Methods.join(:or, filters) == [or: [filters: [[query: [term: [id: "1"]]],[query: [term: [id: "4"]]]]]]
+    assert Tirexs.Query.Filter.join(:and, filters) == [and: [filters: [[query: [term: [id: "1"]]],[query: [term: [id: "4"]]]]]]
+    assert Tirexs.Query.Filter.join(:or, filters) == [or: [filters: [[query: [term: [id: "1"]]],[query: [term: [id: "4"]]]]]]
   end
 
   test :search_with_join_filters do
@@ -427,7 +427,7 @@ defmodule Query.FilterTest do
       query do
         term "tag", "wow"
       end
-      filters Tirexs.Filter.Methods.join(:and, filters)
+      filters Tirexs.Query.Filter.join(:and, filters)
     end
 
     assert search == [search: [query: [term: [tag: "wow"]], filter: [and: [filters: [[query: [term: [id: "1"]]],[query: [term: [id: "4"]]]]]]]]
