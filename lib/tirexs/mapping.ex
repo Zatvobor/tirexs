@@ -1,9 +1,19 @@
 defmodule Tirexs.Mapping do
   @moduledoc false
 
-  import Tirexs.Mapping.Helpers
-  import Tirexs.DSL.Logic
+  use Tirexs.DSL.Logic
   import Tirexs.ElasticSearch
+
+
+  def transpose(block) do
+    case block do
+      {:indexes, _, [params]} -> Tirexs.Mapping.indexes(params[:do])
+      {:indexes, _, options}  -> Tirexs.Mapping.indexes(options)
+      {:index, _, [params]}   -> Tirexs.Mapping.indexes(params[:do])
+      {:index, _, options}    -> Tirexs.Mapping.indexes(options)
+    end
+  end
+
 
   @doc false
   defmacro __using__(_) do
