@@ -23,8 +23,5 @@
                         'Elixir-Tirexs-Query-Helpers','Elixir-Tirexs-Query',
                         'Elixir-Tirexs-Rescore','Elixir-Tirexs-River-Couchdb',
                         'Elixir-Tirexs-River','Elixir-Tirexs-Search',
-                        'Elixir-Tirexs-Suggest-Helpers',
-                        'Elixir-Tirexs-Suggest',
-                        'Elixir-Tirexs-Warmer-Helpers',
-                        'Elixir-Tirexs-Warmer']},
+                        'Elixir-Tirexs-Suggest','Elixir-Tirexs-Warmer']},
               {applications,[kernel,stdlib,elixir]}]}.

@@ -1,7 +1,18 @@
 defmodule Tirexs.Warmer do
+  @moduledoc false
 
-  import Tirexs.DSL.Logic
-  import Tirexs.Warmer.Helpers
+  use Tirexs.DSL.Logic
+
+
+  def transpose(block) do
+    case block do
+      {:filter, _, [params]}          -> Tirexs.Filter._filter(params[:do])
+      {:query, _, [params]}           -> Tirexs.Query._query(params[:do])
+      {:facets, _, [params]}          -> Tirexs.Facets._facets(params[:do])
+      {name, _, [params]}             -> Tirexs.Warmer.make_warmer(name, params[:do])
+      {name, _, params}               -> Tirexs.Warmer.make_warmer(name, params)
+    end
+  end
 
   defmacro warmers([do: block]) do
     [warmers: extract(block)]
@@ -25,10 +36,8 @@ defmodule Tirexs.Warmer do
 
   defp routers(name, options, add_options) do
     case options do
-      {:source, _, [params]}        -> source(params[:do])
-      options                       -> Dict.put([], to_atom(name), extract(options) ++ add_options)
+      {:source, _, [params]} -> source(params[:do])
+      options                -> Dict.put([], to_atom(name), extract(options) ++ add_options)
     end
   end
-
-
 end
