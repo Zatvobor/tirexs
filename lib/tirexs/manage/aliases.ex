@@ -2,7 +2,7 @@ defmodule Tirexs.Manage.Aliases do
   import Tirexs.DSL.Logic
 
   defmacro aliases([do: block]) do
-    actions = get_clear_block(block)
+    actions = extract_block(block)
     if is_tuple(actions) do
       [actions: [actions]]
     else

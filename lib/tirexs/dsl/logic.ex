@@ -30,15 +30,6 @@ defmodule Tirexs.DSL.Logic do
   end
 
   @doc false
-  def get_clear_block([]), do: []
-  def get_clear_block(block) do
-    case block do
-      {:__block__, _, block_list} -> block_list
-      _ -> block
-    end
-  end
-
-  @doc false
   def to_atom(value) when is_atom(value), do: value
   def to_atom(value) when is_binary(value), do: binary_to_atom(value)
   def to_atom(value), do: value
