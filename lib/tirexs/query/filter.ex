@@ -1,7 +1,9 @@
-defmodule Tirexs.Filter do
+defmodule Tirexs.Query.Filter do
+  @moduledoc false
 
   import Tirexs.Query.Helpers
   import Tirexs.DSL.Logic
+
 
   defmacro filter([do: block]) do
     [filter: extract(block)]
@@ -85,4 +87,31 @@ defmodule Tirexs.Filter do
     [or: extract(options) ++ or_opts]
   end
 
+  def join(:and, filters) do
+    [and: [filters: to_array(filters)]]
+  end
+
+  def join(:or, filters) do
+    [or: [filters: to_array(filters)]]
+  end
+
+  def geo_bounding_box(options) do
+    [field, value, options] = extract_options(options)
+    [geo_bounding_box: Dict.put([], to_atom(field), value) ++ options]
+  end
+
+  def geo_distance(options) do
+    [field, value, options] = extract_options(options)
+    [geo_distance: Dict.put([], to_atom(field), value) ++ options]
+  end
+
+  def geo_distance_range(options) do
+    [field, value, options] = extract_options(options)
+    [geo_distance_range: Dict.put([], to_atom(field), value) ++ options]
+  end
+
+  def geo_polygon(options) do
+    [field, value, options] = extract_options(options)
+    [geo_polygon: Dict.put([], to_atom(field), [points: value]) ++ options]
+  end
 end

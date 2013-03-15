@@ -1,8 +1,12 @@
-Code.require_file "../../test_helper.exs", __FILE__
-defmodule FiltersTest do
+Code.require_file "../../../test_helper.exs", __FILE__
+
+defmodule Query.FilterTest do
   use ExUnit.Case
-  import Tirexs.Filter
+
+  import Tirexs.Query.Filter
   import Tirexs.Query
+  import Tirexs.Search
+
 
   test :filter do
     query = filter do
@@ -405,5 +409,27 @@ defmodule FiltersTest do
     assert query == [query: [filtered: [query: [term: ["name.first": "shay"]], filter: [or: [filters: [[range: [postDate: [from: "2010-03-01", to: "2010-04-01"]]],[prefix: ["name.second": "ba"]]], _cache: true]]]]]
   end
 
+  test :join do
+    filters = []
+    filters = filters ++ [query: [term: [id: "1"]]]
+    filters = filters ++ [query: [term: [id: "4"]]]
 
+    assert Tirexs.Filter.Methods.join(:and, filters) == [and: [filters: [[query: [term: [id: "1"]]],[query: [term: [id: "4"]]]]]]
+    assert Tirexs.Filter.Methods.join(:or, filters) == [or: [filters: [[query: [term: [id: "1"]]],[query: [term: [id: "4"]]]]]]
+  end
+
+  test :search_with_join_filters do
+    filters = []
+    filters = filters ++ [query: [term: [id: "1"]]]
+    filters = filters ++ [query: [term: [id: "4"]]]
+
+    search = search do
+      query do
+        term "tag", "wow"
+      end
+      filters Tirexs.Filter.Methods.join(:and, filters)
+    end
+
+    assert search == [search: [query: [term: [tag: "wow"]], filter: [and: [filters: [[query: [term: [id: "1"]]],[query: [term: [id: "4"]]]]]]]]
+  end
 end

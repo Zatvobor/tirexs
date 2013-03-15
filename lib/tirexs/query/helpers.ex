@@ -1,11 +1,10 @@
 defmodule Tirexs.Query.Helpers do
+  @moduledoc false
 
-  import Tirexs.DSL.Logic
   use Tirexs.DSL.Logic
 
-  # defoverridable [transpose: 1]
 
-  defp transpose(block) do
+  def transpose(block) do
       case block do
         {:bool, _, [params]}                  -> Tirexs.Query.Bool.bool(params[:do])
         {:must, _, [params]}                  -> Tirexs.Query.Bool.must(params[:do])
@@ -123,5 +122,4 @@ defmodule Tirexs.Query.Helpers do
   def without_array(_array, acc) do
     acc
   end
-
 end

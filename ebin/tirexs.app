@@ -26,6 +26,8 @@
                         'Elixir-Tirexs-Mapping','Elixir-Tirexs-Query-Bool',
                         'Elixir-Tirexs-Query-Bootstring',
                         'Elixir-Tirexs-Query-DisMax',
+                        'Elixir-Tirexs-Query-Filter-Geo',
+                        'Elixir-Tirexs-Query-Filter',
                         'Elixir-Tirexs-Query-GeoShare',
                         'Elixir-Tirexs-Query-Helpers',
                         'Elixir-Tirexs-Query-Indices',

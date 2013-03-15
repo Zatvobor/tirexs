@@ -3,17 +3,7 @@ defmodule Tirexs.Query do
 
   import Tirexs.Query.Helpers
   import Tirexs.DSL.Logic
-  import Tirexs.Query.Bool
-  import Tirexs.Query.DisMax
 
-  @doc false
-  # defmacro __using__(_) do
-  #   quote do
-  #     import unquote(Tirexs.Query)
-  #     use unquote(Tirexs.Query.Bool)
-  #     import unquote(Tirexs.Query.DisMax)
-  #   end
-  # end
 
   @doc false
   defmacro query([do: block]) do
