@@ -1,7 +1,5 @@
 defmodule Tirexs.Index.Helpers do
 
-  import Tirexs.DSL.Logic
-
   def put_setting(index, type) do
     settings = index[:settings]
     settings = Dict.put(settings, type, [])
