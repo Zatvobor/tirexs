@@ -12,7 +12,6 @@
                         'Elixir-Tirexs-Facets-Helpers','Elixir-Tirexs-Facets',
                         'Elixir-Tirexs-Filter-Geo',
                         'Elixir-Tirexs-Filter-Methods','Elixir-Tirexs-Filter',
-                        'Elixir-Tirexs-Helpers',
                         'Elixir-Tirexs-Index-Analyzer',
                         'Elixir-Tirexs-Index-Blocks',
                         'Elixir-Tirexs-Index-Cache',

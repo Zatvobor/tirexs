@@ -10,7 +10,7 @@ defmodule Tirexs.Index.Settings do
       import unquote(Tirexs.Index.Analyzer)
       import unquote(Tirexs.Index.Tokenizer)
       import unquote(Tirexs.Index.Filter)
-      import unquote(Tirexs.Helpers)
+      import unquote(Tirexs.DSL.Logic)
     end
   end
 
