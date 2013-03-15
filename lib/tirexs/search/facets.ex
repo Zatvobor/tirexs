@@ -1,4 +1,4 @@
-defmodule Tirexs.Facets do
+defmodule Tirexs.Search.Facets do
   @moduledoc false
 
   use Tirexs.DSL.Logic

@@ -1,4 +1,4 @@
-defmodule Tirexs.Rescore do
+defmodule Tirexs.Search.Rescore do
   @moduledoc false
 
   use Tirexs.DSL.Logic

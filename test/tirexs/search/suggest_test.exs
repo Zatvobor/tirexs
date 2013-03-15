@@ -1,7 +1,7 @@
-Code.require_file "../../test_helper.exs", __FILE__
+Code.require_file "../../../test_helper.exs", __FILE__
 defmodule SuggestTest do
   use ExUnit.Case
-  import Tirexs.Suggest
+  import Tirexs.Search.Suggest
 
   test :create_suggest do
     suggest = suggest do

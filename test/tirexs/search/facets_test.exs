@@ -1,7 +1,7 @@
-Code.require_file "../../test_helper.exs", __FILE__
+Code.require_file "../../../test_helper.exs", __FILE__
 defmodule FacetsTest do
   use ExUnit.Case
-  import Tirexs.Facets
+  import Tirexs.Search.Facets
 
   test :simple_facets_dsl do
     facets = facets do

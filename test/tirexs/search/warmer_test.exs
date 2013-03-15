@@ -1,7 +1,7 @@
-Code.require_file "../../test_helper.exs", __FILE__
+Code.require_file "../../../test_helper.exs", __FILE__
 defmodule WarmerTest do
   use ExUnit.Case
-  import Tirexs.Warmer
+  import Tirexs.Search.Warmer
 
   test :create_warmer do
     warmers = warmers do

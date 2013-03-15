@@ -1,4 +1,4 @@
-defmodule Tirexs.Warmer do
+defmodule Tirexs.Search.Warmer do
   @moduledoc false
 
   use Tirexs.DSL.Logic
@@ -8,9 +8,9 @@ defmodule Tirexs.Warmer do
     case block do
       {:filter, _, [params]}          -> Tirexs.Filter._filter(params[:do])
       {:query, _, [params]}           -> Tirexs.Query._query(params[:do])
-      {:facets, _, [params]}          -> Tirexs.Facets._facets(params[:do])
-      {name, _, [params]}             -> Tirexs.Warmer.make_warmer(name, params[:do])
-      {name, _, params}               -> Tirexs.Warmer.make_warmer(name, params)
+      {:facets, _, [params]}          -> Tirexs.Search.Facets._facets(params[:do])
+      {name, _, [params]}             -> Tirexs.Search.Warmer.make_warmer(name, params[:do])
+      {name, _, params}               -> Tirexs.Search.Warmer.make_warmer(name, params)
     end
   end
 
