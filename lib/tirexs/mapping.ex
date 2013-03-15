@@ -7,10 +7,10 @@ defmodule Tirexs.Mapping do
 
   def transpose(block) do
     case block do
-      {:indexes, _, [params]} -> Tirexs.Mapping.indexes(params[:do])
-      {:indexes, _, options}  -> Tirexs.Mapping.indexes(options)
-      {:index, _, [params]}   -> Tirexs.Mapping.indexes(params[:do])
-      {:index, _, options}    -> Tirexs.Mapping.indexes(options)
+      {:indexes, _, [params]} -> indexes(params[:do])
+      {:indexes, _, options}  -> indexes(options)
+      {:index, _, [params]}   -> indexes(params[:do])
+      {:index, _, options}    -> indexes(options)
     end
   end
 

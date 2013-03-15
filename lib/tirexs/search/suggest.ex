@@ -3,14 +3,16 @@ defmodule Tirexs.Search.Suggest do
 
   use Tirexs.DSL.Logic
 
+  alias Tirexs.Query, as: Query
+  alias Tirexs.Query.Filter, as: Filter
 
   def transpose(block) do
     case block do
-      {:filter, _, [params]} -> Tirexs.Filter._filter(params[:do])
-      {:query, _, [params]}  -> Tirexs.Query._query(params[:do])
-      {:fuzzy, _, params}    -> Tirexs.Query.fuzzy(params)
-      {name, _, [params]}    -> Tirexs.Search.Suggest.make_suggest(name, params[:do])
-      {name, _, params}      -> Tirexs.Search.Suggest.make_suggest(name, params)
+      {:filter, _, [params]} -> Filter._filter(params[:do])
+      {:query, _, [params]}  -> Query._query(params[:do])
+      {:fuzzy, _, params}    -> Query.fuzzy(params)
+      {name, _, [params]}    -> make_suggest(name, params[:do])
+      {name, _, params}      -> make_suggest(name, params)
     end
   end
 

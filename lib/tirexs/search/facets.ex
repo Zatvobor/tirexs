@@ -3,6 +3,8 @@ defmodule Tirexs.Search.Facets do
 
   use Tirexs.DSL.Logic
 
+  alias Tirexs.Query, as: Query
+
   def transpose(block) do
     case block do
       {:terms, _, [params]}           -> terms(params)
@@ -12,8 +14,8 @@ defmodule Tirexs.Search.Facets do
       {:statistical, _, [params]}     -> statistical(params)
       {:terms_stats, _, [params]}     -> terms_stats(params)
       {:geo_distance, _, [params]}    -> geo_distance(params)
-      {:facet_filter, _, [params]}    -> Tirexs.Query.facet_filter(params[:do])
-      {:facet_filter, _, options}     -> Tirexs.Query.facet_filter(options)
+      {:facet_filter, _, [params]}    -> Query.facet_filter(params[:do])
+      {:facet_filter, _, options}     -> Query.facet_filter(options)
       {name, _, [params]}             -> make_facet(name, params[:do])
       {name, _, params}               -> make_facet(name, params)
     end

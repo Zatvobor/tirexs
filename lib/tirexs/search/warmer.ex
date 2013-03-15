@@ -3,14 +3,17 @@ defmodule Tirexs.Search.Warmer do
 
   use Tirexs.DSL.Logic
 
+  alias Tirexs.Query, as: Query
+  alias Tirexs.Query.Filter, as: Filter
+  alias Tirexs.Search.Facets, as: Facets
 
   def transpose(block) do
     case block do
-      {:filter, _, [params]}          -> Tirexs.Filter._filter(params[:do])
-      {:query, _, [params]}           -> Tirexs.Query._query(params[:do])
-      {:facets, _, [params]}          -> Tirexs.Search.Facets._facets(params[:do])
-      {name, _, [params]}             -> Tirexs.Search.Warmer.make_warmer(name, params[:do])
-      {name, _, params}               -> Tirexs.Search.Warmer.make_warmer(name, params)
+      {:filter, _, [params]}          -> Filter._filter(params[:do])
+      {:query, _, [params]}           -> Query._query(params[:do])
+      {:facets, _, [params]}          -> Facets._facets(params[:do])
+      {name, _, [params]}             -> make_warmer(name, params[:do])
+      {name, _, params}               -> make_warmer(name, params)
     end
   end
 

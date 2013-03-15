@@ -3,21 +3,28 @@ defmodule Tirexs.Search do
 
   use Tirexs.DSL.Logic
 
+  alias Tirexs.Query, as: Query
+  alias Tirexs.Query.Filter, as: Filter
+  alias Tirexs.Search.Facets, as: Facets
+  alias Tirexs.Search.Suggest, as: Suggest
+  alias Tirexs.Search.Rescore, as: Rescore
+
+
   def transpose(block) do
     case block do
-      {:query, _, [params]}         -> Tirexs.Query._query(params[:do])
-      {:query, _, options}          -> Tirexs.Query._query(options)
-      {:filter, _, [params]}        -> Tirexs.Query.Filter._filter(params[:do])
-      {:filter, _, options}         -> Tirexs.Query.Filter._filter(options)
-      {:facets, _, [params]}        -> Tirexs.Search.Facets._facets(params[:do])
+      {:query, _, [params]}         -> Query._query(params[:do])
+      {:query, _, options}          -> Query._query(options)
+      {:filter, _, [params]}        -> Filter._filter(params[:do])
+      {:filter, _, options}         -> Filter._filter(options)
+      {:facets, _, [params]}        -> Facets._facets(params[:do])
       {:highlight, _, [params]}     -> highlight(params)
       {:sort, _, [params]}          -> sort(params)
       {:script_fields, _, [params]} -> script_fields(params)
-      {:suggest, _, [params]}       -> Tirexs.Search.Suggest._suggest(params[:do])
-      {:suggest, _, options}        -> Tirexs.Search.Suggest._suggest(options)
-      {:rescore, _, [params]}       -> Tirexs.Search.Rescore._rescore(params[:do])
-      {:rescore, _, options}        -> Tirexs.Search.Rescore._rescore(options)
-      {:filters, _, [options]}      -> Tirexs.Search.filters(options, [])
+      {:suggest, _, [params]}       -> Suggest._suggest(params[:do])
+      {:suggest, _, options}        -> Suggest._suggest(options)
+      {:rescore, _, [params]}       -> Rescore._rescore(params[:do])
+      {:rescore, _, options}        -> Rescore._rescore(options)
+      {:filters, _, [options]}      -> filters(options, [])
     end
   end
 

@@ -3,13 +3,15 @@ defmodule Tirexs.Search.Rescore do
 
   use Tirexs.DSL.Logic
 
+  alias Tirexs.Query, as: Query
+  alias Tirexs.Query.Filter, as: Filter
 
   def transpose(block) do
     case block do
-      {:query, _, [params]} -> Tirexs.Query._query(params[:do])
-      {:query, _, options}  -> Tirexs.Query._query(options)
-      {:filter, _, [params]} -> Tirexs.Query.Filter._filter(params[:do])
-      {:filter, _, options}  -> Tirexs.Query.Filter._filter(options)
+      {:query, _, [params]}  -> Query._query(params[:do])
+      {:query, _, options}   -> Query._query(options)
+      {:filter, _, [params]} -> Filter._filter(params[:do])
+      {:filter, _, options}  -> Filter._filter(options)
     end
   end
 
