@@ -311,6 +311,80 @@ defmodule Tirexs.Query do
     [extract(options)]
   end
 
+  def bool(block) do
+    [bool: extract(block)]
+  end
+
+  def must(block) do
+    [must: to_array(extract(block))]
+  end
+
+  def should(block) do
+    [should: to_array(extract(block))]
+  end
+
+  def must_not(block) do
+    [must_not: to_array(extract(block))]
+  end
+
+  def positive(options) do
+    [positive: extract(extract_do(options))]
+  end
+
+  def negative(options) do
+    [negative: extract(extract_do(options))]
+  end
+
+  def queries(options) do
+    [queries: to_array(extract(options))]
+  end
+
+  def location(options, location_opts//[]) do
+    if is_list(options) do
+      location_opts = Enum.at!(options, 0)
+      options = extract_do(options, 1)
+    end
+    [location: extract(options) ++ location_opts]
+  end
+
+  def shape(options) do
+    [shape: options]
+  end
+
+  def indexed_shape(options) do
+    [indexed_shape: options]
+  end
+
+  def no_match_query(options) when is_binary(options) do
+    [no_match_query: options]
+  end
+
+  def no_match_query(options) do
+    [no_match_query: extract(options)]
+  end
+
+  def clauses(options) do
+    [clauses: to_array(extract(options))]
+  end
+
+  def include(options) do
+    [include: extract(options[:do])]
+  end
+
+  def exclude(options) do
+    [exclude: extract(options[:do])]
+  end
+
+  def text_phrase(options) do
+    [field, values, _] = extract_options(options)
+    [text_phrase: Dict.put([], to_atom(field), values)]
+  end
+
+  def text_phrase_prefix(options) do
+    [field, values, _] = extract_options(options)
+    [text_phrase_prefix: Dict.put([], to_atom(field), values)]
+  end
+
   @doc false
   def create_resource(definition, opts) do
     url = if definition[:type] do
