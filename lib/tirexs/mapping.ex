@@ -2,7 +2,7 @@ defmodule Tirexs.Mapping do
   @moduledoc false
 
   import Tirexs.Mapping.Helpers
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
   import Tirexs.ElasticSearch
 
   @doc false

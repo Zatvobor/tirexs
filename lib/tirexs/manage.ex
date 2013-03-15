@@ -1,5 +1,5 @@
 defmodule Tirexs.Manage do
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   def count(options, settings) do
     body = JSON.encode(options[:filter] || options[:query] || [])

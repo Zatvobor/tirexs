@@ -1,6 +1,6 @@
 defmodule Tirexs.Index.Helpers do
 
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   def put_setting(index, type) do
     settings = index[:settings]

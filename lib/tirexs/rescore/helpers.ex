@@ -1,10 +1,11 @@
 defmodule Tirexs.Rescore.Helpers do
-  import Tirexs.Helpers
-  use Tirexs.Helpers
 
-  defoverridable [routers: 1]
+  import Tirexs.DSL.Logic
+  use Tirexs.DSL.Logic
 
-  defp routers(block) do
+  defoverridable [transpose: 1]
+
+  defp transpose(block) do
     case block do
       {:query, _, [params]} -> Tirexs.Query._query(params[:do])
       {:query, _, options}  -> Tirexs.Query._query(options)

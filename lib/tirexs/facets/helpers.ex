@@ -1,10 +1,10 @@
 defmodule Tirexs.Facets.Helpers do
-  import Tirexs.Helpers
-  use Tirexs.Helpers
+  import Tirexs.DSL.Logic
+  use Tirexs.DSL.Logic
 
-  defoverridable [routers: 1]
+  defoverridable [transpose: 1]
 
-  defp routers(block) do
+  defp transpose(block) do
     case block do
       {:terms, _, [params]}           -> Tirexs.Facets.terms(params)
       {:range, _, [params]}           -> Tirexs.Facets.range(params)

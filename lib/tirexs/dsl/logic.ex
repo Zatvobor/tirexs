@@ -4,17 +4,15 @@ defmodule Tirexs.DSL.Logic do
   """
 
   ## Logic macros
-
-  @doc false
-  defmacro extract(block), do: extract(get_clear_block(block), [])
-
-  @doc false
-  defp extract([], acc), do: acc
-  defp extract([h|t], acc), do: extract(get_clear_block(t), acc ++ transpose(h))
-  defp extract(item, acc), do: acc ++ transpose(item)
-
-  @doc false
-  defp transpose(item), do: item
+  defmacro __using__(_) do
+    quote do
+      defp extract([], acc), do: acc
+      def extract(block), do: extract(get_clear_block(block), [])
+      defp extract([h|t], acc), do: extract(get_clear_block(t), acc ++ transpose(h))
+      defp extract(item, acc), do: acc ++ transpose(item)
+      defp transpose(item), do: item
+    end
+  end
 
   ## Common utilities
 

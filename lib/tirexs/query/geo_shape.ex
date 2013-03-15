@@ -1,6 +1,6 @@
 defmodule Tirexs.Query.GeoShare do
   import Tirexs.Query.Helpers
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   def location(options, location_opts//[]) do
     if is_list(options) do

@@ -2,7 +2,7 @@ defmodule Tirexs.Query do
   @moduledoc false
 
   import Tirexs.Query.Helpers
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
   import Tirexs.Query.Bool
   import Tirexs.Query.DisMax
 

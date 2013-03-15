@@ -1,14 +1,14 @@
 defmodule Tirexs.Suggest.Helpers do
-  import Tirexs.Helpers
-  use Tirexs.Helpers
+  import Tirexs.DSL.Logic
+  use Tirexs.DSL.Logic
 
-  defoverridable [routers: 1]
+  defoverridable [transpose: 1]
 
-  defp routers(block) do
+  defp transpose(block) do
     case block do
       {:filter, _, [params]}          -> Tirexs.Filter._filter(params[:do])
       {:query, _, [params]}           -> Tirexs.Query._query(params[:do])
-      {:fuzzy, _, params}          -> Tirexs.Query.fuzzy(params)
+      {:fuzzy, _, params}             -> Tirexs.Query.fuzzy(params)
       {name, _, [params]}             -> Tirexs.Suggest.make_suggest(name, params[:do])
       {name, _, params}               -> Tirexs.Suggest.make_suggest(name, params)
     end

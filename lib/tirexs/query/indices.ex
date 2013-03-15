@@ -1,7 +1,7 @@
 defmodule Tirexs.Query.Indices do
 
   import Tirexs.Query.Helpers
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   def no_match_query(options) when is_binary(options) do
     [no_match_query: options]

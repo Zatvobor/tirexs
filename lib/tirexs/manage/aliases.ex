@@ -1,5 +1,5 @@
 defmodule Tirexs.Manage.Aliases do
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   defmacro aliases([do: block]) do
     actions = get_clear_block(block)

@@ -1,5 +1,5 @@
 defmodule Tirexs.Facets do
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
   import Tirexs.Facets.Helpers
 
   defmacro facets([do: block]) do

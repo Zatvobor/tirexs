@@ -1,7 +1,7 @@
 defmodule Tirexs.Bulk do
 
   import Tirexs.Bulk.Helpers
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   defmacro store(options, settings, [do: block]) do
     documents = get_clear_block(block)

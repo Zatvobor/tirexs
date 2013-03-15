@@ -1,6 +1,6 @@
 defmodule Tirexs.Filter.Methods do
 
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   def join(:and, filters) do
     [and: [filters: to_array(filters)]]

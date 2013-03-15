@@ -1,6 +1,6 @@
 defmodule Tirexs.Warmer do
 
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
   import Tirexs.Warmer.Helpers
 
   defmacro warmers([do: block]) do

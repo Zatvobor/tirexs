@@ -1,6 +1,6 @@
 defmodule Tirexs.Filter.Geo do
   import Tirexs.Query.Helpers
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   def geo_bounding_box(options) do
     [field, value, options] = extract_options(options)

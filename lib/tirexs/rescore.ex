@@ -1,5 +1,5 @@
 defmodule Tirexs.Rescore do
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
   import Tirexs.Rescore.Helpers
 
   defmacro rescore([do: block]) do

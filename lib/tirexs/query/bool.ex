@@ -1,8 +1,7 @@
 defmodule Tirexs.Query.Bool do
 
   import Tirexs.Query.Helpers
-  # import Tirexs.Query
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   defmacro __using__(_) do
     quote do

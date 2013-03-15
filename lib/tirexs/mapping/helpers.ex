@@ -1,11 +1,11 @@
 defmodule Tirexs.Mapping.Helpers do
 
-  import Tirexs.Helpers
-  use Tirexs.Helpers
+  import Tirexs.DSL.Logic
+  use Tirexs.DSL.Logic
 
-  defoverridable [routers: 1]
+  defoverridable [transpose: 1]
 
-  defp routers(block) do
+  defp transpose(block) do
     case block do
       {:indexes, _, [params]}  -> Tirexs.Mapping.indexes(params[:do])
       {:indexes, _, options}   -> Tirexs.Mapping.indexes(options)

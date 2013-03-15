@@ -1,6 +1,6 @@
 defmodule Tirexs.Query.Text do
   import Tirexs.Query.Helpers
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   def text_phrase(options) do
     [field, values, _] = extract_options(options)

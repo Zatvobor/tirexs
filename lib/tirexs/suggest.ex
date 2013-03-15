@@ -1,6 +1,6 @@
 defmodule Tirexs.Suggest do
 
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
   import Tirexs.Suggest.Helpers
 
   defmacro suggest([do: block]) do

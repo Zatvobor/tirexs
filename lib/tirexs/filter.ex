@@ -1,7 +1,7 @@
 defmodule Tirexs.Filter do
 
   import Tirexs.Query.Helpers
-  import Tirexs.Helpers
+  import Tirexs.DSL.Logic
 
   defmacro filter([do: block]) do
     [filter: extract(block)]
