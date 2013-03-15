@@ -1,7 +1,10 @@
-Code.require_file "../../../test_helper.exs", __FILE__
-defmodule Bulk.HelpersTest do
+Code.require_file "../../test_helper.exs", __FILE__
+
+defmodule BulkTest do
+
   use ExUnit.Case
-  import Tirexs.Bulk.Helpers
+
+  import Tirexs.Bulk
 
   test :get_id_from_document do
     document = [id: "id", title: "Hello"]
@@ -28,6 +31,4 @@ defmodule Bulk.HelpersTest do
 
     assert get_type_from_document(document) == "my_type"
   end
-
-
 end

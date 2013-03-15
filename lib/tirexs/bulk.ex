@@ -1,6 +1,6 @@
 defmodule Tirexs.Bulk do
+  @moduledoc false
 
-  import Tirexs.Bulk.Helpers
   import Tirexs.DSL.Logic
 
   defmacro store(options, settings, [do: block]) do
@@ -60,4 +60,15 @@ defmodule Tirexs.Bulk do
     meta(t, document, acc)
   end
 
+  def get_id_from_document(document) do
+    document[:id] || document["id"] || document[:_id] || document["_id"]
+  end
+
+  def convert_document_to_json(document) do
+    JSON.encode(document)
+  end
+
+  def get_type_from_document(document) do
+    document[:_type] || document["_type"] || document[:type] || document["type"] || "document"
+  end
 end
