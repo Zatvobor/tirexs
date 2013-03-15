@@ -1,6 +1,24 @@
 defmodule Tirexs.Facets do
-  import Tirexs.DSL.Logic
-  import Tirexs.Facets.Helpers
+  @moduledoc false
+
+  use Tirexs.DSL.Logic
+
+  def transpose(block) do
+    case block do
+      {:terms, _, [params]}           -> terms(params)
+      {:range, _, [params]}           -> range(params)
+      {:histogram, _, [params]}       -> histogram(params)
+      {:date_histogram, _, [params]}  -> date_histogram(params)
+      {:statistical, _, [params]}     -> statistical(params)
+      {:terms_stats, _, [params]}     -> terms_stats(params)
+      {:geo_distance, _, [params]}    -> geo_distance(params)
+      {:facet_filter, _, [params]}    -> Tirexs.Query.facet_filter(params[:do])
+      {:facet_filter, _, options}     -> Tirexs.Query.facet_filter(options)
+      {name, _, [params]}             -> make_facet(name, params[:do])
+      {name, _, params}               -> make_facet(name, params)
+    end
+  end
+
 
   defmacro facets([do: block]) do
     [facets: extract(block)]

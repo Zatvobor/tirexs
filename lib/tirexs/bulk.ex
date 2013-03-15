@@ -4,7 +4,7 @@ defmodule Tirexs.Bulk do
   import Tirexs.DSL.Logic
 
   defmacro store(options, settings, [do: block]) do
-    documents = get_clear_block(block)
+    documents = extract_block(block)
     options = options
     quote do
       [documents, options, settings] = [unquote(documents), unquote(options), unquote(settings)]

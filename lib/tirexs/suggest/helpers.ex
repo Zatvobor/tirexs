@@ -2,7 +2,7 @@ defmodule Tirexs.Suggest.Helpers do
   import Tirexs.DSL.Logic
   use Tirexs.DSL.Logic
 
-  defoverridable [transpose: 1]
+  # defoverridable [transpose: 1]
 
   defp transpose(block) do
     case block do

@@ -3,27 +3,30 @@ defmodule Tirexs.DSL.Logic do
   Defines a main module which provides a common contract for DSL handlers and common utilities.
   """
 
-  ## Logic macros
+  @doc false
   defmacro __using__(_) do
     quote do
+      @behaviour unquote(Tirexs.DSL.Behaviour)
+      import :functions, unquote(__MODULE__)
+
+      def extract(block), do: extract(extract_block(block), [])
+
       defp extract([], acc), do: acc
-      def extract(block), do: extract(get_clear_block(block), [])
-      defp extract([h|t], acc), do: extract(get_clear_block(t), acc ++ transpose(h))
+      defp extract([h|t], acc), do: extract(extract_block(t), acc ++ transpose(h))
       defp extract(item, acc), do: acc ++ transpose(item)
-      defp transpose(item), do: item
     end
   end
+
 
   ## Common utilities
 
   @doc false
-  def to_atom(value) when is_atom(value), do: value
-  def to_atom(value) when is_binary(value), do: binary_to_atom(value)
-  def to_atom(value), do: value
-
-  @doc false
-  def is_dict?(dict) do
-    is_record(dict, Dict) || false
+  def extract_block([]), do: []
+  def extract_block(block) do
+    case block do
+      {:__block__, _, block_list} -> block_list
+      _ -> block
+    end
   end
 
   @doc false
@@ -33,6 +36,16 @@ defmodule Tirexs.DSL.Logic do
       {:__block__, _, block_list} -> block_list
       _ -> block
     end
+  end
+
+  @doc false
+  def to_atom(value) when is_atom(value), do: value
+  def to_atom(value) when is_binary(value), do: binary_to_atom(value)
+  def to_atom(value), do: value
+
+  @doc false
+  def is_dict?(dict) do
+    is_record(dict, Dict) || false
   end
 
   @doc false
