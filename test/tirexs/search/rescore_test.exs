@@ -1,5 +1,5 @@
 Code.require_file "../../../test_helper.exs", __FILE__
-defmodule RescoreTest do
+defmodule Tirexs.Search.RescoreTest do
   use ExUnit.Case
   import Tirexs.Search.Rescore
 

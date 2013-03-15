@@ -1,6 +1,6 @@
 Code.require_file "../../../test_helper.exs", __FILE__
 
-defmodule FilterTest do
+defmodule Tirexs.Index.FilterTest do
   use ExUnit.Case
   import Tirexs.Index.Settings
 

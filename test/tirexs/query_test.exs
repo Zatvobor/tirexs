@@ -1,5 +1,5 @@
 Code.require_file "../../test_helper.exs", __FILE__
-defmodule QueryTest do
+defmodule Tirexs.QueryTest do
   use ExUnit.Case
   import Tirexs.Query
 

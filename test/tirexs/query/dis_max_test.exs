@@ -1,5 +1,5 @@
 Code.require_file "../../../test_helper.exs", __FILE__
-defmodule Query.Bool.DisMax.Test do
+defmodule Tirexs.Query.Bool.DisMax.Test do
   use ExUnit.Case
   import Tirexs.Query
 

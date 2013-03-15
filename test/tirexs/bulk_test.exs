@@ -1,6 +1,6 @@
 Code.require_file "../../test_helper.exs", __FILE__
 
-defmodule BulkTest do
+defmodule Tirexs.BulkTest do
 
   use ExUnit.Case
 

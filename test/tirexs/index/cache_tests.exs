@@ -1,6 +1,6 @@
 Code.require_file "../../../test_helper.exs", __FILE__
 
-defmodule CacheTest do
+defmodule Tirexs.Index.CacheTest do
   use ExUnit.Case
   import Tirexs.Index.Settings
 

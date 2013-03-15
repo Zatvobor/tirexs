@@ -1,6 +1,6 @@
 Code.require_file "../../../test_helper.exs", __FILE__
 
-defmodule TokenizerTest do
+defmodule Tirexs.Index.TokenizerTest do
   use ExUnit.Case
   import Tirexs.Index.Settings
 

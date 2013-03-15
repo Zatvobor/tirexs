@@ -1,6 +1,6 @@
 Code.require_file "../../../test_helper.exs", __FILE__
 
-defmodule BlocksTest do
+defmodule Tirexs.Index.BlocksTest do
   use ExUnit.Case
   import Tirexs.Index.Settings
 

@@ -1,6 +1,6 @@
 Code.require_file "../../test_helper.exs", __FILE__
 
-defmodule MappingsTest do
+defmodule Tirexs.MappingsTest do
   use ExUnit.Case
 
   use Tirexs.Mapping

@@ -1,5 +1,5 @@
 Code.require_file "../../../test_helper.exs", __FILE__
-defmodule River.CouchDb.Test do
+defmodule Tirexs.River.CouchDb.Test do
   use ExUnit.Case
   use Tirexs.River
 
