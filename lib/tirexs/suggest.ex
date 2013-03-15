@@ -1,7 +1,18 @@
 defmodule Tirexs.Suggest do
+  @moduledoc false
 
-  import Tirexs.DSL.Logic
-  import Tirexs.Suggest.Helpers
+  use Tirexs.DSL.Logic
+
+
+  def transpose(block) do
+    case block do
+      {:filter, _, [params]} -> Tirexs.Filter._filter(params[:do])
+      {:query, _, [params]}  -> Tirexs.Query._query(params[:do])
+      {:fuzzy, _, params}    -> Tirexs.Query.fuzzy(params)
+      {name, _, [params]}    -> Tirexs.Suggest.make_suggest(name, params[:do])
+      {name, _, params}      -> Tirexs.Suggest.make_suggest(name, params)
+    end
+  end
 
   defmacro suggest([do: block]) do
     [suggest: extract(block)]
@@ -11,7 +22,6 @@ defmodule Tirexs.Suggest do
     [suggest: extract(block) ++ options]
   end
 
-  @doc false
   def _suggest(options, suggest_opts//[]) do
     if is_list(options) do
       suggest_opts = Enum.at!(options, 0)
@@ -33,6 +43,4 @@ defmodule Tirexs.Suggest do
       options -> Dict.put([], to_atom(name), extract(options) ++ add_options)
     end
   end
-
-
 end
