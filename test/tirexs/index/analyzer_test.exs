@@ -2,7 +2,7 @@ Code.require_file "../../../test_helper.exs", __FILE__
 
 defmodule AnalyzerTest do
   use ExUnit.Case
-  use Tirexs.Index.Settings
+  import Tirexs.Index.Settings
 
   test :analyzer_settings do
     index = [name: "bear_test"]

@@ -2,7 +2,7 @@ Code.require_file "../../../test_helper.exs", __FILE__
 
 defmodule BlocksTest do
   use ExUnit.Case
-  use Tirexs.Index.Settings
+  import Tirexs.Index.Settings
 
   test :blocks_settings do
     index = [name: "bear_test"]

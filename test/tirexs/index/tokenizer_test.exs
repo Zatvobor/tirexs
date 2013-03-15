@@ -2,7 +2,7 @@ Code.require_file "../../../test_helper.exs", __FILE__
 
 defmodule TokenizerTest do
   use ExUnit.Case
-  use Tirexs.Index.Settings
+  import Tirexs.Index.Settings
 
   test :tokenizer_settings do
     index = [name: "bear_test"]

@@ -1,18 +1,7 @@
 defmodule Tirexs.Index.Settings do
-  defmacro __using__(_) do
-    quote do
-      import unquote(Tirexs.Index.Settings)
-      import unquote(Tirexs.Index.Helpers)
-      import unquote(Tirexs.Index.Blocks)
-      import unquote(Tirexs.Index.Translog)
-      import unquote(Tirexs.Index.Cache)
-      import unquote(Tirexs.Index.Merge)
-      import unquote(Tirexs.Index.Analyzer)
-      import unquote(Tirexs.Index.Tokenizer)
-      import unquote(Tirexs.Index.Filter)
-      import unquote(Tirexs.DSL.Logic)
-    end
-  end
+
+  import Tirexs.Index.Helpers
+  import Tirexs.DSL.Logic
 
   defmacro settings([do: block]) do
     quote do
@@ -44,6 +33,67 @@ defmodule Tirexs.Index.Settings do
     quote do
       settings = unquote(settings)
       var!(index) = add_index_setting(var!(index), settings)
+    end
+  end
+
+  defmacro analyzer(name, value) do
+    quote do
+      if var!(index)[:settings][:analysis][:analyzer] == nil do
+        var!(index) = put_index_setting(var!(index), :analysis, :analyzer)
+      end
+      [name, value] = [unquote(name), unquote(value)]
+      var!(index) = add_index_setting(var!(index), :analysis, :analyzer, Dict.put([], to_atom(name), value))
+    end
+  end
+
+  defmacro blocks(value) do
+    quote do
+      if var!(index)[:settings][:index][:blocks] == nil do
+        var!(index) = put_index_setting(var!(index), :index, :blocks)
+      end
+      value = unquote(value)
+      var!(index) = add_index_setting(var!(index), :index, :blocks, value)
+    end
+  end
+
+  defmacro cache(value) do
+    quote do
+      if var!(index)[:settings][:index][:cache] == nil do
+        var!(index) = put_index_setting(var!(index), :index, :cache)
+        var!(index) = add_index_setting(var!(index), :index, :cache, [filter: []])
+      end
+      value = unquote(value)
+      var!(index) = add_index_setting_nested_type(var!(index), :index, :cache, :filter, value)
+    end
+  end
+
+  defmacro filter(name, value) do
+    quote do
+      if var!(index)[:settings][:analysis][:filter] == nil do
+        var!(index) = put_index_setting(var!(index), :analysis, :filter)
+      end
+      [name, value] = [unquote(name), unquote(value)]
+      var!(index) = add_index_setting(var!(index), :analysis, :filter, Dict.put([], to_atom(name), value))
+    end
+  end
+
+  defmacro tokenizer(name, value) do
+    quote do
+      if var!(index)[:settings][:analysis][:tokenizer] == nil do
+        var!(index) = put_index_setting(var!(index), :analysis, :tokenizer)
+      end
+      [name, value] = [unquote(name), unquote(value)]
+      var!(index) = add_index_setting(var!(index), :analysis, :tokenizer, Dict.put([], to_atom(name), value))
+    end
+  end
+
+  defmacro translog(value) do
+    quote do
+      if var!(index)[:settings][:index][:translog] == nil do
+        var!(index) = put_index_setting(var!(index), :index, :translog)
+      end
+      value = unquote(value)
+      var!(index) = add_index_setting(var!(index), :index, :translog, value)
     end
   end
 
