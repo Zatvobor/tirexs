@@ -1,4 +1,4 @@
-use Tirexs.Index.Settings
+import Tirexs.Index.Settings
 
 Tirexs.DSL.define [name: "test_dsl_setting"], fn(index, elastic_settings) ->
 

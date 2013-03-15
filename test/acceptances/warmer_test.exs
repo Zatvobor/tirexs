@@ -1,7 +1,7 @@
 Code.require_file "../../test_helper.exs", __FILE__
-defmodule WarmerTestAccept do
+defmodule Acceptances.WarmerTest do
   use ExUnit.Case
-  import Tirexs.Warmer
+  import Tirexs.Search.Warmer
 
   test :create_warmer do
     settings = Tirexs.ElasticSearch.Config.new()

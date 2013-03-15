@@ -1,6 +1,6 @@
 Code.require_file "../../test_helper.exs", __FILE__
 
-defmodule ElasticSearchTest do
+defmodule Acceptances.ElasticSearchTest do
 
   use ExUnit.Case
   use Tirexs.Mapping

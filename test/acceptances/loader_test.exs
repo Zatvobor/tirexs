@@ -1,6 +1,6 @@
 Code.require_file "../../test_helper.exs", __FILE__
 
-defmodule Tirexs.LoaderTest do
+defmodule Acceptances.LoaderTest do
   use ExUnit.Case
 
   import Tirexs.ElasticSearch
