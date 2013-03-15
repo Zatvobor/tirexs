@@ -29,7 +29,6 @@
                         'Elixir-Tirexs-Query-SpanNear',
                         'Elixir-Tirexs-Query-SpanNot',
                         'Elixir-Tirexs-Query-Text','Elixir-Tirexs-Query',
-                        'Elixir-Tirexs-Rescore-Helpers',
                         'Elixir-Tirexs-Rescore','Elixir-Tirexs-River-Couchdb',
                         'Elixir-Tirexs-River','Elixir-Tirexs-Search',
                         'Elixir-Tirexs-Suggest-Helpers',

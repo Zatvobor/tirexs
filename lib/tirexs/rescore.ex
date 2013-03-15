@@ -1,6 +1,17 @@
 defmodule Tirexs.Rescore do
-  import Tirexs.DSL.Logic
-  import Tirexs.Rescore.Helpers
+  @moduledoc false
+
+  use Tirexs.DSL.Logic
+
+
+  def transpose(block) do
+    case block do
+      {:query, _, [params]} -> Tirexs.Query._query(params[:do])
+      {:query, _, options}  -> Tirexs.Query._query(options)
+      {:filter, _, [params]} -> Tirexs.Query.Filter._filter(params[:do])
+      {:filter, _, options}  -> Tirexs.Query.Filter._filter(options)
+    end
+  end
 
   defmacro rescore([do: block]) do
     [rescore: extract(block)]
