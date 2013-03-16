@@ -33,7 +33,7 @@ defmodule Acceptances.ManageTest do
 
   test :delete_by_query do
     delete("bear_test", @settings)
-    index = [name: "bear_test"]
+    index = [index: "bear_test"]
     mappings do
       index "id", type: "integer"
       index "name", type: "string"

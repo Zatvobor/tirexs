@@ -6,7 +6,7 @@ defmodule Tirexs.MappingsTest do
   use Tirexs.Mapping
 
   test :simpe_dsl do
-    index = [name: "bear_test"]
+    index = [index: "bear_test"]
     mappings do
       indexes "id", [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100],
                                                   exact: [type: "string", index: "not_analyzed"]]]
@@ -16,7 +16,7 @@ defmodule Tirexs.MappingsTest do
   end
 
   test :nested_two_level_index_dsl do
-    index = [name: "bear_test"]
+    index = [index: "bear_test"]
     mappings do
       indexes "id", [type: "string", boost: 5, analizer: "good"]
       indexes "title", [type: "nested"] do
@@ -31,7 +31,7 @@ defmodule Tirexs.MappingsTest do
   end
 
   test :default_type do
-    index = [name: "bear_test"]
+    index = [index: "bear_test"]
     mappings do
       indexes "id", [type: "string", boost: 5, analizer: "good"]
       indexes "title" do
@@ -42,11 +42,11 @@ defmodule Tirexs.MappingsTest do
       indexes "simple2", type: "long"
     end
 
-    assert index == [name: "bear_test", mapping: [properties: [id: [type: "string", boost: 5, analizer: "good"], title: [type: "object", properties: [set: [type: "string"], get: [type: "long"]]], simple: [type: "string"], simple2: [type: "long"]]]]
+    assert index == [index: "bear_test", mapping: [properties: [id: [type: "string", boost: 5, analizer: "good"], title: [type: "object", properties: [set: [type: "string"], get: [type: "long"]]], simple: [type: "string"], simple2: [type: "long"]]]]
   end
 
   test :nested_deep_index_dsl do
-    index = [name: "bear_test"]
+    index = [index: "bear_test"]
     mappings do
       indexes "id", [type: "string", boost: 5]
       indexes "title", [type: "nested"] do
@@ -58,12 +58,12 @@ defmodule Tirexs.MappingsTest do
       indexes "simple", type: "string"
     end
 
-    assert index ==  [name: "bear_test", mapping: [properties: [id: [type: "string", boost: 5], title: [type: "nested", properties: [set: [type: "string", properties: [set2: [type: "string"]]], get: [type: "long"]]], simple: [type: "string"]]]]
+    assert index ==  [index: "bear_test", mapping: [properties: [id: [type: "string", boost: 5], title: [type: "nested", properties: [set: [type: "string", properties: [set2: [type: "string"]]], get: [type: "long"]]], simple: [type: "string"]]]]
   end
 
 
   test :real_simpe_example do
-    index = [name: "bear_test"]
+    index = [index: "bear_test"]
     mappings do
       indexes "mn_opts_", [type: "nested"] do
         indexes "uk", [type: "nested"] do
@@ -83,12 +83,12 @@ defmodule Tirexs.MappingsTest do
       end
       indexes "rev_history_", type: "nested"
     end
-    assert index == [name: "bear_test", mapping: [properties: [mn_opts_: [type: "nested", properties: [uk: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]]]], rev_history_: [type: "nested"]]]]
+    assert index == [index: "bear_test", mapping: [properties: [mn_opts_: [type: "nested", properties: [uk: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]]]], rev_history_: [type: "nested"]]]]
 
   end
 
   test :real_advance_exampe do
-      index = [name: "bear_test"]
+      index = [index: "bear_test"]
       mappings do
         indexes "mn_opts_", [type: "nested"] do
           indexes "uk", [type: "nested"] do
@@ -137,7 +137,7 @@ defmodule Tirexs.MappingsTest do
         index "rev_history_", type: "nested"
       end
 
-      assert index == [name: "bear_test", mapping: [properties: [mn_opts_: [type: "nested", properties: [uk: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]], ca: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]], us: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]]]], rev_history_: [type: "nested"]]]]
+      assert index == [index: "bear_test", mapping: [properties: [mn_opts_: [type: "nested", properties: [uk: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]], ca: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]], us: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]]]], rev_history_: [type: "nested"]]]]
     end
 
 end

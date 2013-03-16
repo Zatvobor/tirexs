@@ -45,7 +45,7 @@ defmodule Acceptances.ElasticSearchTest do
 
   test :create_type_mapping do
     settings = Tirexs.ElasticSearch.Config.new()
-    index = [name: "bear_test", type: "bear_type"]
+    index = [index: "bear_test", type: "bear_type"]
       mappings do
         indexes "mn_opts_", [type: "object"] do
           indexes "uk", [type: "object"] do

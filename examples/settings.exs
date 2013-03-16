@@ -1,6 +1,6 @@
 import Tirexs.Index.Settings
 
-Tirexs.DSL.define [name: "test_dsl_setting"], fn(index, elastic_settings) ->
+Tirexs.DSL.define [index: "test_dsl_setting"], fn(index, elastic_settings) ->
 
   settings do
     analysis do
