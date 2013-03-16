@@ -8,7 +8,7 @@
                         'Elixir-Tirexs-ElasticSearch-Config',
                         'Elixir-Tirexs-ElasticSearch-Settings',
                         'Elixir-Tirexs-ElasticSearch',
-                        'Elixir-Tirexs-Index-Helpers',
+                        'Elixir-Tirexs-Index-Logic',
                         'Elixir-Tirexs-Index-Settings','Elixir-Tirexs-Loader',
                         'Elixir-Tirexs-Manage-Aliases','Elixir-Tirexs-Manage',
                         'Elixir-Tirexs-Mapping','Elixir-Tirexs-Query-Filter',

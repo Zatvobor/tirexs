@@ -1,7 +1,9 @@
 defmodule Tirexs.Index.Settings do
+  @moduledoc false
 
-  import Tirexs.Index.Helpers
   import Tirexs.DSL.Logic
+  import Tirexs.Index.Logic
+
 
   defmacro settings([do: block]) do
     quote do
