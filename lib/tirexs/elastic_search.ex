@@ -81,13 +81,13 @@ defmodule Tirexs.ElasticSearch do
 
   def get_body_json(body), do: JSON.decode(to_binary(body))
 
-  defp make_headers, do: [{'Content-Type', 'application/json'}]
-
-  defp make_url(query_url, config) do
+  def make_url(query_url, config) do
     if config.port == nil || config.port == 80 do
       "http://#{config.uri}/#{query_url}"
     else
       "http://#{config.uri}:#{config.port}/#{query_url}"
     end
   end
+
+  defp make_headers, do: [{'Content-Type', 'application/json'}]
 end
