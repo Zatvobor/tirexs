@@ -14,14 +14,6 @@ defmodule Tirexs.Mapping do
     end
   end
 
-
-  @doc false
-  defmacro __using__(_) do
-    quote do
-      import unquote(Tirexs.Mapping), only: [mappings: 1, indexes: 1]
-    end
-  end
-
   @doc false
   defmacro mappings([do: block]) do
     mappings =  [properties: extract(block)]

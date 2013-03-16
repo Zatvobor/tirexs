@@ -9,7 +9,7 @@ defmodule Acceptances.ManageTest do
   import Tirexs.Bulk
 
   import Tirexs.Query
-  use Tirexs.Mapping
+  import :macros, Tirexs.Mapping
 
   @settings Tirexs.ElasticSearch.Config.new()
 

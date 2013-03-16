@@ -8,7 +8,7 @@
 #
 #   Tirexs.Loader.load Path.expand("examples/mapping.exs")
 #
-use Tirexs.Mapping
+import Tirexs.Mapping
 
 Tirexs.DSL.define [type: "dsl", index: "test_dsl_index"], fn(index, _elastic_settings) ->
 

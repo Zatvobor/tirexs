@@ -3,7 +3,7 @@ Code.require_file "../../test_helper.exs", __FILE__
 defmodule Tirexs.MappingsTest do
   use ExUnit.Case
 
-  use Tirexs.Mapping
+  import Tirexs.Mapping
 
   test :simpe_dsl do
     index = [index: "bear_test"]
