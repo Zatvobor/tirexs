@@ -1,8 +1,8 @@
 defmodule Tirexs.Query do
   @moduledoc false
 
-  import Tirexs.Query.Helpers
   import Tirexs.DSL.Logic
+  import Tirexs.Query.Logic
 
 
   @doc false

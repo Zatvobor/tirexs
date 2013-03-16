@@ -12,7 +12,7 @@
                         'Elixir-Tirexs-Index-Settings','Elixir-Tirexs-Loader',
                         'Elixir-Tirexs-Manage-Aliases','Elixir-Tirexs-Manage',
                         'Elixir-Tirexs-Mapping','Elixir-Tirexs-Query-Filter',
-                        'Elixir-Tirexs-Query-Helpers','Elixir-Tirexs-Query',
+                        'Elixir-Tirexs-Query-Logic','Elixir-Tirexs-Query',
                         'Elixir-Tirexs-River-Couchdb','Elixir-Tirexs-River',
                         'Elixir-Tirexs-Search-Facets',
                         'Elixir-Tirexs-Search-Rescore',

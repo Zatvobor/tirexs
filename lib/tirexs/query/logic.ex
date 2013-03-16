@@ -1,10 +1,11 @@
-defmodule Tirexs.Query.Helpers do
+defmodule Tirexs.Query.Logic do
   @moduledoc false
 
   use Tirexs.DSL.Logic
 
   alias Tirexs.Query, as: Query
   alias Tirexs.Query.Filter, as: Filter
+
 
   def transpose(block) do
       case block do
@@ -112,16 +113,12 @@ defmodule Tirexs.Query.Helpers do
   end
 
 
-  def without_array([], acc) do
-    acc
-  end
+  def without_array([], acc), do: acc
 
   def without_array([h|t], acc) do
     acc = acc ++ [Enum.first h]
     without_array(t, acc)
   end
 
-  def without_array(_array, acc) do
-    acc
-  end
+  def without_array(_array, acc), do: acc
 end
