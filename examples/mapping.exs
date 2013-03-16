@@ -1,6 +1,6 @@
 use Tirexs.Mapping
 
-Tirexs.DSL.define [type: "dsl", name: "test_dsl_index"], fn(index, _elastic_settings) ->
+Tirexs.DSL.define [type: "dsl", index: "test_dsl_index"], fn(index, _elastic_settings) ->
 
   elastic_settings = Tirexs.ElasticSearch.Config.new([user: "new_user"])
 

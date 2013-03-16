@@ -51,13 +51,13 @@ defmodule Tirexs.Mapping do
     if definition[:type] do
       create_resource_settings(definition, opts)
 
-      url  = "#{definition[:name]}/#{definition[:type]}/_mapping"
+      url  = "#{definition[:index]}/#{definition[:type]}/_mapping"
       json = to_resource_json(definition)
 
       put(url, json, opts)
     else
-      url  = "#{definition[:name]}/_mapping"
-      json = to_resource_json(definition, definition[:name])
+      url  = "#{definition[:index]}/_mapping"
+      json = to_resource_json(definition, definition[:index])
 
       put(url, json, opts)
     end
@@ -65,7 +65,7 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def create_resource_settings(definition, opts) do
-    unless exist?(definition[:name], opts), do: put(definition[:name], opts)
+    unless exist?(definition[:index], opts), do: put(definition[:index], opts)
   end
 
   @doc false
