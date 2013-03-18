@@ -10,7 +10,7 @@
 #
 import Tirexs.Mapping
 
-Tirexs.DSL.define [type: "dsl", index: "test_dsl_index"], fn(index, _elastic_settings) ->
+Tirexs.DSL.define [type: "dsl", index: "test_dsl_index"], fn(index, _) ->
 
   elastic_settings = Tirexs.ElasticSearch.Config.new([user: "new_user"])
 
