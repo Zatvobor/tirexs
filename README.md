@@ -5,6 +5,7 @@ tirexs
 
 A DSL for the ElasticSearch search engine. Inspired by amazing https://github.com/karmi/tire gem
 Let's create an index named articles and store/index some documents:
+
     settings = Tirexs.ElasticSearch.Config.new()
 
     Tirexs.Bulk.store [index: "articles", refresh: true], settings do
@@ -34,6 +35,7 @@ We can also create the index with custom mapping for a specific document type:
     [_, _, body] = Tirexs.Mapping.create_resource(index, settings)
 
 For delete index:
+
     settings = Tirexs.ElasticSearch.Config.new()
     Tirexs.ElasticSearch.delete("articles", settings)
 
