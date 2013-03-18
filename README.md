@@ -64,6 +64,12 @@ articles = search [index: "articles"] do
       terms field: "tags"
     end
   end
+
+  sort do
+    [
+      [title: "desc"]
+    ]
+  end
 end
 
 result = Tirexs.Query.create_resource(articles)

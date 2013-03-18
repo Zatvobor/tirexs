@@ -119,8 +119,15 @@ defmodule Acceptances.ElasticSearchTest do
           terms field: "tags"
         end
       end
+
+      sort do
+        [
+          [title: "desc"]
+        ]
+      end
     end
 
+    IO.puts JSON.encode(s)
     result = Tirexs.Query.create_resource(s, settings)
 
     assert result.count == 1
