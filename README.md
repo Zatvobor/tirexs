@@ -5,6 +5,7 @@ tirexs
 
 A DSL for the ElasticSearch search engine. Inspired by amazing https://github.com/karmi/tire gem
 Let's create an index named articles and store/index some documents:
+
     settings = Tirexs.ElasticSearch.Config.new()
 
     Tirexs.Bulk.store [index: "articles", refresh: true], settings do
@@ -34,11 +35,13 @@ We can also create the index with custom mapping for a specific document type:
     [_, _, body] = Tirexs.Mapping.create_resource(index, settings)
 
 For delete index:
+
     settings = Tirexs.ElasticSearch.Config.new()
     Tirexs.ElasticSearch.delete("articles", settings)
 
 OK. Now, let's go search all the data.
 We will be searching for articles whose title begins with letter “T”, sorted by title in descending order, filtering them for ones tagged “elixir”, and also retrieving some facets:
+
     import Tirexs.Search
     settings = Tirexs.ElasticSearch.Config.new()
     s = search [index: "articles"] do
