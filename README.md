@@ -11,6 +11,8 @@ Walk-through a code
 Let's create an `articles` index:
 
 ```elixir
+import Tirexs.Bulk
+
 settings = Tirexs.ElasticSearch.Config.new()
 
 Tirexs.Bulk.store [index: "articles", refresh: true], settings do
