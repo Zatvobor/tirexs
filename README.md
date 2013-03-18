@@ -75,7 +75,7 @@ Let's display the results:
     end
 
      #=> [{"_index","articles"},{"_type","article"},{"_id","2"},{"_score",1.0},{"_source",[{"id",2},
-     {"title","Two"},{"tags",["elixir","r uby"]},{"type","article"}]}]
+     {"title","Two"},{"tags",["elixir","ruby"]},{"type","article"}]}]
 
 License
 -------
