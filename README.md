@@ -67,6 +67,7 @@ We will be searching for articles whose title begins with letter “T”, sorted
     result = Tirexs.Query.create_resource(s, settings)
 
 Let's display the results:
+
     result.count # => 1
     result.facets #=> Hash by facet name
     Enum.each result.hits, fn(item) ->
