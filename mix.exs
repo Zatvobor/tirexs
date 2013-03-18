@@ -3,7 +3,7 @@ defmodule Tirexs.Mixfile do
 
   def project do
     [ app: :tirexs,
-      version: "0.2",
+      version: "0.3.dev",
       deps: deps ]
   end
 
