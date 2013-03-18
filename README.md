@@ -40,7 +40,7 @@ mappings do
   end
 end
 
-[_, _, body] = Tirexs.Mapping.create_resource(index, settings)
+[:ok, status, body] = Tirexs.Mapping.create_resource(index, settings)
 ```
 
 Now, let's go further. We will be searching for articles whose title begins with letter “T”, sorted by title in descending order, filtering them for ones tagged “elixir”, and also retrieving some facets:
@@ -49,6 +49,7 @@ Now, let's go further. We will be searching for articles whose title begins with
 import Tirexs.Search
 
 settings = Tirexs.ElasticSearch.Config.new()
+
 articles = search [index: "articles"] do
   query do
     query_string "title:T*"
@@ -68,7 +69,6 @@ articles = search [index: "articles"] do
     end
   end
 end
-
 
 result = Tirexs.Query.create_resource(articles, settings)
 Enum.each result.hits, fn(item) ->
