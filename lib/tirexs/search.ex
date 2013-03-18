@@ -34,7 +34,8 @@ defmodule Tirexs.Search do
   end
 
   defmacro search(options, [do: block]) do
-    [search: extract(block) ++ options]
+    [options, index_opts] = extract_index_options(options)
+    [search: extract(block) ++ options] ++ index_opts
   end
 
   def filters(params, _opts) do
@@ -51,5 +52,18 @@ defmodule Tirexs.Search do
 
   def script_fields([do: block]) do
     [script_fields: block]
+  end
+
+  defp extract_index_options(options, index_opts//[]) do
+    if options[:index] do
+      index_opts = index_opts ++ [index: options[:index]]
+      options = Dict.delete(options, :index)
+    end
+
+    if options[:type] do
+      index_opts = index_opts ++ [type: options[:type]]
+      options = Dict.delete(options, :type)
+    end
+    [options, index_opts]
   end
 end
