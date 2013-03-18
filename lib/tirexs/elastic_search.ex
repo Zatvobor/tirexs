@@ -44,7 +44,7 @@ defmodule Tirexs.ElasticSearch do
   @doc false
   def exist?(url, settings) do
     case head(url, settings) do
-      [:error, _, _] -> false
+      {:error, _, _} -> false
       _ -> true
     end
   end
