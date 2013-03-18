@@ -388,9 +388,9 @@ defmodule Tirexs.Query do
   @doc false
   def create_resource(definition, opts) do
     url = if definition[:type] do
-      "#{definition[:index]}/_search"
+      "#{definition[:index]}/#{definition[:type]}"
     else
-      "#{definition[:index]}/#{definition[:type]}/_search"
+      "#{definition[:index]}"
     end
 
     { url, json } = { "#{url}/_search", to_resource_json(definition) }
