@@ -4,6 +4,8 @@ defmodule Tirexs.Query do
   import Tirexs.DSL.Logic
   import Tirexs.Query.Logic
 
+  defrecord Result, [count: 0, max_score: nil, facets: [], hits: []]
+
 
   @doc false
   defmacro query([do: block]) do
@@ -394,7 +396,15 @@ defmodule Tirexs.Query do
     end
 
     { url, json } = { "#{url}/_search", to_resource_json(definition) }
-    Tirexs.ElasticSearch.post(url, json, opts)
+    case Tirexs.ElasticSearch.post(url, json, opts) do
+      [:ok, _, result] ->
+        count     = result["hits"]["total"]
+        hits      = result["hits"]["hits"]
+        facets    = result["hits"]["facets"]
+        max_score = result["hits"]["max_score"]
+        Result.new(count: count, hits: hits, facets: facets, max_score: max_score)
+      result  -> result
+    end
   end
 
   @doc false
