@@ -388,6 +388,11 @@ defmodule Tirexs.Query do
   end
 
   @doc false
+  def create_resource(definition) do
+    create_resource(definition, Tirexs.ElasticSearch.Config.new)
+  end
+
+  @doc false
   def create_resource(definition, opts) do
     url = if definition[:type] do
       "#{definition[:index]}/#{definition[:type]}"

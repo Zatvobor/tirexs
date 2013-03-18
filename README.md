@@ -26,8 +26,6 @@ Ability to customize the mapping for specific document type:
 ```elixir
 import Tirexs.Mapping
 
-settings = Tirexs.ElasticSearch.Config.new()
-
 index = [index: "articles", type: "article"]
 mappings do
   indexes "id", type: "string", index: "not_analyzed", include_in_all: false
@@ -40,15 +38,13 @@ mappings do
   end
 end
 
-[:ok, status, body] = Tirexs.Mapping.create_resource(index, settings)
+[:ok, status, body] = Tirexs.Mapping.create_resource(index)
 ```
 
 Now, let's go further. We will be searching for articles whose title begins with letter “T”, sorted by title in descending order, filtering them for ones tagged “elixir”, and also retrieving some facets:
 
 ```elixir
 import Tirexs.Search
-
-settings = Tirexs.ElasticSearch.Config.new()
 
 articles = search [index: "articles"] do
   query do
@@ -70,7 +66,8 @@ articles = search [index: "articles"] do
   end
 end
 
-result = Tirexs.Query.create_resource(articles, settings)
+result = Tirexs.Query.create_resource(articles)
+
 Enum.each result.hits, fn(item) ->
   IO.puts inspect(item)
   #=> [{"_index","articles"},{"_type","article"},{"_id","2"},{"_score",1.0},{"_source",[{"id",2}, {"title","Two"},{"tags",["elixir","r uby"]},{"type","article"}]}]

@@ -39,6 +39,11 @@ defmodule Tirexs.Mapping do
   end
 
   @doc false
+  def create_resource(definition) do
+    create_resource(definition, Tirexs.ElasticSearch.Config.new)
+  end
+
+  @doc false
   def create_resource(definition, opts) do
     if definition[:type] do
       create_resource_settings(definition, opts)

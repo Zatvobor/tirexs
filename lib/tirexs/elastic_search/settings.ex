@@ -4,6 +4,11 @@ defmodule Tirexs.ElasticSearch.Settings do
   import Tirexs.ElasticSearch
 
   @doc false
+  def create_resource(definition) do
+    create_resource(definition, Tirexs.ElasticSearch.Config.new)
+  end
+
+  @doc false
   def create_resource(definition, opts) do
     if exist?(definition[:index], opts), do: delete(definition[:index], opts)
     post(definition[:index], to_resource_json(definition), opts)

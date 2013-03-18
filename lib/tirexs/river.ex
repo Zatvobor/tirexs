@@ -30,6 +30,11 @@ defmodule Tirexs.River do
   def init_river(settings), do: settings
 
   @doc false
+  def create_resource(definition) do
+    create_resource(definition, Tirexs.ElasticSearch.Config.new)
+  end
+
+  @doc false
   def create_resource(definition, opts) do
     url = "_river/#{definition[:name]}"
     if exist?(url, opts), do: delete(url, opts)
