@@ -128,10 +128,10 @@ defmodule Acceptances.ElasticSearchTest do
       end
     end
 
-    IO.puts JSON.encode(s)
     result = Tirexs.Query.create_resource(s, settings)
 
     assert result.count == 1
     assert Enum.first(result.hits)["_source"]["id"] == 2
+
   end
 end

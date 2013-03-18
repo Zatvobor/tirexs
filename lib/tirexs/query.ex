@@ -405,7 +405,7 @@ defmodule Tirexs.Query do
       {:ok, _, result} ->
         count     = result["hits"]["total"]
         hits      = result["hits"]["hits"]
-        facets    = result["hits"]["facets"]
+        facets    = result["facets"]
         max_score = result["hits"]["max_score"]
         Result.new(count: count, hits: hits, facets: facets, max_score: max_score)
       result  -> result

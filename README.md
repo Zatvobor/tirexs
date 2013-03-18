@@ -80,6 +80,18 @@ Enum.each result.hits, fn(item) ->
 end
 ```
 
+Let's display the global facets:
+```
+Enum.each result.facets["global_tags"]["terms"], fn(f) ->
+  IO.puts "#{f["term"]}    #{f["count"]}"
+end
+```
+Now, let's display the facets based on current query (notice that count for articles tagged with 'java' is included, even though it's not returned by our query; count for articles tagged 'erlang' is excluded, since they don't match the current query):
+```
+Enum.each result.facets["current_tags"]["terms"], fn(f) ->
+  IO.puts "#{f["term"]}    #{f["count"]}"
+end
+```
 License
 -------
 
