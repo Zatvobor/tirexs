@@ -11,11 +11,8 @@ defmodule Acceptances.ElasticSearchTest do
 
   test :get_elastic_search_server do
     settings = Tirexs.ElasticSearch.Config.new()
-    [status, _, _] = get("missing_index", settings)
-
-    assert status == :error
-
-    [_, _, body] = get("", settings)
+    {:error, _, _}  = get("missing_index", settings)
+    {:ok, _, body}    = get("", settings)
 
     assert body["tagline"] == "You Know, for Search"
 
@@ -24,7 +21,7 @@ defmodule Acceptances.ElasticSearchTest do
   test :create_index do
     settings = Tirexs.ElasticSearch.Config.new()
     delete("bear_test", settings)
-    [_, _, body] = put("bear_test", settings)
+    {:ok, _, body} = put("bear_test", settings)
     assert body["acknowledged"] == true
     delete("bear_test", settings)
   end
@@ -32,7 +29,7 @@ defmodule Acceptances.ElasticSearchTest do
   test :delete_index do
     settings = Tirexs.ElasticSearch.Config.new()
     put("bear_test", settings)
-    [_, _, body] = delete("bear_test", settings)
+    {:ok, _, body} = delete("bear_test", settings)
     assert body["acknowledged"] == true
   end
 
@@ -68,7 +65,7 @@ defmodule Acceptances.ElasticSearchTest do
         indexes "rev_history_", type: "object"
       end
 
-    [_, _, body] = Tirexs.Mapping.create_resource(index, settings)
+    {:ok, _, body} = Tirexs.Mapping.create_resource(index, settings)
 
     assert body["acknowledged"] == true
 
@@ -123,12 +120,9 @@ defmodule Acceptances.ElasticSearchTest do
       end
     end
 
-    result = Tirexs.Query.create_resource(s, settings)
+    { :ok, _, result } = Tirexs.Query.create_resource(s, settings)
 
-    assert result.count == 1
-
+    assert Enum.count(result) == 1
     assert Enum.first(result.hits)["_source"]["id"] == 2
-
   end
-
 end

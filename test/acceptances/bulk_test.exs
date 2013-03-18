@@ -25,9 +25,7 @@ defmodule Acceptances.BulkTest do
     end
 
     :timer.sleep(2_000)
-    [_, _, body] = Tirexs.ElasticSearch.get("bear_test/_count", settings)
+    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", settings)
     assert body["count"] == 11
-
   end
-
 end

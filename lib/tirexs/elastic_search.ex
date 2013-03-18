@@ -55,10 +55,10 @@ defmodule Tirexs.ElasticSearch do
     :inets.start()
     { url, content_type, options } = { binary_to_list(url), 'application/json', [{:body_format, :binary}] }
     case method do
-      :get -> response(:httpc.request(method, {url, [make_headers]}, [], []))
-      :head -> response(:httpc.request(method, {url, []}, [], []))
-      :put -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
-      :post -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
+      :get    -> response(:httpc.request(method, {url, [make_headers]}, [], []))
+      :head   -> response(:httpc.request(method, {url, []}, [], []))
+      :put    -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
+      :post   -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
       :delete -> response(:httpc.request(method, {url, make_headers},[],[]))
     end
   end
@@ -68,11 +68,11 @@ defmodule Tirexs.ElasticSearch do
     case req do
       {:ok, { {_, status, _}, _, body}} ->
         if round(status / 100) == 4 || round(status / 100) == 5 do
-          [:error, status, body]
+          { :error, status, body }
         else
           case body do
-            [] -> [:ok, status, []]
-            _  -> [:ok, status, get_body_json(body)]
+            [] -> { :ok, status, [] }
+            _  -> { :ok, status, get_body_json(body) }
           end
         end
       _ -> :error

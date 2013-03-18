@@ -38,7 +38,7 @@ mappings do
   end
 end
 
-[:ok, status, body] = Tirexs.Mapping.create_resource(index)
+{ :ok, status, body } = Tirexs.Mapping.create_resource(index)
 ```
 
 Now, let's go further. We will be searching for articles whose title begins with letter “T”, sorted by title in descending order, filtering them for ones tagged “elixir”, and also retrieving some facets:
