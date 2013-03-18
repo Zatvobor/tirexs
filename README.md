@@ -41,6 +41,7 @@ For delete index:
 
 OK. Now, let's go search all the data.
 We will be searching for articles whose title begins with letter “T”, sorted by title in descending order, filtering them for ones tagged “elixir”, and also retrieving some facets:
+    
     import Tirexs.Search
     settings = Tirexs.ElasticSearch.Config.new()
     s = search [index: "articles"] do
@@ -66,6 +67,7 @@ We will be searching for articles whose title begins with letter “T”, sorted
     [_, _, result] = Tirexs.Query.create_resource(s, settings)
 
 Let's display the results:
+    
     Enum.each result["hits"]["hits"], fn(item) ->
       IO.puts inspect(item)
     end
