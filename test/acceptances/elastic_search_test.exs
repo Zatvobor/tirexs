@@ -36,8 +36,9 @@ defmodule Acceptances.ElasticSearchTest do
 
   test :head do
     settings = Tirexs.ElasticSearch.Config.new()
+    body = delete("bear_test", settings)
     assert exist?("bear_test", settings) == false
-    put("bear_test", settings)
+    body = put("bear_test", settings)
     assert exist?("bear_test", settings) == true
     delete("bear_test", settings)
   end
@@ -120,9 +121,9 @@ defmodule Acceptances.ElasticSearchTest do
       end
     end
 
-    { :ok, _, result } = Tirexs.Query.create_resource(s, settings)
+    result = Tirexs.Query.create_resource(s, settings)
 
-    assert Enum.count(result) == 1
+    assert result.count == 1
     assert Enum.first(result.hits)["_source"]["id"] == 2
   end
 end

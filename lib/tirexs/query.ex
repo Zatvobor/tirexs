@@ -402,7 +402,7 @@ defmodule Tirexs.Query do
 
     { url, json } = { "#{url}/_search", to_resource_json(definition) }
     case Tirexs.ElasticSearch.post(url, json, opts) do
-      [:ok, _, result] ->
+      {:ok, _, result} ->
         count     = result["hits"]["total"]
         hits      = result["hits"]["hits"]
         facets    = result["hits"]["facets"]
