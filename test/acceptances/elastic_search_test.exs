@@ -123,9 +123,11 @@ defmodule Acceptances.ElasticSearchTest do
       end
     end
 
-    [_, _, result] = Tirexs.Query.create_resource(s, settings)
+    result = Tirexs.Query.create_resource(s, settings)
 
-    assert result["hits"]["total"] == 1
+    assert result.count == 1
+
+    assert Enum.first(result.hits)["_source"]["id"] == 2
 
   end
 
