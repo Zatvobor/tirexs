@@ -36,9 +36,10 @@ defmodule Acceptances.ElasticSearchTest do
 
   test :head do
     settings = Tirexs.ElasticSearch.Config.new()
-    body = delete("bear_test", settings)
+    delete("bear_test", settings)
     assert exist?("bear_test", settings) == false
-    body = put("bear_test", settings)
+
+    put("bear_test", settings)
     assert exist?("bear_test", settings) == true
     delete("bear_test", settings)
   end
