@@ -2,13 +2,12 @@
 # Run this example from console manually:
 #
 #   mix run -r examples/search.exs
+#   # => curl -X POST -d '{"query":{"nested":{"query":{"bool":{"must":[{"match":{"comments.author":{"query":"John"}}},{"match":{"comments.message":{"query":"cool"}}}]}},"path":"comments"}}}' http://127.0.0.1:9200/tets_index/_search
+#
 # Run this example from Elixir environment:
-# => curl -X POST -d '{"query":{"nested":{"query":{"bool":{"must":[{"match":{"comments.author":{"query":"John"}}},{"match":{"comments.message":{"query":"cool"}}}]}},"path":"comments"}}}' http://127.0.0.1:9200/tets_index/_search
 #
 #   Tirexs.Loader.load Path.expand("examples/search.exs")
 #
-
-
 import Tirexs.Search
 
 Tirexs.DSL.define fn(_elastic_settings) ->
