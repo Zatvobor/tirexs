@@ -10,9 +10,10 @@
 #
 import Tirexs.Search
 
-Tirexs.DSL.define [index: "tets_index"], fn(_search, elastic_settings) ->
-  # Let's consider the `nested` query for searching articles where user `John` has left a `Cool` message:
-  search = search do
+Tirexs.DSL.define fn(_elastic_settings) ->
+  # We'll use the `nested` query to search for articles where _John_ left a _"Cool"_ message:
+  #
+  search = search [index: "articles"] do
     query do
       nested [path: "comments"] do
         query do
@@ -29,9 +30,9 @@ Tirexs.DSL.define [index: "tets_index"], fn(_search, elastic_settings) ->
 
   # This couple of code lines here just for `mix run -r examples/search.exs` command output
   # It's obvious that you should not use it in real search :)
-  url  = Tirexs.ElasticSearch.make_url(_search[:index] <> "/_search", elastic_settings)
+  url  = Tirexs.ElasticSearch.make_url(search[:index] <> "/_search", _elastic_settings)
   json = Tirexs.Query.to_resource_json(search)
   IO.puts "# => curl -X POST -d '#{json}' #{url}"
 
-  { search ++ _search, elastic_settings }
+  { search, _elastic_settings }
 end
