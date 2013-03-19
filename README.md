@@ -50,7 +50,7 @@ import Tirexs.Search
 
 articles = search [index: "articles"] do
   query do
-    query_string "title:T*"
+    string "title:T*"
   end
 
   filter do
