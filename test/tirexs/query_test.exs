@@ -47,6 +47,14 @@ defmodule Tirexs.QueryTest do
     assert query == [query: [query_string: [query: "this AND that OR thus", default_field: "content"]]]
   end
 
+  test :string do
+    query = query do
+      string "this AND that OR thus", [default_field: "content"]
+    end
+
+    assert query == [query: [query_string: [query: "this AND that OR thus", default_field: "content"]]]
+  end
+
   test :custom_score do
     query = query do
       custom_score [script: "_score * doc[\"type\"].value"] do

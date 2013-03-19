@@ -17,6 +17,7 @@ defmodule Tirexs.Query.Logic do
         {:match, _, params}                   -> Query.match(params)
         {:multi_match, _, params}             -> Query.multi_match(params)
         {:query_string, _, params}            -> Query.query_string(params)
+        {:string, _, params}                  -> Query.query_string(params)
         {:ids, _, params}                     -> Query.ids(params)
         {:range, _, params}                   -> Query.range(params)
         {:term, _, params}                    -> Query.term(params)
