@@ -6,7 +6,7 @@ defmodule Tirexs.Query do
   import Tirexs.DSL.Logic
   import Tirexs.Query.Logic
 
-  defrecord Result, [count: 0, max_score: nil, facets: [], hits: []]
+  defrecord Result, [count: 0, max_score: nil, facets: [], hits: [], _scroll_id: nil]
 
 
   @doc false
@@ -412,21 +412,22 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def create_resource(definition, opts) do
+  def create_resource(definition, settings, opts//[]) do
     url = if definition[:type] do
       "#{definition[:index]}/#{definition[:type]}"
     else
       "#{definition[:index]}"
     end
 
-    { url, json } = { "#{url}/_search", to_resource_json(definition) }
-    case Tirexs.ElasticSearch.post(url, json, opts) do
+    { url, json } = { "#{url}/_search" <> to_param(opts, ""), to_resource_json(definition) }
+    case Tirexs.ElasticSearch.post(url, json, settings) do
       {:ok, _, result} ->
         count     = result["hits"]["total"]
         hits      = result["hits"]["hits"]
         facets    = result["facets"]
         max_score = result["hits"]["max_score"]
-        Result.new(count: count, hits: hits, facets: facets, max_score: max_score)
+        scroll_id = result["_scroll_id"]
+        Result.new(count: count, hits: hits, facets: facets, max_score: max_score, _scroll_id: scroll_id)
       result  -> result
     end
   end
