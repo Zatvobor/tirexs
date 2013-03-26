@@ -1,4 +1,6 @@
 defmodule Tirexs.Query do
+  #http://www.elasticsearch.org/guide/reference/query-dsl/
+
   @moduledoc false
 
   import Tirexs.DSL.Logic
@@ -313,34 +315,42 @@ defmodule Tirexs.Query do
     [extract(options)]
   end
 
+  @doc false
   def bool(block) do
     [bool: extract(block)]
   end
 
+  @doc false
   def must(block) do
     [must: to_array(extract(block))]
   end
 
+  @doc false
   def should(block) do
     [should: to_array(extract(block))]
   end
 
+  @doc false
   def must_not(block) do
     [must_not: to_array(extract(block))]
   end
 
+  @doc false
   def positive(options) do
     [positive: extract(extract_do(options))]
   end
 
+  @doc false
   def negative(options) do
     [negative: extract(extract_do(options))]
   end
 
+  @doc false
   def queries(options) do
     [queries: to_array(extract(options))]
   end
 
+  @doc false
   def location(options, location_opts//[]) do
     if is_list(options) do
       location_opts = Enum.at!(options, 0)
@@ -349,39 +359,48 @@ defmodule Tirexs.Query do
     [location: extract(options) ++ location_opts]
   end
 
+  @doc false
   def shape(options) do
     [shape: options]
   end
 
+  @doc false
   def indexed_shape(options) do
     [indexed_shape: options]
   end
 
+  @doc false
   def no_match_query(options) when is_binary(options) do
     [no_match_query: options]
   end
 
+  @doc false
   def no_match_query(options) do
     [no_match_query: extract(options)]
   end
 
+  @doc false
   def clauses(options) do
     [clauses: to_array(extract(options))]
   end
 
+  @doc false
   def include(options) do
     [include: extract(options[:do])]
   end
 
+  @doc false
   def exclude(options) do
     [exclude: extract(options[:do])]
   end
 
+  @doc false
   def text_phrase(options) do
     [field, values, _] = extract_options(options)
     [text_phrase: Dict.put([], to_atom(field), values)]
   end
 
+  @doc false
   def text_phrase_prefix(options) do
     [field, values, _] = extract_options(options)
     [text_phrase_prefix: Dict.put([], to_atom(field), values)]
