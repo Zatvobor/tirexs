@@ -26,7 +26,7 @@ defmodule Acceptances.ScrollTest do
       index  id: 90, title: "barww"
     end
 
-    :timer.sleep(2_000)
+    Tirexs.Manage.refresh("bear_test", settings)
 
     s = search [index: "bear_test"] do
       query do

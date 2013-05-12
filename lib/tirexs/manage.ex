@@ -44,6 +44,15 @@ defmodule Tirexs.Manage do
     end
   end
 
+  def refresh(index, settings) when is_binary(index) do
+    Tirexs.ElasticSearch.post(to_binary(index) <> "/_refresh", settings)
+  end
+
+  def refresh(indexes, settings) when is_list(indexes) do
+    indexes = Enum.join(indexes, ",")
+    refresh(indexes, settings)
+  end
+
   defp make_url(method, options) do
     index = options[:index] <> "/"
     if options[:type] do

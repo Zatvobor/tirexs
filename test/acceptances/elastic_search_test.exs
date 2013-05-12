@@ -100,7 +100,7 @@ defmodule Acceptances.ElasticSearchTest do
       create id: 4, title: "Four", tags: ["erlang"], type: "article"
     end
 
-    :timer.sleep(2_000)
+    Tirexs.Manage.refresh("articles", settings)
 
     s = search [index: "articles"] do
       query do

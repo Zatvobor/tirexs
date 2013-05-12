@@ -24,7 +24,7 @@ defmodule Acceptances.BulkTest do
       index  id: 90, title: "barww"
     end
 
-    :timer.sleep(2_000)
+    Tirexs.Manage.refresh("bear_test", settings)
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", settings)
     assert body["count"] == 11
   end

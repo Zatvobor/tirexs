@@ -43,7 +43,9 @@ defmodule Acceptances.ManageTest do
       create id: 1, name: "bar1", description: "foo bar test"
       create id: 2, name: "bar2", description: "foo bar test"
     end
-    :timer.sleep(2_000)
+
+    Tirexs.Manage.refresh(["bear_test"], @settings)
+
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
 
     assert body["count"] == 2
@@ -71,7 +73,8 @@ defmodule Acceptances.ManageTest do
       create id: 1, name: "bar1", description: "foo bar test", type: "my_type"
       create id: 2, name: "bar2", description: "foo bar test", type: "my_type"
     end
-    :timer.sleep(2_000)
+
+    Tirexs.Manage.refresh(["bear_test"], @settings)
 
     {_, _, body} = Tirexs.Manage.more_like_this([id: 1, type: "my_type", index: "bear_test", mlt_fields: "name,description", min_term_freq: 1], @settings)
     assert body["hits"]["hits"] == []
