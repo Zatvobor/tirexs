@@ -1,2 +1,2 @@
-[ "jsonex": {:git,"https://github.com/devinus/jsonex.git","0fb926af631df749ca0d1335e2ba5d3d1435d1d3",[ref: "62692a62b7415625ec53b278dda8d0227a535f15"]},
+[ "jsonex": {:git,"https://github.com/devinus/jsonex.git","0fb926af631df749ca0d1335e2ba5d3d1435d1d3",[]},
   "jsx": {:git,"git://github.com/talentdeficit/jsx.git","58a9a5110f953e0b21f59f8b2dbc741a452e443f",[]} ]
