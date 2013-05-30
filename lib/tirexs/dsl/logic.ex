@@ -47,7 +47,7 @@ defmodule Tirexs.DSL.Logic do
   @doc false
   def get_options(options) do
     if Dict.size(options) > 2 do
-      Enum.at!(options, 2)
+      Enum.fetch!(options, 2)
     else
       []
     end
@@ -56,15 +56,15 @@ defmodule Tirexs.DSL.Logic do
   @doc false
   def extract_options(params) do
     if Dict.size(params) > 1 do
-      [Enum.at!(params, 0), Enum.at!(params, 1), get_options(params)]
+      [Enum.fetch!(params, 0), Enum.fetch!(params, 1), get_options(params)]
     else
-      [Enum.at!(params, 0), [],[]]
+      [Enum.fetch!(params, 0), [],[]]
     end
   end
 
   @doc false
   def extract_do(block, position//0) do
-    element = Enum.at!(block, position)
+    element = Enum.fetch!(block, position)
     if element[:do] != nil do
       element[:do]
     else

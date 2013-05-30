@@ -25,7 +25,7 @@ defmodule Tirexs.Search.Rescore do
 
   def _rescore(options, rescore_opts//[]) do
     if is_list(options) do
-      rescore_opts = Enum.at!(options, 0)
+      rescore_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
     end
     [rescore: extract(options) ++ rescore_opts]

@@ -32,7 +32,7 @@ defmodule Tirexs.Search.Facets do
 
   def make_facet(name, options, facet_opts//[]) do
     if is_list(options) do
-      facet_opts = Enum.at!(options, 0)
+      facet_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
     end
     routers(name, options, facet_opts)
