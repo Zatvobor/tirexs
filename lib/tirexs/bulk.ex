@@ -24,7 +24,6 @@ defmodule Tirexs.Bulk do
   end
 
 	def update(opts) do
-		IO.puts "d"
 		[update: opts]
 	end
 
