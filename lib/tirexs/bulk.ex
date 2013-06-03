@@ -88,9 +88,8 @@ defmodule Tirexs.Bulk do
   end
 
 	def match(document) do
-
 		case is_list(document) do
-			true -> document
+			true  -> document
 			false ->
 				{key, properties} = document
 				Dict.put([], key, properties)
