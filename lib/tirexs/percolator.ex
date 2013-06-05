@@ -46,7 +46,7 @@ defmodule Tirexs.Percolator do
     definition = Dict.delete(definition, :index)
     definition = Dict.delete(definition, :type)
     definition = Dict.delete(definition, :name)
-    JSON.encode(definition)
+    JSEX.encode!(definition)
   end
 
   def matches(definition, settings) do

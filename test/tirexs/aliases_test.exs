@@ -29,6 +29,6 @@ defmodule Tirexs.AliasesTest do
 
     #create aliases
     # settings = Tirexs.ElasticSearch.Config.new()
-    # Tirexs.ElasticSearch.post("_aliases", JSON.encode(aliases), settings)
+    # Tirexs.ElasticSearch.post("_aliases", JSEX.encode(aliases), settings)
   end
 end

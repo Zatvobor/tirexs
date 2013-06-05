@@ -22,7 +22,7 @@ defmodule Acceptances.WarmerTest do
       end
     end
 
-    Tirexs.ElasticSearch.put("bear_test", JSON.encode(warmers), settings)
+    Tirexs.ElasticSearch.put("bear_test", JSEX.encode!(warmers), settings)
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/_warmer/warmer_1", settings)
 
     assert body["bear_test"]["warmers"] == [{"warmer_1",[{"types",[]},{"source",[{"query",[{"match_all",[]}]},{"facets",[{"facet_1",[{"terms",[{"field","field"}]}]}]}]}]}]

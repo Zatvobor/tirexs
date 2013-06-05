@@ -1,2 +1,3 @@
-[ "jsonex": {:git,"https://github.com/devinus/jsonex.git","b2e06c99706f6d56e7202efa6fcc942509c45f19",[]},
-  "jsx": {:git,"git://github.com/talentdeficit/jsx.git","f0f43c4abab4d4e889bff79e5d5aab675f9e8d4d",[]} ]
+[ "jsex": {:git,"https://github.com/talentdeficit/jsex.git","ad3587a3293f13012e63934ad05840c308246d4a",[]},
+  "jsonex": {:git,"https://github.com/talentdeficit/jsex.git","ad3587a3293f13012e63934ad05840c308246d4a",[]},
+  "jsx": {:git,"https://github.com/talentdeficit/jsx.git","352d6b21cbec4fe1b66bc7ce3ded67a3b32add2c",[tag: "v1.4.2"]} ]

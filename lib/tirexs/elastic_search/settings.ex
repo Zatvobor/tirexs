@@ -16,6 +16,6 @@ defmodule Tirexs.ElasticSearch.Settings do
 
   @doc false
   def to_resource_json(definition) do
-    JSON.encode [settings: definition[:settings]]
+    JSEX.encode! [settings: definition[:settings]]
   end
 end

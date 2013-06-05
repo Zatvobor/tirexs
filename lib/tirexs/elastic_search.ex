@@ -79,7 +79,7 @@ defmodule Tirexs.ElasticSearch do
     end
   end
 
-  def get_body_json(body), do: JSON.decode(to_binary(body))
+  def get_body_json(body), do: JSEX.decode!(to_binary(body))
 
   def make_url(query_url, config) do
     if config.port == nil || config.port == 80 do

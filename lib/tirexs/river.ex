@@ -47,6 +47,6 @@ defmodule Tirexs.River do
   @doc false
   def to_resource_json(definition) do
     definition = Dict.delete(Dict.delete(definition, :name), :river)
-    JSON.encode(definition)
+    JSEX.encode!(definition)
   end
 end

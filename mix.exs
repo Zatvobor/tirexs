@@ -11,7 +11,7 @@ defmodule Tirexs.Mixfile do
 
   defp deps do
     [
-      {:jsonex, github: "devinus/jsonex"}
+      {:jsex, github: "talentdeficit/jsex"}
     ]
   end
 end

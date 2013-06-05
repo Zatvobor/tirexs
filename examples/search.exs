@@ -31,8 +31,8 @@ Tirexs.DSL.define fn(elastic_settings) ->
   # This couple of code lines here just for `mix run -r examples/search.exs` command output
   # It's obvious that you should not use it in real search :)
   url  = Tirexs.ElasticSearch.make_url(search[:index] <> "/_search", elastic_settings)
-  json = Tirexs.Query.to_resource_json(search)
-  IO.puts "# => curl -X POST -d '#{json}' #{url}"
+  json = JSEX.prettify!(Tirexs.Query.to_resource_json(search))
+  IO.puts "\n # => curl -X POST -d '#{json}' #{url}"
 
   { search, elastic_settings }
 end

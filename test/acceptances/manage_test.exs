@@ -84,7 +84,7 @@ defmodule Acceptances.ManageTest do
     delete("bear_test", @settings)
     put("bear_test/my_type", @settings)
     doc = [user: "kimchy", post_date: "2009-11-15T14:12:12", message: "trying out Elastic Search"]
-    put("bear_test/my_type/1", JSON.encode(doc), @settings)
+    put("bear_test/my_type/1", JSEX.encode!(doc), @settings)
 
     query = query do
       filtered do
@@ -106,7 +106,7 @@ defmodule Acceptances.ManageTest do
     assert body["valid"] == true
 
     {_, _, body} = Tirexs.Manage.explain([index: "bear_test", type: "my_type", id: 1, q: "message:search"], @settings)
-    body = JSON.decode(to_binary(body))
+    body = JSEX.decode!(to_binary(body))
     assert body["matched"] == false
 
     delete("bear_test", @settings)
@@ -116,7 +116,7 @@ defmodule Acceptances.ManageTest do
     delete("bear_test", @settings)
     put("bear_test/my_type", @settings)
     doc = [user: "kimchy", counter: 1, post_date: "2009-11-15T14:12:12", message: "trying out Elastic Search", id: 1]
-    put("bear_test/my_type/1", JSON.encode(doc), @settings)
+    put("bear_test/my_type/1", JSEX.encode!(doc), @settings)
 
     {_, _, body} = get("bear_test/my_type/1", @settings)
 
