@@ -1,3 +1,2 @@
-[ "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "ad3587a3293f13012e63934ad05840c308246d4a", []},
-  "jsonex": {:git, "https://github.com/talentdeficit/jsex.git", "ad3587a3293f13012e63934ad05840c308246d4a", []},
-  "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "352d6b21cbec4fe1b66bc7ce3ded67a3b32add2c", [{:tag, "v1.4.2"}]} ]
+[ "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "95492e9a4f418c10ff1c74d669d89ca5e8ac4d67", []},
+  "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [{:tag, "v1.4.3"}]} ]

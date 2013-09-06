@@ -38,14 +38,14 @@ defmodule Tirexs.Manage do
     warmers = options[:warmers]
     Tirexs.ElasticSearch.put("bear_test/_warmer/warmer_1", settings)
     Enum.each Dict.keys(warmers), fn(key) ->
-      url = make_url(to_binary(key), options)
+      url = make_url(to_string(key), options)
       body = JSEX.encode!(warmers[key][:source])
       Tirexs.ElasticSearch.put(url, body, settings)
     end
   end
 
   def refresh(index, settings) when is_binary(index) do
-    Tirexs.ElasticSearch.post(to_binary(index) <> "/_refresh", settings)
+    Tirexs.ElasticSearch.post(to_string(index) <> "/_refresh", settings)
   end
 
   def refresh(indexes, settings) when is_list(indexes) do
@@ -59,7 +59,7 @@ defmodule Tirexs.Manage do
       index = index <> options[:type] <> "/"
     end
     if options[:id] do
-      index = index <> to_binary(options[:id]) <> "/"
+      index = index <> to_string(options[:id]) <> "/"
     end
 
     if options[:warmer] do

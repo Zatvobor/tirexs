@@ -7,7 +7,7 @@ defmodule Tirexs.DSL.Logic do
   defmacro __using__(_) do
     quote do
       @behaviour unquote(Tirexs.DSL.Behaviour)
-      import :functions, unquote(__MODULE__)
+      import unquote(__MODULE__), only: :functions
 
       def extract(block), do: extract(extract_block(block), [])
 

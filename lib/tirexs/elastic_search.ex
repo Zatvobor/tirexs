@@ -15,7 +15,7 @@ defmodule Tirexs.ElasticSearch do
   def put(query_url, config), do: put(query_url, [], config)
 
   def put(query_url, body, config) do
-    unless body == [], do: body = to_binary(body)
+    unless body == [], do: body = to_string(body)
     do_request(make_url(query_url, config), :put, body)
   end
 
@@ -24,7 +24,7 @@ defmodule Tirexs.ElasticSearch do
 
   @doc false
   def delete(query_url, _body, config) do
-    unless _body == [], do: _body = to_binary(_body)
+    unless _body == [], do: _body = to_string(_body)
     do_request(make_url(query_url, config), :delete)
   end
 
@@ -37,7 +37,7 @@ defmodule Tirexs.ElasticSearch do
   def post(query_url, config), do: post(query_url, [], config)
 
   def post(query_url, body, config) do
-    unless body == [], do: body = to_binary(body)
+    unless body == [], do: body = to_string(body)
     do_request(make_url(query_url, config), :post, body)
   end
 
@@ -53,7 +53,7 @@ defmodule Tirexs.ElasticSearch do
   @doc false
   def do_request(url, method, body//[]) do
     :inets.start()
-    { url, content_type, options } = { binary_to_list(url), 'application/json', [{:body_format, :binary}] }
+    { url, content_type, options } = { String.to_char_list!(url), 'application/json', [{:body_format, :binary}] }
     case method do
       :get    -> response(:httpc.request(method, {url, [make_headers]}, [], []))
       :head   -> response(:httpc.request(method, {url, []}, [], []))
@@ -79,7 +79,7 @@ defmodule Tirexs.ElasticSearch do
     end
   end
 
-  def get_body_json(body), do: JSEX.decode!(to_binary(body))
+  def get_body_json(body), do: JSEX.decode!(to_string(body))
 
   def make_url(query_url, config) do
     if config.port == nil || config.port == 80 do

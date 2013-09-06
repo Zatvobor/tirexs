@@ -9,7 +9,7 @@ defmodule Acceptances.ManageTest do
   import Tirexs.Bulk
 
   import Tirexs.Query
-  import :macros, Tirexs.Mapping
+  import Tirexs.Mapping, only: :macros
 
   @settings Tirexs.ElasticSearch.Config.new()
 
@@ -106,7 +106,7 @@ defmodule Acceptances.ManageTest do
     assert body["valid"] == true
 
     {_, _, body} = Tirexs.Manage.explain([index: "bear_test", type: "my_type", id: 1, q: "message:search"], @settings)
-    body = JSEX.decode!(to_binary(body))
+    body = JSEX.decode!(to_string(body))
     assert body["matched"] == false
 
     delete("bear_test", @settings)

@@ -3,7 +3,7 @@ Code.require_file "../../test_helper.exs", __FILE__
 defmodule Acceptances.ElasticSearchTest do
 
   use ExUnit.Case
-  import :macros, Tirexs.Mapping
+  import Tirexs.Mapping, only: :macros
   import Tirexs.Bulk
   import Tirexs.ElasticSearch
   import Tirexs.Search
