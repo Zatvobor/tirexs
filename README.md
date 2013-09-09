@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/datahogs/tirexs.png)](https://travis-ci.org/datahogs/tirexs)
+[![Build Status](https://travis-ci.org/roundscope/tirexs.png)](https://travis-ci.org/roundscope/tirexs)
 
 tirexs
 ======
