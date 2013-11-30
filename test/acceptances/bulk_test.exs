@@ -6,7 +6,8 @@ defmodule Acceptances.BulkTest do
 
   test :create do
     settings = Tirexs.ElasticSearch.Config.new()
-        Tirexs.ElasticSearch.delete("bear_test", settings)
+
+				Tirexs.ElasticSearch.delete("bear_test", settings)
 
         Tirexs.Bulk.store [index: "bear_test", refresh: false], settings do
           create id: 1, title: "bar1", description: "foo bar test"
@@ -31,11 +32,11 @@ defmodule Acceptances.BulkTest do
 
 	test :update do
 		settings = Tirexs.ElasticSearch.Config.new()
-    Tirexs.ElasticSearch.delete("bear_test", settings)
+	    Tirexs.ElasticSearch.delete("bear_test", settings)
 
 		Tirexs.Bulk.store [index: "bear_test", refresh: false], settings do
-      create id: 1, title: "bar1", description: "foo bar test"
-      create id: 2, title: "bar2", description: "foo bar test"
+	      create id: 1, title: "bar1", description: "foo bar test"
+	      create id: 2, title: "bar2", description: "foo bar test"
 		end
 
 		Tirexs.Manage.refresh("bear_test", settings)

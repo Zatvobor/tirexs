@@ -4,3 +4,4 @@ ebin/tirexs.app
 erl_crash.dump
 local_mapping/
 ebin/.compile.elixir
+_build
