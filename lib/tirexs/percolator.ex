@@ -25,7 +25,7 @@ defmodule Tirexs.Percolator do
   end
 
   def doc(options, doc_opts//[]) do
-    options = Enum.first(extract_block(options))
+    options = List.first(extract_block(options))
     [doc: extract_block(options) ++ doc_opts]
   end
 

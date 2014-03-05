@@ -117,7 +117,7 @@ defmodule Tirexs.Query.Logic do
   def without_array([], acc), do: acc
 
   def without_array([h|t], acc) do
-    acc = acc ++ [Enum.first h]
+    acc = acc ++ [List.first h]
     without_array(t, acc)
   end
 
