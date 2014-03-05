@@ -1,4 +1,4 @@
-Code.require_file "../../../test_helper.exs", __FILE__
+Code.require_file "../../../test_helper.exs", __ENV__.file
 defmodule Tirexs.Search.WarmerTest do
   use ExUnit.Case
   import Tirexs.Search.Warmer
