@@ -276,8 +276,6 @@ defmodule Tirexs.QueryTest do
     end
 
     assert query == [query: [top_children: [query: [term: [tag: "something"]], type: "blog_tag", score: "max", factor: 5, incremental_factor: 2]]]
-    # settings = elastic_settings.new([port: 80, uri: "api.tunehog.com/kiosk-rts"])
-    # IO.puts inspect(do_query(settings, "labeled/track", query))
   end
 
   test :wildcard do

@@ -25,10 +25,10 @@ defmodule Tirexs.AliasesTest do
       remove index: "bear_test", alias: "my_alias1"
     end
 
-    assert aliases == [actions: [[add: [index: "bear_test", alias: "my_alias1"]],[add: [index: "bear_test", alias: "my_alias2", filter: [term: [user: "kimchy"]]]],[remove: [index: "bear_test", alias: "my_alias1"]]]]
-
-    #create aliases
-    # settings = Tirexs.ElasticSearch.Config.new()
-    # Tirexs.ElasticSearch.post("_aliases", JSEX.encode(aliases), settings)
+    assert aliases == [actions: [
+      [add: [index: "bear_test", alias: "my_alias1"]],
+      [add: [index: "bear_test", alias: "my_alias2", filter: [term: [user: "kimchy"]]]],
+      [remove: [index: "bear_test", alias: "my_alias1"]]
+    ]]
   end
 end

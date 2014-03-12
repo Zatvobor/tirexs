@@ -49,9 +49,6 @@ defmodule Acceptances.BulkTest do
 
     Tirexs.Manage.refresh("bear_test", settings)
 
-    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/document/1", settings)
-
-    # IO.puts inspect(body) #To do implement for 0.90.1
-
+    {_, _, _body} = Tirexs.ElasticSearch.get("bear_test/document/1", settings)
   end
 end

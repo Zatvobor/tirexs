@@ -28,11 +28,11 @@ Tirexs.DSL.define [type: "dsl", index: "test_dsl_index"], fn(index, _) ->
      indexes "rev_history_", type: "object"
    end
 
-   # This couple of code lines here just for `mix run -r examples/mapping.exs` command output
-   # It's obvious that you should not use it in real mappings :)
-   url  = Tirexs.ElasticSearch.make_url(index[:index], elastic_settings)
-   json = JSEX.prettify!(Tirexs.Mapping.to_resource_json(index))
-   IO.puts "\n # => curl -X PUT -d '#{json}' #{url}"
+   # Below a couple of code which could be useful for debugging
+
+   # url  = Tirexs.ElasticSearch.make_url(index[:index], elastic_settings)
+   # json = JSEX.prettify!(Tirexs.Mapping.to_resource_json(index))
+   # IO.puts "\n # => curl -X PUT -d '#{json}' #{url}"
 
    { index, elastic_settings }
 end

@@ -1,5 +1,5 @@
 Code.require_file "../../test_helper.exs", __ENV__.file
-defmodule Tirexs.PerlocatorTest do
+defmodule Tirexs.PerlocatorrTest do
   use ExUnit.Case
   import Tirexs.Percolator
 

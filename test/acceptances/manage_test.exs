@@ -4,7 +4,6 @@ defmodule Acceptances.ManageTest do
   use ExUnit.Case
 
   import Tirexs.ElasticSearch
-  import Tirexs.Manage
 
   import Tirexs.Bulk
 
@@ -59,12 +58,6 @@ defmodule Acceptances.ManageTest do
     assert body["count"] == 1
 
     delete("bear_test", @settings)
-    # curl localhost:9200/bear_test/_search -d'{
-    #   "query": {
-    #     "term":{ "id": 1}
-    #   }
-    # }'
-
   end
 
   test :more_like_this do

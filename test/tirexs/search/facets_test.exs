@@ -29,10 +29,7 @@ defmodule Tirexs.Search.FacetsTest do
   test :range do
     facets = facets do
       range1 do
-        range field: "field_name", ranges: [[to: 50 ],
-                                            [from: 20, to: 70 ],
-                                            [from: 70, to: 120 ],
-                                            [from: 150]]
+        range field: "field_name", ranges: [[to: 50 ], [from: 20, to: 70 ], [from: 70, to: 120 ], [from: 150]]
       end
     end
 

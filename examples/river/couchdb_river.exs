@@ -36,11 +36,10 @@ Tirexs.DSL.define [name: "tets_river_dsl"], fn(river, elastic_settings) ->
   end
 
 
-  # This couple of code lines here just for `mix run -r examples/river/couchdb_river.exs` command output
-  # It's obvious that you should not use it in real river :)
-  url  = Tirexs.ElasticSearch.make_url("_river/" <> river[:name] <>"/_meta", elastic_settings)
-  json = JSEX.prettify!(Tirexs.River.to_resource_json(river))
-  IO.puts "\n # => curl -X PUT -d '#{json}' #{url}"
+  # Below a couple of code which could be useful for debugging
+  # url  = Tirexs.ElasticSearch.make_url("_river/" <> river[:name] <>"/_meta", elastic_settings)
+  # json = JSEX.prettify!(Tirexs.River.to_resource_json(river))
+  # IO.puts "\n # => curl -X PUT -d '#{json}' #{url}"
 
   { river, elastic_settings }
 end
