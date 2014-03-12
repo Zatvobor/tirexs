@@ -1,4 +1,4 @@
-Code.require_file "../../test_helper.exs", __FILE__
+Code.require_file "../../test_helper.exs", __ENV__.file
 
 defmodule Acceptances.ElasticSearchTest do
 
@@ -131,7 +131,7 @@ defmodule Acceptances.ElasticSearchTest do
     result = Tirexs.Query.create_resource(s, settings)
 
     assert result.count == 1
-    assert Enum.first(result.hits)["_source"]["id"] == 2
+    assert List.first(result.hits)["_source"]["id"] == 2
 
   end
 end

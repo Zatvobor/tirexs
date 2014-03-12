@@ -1,4 +1,4 @@
-Code.require_file "../../test_helper.exs", __FILE__
+Code.require_file "../../test_helper.exs", __ENV__.file
 
 defmodule Acceptances.LoaderTest do
   use ExUnit.Case
@@ -9,7 +9,7 @@ defmodule Acceptances.LoaderTest do
 
    test :load_dsl_file do
      settings = Tirexs.ElasticSearch.Config.new()
-     
+
      Tirexs.Loader.load_all(@path)
 
      assert exist?("test_dsl_index", settings) == true

@@ -74,7 +74,7 @@ defmodule Tirexs.DSL.Logic do
 
   @doc false
   def key(dict) do
-    Enum.first Dict.keys(dict)
+    List.first Dict.keys(dict)
   end
 
   @doc false

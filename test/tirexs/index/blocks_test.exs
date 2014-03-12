@@ -1,4 +1,4 @@
-Code.require_file "../../../test_helper.exs", __FILE__
+Code.require_file "../../../test_helper.exs", __ENV__.file
 
 defmodule Tirexs.Index.BlocksTest do
   use ExUnit.Case
