@@ -24,7 +24,7 @@ defmodule Tirexs.Search.Suggest do
     [suggest: extract(block) ++ options]
   end
 
-  def _suggest(options, suggest_opts//[]) do
+  def _suggest(options, suggest_opts \\ []) do
     if is_list(options) do
       suggest_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -32,7 +32,7 @@ defmodule Tirexs.Search.Suggest do
     [suggest: extract(options) ++ suggest_opts]
   end
 
-  def make_suggest(name, options, suggest_opts//[]) do
+  def make_suggest(name, options, suggest_opts \\ []) do
     if is_list(options) do
       suggest_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)

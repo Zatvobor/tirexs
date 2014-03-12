@@ -15,7 +15,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def _query(options, query_opts//[]) do
+  def _query(options, query_opts\\[]) do
     if is_list(options) do
       query_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -46,7 +46,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def boosting(options, boosting_opts//[]) do
+  def boosting(options, boosting_opts\\[]) do
     if is_list(options) do
       boosting_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -67,7 +67,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def custom_score(options, custom_score_opts//[]) do
+  def custom_score(options, custom_score_opts\\[]) do
     if is_list(options) do
       custom_score_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -76,7 +76,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def custom_boost_factor(options, custom_boost_factor_opts//[]) do
+  def custom_boost_factor(options, custom_boost_factor_opts\\[]) do
     if is_list(options) do
       custom_boost_factor_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -85,7 +85,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def constant_score(options, constant_score_opts//[]) do
+  def constant_score(options, constant_score_opts\\[]) do
     if is_list(options) do
       constant_score_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -94,7 +94,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def dis_max(options, dis_max_opts//[]) do
+  def dis_max(options, dis_max_opts\\[]) do
     if is_list(options) do
       dis_max_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -133,7 +133,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def has_child(options, has_child_opts//[]) do
+  def has_child(options, has_child_opts\\[]) do
     if is_list(options) do
       has_child_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -142,7 +142,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def has_parent(options, has_parent_opts//[]) do
+  def has_parent(options, has_parent_opts\\[]) do
     if is_list(options) do
       has_parent_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -174,7 +174,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def span_first(options, span_first_opts//[]) do
+  def span_first(options, span_first_opts\\[]) do
     if is_list(options) do
       span_first_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -189,7 +189,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def span_near(options, span_near_opts//[]) do
+  def span_near(options, span_near_opts\\[]) do
     if is_list(options) do
       span_near_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -198,7 +198,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def span_not(options, span_not_opts//[]) do
+  def span_not(options, span_not_opts\\[]) do
     if is_list(options) do
       span_not_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -207,7 +207,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def span_or(options, span_or_opts//[]) do
+  def span_or(options, span_or_opts\\[]) do
     if is_list(options) do
       span_or_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -222,7 +222,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def top_children(options, top_children_opts//[]) do
+  def top_children(options, top_children_opts\\[]) do
     if is_list(options) do
       top_children_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -237,7 +237,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def indices(options, indices_opts//[]) do
+  def indices(options, indices_opts\\[]) do
     if is_list(options) do
       indices_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -252,7 +252,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def geo_shape(options, geo_shape_opts//[]) do
+  def geo_shape(options, geo_shape_opts\\[]) do
     if is_list(options) do
       geo_shape_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -261,7 +261,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def nested(options, nested_opts//[]) do
+  def nested(options, nested_opts\\[]) do
     if is_list(options) do
       nested_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -270,7 +270,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def rescore_query(options, rescore_opts//[]) do
+  def rescore_query(options, rescore_opts\\[]) do
     if is_list(options) do
       rescore_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -279,7 +279,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def facet_filter(options, facet_opts//[]) do
+  def facet_filter(options, facet_opts\\[]) do
     if is_list(options) do
       facet_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -288,7 +288,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def custom_filters_score(options, custom_filters_score_opts//[]) do
+  def custom_filters_score(options, custom_filters_score_opts\\[]) do
     if is_list(options) do
       custom_filters_score_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -307,7 +307,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def group(options, _object_opts//[]) do
+  def group(options, _object_opts\\[]) do
     if is_list(options) do
       _object_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -351,7 +351,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def location(options, location_opts//[]) do
+  def location(options, location_opts\\[]) do
     if is_list(options) do
       location_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -412,7 +412,7 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def create_resource(definition, settings, opts//[]) do
+  def create_resource(definition, settings, opts\\[]) do
     url = if definition[:type] do
       "#{definition[:index]}/#{definition[:type]}"
     else

@@ -54,7 +54,7 @@ defmodule Tirexs.Search do
     [script_fields: block]
   end
 
-  def extract_index_options(options, index_opts//[]) do
+  def extract_index_options(options, index_opts \\ []) do
     if options[:index] do
       index_opts = index_opts ++ [index: options[:index]]
       options = Dict.delete(options, :index)

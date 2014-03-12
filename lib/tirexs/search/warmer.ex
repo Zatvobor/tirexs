@@ -21,7 +21,7 @@ defmodule Tirexs.Search.Warmer do
     [warmers: extract(block)]
   end
 
-  def make_warmer(name, options, warmers_opts//[]) do
+  def make_warmer(name, options, warmers_opts \\ []) do
     if is_list(options) do
       warmers_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
@@ -29,7 +29,7 @@ defmodule Tirexs.Search.Warmer do
     Dict.put([], to_atom(name), routers(name, options, []) ++ warmers_opts)
   end
 
-  def source(options, source_opts//[]) do
+  def source(options, source_opts \\ []) do
     if is_list(options) do
       source_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)

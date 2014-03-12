@@ -4,7 +4,6 @@ defmodule Tirexs.Percolator do
   use Tirexs.DSL.Logic
 
   alias Tirexs.Query, as: Query
-  alias Tirexs.Query.Filter, as: Filter
 
   def transpose(block) do
     case block do
@@ -24,7 +23,7 @@ defmodule Tirexs.Percolator do
     extract(block) ++ options ++ index_opts
   end
 
-  def doc(options, doc_opts//[]) do
+  def doc(options, doc_opts \\ []) do
     options = List.first(extract_block(options))
     [doc: extract_block(options) ++ doc_opts]
   end
