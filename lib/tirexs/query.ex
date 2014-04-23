@@ -6,7 +6,7 @@ defmodule Tirexs.Query do
   import Tirexs.DSL.Logic
   import Tirexs.Query.Logic
 
-  defrecord Result, [count: 0, max_score: nil, facets: [], hits: [], _scroll_id: nil]
+  defrecord Result, [count: 0, max_score: nil, facets: [], hits: [], _scroll_id: nil, aggregations: []]
 
 
   @doc false
@@ -427,7 +427,8 @@ defmodule Tirexs.Query do
         facets    = result["facets"]
         max_score = result["hits"]["max_score"]
         scroll_id = result["_scroll_id"]
-        Result.new(count: count, hits: hits, facets: facets, max_score: max_score, _scroll_id: scroll_id)
+        aggregations = result["aggregations"]
+        Result.new(count: count, hits: hits, facets: facets, max_score: max_score, _scroll_id: scroll_id, aggregations: aggregations)
       result  -> result
     end
   end
