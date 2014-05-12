@@ -2,16 +2,7 @@ defmodule Tirexs.Manage do
   import Tirexs.DSL.Logic
 
   def count(options, settings) do
-    body =
-      cond do
-        options[:filter] -> options[:filter]
-        options[:query] -> [query: options[:query]]
-        true -> []
-      end
-    case JSEX.encode!(body) do
-      "[]" -> Tirexs.ElasticSearch.get(make_url("_count", options), settings)
-      body -> Tirexs.ElasticSearch.post(make_url("_count", options), body, settings)
-    end
+    execute_get_if_body_empty_and_post_otherwise("_count", options, settings)
   end
 
   def delete_by_query(options, settings) do
@@ -25,12 +16,7 @@ defmodule Tirexs.Manage do
   end
 
   def validate(options, settings) do
-    body = JSEX.encode!(options[:filter] || options[:query] || [])
-    if body == JSEX.encode!([]) do
-      Tirexs.ElasticSearch.get(make_url("_validate/query", options), settings)
-    else
-      Tirexs.ElasticSearch.post(make_url("_validate/query", options), body, settings)
-    end
+    execute_get_if_body_empty_and_post_otherwise("_validate/query", options, settings)
   end
 
   def explain(options, settings) do
@@ -85,5 +71,18 @@ defmodule Tirexs.Manage do
   defp delete_options([h|t], options) do
     options = Dict.delete(options, h)
     delete_options(t, options)
+  end
+
+  defp execute_get_if_body_empty_and_post_otherwise(url_suffix, options, settings) do
+    body =
+      cond do
+        options[:filter] -> options[:filter]
+        options[:query] -> [query: options[:query]]
+        true -> []
+      end
+    case JSEX.encode!(body) do
+      "[]" -> Tirexs.ElasticSearch.get(make_url(url_suffix, options), settings)
+      body -> Tirexs.ElasticSearch.post(make_url(url_suffix, options), body, settings)
+    end
   end
 end
