@@ -22,10 +22,11 @@ defmodule Acceptances.WarmerTest do
       end
     end
 
+    IO.puts JSEX.encode!(warmers)
     Tirexs.ElasticSearch.put("bear_test", JSEX.encode!(warmers), settings)
-    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/_warmer/warmer_1", settings)
+    {:ok, 200, body} = Tirexs.ElasticSearch.get("bear_test/_warmer/warmer_1", settings)
 
-    assert body["bear_test"]["warmers"] == [{"warmer_1",[{"types",[]},{"source",[{"query",[{"match_all",[]}]},{"facets",[{"facet_1",[{"terms",[{"field","field"}]}]}]}]}]}]
+    assert Dict.get(body, "bear_test") |> Dict.get("warmers") == [{"warmer_1",[{"types",[]},{"source",[{"query",[{"match_all",[]}]},{"facets",[{"facet_1",[{"terms",[{"field","field"}]}]}]}]}]}]
     Tirexs.ElasticSearch.delete("bear_test", settings)
   end
 end
