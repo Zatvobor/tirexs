@@ -52,7 +52,7 @@ defmodule Acceptances.ManageTest do
 
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
 
-    assert body["count"] == 2
+    assert body[:count] == 2
 
     query = query do
       term "id", 1
@@ -60,7 +60,7 @@ defmodule Acceptances.ManageTest do
 
     Tirexs.Manage.delete_by_query([index: "bear_test", q: "id:1"] ++ query, @settings)
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
-    assert body["count"] == 1
+    assert body[:count] == 1
   end
 
   test :more_like_this do
@@ -72,7 +72,7 @@ defmodule Acceptances.ManageTest do
     Tirexs.Manage.refresh(["bear_test"], @settings)
 
     {_, _, body} = Tirexs.Manage.more_like_this([id: 1, type: "my_type", index: "bear_test", mlt_fields: "name,description", min_term_freq: 1], @settings)
-    assert body["hits"]["hits"] == []
+    assert body[:hits][:hits] == []
   end
 
   test :validate_and_explain do
@@ -91,15 +91,15 @@ defmodule Acceptances.ManageTest do
     end
 
     {_, _, body} = Tirexs.Manage.validate([index: "bear_test"] ++ query, @settings)
-    assert body["valid"] == true
+    assert body[:valid] == true
 
     {_, _, body} = Tirexs.Manage.validate([index: "bear_test", q: "user:foo"], @settings)
 
-    assert body["valid"] == true
+    assert body[:valid] == true
 
     {_, _, body} = Tirexs.Manage.explain([index: "bear_test", type: "my_type", id: 1, q: "message:search"], @settings)
     body = JSEX.decode!(to_string(body))
-    assert body["matched"] == false
+    assert body[:matched] == false
   end
 
   test :update do
@@ -109,17 +109,17 @@ defmodule Acceptances.ManageTest do
 
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/1", @settings)
 
-    assert body["_source"]["counter"] == 1
+    assert body[:_source][:counter] == 1
     update = [script: "ctx._source.counter += count", params: [count: 1]]
     Tirexs.Manage.update([index: "bear_test", type: "my_type", id: "1"], update, @settings)
 
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/1", @settings)
-    assert body["_source"]["counter"] == 2
+    assert body[:_source][:counter] == 2
 
     update_doc = [doc: [name: "new_name"]]
     Tirexs.Manage.update([index: "bear_test", type: "my_type", id: "1"], update_doc, @settings)
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/1", @settings)
-    assert body["_source"]["name"] == "new_name"
+    assert body[:_source][:name] == "new_name"
   end
 
   #helpers

@@ -27,7 +27,7 @@ defmodule Acceptances.BulkTest do
 
         Tirexs.Manage.refresh("bear_test", settings)
         {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", settings)
-        assert body["count"] == 11
+        assert body[:count] == 11
   end
 
   test :update do
@@ -41,7 +41,7 @@ defmodule Acceptances.BulkTest do
 
     Tirexs.Manage.refresh("bear_test", settings)
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", settings)
-    assert body["count"] == 2
+    assert body[:count] == 2
 
     Tirexs.Bulk.store [index: "bear_test", type: "document", id: 1, retry_on_conflict: 3], settings do
       update doc: [title: "updated_title"]

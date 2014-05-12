@@ -14,7 +14,7 @@ defmodule Acceptances.ElasticSearchTest do
     {:error, _, _}  = get("missing_index", settings)
     {:ok, _, body}    = get("", settings)
 
-    assert body["tagline"] == "You Know, for Search"
+    assert body[:tagline] == "You Know, for Search"
 
   end
 
@@ -22,7 +22,7 @@ defmodule Acceptances.ElasticSearchTest do
     settings = Tirexs.ElasticSearch.Config.new()
     delete("bear_test", settings)
     {:ok, _, body} = put("bear_test", settings)
-    assert body["acknowledged"] == true
+    assert body[:acknowledged] == true
     delete("bear_test", settings)
   end
 
@@ -30,7 +30,7 @@ defmodule Acceptances.ElasticSearchTest do
     settings = Tirexs.ElasticSearch.Config.new()
     put("bear_test", settings)
     {:ok, _, body} = delete("bear_test", settings)
-    assert body["acknowledged"] == true
+    assert body[:acknowledged] == true
   end
 
 
@@ -69,7 +69,7 @@ defmodule Acceptances.ElasticSearchTest do
 
     {:ok, _, body} = Tirexs.Mapping.create_resource(index, settings)
 
-    assert body["acknowledged"] == true
+    assert body[:acknowledged] == true
 
     delete("bear_test", settings)
   end
