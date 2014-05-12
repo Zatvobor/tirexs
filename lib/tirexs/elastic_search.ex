@@ -38,7 +38,8 @@ defmodule Tirexs.ElasticSearch do
 
   def post(query_url, body, config) do
     unless body == [], do: body = to_string(body)
-    do_request(make_url(query_url, config), :post, body)
+    url = make_url(query_url, config)
+    do_request(url, :post, body)
   end
 
   @doc false

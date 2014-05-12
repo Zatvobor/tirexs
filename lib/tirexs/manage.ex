@@ -2,8 +2,16 @@ defmodule Tirexs.Manage do
   import Tirexs.DSL.Logic
 
   def count(options, settings) do
-    body = JSEX.encode!(options[:filter] || options[:query] || [])
-    Tirexs.ElasticSearch.post(make_url("_count", options), body, settings)
+    body =
+      cond do
+        options[:filter] -> options[:filter]
+        options[:query] -> [query: options[:query]]
+        true -> []
+      end
+    case JSEX.encode!(body) do
+      "[]" -> Tirexs.ElasticSearch.get(make_url("_count", options), settings)
+      body -> Tirexs.ElasticSearch.post(make_url("_count", options), body, settings)
+    end
   end
 
   def delete_by_query(options, settings) do
