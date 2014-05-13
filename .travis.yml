@@ -2,7 +2,6 @@ language: erlang
 notifications:
   recipients:
     - a.zatvornitskiy@gmail.com
-    - opak.alexandr@gmail.com
 otp_release:
   - R16B
 before_install:
