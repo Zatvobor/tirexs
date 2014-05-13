@@ -97,8 +97,8 @@ defmodule Acceptances.ManageTest do
     assert Dict.get(body, :valid) == true
 
     {_, _, body} = Tirexs.Manage.explain([index: "bear_test", type: "my_type", id: 1, q: "message:search"], @settings)
-    body = JSEX.decode!(to_string(body))
-    assert Dict.get(body, "matched") == false
+    body = JSEX.decode!(to_string(body), [{:labels, :atom}])
+    assert Dict.get(body, :matched) == false
   end
 
   # test :update do

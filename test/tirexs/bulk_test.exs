@@ -10,13 +10,13 @@ defmodule Tirexs.BulkTest do
     document = [id: "id", title: "Hello"]
     assert get_id_from_document(document) == "id"
 
-    document = [{"id", "id"}, {"title", "Hello"}]
+    document = [{:id, "id"}, {:title, "Hello"}]
     assert get_id_from_document(document) == "id"
 
     document = [_id: "_id", title: "Hello"]
     assert get_id_from_document(document) == "_id"
 
-    document = [{"_id", "_id"}, {"title", "Hello"}]
+    document = [{:_id, "_id"}, {:title, "Hello"}]
     assert get_id_from_document(document) == "_id"
   end
 
