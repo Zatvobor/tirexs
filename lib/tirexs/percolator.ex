@@ -36,7 +36,7 @@ defmodule Tirexs.Percolator do
       "#{definition[:index]}/#{definition[:name]}"
     end
 
-    { url, json } = { "_percolator/#{url}", to_resource_json(definition) }
+    { url, json } = { ".percolator/#{url}", to_resource_json(definition) }
     Tirexs.ElasticSearch.put(url, json, settings)
   end
 

@@ -15,6 +15,6 @@ defmodule Tirexs.PerlocatorTest do
 
     {_, _, body} = Tirexs.Percolator.create_resource(percolator, settings)
 
-    assert body["_id"] == "kuku"
+    assert body[:_id] == "kuku"
   end
 end
