@@ -101,25 +101,23 @@ defmodule Acceptances.ManageTest do
     assert Dict.get(body, :matched) == false
   end
 
-  # test :update do
-  #   Tirexs.ElasticSearch.put("bear_test/my_type", @settings)
-  #   doc = [user: "kimchy", counter: 1, post_date: "2009-11-15T14:12:12", message: "trying out Elastic Search", id: 1]
-  #   Tirexs.ElasticSearch.put("bear_test/my_type/1", JSEX.encode!(doc), @settings)
+  test :update do
+    Tirexs.ElasticSearch.put("bear_test/my_type", @settings)
+    doc = [user: "kimchy", counter: 1, post_date: "2009-11-15T14:12:12", message: "trying out Elastic Search", id: 1]
+    Tirexs.ElasticSearch.put("bear_test/my_type/1", JSEX.encode!(doc), @settings)
 
-  #   {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/1", @settings)
+    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/1", @settings)
 
-  #   assert body[:_source][:counter] == 1
-  #   update = [script: "ctx._source.counter += count", params: [count: 1]]
-  #   Tirexs.Manage.update([index: "bear_test", type: "my_type", id: "1"], update, @settings)
+    assert body[:_source][:counter] == 1
+    update = [script: "ctx._source.counter += count", params: [count: 1]]
+    Tirexs.Manage.update([index: "bear_test", type: "my_type", id: "1"], update, @settings)
 
-  #   {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/1", @settings)
-  #   assert body[:_source][:counter] == 2
+    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/1", @settings)
+    assert body[:_source][:counter] == 2
 
-  #   update_doc = [doc: [name: "new_name"]]
-  #   Tirexs.Manage.update([index: "bear_test", type: "my_type", id: "1"], update_doc, @settings)
-  #   {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/1", @settings)
-  #   assert body[:_source][:name] == "new_name"
-  # end
-
-
+    update_doc = [doc: [name: "new_name"]]
+    Tirexs.Manage.update([index: "bear_test", type: "my_type", id: "1"], update_doc, @settings)
+    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/1", @settings)
+    assert body[:_source][:name] == "new_name"
+  end
 end
