@@ -76,7 +76,7 @@ defmodule Tirexs.Bulk do
   end
 
   def get_id_from_document(document) do
-    document[:id] || document["id"] || document[:_id] || document["_id"]
+    document[:id] || document[:_id]
   end
 
   def convert_document_to_json(document) do
@@ -84,7 +84,7 @@ defmodule Tirexs.Bulk do
   end
 
   def get_type_from_document(document) do
-    document[:_type] || document["_type"] || document[:type] || document["type"] || "document"
+    document[:_type] || document[:type] || "document"
   end
 
 	def match(document) do
