@@ -4,11 +4,12 @@ https://github.com/roundscope/tirexs
 tirexs
 ======
 
-A DSL convenience for the ElasticSearch search engine. Inspired by amazing https://github.com/karmi/tire gem.
+An Elixir based DSL for operating the ElasticSearch cluster related stuff, such as indexes, scoped queries and so on.
 
-tested on: 
-- elastisearch `v0.90.3`
-- elixir `0.12.5`
+releases:
+
+- `v0.5.0` tested on elastisearch `1.1.1`, elixir `0.13.1`
+- `v0.4` tested on elastisearch `0.90.3`, elixir `0.12.5`
 
 Walk-through a code
 -------------------
