@@ -5,6 +5,10 @@ tirexs
 
 A DSL convenience for the ElasticSearch search engine. Inspired by amazing https://github.com/karmi/tire gem.
 
+tested on: 
+- elastisearch `v0.90.3`
+- elixir `0.12.5`
+
 Walk-through a code
 -------------------
 

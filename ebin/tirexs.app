@@ -1,7 +1,7 @@
 {application,tirexs,
              [{registered,[]},
               {description,"tirexs"},
-              {vsn,"0.4.0"},
+              {vsn,"0.4.1-dev"},
               {modules,['Elixir.Mix.Tasks.Travis','Elixir.Tirexs.Bulk',
                         'Elixir.Tirexs.DSL','Elixir.Tirexs.DSL.Behaviour',
                         'Elixir.Tirexs.DSL.Logic',
