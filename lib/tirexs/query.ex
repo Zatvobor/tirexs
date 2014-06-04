@@ -427,6 +427,7 @@ defmodule Tirexs.Query do
         facets    = result[:facets]
         max_score = result[:hits][:max_score]
         scroll_id = result[:_scroll_id]
+        aggregations = result[:aggregations]
         Result.new(count: count, hits: hits, facets: facets, max_score: max_score, _scroll_id: scroll_id, aggregations: aggregations)
       result  -> result
     end
