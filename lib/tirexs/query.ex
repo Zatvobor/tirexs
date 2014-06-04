@@ -422,12 +422,11 @@ defmodule Tirexs.Query do
     { url, json } = { "#{url}/_search" <> to_param(opts, ""), to_resource_json(definition) }
     case Tirexs.ElasticSearch.post(url, json, settings) do
       {:ok, _, result} ->
-        count     = result["hits"]["total"]
-        hits      = result["hits"]["hits"]
-        facets    = result["facets"]
-        max_score = result["hits"]["max_score"]
-        scroll_id = result["_scroll_id"]
-        aggregations = result["aggregations"]
+        count     = result[:hits][:total]
+        hits      = result[:hits][:hits]
+        facets    = result[:facets]
+        max_score = result[:hits][:max_score]
+        scroll_id = result[:_scroll_id]
         Result.new(count: count, hits: hits, facets: facets, max_score: max_score, _scroll_id: scroll_id, aggregations: aggregations)
       result  -> result
     end
