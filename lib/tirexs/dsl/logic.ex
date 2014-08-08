@@ -2,6 +2,8 @@ defmodule Tirexs.DSL.Logic do
   @moduledoc """
   Defines a main module which provides a common contract for DSL handlers and common utilities.
   """
+  
+  require Record
 
   @doc false
   defmacro __using__(_) do
@@ -31,12 +33,12 @@ defmodule Tirexs.DSL.Logic do
 
   @doc false
   def to_atom(value) when is_atom(value), do: value
-  def to_atom(value) when is_binary(value), do: binary_to_atom(value)
+  def to_atom(value) when is_binary(value), do: String.to_atom(value)
   def to_atom(value), do: value
 
   @doc false
   def is_dict?(dict) do
-    is_record(dict, Dict) || false
+    Record.record?(dict, Dict) || false
   end
 
   @doc false

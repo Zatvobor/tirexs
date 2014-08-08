@@ -5,8 +5,9 @@ defmodule Tirexs.Query do
 
   import Tirexs.DSL.Logic
   import Tirexs.Query.Logic
+  require Record
 
-  defrecord Result, [count: 0, max_score: nil, facets: [], hits: [], _scroll_id: nil, aggregations: []]
+  Record.defrecord Result, [count: 0, max_score: nil, facets: [], hits: [], _scroll_id: nil, aggregations: []]
 
 
   @doc false
