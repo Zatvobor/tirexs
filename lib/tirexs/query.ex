@@ -5,9 +5,10 @@ defmodule Tirexs.Query do
 
   import Tirexs.DSL.Logic
   import Tirexs.Query.Logic
+  import Tirexs.ElasticSearch
   require Record
 
-  Record.defrecord Result, [count: 0, max_score: nil, facets: [], hits: [], _scroll_id: nil, aggregations: []]
+  Record.defrecord :record_result, [count: 0, max_score: nil, facets: [], hits: [], _scroll_id: nil, aggregations: []]
 
 
   @doc false
@@ -409,7 +410,7 @@ defmodule Tirexs.Query do
 
   @doc false
   def create_resource(definition) do
-    create_resource(definition, Tirexs.ElasticSearch.Config.new)
+    create_resource(definition, record_config())
   end
 
   @doc false
@@ -429,7 +430,7 @@ defmodule Tirexs.Query do
         max_score = result[:hits][:max_score]
         scroll_id = result[:_scroll_id]
         aggregations = result[:aggregations]
-        Result.new(count: count, hits: hits, facets: facets, max_score: max_score, _scroll_id: scroll_id, aggregations: aggregations)
+        record_result(count: count, hits: hits, facets: facets, max_score: max_score, _scroll_id: scroll_id, aggregations: aggregations)
       result  -> result
     end
   end

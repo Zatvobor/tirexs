@@ -7,7 +7,7 @@ defmodule Tirexs.ElasticSearch do
 
   require Record
 
-  Record.defrecord Config,  [port: 9200, uri: "127.0.0.1", user: nil, pass: nil]
+  Record.defrecord :record_config,  [port: 9200, uri: "127.0.0.1", user: nil, pass: nil]
 
   @doc false
   def get(query_url, config) do
@@ -86,10 +86,10 @@ defmodule Tirexs.ElasticSearch do
   def get_body_json(body), do: JSEX.decode!(to_string(body), [{:labels, :atom}])
 
   def make_url(query_url, config) do
-    if config.port == nil || config.port == 80 do
-      "http://#{config.uri}/#{query_url}"
+    if (config |> record_config(:port) == nil) || (config |> record_config(:port)) == 80 do
+      "http://#{config |> record_config(:uri)}/#{query_url}"
     else
-      "http://#{config.uri}:#{config.port}/#{query_url}"
+      "http://#{config |> record_config(:uri)}:#{config |> record_config(:port)}/#{query_url}"
     end
   end
 

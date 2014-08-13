@@ -31,7 +31,7 @@ defmodule Tirexs.River do
 
   @doc false
   def create_resource(definition) do
-    create_resource(definition, Tirexs.ElasticSearch.Config.new)
+    create_resource(definition, record_config())
   end
 
   @doc false

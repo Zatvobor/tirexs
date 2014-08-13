@@ -4,9 +4,11 @@ defmodule Tirexs.DSL do
   Check an `examples` directory which consists a DSL tempaltes for `mapping`, `settings`, `query` and `river`.
   """
 
+  import Tirexs.ElasticSearch
+
   @doc false
   def define(type, resource) do
-    elastic_settings = Tirexs.ElasticSearch.Config.new()
+    elastic_settings = record_config()
     case resource.(type, elastic_settings) do
       { type, elastic_settings } -> create_resource(type, elastic_settings)
     end
@@ -14,7 +16,7 @@ defmodule Tirexs.DSL do
 
   @doc false
   def define(resource) do
-    elastic_settings = Tirexs.ElasticSearch.Config.new()
+    elastic_settings = record_config()
     case resource.(elastic_settings) do
       { type, elastic_settings } -> create_resource(type, elastic_settings)
     end
