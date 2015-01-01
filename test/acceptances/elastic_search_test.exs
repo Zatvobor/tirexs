@@ -6,11 +6,13 @@ defmodule Acceptances.ElasticSearchTest do
   import Tirexs.Mapping, only: :macros
   import Tirexs.Bulk
   import Tirexs.ElasticSearch
+  require Tirexs.ElasticSearch
+  require Tirexs.Query
   import Tirexs.Search
 
 
   test :get_elastic_search_server do
-    settings = Tirexs.ElasticSearch.Config.new()
+    settings = Tirexs.ElasticSearch.config()
     {:error, _, _}  = get("missing_index", settings)
     {:ok, _, body}    = get("", settings)
 
@@ -19,7 +21,7 @@ defmodule Acceptances.ElasticSearchTest do
   end
 
   test :create_index do
-    settings = Tirexs.ElasticSearch.Config.new()
+    settings = Tirexs.ElasticSearch.config()
     delete("bear_test", settings)
     {:ok, _, body} = put("bear_test", settings)
     assert body[:acknowledged] == true
@@ -27,7 +29,7 @@ defmodule Acceptances.ElasticSearchTest do
   end
 
   test :delete_index do
-    settings = Tirexs.ElasticSearch.Config.new()
+    settings = Tirexs.ElasticSearch.config()
     put("bear_test", settings)
     {:ok, _, body} = delete("bear_test", settings)
     assert body[:acknowledged] == true
@@ -35,7 +37,7 @@ defmodule Acceptances.ElasticSearchTest do
 
 
   test :head do
-    settings = Tirexs.ElasticSearch.Config.new()
+    settings = Tirexs.ElasticSearch.config()
     delete("bear_test", settings)
     assert exist?("bear_test", settings) == false
 
@@ -45,7 +47,7 @@ defmodule Acceptances.ElasticSearchTest do
   end
 
   test :create_type_mapping do
-    settings = Tirexs.ElasticSearch.Config.new()
+    settings = Tirexs.ElasticSearch.config()
     index = [index: "bear_test", type: "bear_type"]
       mappings do
         indexes "mn_opts_", [type: "object"] do
@@ -75,7 +77,7 @@ defmodule Acceptances.ElasticSearchTest do
   end
 
   test :create_mapping_search do
-    settings = Tirexs.ElasticSearch.Config.new()
+    settings = Tirexs.ElasticSearch.config()
 
     delete("articles", settings)
 
@@ -130,8 +132,8 @@ defmodule Acceptances.ElasticSearchTest do
 
     result = Tirexs.Query.create_resource(s, settings)
 
-    assert result.count == 1
-    assert List.first(result.hits)[:_source][:id] == 2
+    assert Tirexs.Query.result(result, :count) == 1
+    assert List.first(Tirexs.Query.result(result, :hits))[:_source][:id] == 2
 
   end
 end
