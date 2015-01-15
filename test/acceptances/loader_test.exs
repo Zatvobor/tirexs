@@ -8,7 +8,8 @@ defmodule Acceptances.LoaderTest do
   @path Path.join([File.cwd!, "examples"])
 
    test :load_dsl_file do
-     settings = Tirexs.ElasticSearch.Config.new()
+     require Tirexs.ElasticSearch
+     settings = Tirexs.ElasticSearch.config()
 
      Tirexs.Loader.load_all(@path)
 
@@ -22,7 +23,8 @@ defmodule Acceptances.LoaderTest do
 
    test :river_dsl do
     river_path = Path.join([File.cwd!, "examples", "river"])
-    settings = Tirexs.ElasticSearch.Config.new()
+    require Tirexs.ElasticSearch
+    settings = Tirexs.ElasticSearch.config()
 
     Tirexs.Loader.load_all(river_path)
 

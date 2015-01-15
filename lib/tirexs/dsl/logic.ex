@@ -31,12 +31,12 @@ defmodule Tirexs.DSL.Logic do
 
   @doc false
   def to_atom(value) when is_atom(value), do: value
-  def to_atom(value) when is_binary(value), do: binary_to_atom(value)
+  def to_atom(value) when is_binary(value), do: String.to_atom(value)
   def to_atom(value), do: value
 
   @doc false
   def is_dict?(dict) do
-    is_record(dict, Dict) || false
+    is_map(dict) || false
   end
 
   @doc false

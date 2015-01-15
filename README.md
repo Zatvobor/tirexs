@@ -8,6 +8,7 @@ An Elixir based DSL for operating the ElasticSearch cluster related stuff, such 
 
 releases:
 
+- `v0.5.1` tested on elasticsearch `1.4.1` elixir `1.0.2`
 - `v0.5.0` tested on elastisearch `1.1.1`, elixir `0.13.1`
 - `v0.4` tested on elastisearch `0.90.3`, elixir `0.12.5`
 
@@ -19,7 +20,8 @@ Let's create an `articles` index:
 ```elixir
 import Tirexs.Bulk
 
-settings = Tirexs.ElasticSearch.Config.new()
+require Tirexs.ElasticSearch
+settings = Tirexs.ElasticSearch.config()
 
 Tirexs.Bulk.store [index: "articles", refresh: true], settings do
   create id: 1, title: "One", tags: ["elixir"], type: "article"

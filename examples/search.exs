@@ -30,7 +30,7 @@ Tirexs.DSL.define fn(elastic_settings) ->
 
   # Below a couple of code which could be useful for debugging
   # url  = Tirexs.ElasticSearch.make_url(search[:index] <> "/_search", elastic_settings)
-  # json = JSEX.prettify!(Tirexs.Query.to_resource_json(search))
+  # json = JSX.prettify!(Tirexs.Query.to_resource_json(search))
   # IO.puts "\n # => curl -X POST -d '#{json}' #{url}"
 
   { search, elastic_settings }
