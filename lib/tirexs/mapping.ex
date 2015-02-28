@@ -40,7 +40,7 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def create_resource(definition) do
-    create_resource(definition, Tirexs.ElasticSearch.Config.new)
+    create_resource(definition, Tirexs.ElasticSearch.config)
   end
 
   @doc false
@@ -71,6 +71,6 @@ defmodule Tirexs.Mapping do
   @doc false
   def to_resource_json(definition, type) do
     json_dict = Dict.put([], to_atom(type), definition[:mapping])
-		JSEX.encode!(json_dict)
+		JSX.encode!(json_dict)
   end
 end
