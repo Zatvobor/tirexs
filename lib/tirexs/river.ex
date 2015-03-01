@@ -31,7 +31,8 @@ defmodule Tirexs.River do
 
   @doc false
   def create_resource(definition) do
-    create_resource(definition, Tirexs.ElasticSearch.Config.new)
+    require Tirexs.ElasticSearch
+    create_resource(definition, Tirexs.ElasticSearch.config)
   end
 
   @doc false
@@ -47,6 +48,6 @@ defmodule Tirexs.River do
   @doc false
   def to_resource_json(definition) do
     definition = Dict.delete(Dict.delete(definition, :name), :river)
-    JSEX.encode!(definition)
+    JSX.encode!(definition)
   end
 end

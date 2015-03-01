@@ -5,7 +5,8 @@ defmodule Acceptances.BulkTest do
   import Tirexs.Bulk
 
   test :create do
-    settings = Tirexs.ElasticSearch.Config.new()
+    require Tirexs.ElasticSearch
+    settings = Tirexs.ElasticSearch.config()
 
         Tirexs.ElasticSearch.delete("bear_test", settings)
 
@@ -31,7 +32,8 @@ defmodule Acceptances.BulkTest do
   end
 
   test :update do
-    settings = Tirexs.ElasticSearch.Config.new()
+    require Tirexs.ElasticSearch
+    settings = Tirexs.ElasticSearch.config()
       Tirexs.ElasticSearch.delete("bear_test", settings)
 
     Tirexs.Bulk.store [index: "bear_test", refresh: false], settings do

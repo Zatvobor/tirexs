@@ -4,7 +4,8 @@ defmodule Tirexs.PerlocatorTest do
   import Tirexs.Percolator
 
   test :percolator do
-    settings = Tirexs.ElasticSearch.Config.new()
+    require Tirexs.ElasticSearch
+    settings = Tirexs.ElasticSearch.config()
     Tirexs.ElasticSearch.delete("_percolator/test/kuku", settings)
 
     percolator = percolator [index: "test", name: "kuku"] do
