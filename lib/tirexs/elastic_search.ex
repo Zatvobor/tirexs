@@ -54,7 +54,7 @@ defmodule Tirexs.ElasticSearch do
   @doc false
   def do_request(url, method, body \\ []) do
     :inets.start()
-    { url, content_type, options } = { String.to_char_list!(url), 'application/json', [{:body_format, :binary}] }
+    { url, content_type, options } = { String.to_char_list(url), 'application/json', [{:body_format, :binary}] }
     case method do
       :get    -> response(:httpc.request(method, {url, []}, [], []))
       :head   -> response(:httpc.request(method, {url, []}, [], []))
