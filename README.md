@@ -1,5 +1,4 @@
-https://github.com/roundscope/tirexs
-[![Build Status](https://travis-ci.org/roundscope/tirexs.png)](https://travis-ci.org/roundscope/tirexs)
+[![Build Status](https://travis-ci.org/Zatvobor/tirexs.png)](https://travis-ci.org/Zatvobor/tirexs)
 
 tirexs
 ======
@@ -113,4 +112,4 @@ License
 -------
 
 `Tirexs` source code is released under Apache 2 License.
-Check [LICENSE](https://github.com/datahogs/tirexs/blob/master/LICENSE) and [NOTICE](https://github.com/datahogs/tirexs/blob/master/NOTICE) files for more details.
+Check [LICENSE](https://github.com/zatvobor/tirexs/blob/master/LICENSE) and [NOTICE](https://github.com/zatvobor/tirexs/blob/master/NOTICE) files for more details. The project HEAD is https://github.com/zatvobor/tirexs.

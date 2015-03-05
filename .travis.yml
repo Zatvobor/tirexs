@@ -1,7 +1,7 @@
 language: erlang
 notifications:
   recipients:
-    - support@roundscope.com
+    - a.zatvornitskiy@gmail.com
 otp_release:
   - 17.0
 before_install:
