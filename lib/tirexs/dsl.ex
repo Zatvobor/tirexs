@@ -1,3 +1,5 @@
+require Tirexs.ElasticSearch
+
 defmodule Tirexs.DSL do
   @moduledoc """
   This module represents a main entry point for defining DSL scenarios.
@@ -6,7 +8,7 @@ defmodule Tirexs.DSL do
 
   @doc false
   def define(type, resource) do
-    elastic_settings = Tirexs.ElasticSearch.Config.new()
+    elastic_settings = Tirexs.ElasticSearch.config()
     case resource.(type, elastic_settings) do
       { type, elastic_settings } -> create_resource(type, elastic_settings)
     end
@@ -14,7 +16,7 @@ defmodule Tirexs.DSL do
 
   @doc false
   def define(resource) do
-    elastic_settings = Tirexs.ElasticSearch.Config.new()
+    elastic_settings = Tirexs.ElasticSearch.config()
     case resource.(elastic_settings) do
       { type, elastic_settings } -> create_resource(type, elastic_settings)
     end

@@ -8,16 +8,18 @@ defmodule Acceptances.ManageTest do
 
   import Tirexs.Query
   import Tirexs.Mapping, only: :macros
+  require Tirexs.ElasticSearch
 
-  @settings Tirexs.ElasticSearch.Config.new()
+  @settings Tirexs.ElasticSearch.config()
 
   setup do
     create_index("bear_test", @settings)
-    :ok
-  end
 
-  teardown do
-    remove_index("bear_test", @settings)
+    on_exit fn ->
+      remove_index("bear_test", @settings)
+      :ok
+    end
+
     :ok
   end
 
@@ -76,7 +78,7 @@ defmodule Acceptances.ManageTest do
 
   test :validate_and_explain do
     doc = [user: "kimchy", post_date: "2009-11-15T14:12:12", message: "trying out Elastic Search"]
-    Tirexs.ElasticSearch.put("bear_test/my_type/1", JSEX.encode!(doc), @settings)
+    Tirexs.ElasticSearch.put("bear_test/my_type/1", JSX.encode!(doc), @settings)
 
     query = query do
       filtered do
@@ -97,14 +99,14 @@ defmodule Acceptances.ManageTest do
     assert Dict.get(body, :valid) == true
 
     {_, _, body} = Tirexs.Manage.explain([index: "bear_test", type: "my_type", id: 1, q: "message:search"], @settings)
-    body = JSEX.decode!(to_string(body), [{:labels, :atom}])
+    body = JSX.decode!(to_string(body), [{:labels, :atom}])
     assert Dict.get(body, :matched) == false
   end
 
   test :update do
     Tirexs.ElasticSearch.put("bear_test/my_type", @settings)
     doc = [user: "kimchy", counter: 1, post_date: "2009-11-15T14:12:12", message: "trying out Elastic Search", id: 1]
-    Tirexs.ElasticSearch.put("bear_test/my_type/1", JSEX.encode!(doc), @settings)
+    Tirexs.ElasticSearch.put("bear_test/my_type/1", JSX.encode!(doc), @settings)
 
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/my_type/1", @settings)
 

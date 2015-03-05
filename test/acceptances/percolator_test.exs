@@ -2,9 +2,10 @@ Code.require_file "../../test_helper.exs", __ENV__.file
 defmodule Tirexs.PerlocatorTest do
   use ExUnit.Case
   import Tirexs.Percolator
+  require Tirexs.ElasticSearch
 
   test :percolator do
-    settings = Tirexs.ElasticSearch.Config.new()
+    settings = Tirexs.ElasticSearch.config()
     Tirexs.ElasticSearch.delete("_percolator/test/kuku", settings)
 
     percolator = percolator [index: "test", name: "kuku"] do
