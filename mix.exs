@@ -8,6 +8,6 @@ defmodule Tirexs.Mixfile do
   def application, do: []
 
   defp deps do
-    [ {:jsex, github: "talentdeficit/jsex"} ]
+    [ {:jsex, github: "talentdeficit/jsex", tag: "v2.0.0"} ]
   end
 end
