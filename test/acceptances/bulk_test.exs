@@ -3,9 +3,10 @@ Code.require_file "../../test_helper.exs", __ENV__.file
 defmodule Acceptances.BulkTest do
   use ExUnit.Case
   import Tirexs.Bulk
+  require Tirexs.ElasticSearch
 
   test :create do
-    settings = Tirexs.ElasticSearch.Config.new()
+    settings = Tirexs.ElasticSearch.config()
 
         Tirexs.ElasticSearch.delete("bear_test", settings)
 
@@ -31,7 +32,7 @@ defmodule Acceptances.BulkTest do
   end
 
   test :update do
-    settings = Tirexs.ElasticSearch.Config.new()
+    settings = Tirexs.ElasticSearch.config()
       Tirexs.ElasticSearch.delete("bear_test", settings)
 
     Tirexs.Bulk.store [index: "bear_test", refresh: false], settings do

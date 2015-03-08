@@ -5,6 +5,6 @@ defmodule Tirexs.LoggerTest do
 
   test :to_curl do
     assert Tirexs.Logger.to_curl([d: 4]) == :ok
-    assert Tirexs.Logger.to_curl(JSEX.encode!([d: 4])) == :ok
+    assert Tirexs.Logger.to_curl(JSX.encode!([d: 4])) == :ok
   end
 end

@@ -1,10 +1,12 @@
+require Record
+
 defmodule Tirexs.ElasticSearch do
 
   @doc """
   This module provides a simple convenience for connection options such as `port`, `uri`, `user`, `pass`
   and functions for doing a `HTTP` request to `ElasticSearch` engine directly.
   """
-  defrecord Config,  [port: 9200, uri: "127.0.0.1", user: nil, pass: nil]
+  Record.defrecord :config, [port: 9200, uri: "127.0.0.1", user: nil, pass: nil]
 
   @doc false
   def get(query_url, config) do
@@ -54,7 +56,7 @@ defmodule Tirexs.ElasticSearch do
   @doc false
   def do_request(url, method, body \\ []) do
     :inets.start()
-    { url, content_type, options } = { String.to_char_list!(url), 'application/json', [{:body_format, :binary}] }
+    { url, content_type, options } = { String.to_char_list(url), 'application/json', [{:body_format, :binary}] }
     case method do
       :get    -> response(:httpc.request(method, {url, []}, [], []))
       :head   -> response(:httpc.request(method, {url, []}, [], []))
@@ -80,13 +82,13 @@ defmodule Tirexs.ElasticSearch do
     end
   end
 
-  def get_body_json(body), do: JSEX.decode!(to_string(body), [{:labels, :atom}])
+  def get_body_json(body), do: JSX.decode!(to_string(body), [{:labels, :atom}])
 
   def make_url(query_url, config) do
-    if config.port == nil || config.port == 80 do
+    if config(config, :port) == nil || config(config, :port) == 80 do
       "http://#{config.uri}/#{query_url}"
     else
-      "http://#{config.uri}:#{config.port}/#{query_url}"
+      "http://#{config(config, :uri)}:#{config(config, :port)}/#{query_url}"
     end
   end
 
