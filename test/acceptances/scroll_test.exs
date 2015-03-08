@@ -4,10 +4,12 @@ defmodule Acceptances.ScrollTest do
   use ExUnit.Case
   import Tirexs.Search
   import Tirexs.Bulk
+  require Tirexs.ElasticSearch
+  require Tirexs.Query
 
   test :scroll do
 
-    settings = Tirexs.ElasticSearch.Config.new()
+    settings = Tirexs.ElasticSearch.config()
     Tirexs.ElasticSearch.delete("bear_test", settings)
 
     Tirexs.Bulk.store [index: "bear_test", refresh: false], settings do
@@ -35,7 +37,7 @@ defmodule Acceptances.ScrollTest do
     end
 
     body = Tirexs.Query.create_resource(s, settings, [scroll: "5m"])
-    assert body._scroll_id != nil
+    assert Tirexs.Query.result(body, :_scroll_id) != nil
   end
 
 end

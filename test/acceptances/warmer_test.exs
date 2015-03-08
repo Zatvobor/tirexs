@@ -4,11 +4,16 @@ defmodule Acceptances.WarmerTest do
   import TestHelpers
 
   import Tirexs.Search.Warmer
+  require Tirexs.ElasticSearch
 
-  @settings Tirexs.ElasticSearch.Config.new()
+  @settings Tirexs.ElasticSearch.config()
 
-  teardown do
-    remove_index("bear_test", @settings)
+  setup do
+    on_exit fn ->
+      remove_index("bear_test", @settings)
+      :ok
+    end
+
     :ok
   end
 
@@ -30,8 +35,8 @@ defmodule Acceptances.WarmerTest do
       end
     end
 
-    Tirexs.ElasticSearch.put("bear_test", JSEX.encode!(warmers), @settings)
+    Tirexs.ElasticSearch.put("bear_test", JSX.encode!(warmers), @settings)
     {:ok, 200, body} = Tirexs.ElasticSearch.get("bear_test/_warmer/warmer_1", @settings)
-    assert Dict.get(body, :bear_test) |> Dict.get(:warmers) == [warmer_1: [types: [], source: [query: [match_all: []], facets: [facet_1: [terms: [field: "field"]]]]]]
+    assert Dict.get(body, :bear_test) |> Dict.get(:warmers) == %{warmer_1: %{types: [], source: %{query: %{match_all: []}, facets: %{facet_1: %{terms: %{field: "field"}}}}}}
   end
 end

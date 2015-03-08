@@ -1,11 +1,14 @@
+require Tirexs.ElasticSearch
+
 defmodule Tirexs.ElasticSearch.Settings do
   @moduledoc false
 
   import Tirexs.ElasticSearch
+  require Tirexs.ElasticSearch
 
   @doc false
   def create_resource(definition) do
-    create_resource(definition, Tirexs.ElasticSearch.Config.new)
+    create_resource(definition, Tirexs.ElasticSearch.config())
   end
 
   @doc false
@@ -16,6 +19,6 @@ defmodule Tirexs.ElasticSearch.Settings do
 
   @doc false
   def to_resource_json(definition) do
-    JSEX.encode! [settings: definition[:settings]]
+    JSX.encode! [settings: definition[:settings]]
   end
 end
