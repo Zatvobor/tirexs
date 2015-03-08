@@ -11,6 +11,8 @@ releases:
 - `v0.5.0` tested on elastcisearch `1.1.1`, `1.4.2`, elixir `0.13.1`
 - `v0.4` tested on elasticsearch `0.90.3`, elixir `0.12.5`
 
+available as [Hex package](https://hex.pm/packages/tirexs).
+
 Walk-through a code
 -------------------
 
