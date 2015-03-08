@@ -7,8 +7,8 @@ An Elixir based DSL for operating the ElasticSearch cluster related stuff, such 
 
 releases:
 
-- `v0.5.0` tested on elastcisearch `1.4.2`, elixir `1.0.2`
-- `v0.5.0` tested on elastcisearch `1.1.1`, elixir `0.13.1`
+- `v0.6.0` tested on elastcisearch `1.4.4`, elixir `1.0.3`
+- `v0.5.0` tested on elastcisearch `1.1.1`, `1.4.2`, elixir `0.13.1`
 - `v0.4` tested on elasticsearch `0.90.3`, elixir `0.12.5`
 
 Walk-through a code
