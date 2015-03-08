@@ -5,4 +5,6 @@ elixir:
 notifications:
   recipients:
     - a.zatvornitskiy@gmail.com
-script: "MIX_ENV=test mix travis"
+services:
+  - elasticsearch
+script: "MIX_ENV=test mix test"
