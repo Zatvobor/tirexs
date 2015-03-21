@@ -4,7 +4,9 @@ defmodule Tirexs.LoggerTest do
   use ExUnit.Case
 
   test :to_curl do
-    assert Tirexs.Logger.to_curl([d: 4]) == :ok
-    assert Tirexs.Logger.to_curl(JSX.encode!([d: 4])) == :ok
+    ExUnit.CaptureIO.capture_io(:error_logger, fn ->
+      assert Tirexs.Logger.to_curl([d: 4]) == :ok
+      assert Tirexs.Logger.to_curl(JSX.encode!([d: 4])) == :ok
+    end)
   end
 end
