@@ -118,3 +118,5 @@ License
 
 `Tirexs` source code is released under Apache 2 License.
 Check [LICENSE](https://github.com/zatvobor/tirexs/blob/master/LICENSE) and [NOTICE](https://github.com/zatvobor/tirexs/blob/master/NOTICE) files for more details. The project HEAD is https://github.com/zatvobor/tirexs.
+
+[![Analytics](https://ga-beacon.appspot.com/UA-61065309-1/Zatvobor/tirexs/README)](https://github.com/igrigorik/ga-beacon)
