@@ -2,7 +2,7 @@ defmodule Tirexs.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :tirexs, version: "0.6.0", elixir: "1.0.3", description: description, package: package, deps: deps ]
+    [ app: :tirexs, version: "0.6.1", elixir: "1.0.3", description: description, package: package, deps: deps ]
   end
 
   def application, do: []
@@ -13,7 +13,7 @@ defmodule Tirexs.Mixfile do
 
   defp description do
     """
-    An Elixir based DSL for operating the ElasticSearch cluster related stuff, such as indexes, scoped queries and so on.
+    An Elixir flavored DSL for building JSON based queries to Elasticsearch engine
     """
   end
 
