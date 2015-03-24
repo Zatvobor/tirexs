@@ -2,11 +2,34 @@ require Record
 
 defmodule Tirexs.ElasticSearch do
 
+  @config %URI{ scheme: "http", userinfo: nil, host: "127.0.0.1", port: 9200 }
+
   @doc """
-  This module provides a simple convenience for connection options such as `port`, `uri`, `user`, `pass`
-  and functions for doing a `HTTP` request to `ElasticSearch` engine directly.
+  Get default configuration for `ElasticSearch` connection.
   """
-  Record.defrecord :config, [port: 9200, uri: "127.0.0.1", user: nil, pass: nil]
+  def config do
+    @config
+  end
+
+  @doc """
+  Set `ElasticSearch` connection from URL.
+  """
+  def config(url) when is_bitstring(url) do
+    URI.parse(url)
+  end
+
+  @doc """
+  Override default configuration for `ElasticSearch` connection from argument list.
+  Arguments must match those in Elixir's `URI` module.
+  """
+  def config(opts) when is_list(opts) do
+    Map.merge config, Enum.into(opts, %{})
+  end
+
+  @doc false
+  def config(config, part) do
+    config[part]
+  end
 
   @doc false
   def get(query_url, config) do
@@ -85,11 +108,7 @@ defmodule Tirexs.ElasticSearch do
   def get_body_json(body), do: JSX.decode!(to_string(body), [{:labels, :atom}])
 
   def make_url(query_url, config) do
-    if config(config, :port) == nil || config(config, :port) == 80 do
-      "http://#{config.uri}/#{query_url}"
-    else
-      "http://#{config(config, :uri)}:#{config(config, :port)}/#{query_url}"
-    end
+    %URI{config | path: "/#{query_url}"} |> to_string
   end
 
   defp make_headers, do: [{'Content-Type', 'application/json'}]
