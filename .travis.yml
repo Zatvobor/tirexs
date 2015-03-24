@@ -7,4 +7,4 @@ notifications:
     - a.zatvornitskiy@gmail.com
 services:
   - elasticsearch
-script: "MIX_ENV=test mix test"
+script: "mix test"
