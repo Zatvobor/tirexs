@@ -2,9 +2,12 @@ sudo: false
 language: elixir
 elixir:
   - 1.0.3
-notifications:
-  recipients:
-    - a.zatvornitskiy@gmail.com
 services:
   - elasticsearch
 script: "mix test"
+notifications:
+  email: false
+  slack:
+    rooms:
+      - goroundscope:3uAcoRPk3TZkvMXJTCEcQYS7#oss-feed
+    on_success: change
