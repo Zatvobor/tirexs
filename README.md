@@ -1,9 +1,9 @@
-[![HEX version](https://img.shields.io/hexpm/v/tirexs.svg)](https://hex.pm/packages/tirexs) [![Build Status](https://travis-ci.org/Zatvobor/tirexs.png)](https://travis-ci.org/Zatvobor/tirexs)
+[![Build Status](https://travis-ci.org/Zatvobor/tirexs.png)](https://travis-ci.org/Zatvobor/tirexs) [![HEX version](https://img.shields.io/hexpm/v/tirexs.svg)](https://hex.pm/packages/tirexs) [![HEX downloads](https://img.shields.io/hexpm/dw/tirexs.svg)](https://hex.pm/packages/tirexs)
 
 tirexs
 ======
 
-An Elixir based DSL for operating the ElasticSearch cluster related stuff, such as indexes, scoped queries and so on.
+An Elixir flavored DSL for building JSON based settings, mappings, queries, perlocators to Elasticsearch engine.
 
 releases:
 
@@ -117,6 +117,6 @@ License
 -------
 
 `Tirexs` source code is released under Apache 2 License.
-Check [LICENSE](https://github.com/zatvobor/tirexs/blob/master/LICENSE) and [NOTICE](https://github.com/zatvobor/tirexs/blob/master/NOTICE) files for more details. The project HEAD is https://github.com/zatvobor/tirexs.
+Check [LICENSE](LICENSE) and [NOTICE](NOTICE) files for more details. The project HEAD is https://github.com/zatvobor/tirexs.
 
 [![Analytics](https://ga-beacon.appspot.com/UA-61065309-1/Zatvobor/tirexs/README)](https://github.com/igrigorik/ga-beacon)
