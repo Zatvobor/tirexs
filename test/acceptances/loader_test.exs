@@ -6,34 +6,34 @@ defmodule Acceptances.LoaderTest do
   import Tirexs.ElasticSearch
   require Tirexs.ElasticSearch
 
-  @path Path.join([File.cwd!, "examples"])
+  @settings Tirexs.ElasticSearch.config()
 
-   test :load_dsl_file do
-     settings = Tirexs.ElasticSearch.config()
+  test :river_couchdb_dsl do
+    delete("_river/test_river_dsl", @settings)
+    river_couchdb_review_exs = Path.join([File.cwd!, "examples", "river", "couchdb_river.exs"])
+    Tirexs.Loader.load(river_couchdb_review_exs)
 
-     Tirexs.Loader.load_all(@path)
+    assert exist?("_river/test_river_dsl/_meta", @settings) == true
+  end
 
-     assert exist?("test_dsl_index", settings) == true
-     delete("test_dsl_index", settings)
-     assert exist?("test_dsl_index", settings) == false
-     assert exist?("test_dsl_setting", settings) == true
-     delete("test_dsl_setting", settings)
-     assert exist?("test_dsl_setting", settings) == false
-   end
+  test :mappings_dsl do
+    delete("test_dsl_index", @settings)
+    mappings_exs = Path.join([File.cwd!, "examples", "mapping.exs"])
+    Tirexs.Loader.load(mappings_exs)
 
-   test :river_dsl do
-    river_path = Path.join([File.cwd!, "examples", "river"])
-    settings = Tirexs.ElasticSearch.config()
+    assert exist?("test_dsl_index", @settings) == true
+  end
 
-    Tirexs.Loader.load_all(river_path)
+  test :search_dsl do
+    search_exs = Path.join([File.cwd!, "examples", "search.exs"])
+    Tirexs.Loader.load(search_exs)
+  end
 
-    assert exist?("_river/tets_river_dsl/_meta", settings) == true
-    delete("_river/tets_river_dsl", settings)
-    assert exist?("_river/tets_river_dsl/_meta", settings) == false
-   end
+  test :settings_dsl do
+    delete("test_dsl_settings", @settings)
+    settings_exs = Path.join([File.cwd!, "examples", "settings.exs"])
+    Tirexs.Loader.load(settings_exs)
 
-   test :search_dsl do
-     search_file_path = Path.join([File.cwd!, "examples"])
-     Tirexs.Loader.load(search_file_path <> "/search.exs")
-   end
+    assert exist?("test_dsl_settings", @settings) == true
+  end
 end
