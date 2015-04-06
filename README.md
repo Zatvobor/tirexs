@@ -113,6 +113,12 @@ end
 #=> java    1
 #=> elixir  1
 ```
+
+Contributing
+------------
+
+If you feel like porting or fixing something, please drop a [pull request](https://github.com/Zatvobor/tirexs/pulls) or [issue tracker](https://github.com/Zatvobor/tirexs/issues) at GitHub! Check out the [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
+
 License
 -------
 
