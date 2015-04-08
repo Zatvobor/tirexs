@@ -14,7 +14,7 @@ defmodule Acceptances.ElasticSearchTest do
   test :get_elastic_search_server do
     settings = Tirexs.ElasticSearch.config()
     {:error, _, _}  = get("missing_index", settings)
-    {:ok, _, body}    = get("", settings)
+    {:ok, _, body}  = get("", settings)
 
     assert body[:tagline] == "You Know, for Search"
 
