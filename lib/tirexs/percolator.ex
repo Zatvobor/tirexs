@@ -30,13 +30,9 @@ defmodule Tirexs.Percolator do
 
   @doc false
   def create_resource(definition, settings) do
-    url = if definition[:type] do
-      "#{definition[:index]}/#{definition[:type]}/#{definition[:name]}"
-    else
-      "#{definition[:index]}/#{definition[:name]}"
-    end
+    url  = "#{definition[:index]}/.percolator/#{definition[:name]}"
+    json = to_resource_json(definition)
 
-    { url, json } = { ".percolator/#{url}", to_resource_json(definition) }
     Tirexs.ElasticSearch.put(url, json, settings)
   end
 
@@ -49,14 +45,10 @@ defmodule Tirexs.Percolator do
   end
 
   def match(definition, settings) do
-    url = if definition[:type] do
-      "#{definition[:index]}/#{definition[:type]}/_percolate"
-    else
-      "#{definition[:index]}/_percolate"
-    end
+    url  = "#{definition[:index]}/#{definition[:type]}/_percolate"
+    json = to_resource_json(definition)
 
-    { url, json } = { "#{url}", to_resource_json(definition) }
-    Tirexs.ElasticSearch.get(url, json, settings)
+    Tirexs.ElasticSearch.post(url, json, settings)
   end
 
 end

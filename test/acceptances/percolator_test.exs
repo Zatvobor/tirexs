@@ -6,9 +6,9 @@ defmodule Tirexs.PercolatorTest do
 
   test :percolator do
     settings = Tirexs.ElasticSearch.config()
-    Tirexs.ElasticSearch.delete(".percolator/my-index", settings)
+    Tirexs.ElasticSearch.delete("my-index/.percolator/1", settings)
 
-    percolator = percolator [index: "my-index", name: "message"] do
+    percolator = percolator [index: "my-index", name: 1] do
       query do
         match "message",  "bonsai tree"
       end
@@ -17,10 +17,9 @@ defmodule Tirexs.PercolatorTest do
     {_, _, body} = Tirexs.Percolator.create_resource(percolator, settings)
 
     assert body[:created]
-    assert body[:_id]   == "message"
-    assert body[:_type] == "my-index"
+    assert body[:_id]   == "1"
 
-    percolator = percolator [index: "my-index"] do
+    percolator = percolator [index: "my-index", type: "message"] do
       doc do
         [[message: "A new bonsai tree in the office"]]
       end
