@@ -9,11 +9,11 @@ defmodule Acceptances.LoaderTest do
   @settings Tirexs.ElasticSearch.config()
 
   test :river_couchdb_dsl do
-    delete("_river/test_river_dsl", @settings)
     river_couchdb_review_exs = Path.join([File.cwd!, "examples", "river", "couchdb_river.exs"])
     Tirexs.Loader.load(river_couchdb_review_exs)
 
     assert exist?("_river/test_river_dsl/_meta", @settings) == true
+    delete("_river/test_river_dsl", @settings)
   end
 
   test :mappings_dsl do
