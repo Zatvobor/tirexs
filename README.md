@@ -3,7 +3,9 @@
 tirexs
 ======
 
-An Elixir flavored DSL for building JSON based settings, mappings, queries, perlocators to Elasticsearch engine.
+An Elixir flavored DSL for building JSON based settings, mappings, queries, percolators to Elasticsearch engine.
+
+_Hint: Check out [/examples](/examples) directory as a quick intro._
 
 releases:
 
@@ -112,6 +114,25 @@ end
 #=> ruby    1
 #=> java    1
 #=> elixir  1
+```
+
+In the end, a snippet about using a Percolator (check out the [examples/percolator.exs](examples/percolator.exs))
+```elixir
+percolator = percolator [index: "my-index", name: 1] do
+  query do
+    match "message",  "bonsai tree"
+  end
+end
+
+{_, _, body} = Tirexs.Percolator.create_resource(percolator, settings)
+
+percolator = percolator [index: "my-index", type: "message"] do
+  doc do
+    [[message: "A new bonsai tree in the office"]]
+  end
+end
+
+{_, _, body} = Tirexs.Percolator.match(percolator, settings)
 ```
 
 Contributing
