@@ -48,7 +48,7 @@ defmodule Tirexs.Percolator do
     JSX.encode!(definition)
   end
 
-  def matches(definition, settings) do
+  def match(definition, settings) do
     url = if definition[:type] do
       "#{definition[:index]}/#{definition[:type]}/_percolate"
     else
