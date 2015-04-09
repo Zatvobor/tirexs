@@ -56,11 +56,11 @@ defmodule Tirexs.ElasticSearch do
 
   @doc false
   def do_request(url, method, body \\ []) do
-    do_request_with_trial(url, method, body, 5)
+    do_request_with_retry(url, method, body, 5)
   end
 
 
-  defp do_request_with_trial(url, method, body, trial_left) do
+  defp do_request_with_retry(url, method, body, retry_left) do
     try do
       :inets.start()
       { url, content_type, options } = { String.to_char_list(url), 'application/json', [{:body_format, :binary}] }
@@ -73,11 +73,11 @@ defmodule Tirexs.ElasticSearch do
       end
     rescue
       error ->
-        if trial_left == 0 do
+        if retry_left == 0 do
           IO.puts("==========> #{inspect(error)}")
           raise error
         else
-          do_request_with_trial(url, method, body, trial_left - 1)
+          do_request_with_retry(url, method, body, retry_left - 1)
         end
     end
   end
@@ -90,6 +90,7 @@ defmodule Tirexs.ElasticSearch do
         else
           case body do
             [] -> { :ok, status, [] }
+            " " -> { :ok, status, " " }
             _  -> { :ok, status, get_body_json(body) }
           end
         end
