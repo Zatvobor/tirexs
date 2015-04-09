@@ -56,28 +56,44 @@ defmodule Tirexs.ElasticSearch do
 
   @doc false
   def do_request(url, method, body \\ []) do
-    :inets.start()
-    { url, content_type, options } = { String.to_char_list(url), 'application/json', [{:body_format, :binary}] }
-    case method do
-      :get    -> response(HTTPotion.get url, [], [])
-      :head   -> response(HTTPotion.head url, [], [])
-      :put    -> response(HTTPotion.put url, body, make_headers)
-      :post   -> response(HTTPotion.post url, body, make_headers)
-      :delete -> response(HTTPotion.delete url, [], make_headers)
-    end
+    do_request_with_trial(url, method, body, 5)
   end
 
 
-  defp response(req) do
-    {status, _, body} = {req.status_code, req.headers, req.body}
-
-    if !HTTPotion.Response.success?(req) do
-      { :error, status, body }
-    else
-      case body do
-        [] -> { :ok, status, [] }
-        _  -> { :ok, status, get_body_json(body) }
+  defp do_request_with_trial(url, method, body, trial_left) do
+    try do
+      :inets.start()
+      { url, content_type, options } = { String.to_char_list(url), 'application/json', [{:body_format, :binary}] }
+      case method do
+        :get    -> response(:httpc.request(method, {url, []}, [], []))
+        :head   -> response(:httpc.request(method, {url, []}, [], []))
+        :put    -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
+        :post   -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
+        :delete -> response(:httpc.request(method, {url, make_headers},[],[]))
       end
+    rescue
+      error ->
+        if trial_left == 0 do
+          IO.puts("==========> #{inspect(error)}")
+          raise error
+        else
+          do_request_with_trial(url, method, body, trial_left - 1)
+        end
+    end
+  end
+
+  defp response(req) do
+    case req do
+      {:ok, { {_, status, _}, _, body}} ->
+        if round(status / 100) == 4 || round(status / 100) == 5 do
+          raise "#{inspect({ :error, status, body })}"
+        else
+          case body do
+            [] -> { :ok, status, [] }
+            _  -> { :ok, status, get_body_json(body) }
+          end
+        end
+      error -> raise "#{inspect(error)}"
     end
   end
 
