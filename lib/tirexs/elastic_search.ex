@@ -74,9 +74,11 @@ defmodule Tirexs.ElasticSearch do
     rescue
       error ->
         if retry_left == 0 do
-          IO.puts("==========> #{inspect(error)}")
+          IO.puts("#{inspect(:erlang.date)} #{inspect(:erlang.time)} ==========> #{inspect(error)}")
           raise error
         else
+          sleep_duration = round(:math.pow(8, (5 - retry_left)))
+          :timer.sleep(sleep_duration * 1000)
           do_request_with_retry(url, method, body, retry_left - 1)
         end
     end
