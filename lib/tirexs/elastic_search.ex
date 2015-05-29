@@ -6,8 +6,11 @@ defmodule Tirexs.ElasticSearch do
   """
 
   require Record
+  require Logger
 
   Record.defrecord :record_config,  [port: 9200, uri: "127.0.0.1", user: nil, pass: nil]
+  @number_of_retry 1
+  @exponential_base 8
 
   @doc false
   def get(query_url, config) do
@@ -56,7 +59,7 @@ defmodule Tirexs.ElasticSearch do
 
   @doc false
   def do_request(url, method, body \\ []) do
-    do_request_with_retry(url, method, body, 5)
+    do_request_with_retry(url, method, body, @number_of_retry)
   end
 
 
@@ -74,10 +77,11 @@ defmodule Tirexs.ElasticSearch do
     rescue
       error ->
         if retry_left == 0 do
-          IO.puts("#{inspect(:erlang.date)} #{inspect(:erlang.time)} ==========> #{inspect(error)}")
+          Logger.error("#{inspect(error)} ==========> no more retry")
           raise error
         else
-          sleep_duration = round(:math.pow(8, (5 - retry_left)))
+          Logger.error("#{inspect(error)} ==========> #{retry_left} retry(ies) left")
+          sleep_duration = round(:math.pow(@exponential_base, (@number_of_retry - retry_left)))
           :timer.sleep(sleep_duration * 1000)
           do_request_with_retry(url, method, body, retry_left - 1)
         end
