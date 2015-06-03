@@ -82,7 +82,7 @@ defmodule Tirexs.ElasticSearch do
         else
           Logger.error("#{inspect(error)} ==========> #{retry_left} retry(ies) left")
           sleep_duration = round(:math.pow(@exponential_base, (@number_of_retry - retry_left)))
-          :timer.sleep(sleep_duration * 1000)
+          :timer.sleep(sleep_duration * 100)
           do_request_with_retry(url, method, body, retry_left - 1)
         end
     end
