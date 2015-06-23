@@ -117,6 +117,7 @@ defmodule Tirexs.ElasticSearch do
           case body do
             [] -> { :ok, status, [] }
             " " -> { :ok, status, " " }
+            "Published\n" -> { :ok, status, "Published\n" }
             _  -> { :ok, status, get_body_json(body) }
           end
         end
