@@ -8,7 +8,7 @@ defmodule Tirexs.Mixfile do
   def application, do: []
 
   defp deps do
-    [ {:exjsx, github: "talentdeficit/exjsx", tag: "v3.1.0"} ]
+    [ {:exjsx, "~> 3.1.0"} ]
   end
 
   defp description do
