@@ -39,8 +39,10 @@ defmodule Tirexs.Bulk do
 			action = key(document)
       document = document[action]
       type = get_type_from_document(document)
+      document = remove_type_from_document(document)
       unless id do
 				id   = get_id_from_document(document)
+        document = remove_id_from_document(document)
 			end
 
 			header = [_index: index, _type: type, _id: id ]
@@ -79,12 +81,20 @@ defmodule Tirexs.Bulk do
     document[:id] || document[:_id]
   end
 
+  def remove_id_from_document(document) do
+    document |> Dict.delete(:id) |> Dict.delete(:_id)# return
+  end
+
   def convert_document_to_json(document) do
     JSEX.encode!(document)
   end
 
   def get_type_from_document(document) do
     document[:_type] || document[:type] || "document"
+  end
+
+  def remove_type_from_document(document) do
+    document |> Dict.delete(:_type) |> Dict.delete(:type)# return
   end
 
 	def match(document) do
