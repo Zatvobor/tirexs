@@ -71,7 +71,8 @@ defmodule Tirexs.ElasticSearch do
     if (seconds != 0), do: string_time = "#{seconds}_#{string_time |> String.rjust(7, ?0)}"
 
     last_module = module |> Module.split() |> Enum.at(-1)
-    last_module_and_function = "#{last_module}.#{function}" |> String.ljust(25)
+    longest_length = "Room.load_unclosed_rooms_state_to_memory" |> String.length()
+    last_module_and_function = "#{last_module}.#{function}" |> String.ljust(longest_length + 1)
 
     Logger.info("\t#{string_time}\t#{last_module_and_function}\t#{inspect(params)}")
     reply# return
