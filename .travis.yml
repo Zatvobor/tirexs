@@ -9,5 +9,5 @@ notifications:
   email: false
   slack:
     rooms:
-      - goroundscope:3uAcoRPk3TZkvMXJTCEcQYS7#oss-feed
+      - zatvobor:eLjCTZD2l85xl19hsSdxkMdN##oss-feed
     on_success: change
