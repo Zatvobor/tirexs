@@ -1,2 +1,2 @@
-%{"exjsx": {:git, "git://github.com/talentdeficit/exjsx.git", "087e01df2457262dcc578d36b68fcdca41860f23", [tag: "v3.1.0"]},
+%{"exjsx": {:hex, :exjsx, "3.1.0"},
   "jsx": {:hex, :jsx, "2.4.0"}}
