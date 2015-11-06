@@ -4,7 +4,6 @@ elixir:
   - 1.0.2
 services:
   - elasticsearch
-script: "mix test"
 notifications:
   email: false
   slack:
