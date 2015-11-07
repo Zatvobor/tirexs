@@ -10,7 +10,7 @@ defmodule Tirexs.Query do
   import Tirexs.DSL.Logic
   import Tirexs.Query.Logic
 
-  Record.defrecord :result, [count: 0, max_score: nil, facets: [], hits: [], _scroll_id: nil]
+  Record.defrecord :result, [count: 0, max_score: nil, facets: [], aggregations: [], hits: [], _scroll_id: nil]
 
 
   @doc false
@@ -429,9 +429,10 @@ defmodule Tirexs.Query do
         count     = result[:hits][:total]
         hits      = result[:hits][:hits]
         facets    = result[:facets]
+        aggregations = result[:aggregations]
         max_score = result[:hits][:max_score]
         scroll_id = result[:_scroll_id]
-        result(count: count, hits: hits, facets: facets, max_score: max_score, _scroll_id: scroll_id)
+        result(count: count, hits: hits, facets: facets, aggregations: aggregations, max_score: max_score, _scroll_id: scroll_id)
       result  -> result
     end
   end
