@@ -2,7 +2,7 @@ defmodule Tirexs.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :tirexs, version: "0.7.2", elixir: "~> 1.1.1", description: description, package: package, deps: deps ]
+    [ app: :tirexs, version: "0.7.3", elixir: "~> 1.1.1", description: description, package: package, deps: deps ]
   end
 
   def application do
@@ -21,6 +21,7 @@ defmodule Tirexs.Mixfile do
 
   defp package do
     [
+      maintainers: ["Aleksey Zatvobor"],
       licenses: ["Apache 2.0"],
       links: %{"GitHub" => "https://github.com/Zatvobor/tirexs", "Contributors" => "https://github.com/Zatvobor/tirexs/graphs/contributors", "Issues" => "https://github.com/Zatvobor/tirexs/issues"}
     ]
