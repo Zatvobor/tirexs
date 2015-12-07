@@ -7,13 +7,6 @@ An Elixir flavored DSL for building JSON based settings, mappings, queries, perc
 
 _Hint: Check out [/examples](/examples) directory as a quick intro._
 
-releases:
-
-- `v0.6.0` tested on elastcisearch `1.4.4`, elixir `1.0.3`
-- `v0.5.0` tested on elastcisearch `1.1.1`, `1.4.2`, elixir `0.13.1`
-- `v0.4` tested on elasticsearch `0.90.3`, elixir `0.12.5`
-
-available as [Hex package](https://hex.pm/packages/tirexs).
 
 Walk-through a code
 -------------------
