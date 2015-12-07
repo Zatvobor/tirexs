@@ -1,2 +1,2 @@
-%{"exjsx": {:hex, :exjsx, "3.1.0"},
-  "jsx": {:hex, :jsx, "2.4.0"}}
+%{"exjsx": {:hex, :exjsx, "3.2.0"},
+  "jsx": {:hex, :jsx, "2.6.2"}}
