@@ -51,7 +51,8 @@ end
 
 If you want to provide a dynamic list of documents you can prepare a list of
 document in this way:
-```
+
+```elixir
 docs = [
     create: [id: 1, title: "One", tags: ["elixir"], type: "article"],
     create: [id: 2, title: "Two", tags: ["elixir", "ruby"], type: "article"],
@@ -63,7 +64,9 @@ docs = [
 
 and call:
 
-`Tirexs.Bulk.store [index: "articles", refresh: true], settings, do: docs`
+```elixir
+Tirexs.Bulk.store [index: "articles", refresh: true], settings, do: docs
+```
 
 Now, let's go further. We will be searching for articles whose title begins with letter “T”, sorted by title in descending order, filtering them for ones tagged “elixir”, and also retrieving some facets:
 
