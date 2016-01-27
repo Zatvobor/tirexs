@@ -4,6 +4,12 @@ defmodule Tirexs.Index.Settings do
   import Tirexs.DSL.Logic
   import Tirexs.Index.Logic
 
+  @doc false
+  defmacro __using__(_) do
+    quote do
+      import unquote(__MODULE__), only: :macros
+    end
+  end
 
   defmacro settings([do: block]) do
     quote do

@@ -5,8 +5,14 @@ defmodule Tirexs.Mapping do
 
   use Tirexs.DSL.Logic
   import Tirexs.ElasticSearch
-  require Tirexs.ElasticSearch
 
+  @doc false
+  defmacro __using__(_) do
+    quote do
+      use unquote(Tirexs.Index.Settings)
+      import unquote(__MODULE__), only: :macros
+    end
+  end
 
   def transpose(block) do
     case block do
