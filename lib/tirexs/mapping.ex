@@ -80,6 +80,6 @@ defmodule Tirexs.Mapping do
   @doc false
   def to_resource_json(definition, type) do
     json_dict = Dict.put([], to_atom(type), definition[:mapping])
-		JSX.encode!(json_dict)
+    JSX.encode!(json_dict)
   end
 end
