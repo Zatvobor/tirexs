@@ -8,6 +8,7 @@ defmodule Acceptances.ManageTest do
 
   import Tirexs.Query
   import Tirexs.Mapping, only: :macros
+  import Tirexs.Manage.Aliases, only: [aliases: 1, add: 1, remove: 1]
   require Tirexs.ElasticSearch
 
   @settings Tirexs.ElasticSearch.config()
@@ -101,6 +102,22 @@ defmodule Acceptances.ManageTest do
     {_, _, body} = Tirexs.Manage.explain([index: "bear_test", type: "my_type", id: 1, q: "message:search"], @settings)
     body = JSX.decode!(to_string(body), [{:labels, :atom}])
     assert Dict.get(body, :matched) == false
+  end
+
+  test :aliases do
+    queries = aliases do
+      add    index: "bear_test", alias: "bear_test_alias"
+    end
+    Tirexs.Manage.aliases queries, @settings
+
+    queries = aliases do
+      remove index: "bear_test", alias: "bear_test_alias"
+      add    index: "bear_test", alias: "bear_test_alias1"
+    end
+    Tirexs.Manage.aliases queries, @settings
+
+    {_, _, body} = Tirexs.ElasticSearch.get("_aliases", @settings)
+    assert body[:bear_test] == %{aliases: %{bear_test_alias1: %{}}}
   end
 
   test :update do

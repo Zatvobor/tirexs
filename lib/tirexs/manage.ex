@@ -23,6 +23,10 @@ defmodule Tirexs.Manage do
     Tirexs.ElasticSearch.get(make_url("_explain", options), settings)
   end
 
+  def aliases(aliases_params, settings) do
+    Tirexs.ElasticSearch.post("_aliases", JSX.encode!(aliases_params), settings)
+  end
+
   def update(options, update_params, settings) do
     Tirexs.ElasticSearch.post(make_url("_update", options), JSX.encode!(update_params), settings)
   end
