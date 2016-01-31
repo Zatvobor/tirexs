@@ -5,7 +5,7 @@ defmodule Tirexs.MappingsTest do
 
   import Tirexs.Mapping
 
-  test :simpe_dsl do
+  test :simple_dsl do
     index = [index: "bear_test"]
     mappings do
       indexes "id", [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100],
@@ -62,7 +62,7 @@ defmodule Tirexs.MappingsTest do
   end
 
 
-  test :real_simpe_example do
+  test :real_simple_example do
     index = [index: "bear_test"]
     mappings do
       indexes "mn_opts_", [type: "nested"] do
@@ -87,7 +87,7 @@ defmodule Tirexs.MappingsTest do
 
   end
 
-  test :real_advance_exampe do
+  test :real_advanced_example do
       index = [index: "bear_test"]
       mappings do
         indexes "mn_opts_", [type: "nested"] do

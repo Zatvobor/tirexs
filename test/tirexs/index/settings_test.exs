@@ -4,7 +4,7 @@ defmodule Tirexs.Index.SettingsTest do
   use ExUnit.Case
   import Tirexs.Index.Settings
 
-  test :simpe_index_settings do
+  test :simple_index_settings do
     index = [name: "bear_test"]
 
     settings do
