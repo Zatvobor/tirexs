@@ -7,8 +7,8 @@ defmodule Tirexs.DSL do
   """
 
   @doc false
-  def define(type, resource) do
-    elastic_settings = Tirexs.ElasticSearch.config()
+  def define(type, resource, opts \\ []) do
+    elastic_settings = Keyword.fetch(opts, :config, Tirexs.ElasticSearch.config)
     case resource.(type, elastic_settings) do
       { type, elastic_settings } -> create_resource(type, elastic_settings)
     end
