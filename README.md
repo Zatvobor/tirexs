@@ -31,6 +31,30 @@ end
 { :ok, status, body } = Tirexs.Mapping.create_resource(index)
 ```
 
+___
+**NOTE**
+If you want to PUT settings with mappings you can (for example) use settings
+and mappings, for instance in this snippet:
+```elixir
+
+use Tirexs.Mapping
+
+settings do
+    analysis do
+        filter "edge_ngram", [type: "edgeNGram", min_gram: 1, max_gram: 15]
+        analyzer "autocomplete_analyzer",
+        [
+          filter: ["icu_normalizer", "icu_folding", "edge_ngram"],
+          tokenizer: "icu_tokenizer"
+        ]
+  end
+end
+```
+
+When `Tirexs.Mapping.create_resource(index)` will be used settings and mappings
+will be created in one request together.
+___
+
 Then let's populate an `articles` index:
 
 ```elixir
