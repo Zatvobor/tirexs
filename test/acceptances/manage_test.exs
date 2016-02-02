@@ -38,30 +38,30 @@ defmodule Acceptances.ManageTest do
     assert Dict.get(body, :count) == 0
   end
 
+  @tag skip: "deprecated and removed in 2.0 core"
   test :delete_by_query do
-    index = [index: "bear_test"]
+    index = [index: "bear_test", type: "bear_type"]
     mappings do
       index "id", type: "integer"
       index "name", type: "string"
     end
-    Tirexs.Mapping.create_resource(index, @settings)
-    Tirexs.Bulk.store [index: "bear_test", refresh: false], @settings do
+
+    {:ok, _, _} = Tirexs.Mapping.create_resource(index, @settings)
+
+    Tirexs.Bulk.store [index: "bear_test", refresh: true], @settings do
       create id: 1, name: "bar1", description: "foo bar test"
       create id: 2, name: "bar2", description: "foo bar test"
     end
 
-    Tirexs.Manage.refresh(["bear_test"], @settings)
-
-    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
+    {:ok, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
 
     assert Dict.get(body, :count) == 2
 
-    query = query do
-      term "id", 1
-    end
+    query = query do: term "id", 1
 
-    Tirexs.Manage.delete_by_query([index: "bear_test", q: "id:1"] ++ query, @settings)
-    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
+    {:ok, _, _} = Tirexs.Manage.delete_by_query([index: "bear_test", q: "id:1"] ++ query, @settings)
+    {:ok, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
+
     assert Dict.get(body, :count) == 1
   end
 
