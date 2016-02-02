@@ -65,6 +65,7 @@ defmodule Acceptances.ManageTest do
     assert Dict.get(body, :count) == 1
   end
 
+  @tag skip: "deprecated in 1.6.0 and removed in 2.0"
   test :more_like_this do
     Tirexs.Bulk.store [index: "bear_test", refresh: false], @settings do
       create id: 1, name: "bar1", description: "foo bar test", type: "my_type"
@@ -73,7 +74,7 @@ defmodule Acceptances.ManageTest do
 
     Tirexs.Manage.refresh(["bear_test"], @settings)
 
-    {_, _, body} = Tirexs.Manage.more_like_this([id: 1, type: "my_type", index: "bear_test", mlt_fields: "name,description", min_term_freq: 1], @settings)
+    {:ok, _, body} = Tirexs.Manage.more_like_this([id: 1, type: "my_type", index: "bear_test", mlt_fields: "name,description", min_term_freq: 1], @settings)
     assert Dict.get(body, :hits) |> Dict.get(:hits) == []
   end
 
