@@ -54,19 +54,29 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def create_resource(definition, opts) do
-    if definition[:type] do
-      create_resource_settings(definition, opts)
+    index_settings = Keyword.get(definition, :settings)
+    cond do
+      index_settings  ->
+        url  = "#{definition[:index]}"
+        json = to_resource_json(definition)
 
-      url  = "#{definition[:index]}/#{definition[:type]}/_mapping"
-      json = to_resource_json(definition)
+        post(url, json, opts)
 
-      put(url, json, opts)
-    else
-      url  = "#{definition[:index]}/_mapping"
-      json = to_resource_json(definition, definition[:index])
+      definition[:type] ->
+        create_resource_settings(definition, opts)
 
-      put(url, json, opts)
+        url  = "#{definition[:index]}/#{definition[:type]}/_mapping"
+        json = to_resource_json(definition)
+
+        put(url, json, opts)
+      true ->
+        url  = "#{definition[:index]}/_mapping"
+        json = to_resource_json(definition, definition[:index])
+
+        put(url, json, opts)
     end
+
+
   end
 
   @doc false
