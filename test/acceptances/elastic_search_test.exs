@@ -76,6 +76,7 @@ defmodule Acceptances.ElasticSearchTest do
     delete("bear_test", settings)
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :create_mapping_search do
     settings = Tirexs.ElasticSearch.config()
 
