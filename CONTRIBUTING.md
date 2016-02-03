@@ -48,5 +48,7 @@ into the project.
 should always `git rebase` on `master` to bring your changes up to date when
 necessary.
 
+Your requests with improvements, new features should point to `rc` (aka release candidate) branch.
+Use `master` branch just only for patches instead.
 
 Thank you for your contributions!
