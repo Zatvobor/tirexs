@@ -6,6 +6,7 @@ defmodule Tirexs.Query.Logic do
   alias Tirexs.{Query, Query.Filter}
 
 
+  @doc false
   def transpose(block) do
       case block do
         {:bool, _, [params]}                  -> Query.bool(params[:do])
@@ -112,7 +113,7 @@ defmodule Tirexs.Query.Logic do
       end
   end
 
-
+  @doc false
   def without_array([], acc), do: acc
 
   def without_array([h|t], acc) do

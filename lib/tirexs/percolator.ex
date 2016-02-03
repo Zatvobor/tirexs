@@ -3,6 +3,7 @@ defmodule Tirexs.Percolator do
 
   use Tirexs.DSL.Logic
 
+
   @doc false
   defmacro percolator([do: block]) do
     extract(block)
@@ -49,6 +50,7 @@ defmodule Tirexs.Percolator do
     JSX.encode!(definition)
   end
 
+  @doc false
   def match(definition, settings) do
     url  = "#{definition[:index]}/#{definition[:type]}/_percolate"
     json = to_resource_json(definition)

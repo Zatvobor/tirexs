@@ -4,6 +4,7 @@ defmodule Tirexs.Bulk do
   import Tirexs.DSL.Logic
 
 
+  @doc false
   defmacro store(options, settings, [do: block]) do
     documents = extract_block(block)
     quote do
@@ -13,11 +14,19 @@ defmodule Tirexs.Bulk do
   end
 
 
+  @doc false
   def create(opts), do: [create: opts]
+
+  @doc false
   def delete(opts), do: [delete: opts]
+
+  @doc false
   def index(opts),  do: [index: opts]
+
+  @doc false
   def update(opts), do: [update: opts]
 
+  @doc false
   def bulk(documents, options, settings) do
     index = options[:index]
     options = Dict.delete(options, :index)
@@ -59,10 +68,12 @@ defmodule Tirexs.Bulk do
     Tirexs.ElasticSearch.post("_bulk" <> to_param(options, ""), payload, settings)
   end
 
+  @doc false
   def meta([], document, acc) do
     [document, acc]
   end
 
+  @doc false
   def meta([h|t], document, acc) do
     unless document[h] == nil do
       acc = Dict.put(acc, h, document[h])
@@ -71,18 +82,22 @@ defmodule Tirexs.Bulk do
     meta(t, document, acc)
   end
 
+  @doc false
   def get_id_from_document(document) do
     document[:id] || document[:_id]
   end
 
+  @doc false
   def convert_document_to_json(document) do
     JSX.encode!(document)
   end
 
+  @doc false
   def get_type_from_document(document) do
     document[:_type] || document[:type] || "document"
   end
 
+  @doc false
   def match(document) do
     case is_list(document) do
       true  -> document
@@ -91,5 +106,4 @@ defmodule Tirexs.Bulk do
         Dict.put([], key, properties)
     end
   end
-
 end

@@ -3,6 +3,7 @@ defmodule Tirexs.Search do
 
   use Tirexs.DSL.Logic
 
+
   @doc false
   defmacro search([do: block]) do
     [search: extract(block)]
