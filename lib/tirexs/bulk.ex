@@ -3,6 +3,7 @@ defmodule Tirexs.Bulk do
 
   import Tirexs.DSL.Logic
 
+
   defmacro store(options, settings, [do: block]) do
     documents = extract_block(block)
     quote do
@@ -11,21 +12,11 @@ defmodule Tirexs.Bulk do
     end
   end
 
-  def create(opts) do
-    [create: opts]
-  end
 
-  def delete(opts) do
-    [delete: opts]
-  end
-
-  def index(opts) do
-    [index: opts]
-  end
-
-  def update(opts) do
-    [update: opts]
-  end
+  def create(opts), do: [create: opts]
+  def delete(opts), do: [delete: opts]
+  def index(opts),  do: [index: opts]
+  def update(opts), do: [update: opts]
 
   def bulk(documents, options, settings) do
     index = options[:index]

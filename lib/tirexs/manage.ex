@@ -1,36 +1,47 @@
 defmodule Tirexs.Manage do
+  @moduledoc false
+
   import Tirexs.DSL.Logic
 
+
+  @doc false
   def count(options, settings) do
     execute_get_if_body_empty_and_post_otherwise("_count", options, settings)
   end
 
+  @doc false
   def delete_by_query(options, settings) do
     _body = JSX.encode!(options[:filter] || options[:query] || [])
     #To do add DELETE with body
     Tirexs.ElasticSearch.delete(make_url("_query", options), settings)
   end
 
+  @doc false
   def more_like_this(options, settings) do
     Tirexs.ElasticSearch.get(make_url("_mlt", options), settings)
   end
 
+  @doc false
   def validate(options, settings) do
     execute_get_if_body_empty_and_post_otherwise("_validate/query", options, settings)
   end
 
+  @doc false
   def explain(options, settings) do
     Tirexs.ElasticSearch.get(make_url("_explain", options), settings)
   end
 
+  @doc false
   def aliases(aliases_params, settings) do
     Tirexs.ElasticSearch.post("_aliases", JSX.encode!(aliases_params), settings)
   end
 
+  @doc false
   def update(options, update_params, settings) do
     Tirexs.ElasticSearch.post(make_url("_update", options), JSX.encode!(update_params), settings)
   end
 
+  @doc false
   def create(:warmer, options, settings) do
     options = options ++ [warmer: true]
     warmers = options[:warmers]
@@ -42,14 +53,17 @@ defmodule Tirexs.Manage do
     end
   end
 
+  @doc false
   def refresh(index, settings) when is_binary(index) do
     Tirexs.ElasticSearch.post(to_string(index) <> "/_refresh", settings)
   end
 
+  @doc false
   def refresh(indexes, settings) when is_list(indexes) do
     indexes = Enum.join(indexes, ",")
     refresh(indexes, settings)
   end
+
 
   defp make_url(method, options) do
     index = options[:index] <> "/"

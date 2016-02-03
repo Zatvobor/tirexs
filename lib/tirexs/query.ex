@@ -1,11 +1,7 @@
-require Tirexs.ElasticSearch
-
 defmodule Tirexs.Query do
-  require Record
-
-  #http://www.elasticsearch.org/guide/reference/query-dsl/
-
   @moduledoc false
+
+  require Record
 
   import Tirexs.DSL.Logic
   import Tirexs.Query.Logic

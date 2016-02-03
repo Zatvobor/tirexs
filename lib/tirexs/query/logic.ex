@@ -3,8 +3,7 @@ defmodule Tirexs.Query.Logic do
 
   use Tirexs.DSL.Logic
 
-  alias Tirexs.Query, as: Query
-  alias Tirexs.Query.Filter, as: Filter
+  alias Tirexs.{Query, Query.Filter}
 
 
   def transpose(block) do

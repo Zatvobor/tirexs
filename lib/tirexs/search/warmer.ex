@@ -3,9 +3,13 @@ defmodule Tirexs.Search.Warmer do
 
   use Tirexs.DSL.Logic
 
-  alias Tirexs.Query, as: Query
-  alias Tirexs.Query.Filter, as: Filter
-  alias Tirexs.Search.Facets, as: Facets
+
+  defmacro warmers([do: block]) do
+    [warmers: extract(block)]
+  end
+
+
+  alias Tirexs.{Query, Query.Filter, Search.Facets}
 
   def transpose(block) do
     case block do
@@ -15,10 +19,6 @@ defmodule Tirexs.Search.Warmer do
       {name, _, [params]}             -> make_warmer(name, params[:do])
       {name, _, params}               -> make_warmer(name, params)
     end
-  end
-
-  defmacro warmers([do: block]) do
-    [warmers: extract(block)]
   end
 
   def make_warmer(name, options, warmers_opts \\ []) do
@@ -36,6 +36,7 @@ defmodule Tirexs.Search.Warmer do
     end
     [source:  extract(options) ++ source_opts]
   end
+
 
   defp routers(name, options, add_options) do
     case options do

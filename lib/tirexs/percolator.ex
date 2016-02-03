@@ -3,26 +3,31 @@ defmodule Tirexs.Percolator do
 
   use Tirexs.DSL.Logic
 
-  alias Tirexs.Query, as: Query
-
-  def transpose(block) do
-    case block do
-      {:query, _, [params]} -> Query._query(params[:do])
-      {:query, _, options}  -> Query._query(options)
-      {:doc, _, [params]}   -> doc(params[:do])
-      {:doc, _, options}   -> doc(options)
-    end
-  end
-
+  @doc false
   defmacro percolator([do: block]) do
     extract(block)
   end
 
+  @doc false
   defmacro percolator(options, [do: block]) do
     [options, index_opts] = Tirexs.Search.extract_index_options(options)
     extract(block) ++ options ++ index_opts
   end
 
+
+  alias Tirexs.Query
+
+  @doc false
+  def transpose(block) do
+    case block do
+      {:query, _, [params]} -> Query._query(params[:do])
+      {:query, _, options}  -> Query._query(options)
+      {:doc, _, [params]}   -> doc(params[:do])
+      {:doc, _, options}    -> doc(options)
+    end
+  end
+
+  @doc false
   def doc(options, doc_opts \\ []) do
     options = List.first(extract_block(options))
     [doc: extract_block(options) ++ doc_opts]
@@ -50,5 +55,4 @@ defmodule Tirexs.Percolator do
 
     Tirexs.ElasticSearch.post(url, json, settings)
   end
-
 end

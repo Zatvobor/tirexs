@@ -1,8 +1,7 @@
-require Record
-
 defmodule Tirexs.ElasticSearch do
 
   @config %URI{ scheme: "http", userinfo: nil, host: "127.0.0.1", port: 9200 }
+
 
   @doc """
   Get default configuration for `ElasticSearch` connection.

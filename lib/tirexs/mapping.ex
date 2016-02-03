@@ -1,27 +1,28 @@
-require Tirexs.ElasticSearch
-
 defmodule Tirexs.Mapping do
   @moduledoc false
 
   use Tirexs.DSL.Logic
-  import Tirexs.ElasticSearch
-  require Tirexs.ElasticSearch
 
-
-  def transpose(block) do
-    case block do
-      {:indexes, _, [params]} -> indexes(params[:do])
-      {:indexes, _, options}  -> indexes(options)
-      {:index, _, [params]}   -> indexes(params[:do])
-      {:index, _, options}    -> indexes(options)
-    end
-  end
 
   @doc false
   defmacro mappings([do: block]) do
     mappings =  [properties: extract(block)]
     quote do
       var!(index) = var!(index) ++ [mapping: unquote(mappings)]
+    end
+  end
+
+
+  import Tirexs.ElasticSearch
+
+
+  @doc false
+  def transpose(block) do
+    case block do
+      {:indexes, _, [params]} -> indexes(params[:do])
+      {:indexes, _, options}  -> indexes(options)
+      {:index, _, [params]}   -> indexes(params[:do])
+      {:index, _, options}    -> indexes(options)
     end
   end
 
@@ -43,7 +44,7 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def create_resource(definition) do
-    create_resource(definition, Tirexs.ElasticSearch.config())
+    create_resource(definition, config())
   end
 
   @doc false
@@ -69,11 +70,13 @@ defmodule Tirexs.Mapping do
   end
 
   @doc false
-  def to_resource_json(definition), do: to_resource_json(definition, definition[:type])
+  def to_resource_json(definition) do
+    to_resource_json(definition, definition[:type])
+  end
 
   @doc false
   def to_resource_json(definition, type) do
     json_dict = Dict.put([], to_atom(type), definition[:mapping])
-		JSX.encode!(json_dict)
+    JSX.encode!(json_dict)
   end
 end

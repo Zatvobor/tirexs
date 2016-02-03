@@ -1,10 +1,9 @@
-require Tirexs.ElasticSearch
-
 defmodule Tirexs.DSL do
   @moduledoc """
   This module represents a main entry point for defining DSL scenarios.
   Check an `examples` directory which consists a DSL tempaltes for `mapping`, `settings`, `query` and `river`.
   """
+
 
   @doc false
   def define(type, resource) do
