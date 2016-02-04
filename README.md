@@ -104,7 +104,7 @@ result = Tirexs.Query.create_resource(articles)
 
 Enum.each Tirexs.Query.result(result, :hits), fn(item) ->
   IO.puts inspect(item)
-  #=> [{"_index","articles"},{"_type","article"},{"_id","2"},{"_score",1.0},{"_source",[{"id",2}, {"title","Two"},{"tags",["elixir","r uby"]},{"type","article"}]}]
+  #=> [{"_index","articles"},{"_type","article"},{"_id","2"},{"_score",1.0},{"_source",[{"id",2}, {"title","Two"},{"tags",["elixir","ruby"]},{"type","article"}]}]
 end
 ```
 
