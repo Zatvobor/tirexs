@@ -6,6 +6,13 @@ defmodule Tirexs.Index.Settings do
 
 
   @doc false
+  defmacro __using__(_) do
+    quote do
+      import unquote(__MODULE__), only: :macros
+    end
+  end
+
+  @doc false
   defmacro settings([do: block]) do
     quote do
       var!(index) = Dict.put(var!(index), :settings, [])

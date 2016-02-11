@@ -12,9 +12,16 @@ defmodule Tirexs.Mapping do
     end
   end
 
+  @doc false
+  defmacro __using__(_) do
+    quote do
+      use unquote(Tirexs.Index.Settings)
+      import unquote(__MODULE__), only: :macros
+    end
+  end
+
 
   import Tirexs.ElasticSearch
-
 
   @doc false
   def transpose(block) do
@@ -49,19 +56,29 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def create_resource(definition, opts) do
-    if definition[:type] do
-      create_resource_settings(definition, opts)
+    index_settings = Keyword.get(definition, :settings)
+    cond do
+      index_settings  ->
+        url  = "#{definition[:index]}"
+        json = to_resource_json(definition)
 
-      url  = "#{definition[:index]}/#{definition[:type]}/_mapping"
-      json = to_resource_json(definition)
+        post(url, json, opts)
 
-      put(url, json, opts)
-    else
-      url  = "#{definition[:index]}/_mapping"
-      json = to_resource_json(definition, definition[:index])
+      definition[:type] ->
+        create_resource_settings(definition, opts)
 
-      put(url, json, opts)
+        url  = "#{definition[:index]}/#{definition[:type]}/_mapping"
+        json = to_resource_json(definition)
+
+        put(url, json, opts)
+      true ->
+        url  = "#{definition[:index]}/_mapping"
+        json = to_resource_json(definition, definition[:index])
+
+        put(url, json, opts)
     end
+
+
   end
 
   @doc false
@@ -76,7 +93,20 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def to_resource_json(definition, type) do
-    json_dict = Dict.put([], to_atom(type), definition[:mapping])
+    index_settings = definition[:settings] != nil
+    json_dict =
+      case index_settings do
+        # settings and mappings
+        true ->
+          mappings_dict = Dict.put([], to_atom(type), definition[:mapping])
+          json_dict = Dict.put([], to_atom("mappings"), mappings_dict)
+
+          json_dict = Dict.put(json_dict, to_atom("settings"), definition[:settings])
+        # mapping
+        _ ->
+          Dict.put([], to_atom(type), definition[:mapping])
+      end
+
     JSX.encode!(json_dict)
   end
 end
