@@ -6,7 +6,11 @@ defmodule Tirexs.Mixfile do
   end
 
   def application do
-    [applications: [:exjsx, :inets]]
+    [ applications: [:exjsx, :inets], env: env ]
+  end
+
+  defp env do
+    [ uri: %URI{ scheme: "http", userinfo: nil, host: "127.0.0.1", port: 9200 } ]
   end
 
   defp deps do

@@ -37,6 +37,7 @@ Then let's populate an `articles` index:
 import Tirexs.Bulk
 require Tirexs.ElasticSearch
 
+# Returns the value from `Application.get_env(:tirexs, :uri)`.
 settings = Tirexs.ElasticSearch.config()
 
 Tirexs.Bulk.store [index: "articles", refresh: true], settings do
