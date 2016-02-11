@@ -2,16 +2,16 @@
 # Run this example from console manually:
 #
 #   $ mix run -r examples/percolator.exs
-#   # => curl -X PUT -d '{"query": {"term": {"field1": "value1"}}}' http://127.0.0.1:9200/test/.percolator/1
+#   # => curl -X PUT -d '{"query": {"term": {"field1": "value1"}}}' http://127.0.0.1:9200/bear_test/.percolator/1
 #
 # Run this example from Elixir environment (`iex -S mix`):
 #
 #   iex> Tirexs.Loader.load Path.expand("examples/percolator.exs")
 #
-import Tirexs.Percolator
-
 Tirexs.DSL.define fn(settings) ->
-  query = percolator [index: "test", name: "1"] do
+  import Tirexs.Percolator
+
+  query = percolator [index: "bear_test", name: "1"] do
     query do
       term "field1", "value1"
     end

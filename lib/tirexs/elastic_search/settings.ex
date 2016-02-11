@@ -1,14 +1,12 @@
-require Tirexs.ElasticSearch
-
 defmodule Tirexs.ElasticSearch.Settings do
   @moduledoc false
 
   import Tirexs.ElasticSearch
-  require Tirexs.ElasticSearch
+
 
   @doc false
   def create_resource(definition) do
-    create_resource(definition, Tirexs.ElasticSearch.config())
+    create_resource(definition, config())
   end
 
   @doc false

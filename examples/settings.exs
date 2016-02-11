@@ -2,16 +2,14 @@
 # Run this example from console manually:
 #
 #   $ mix run -r examples/settings.exs
-#   # => curl -X PUT -d '{"settings": {"index": {"blocks": {"write": true},"translog": {"disable_flush": false},"cache": {"filter": {"max_size": -1}},"number_of_replicas": 3},"analysis": {"tokenizer": {"dot-tokenizer": {"type": "path_hierarchy","delimiter": "."}},"filter": {"substring": {"type": "nGram","min_gram": 2,"max_gram": 32}},"analyzer": {"msg_search_analyzer": {"tokenizer": "keyword","filter": ["lowercase"]},"msg_index_analyzer": {"tokenizer": "keyword","filter": ["lowercase","substring"]}}}}}' http://127.0.0.1:9200/test_dsl_settings
+#   # => curl -X PUT -d '{"settings": {"index": {"blocks": {"write": true},"translog": {"disable_flush": false},"cache": {"filter": {"max_size": -1}},"number_of_replicas": 3},"analysis": {"tokenizer": {"dot-tokenizer": {"type": "path_hierarchy","delimiter": "."}},"filter": {"substring": {"type": "nGram","min_gram": 2,"max_gram": 32}},"analyzer": {"msg_search_analyzer": {"tokenizer": "keyword","filter": ["lowercase"]},"msg_index_analyzer": {"tokenizer": "keyword","filter": ["lowercase","substring"]}}}}}' http://127.0.0.1:9200/bear_test
 #
 # Run this example from Elixir environment (`iex -S mix`):
 #
 #   iex> Tirexs.Loader.load Path.expand("examples/settings.exs")
 #
-
-import Tirexs.Index.Settings
-
-Tirexs.DSL.define [index: "test_dsl_settings"], fn(index, elastic_settings) ->
+Tirexs.DSL.define [index: "bear_test"], fn(index, elastic_settings) ->
+  import Tirexs.Index.Settings
 
   settings do
     analysis do

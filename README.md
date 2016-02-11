@@ -37,6 +37,7 @@ Then let's populate an `articles` index:
 import Tirexs.Bulk
 require Tirexs.ElasticSearch
 
+# Returns the value from `Application.get_env(:tirexs, :uri)`.
 settings = Tirexs.ElasticSearch.config()
 
 Tirexs.Bulk.store [index: "articles", refresh: true], settings do
@@ -104,7 +105,7 @@ result = Tirexs.Query.create_resource(articles)
 
 Enum.each Tirexs.Query.result(result, :hits), fn(item) ->
   IO.puts inspect(item)
-  #=> [{"_index","articles"},{"_type","article"},{"_id","2"},{"_score",1.0},{"_source",[{"id",2}, {"title","Two"},{"tags",["elixir","r uby"]},{"type","article"}]}]
+  #=> [{"_index","articles"},{"_type","article"},{"_id","2"},{"_score",1.0},{"_source",[{"id",2}, {"title","Two"},{"tags",["elixir","ruby"]},{"type","article"}]}]
 end
 ```
 
@@ -148,6 +149,11 @@ end
 
 {_, _, body} = Tirexs.Percolator.match(percolator, settings)
 ```
+
+Not sure?
+---------
+
+Look around using [https://hex.pm/packages?search=elasticsearch...](https://hex.pm/packages?search=elasticsearch&sort=downloads) to find out some other packages.
 
 Contributing
 ------------

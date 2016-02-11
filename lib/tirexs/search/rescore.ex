@@ -3,9 +3,21 @@ defmodule Tirexs.Search.Rescore do
 
   use Tirexs.DSL.Logic
 
-  alias Tirexs.Query, as: Query
-  alias Tirexs.Query.Filter, as: Filter
 
+  @doc false
+  defmacro rescore([do: block]) do
+    [rescore: extract(block)]
+  end
+
+  @doc false
+  defmacro rescore(options, [do: block]) do
+    [rescore: extract(block) ++ options]
+  end
+
+
+  alias Tirexs.{Query, Query.Filter}
+
+  @doc false
   def transpose(block) do
     case block do
       {:query, _, [params]}  -> Query._query(params[:do])
@@ -15,14 +27,7 @@ defmodule Tirexs.Search.Rescore do
     end
   end
 
-  defmacro rescore([do: block]) do
-    [rescore: extract(block)]
-  end
-
-  defmacro rescore(options, [do: block]) do
-    [rescore: extract(block) ++ options]
-  end
-
+  @doc false
   def _rescore(options, rescore_opts \\ []) do
     if is_list(options) do
       rescore_opts = Enum.fetch!(options, 0)

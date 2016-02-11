@@ -8,9 +8,8 @@
 #
 #   iex> Tirexs.Loader.load Path.expand("examples/search.exs")
 #
-import Tirexs.Search
-
 Tirexs.DSL.define fn(elastic_settings) ->
+  import Tirexs.Search
   # We'll use the `nested` query to search for posts where _John_ left a _"Cool"_ message:
   search = search [index: "posts"] do
     query do

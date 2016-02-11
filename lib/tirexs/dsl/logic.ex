@@ -1,9 +1,10 @@
 defmodule Tirexs.DSL.Logic do
-  require Record
-
   @moduledoc """
   Defines a main module which provides a common contract for DSL handlers and common utilities.
   """
+
+  require Record
+
 
   @doc false
   defmacro __using__(_) do

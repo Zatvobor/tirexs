@@ -1,14 +1,11 @@
-require Record
-
 defmodule Tirexs.ElasticSearch do
 
-  @config %URI{ scheme: "http", userinfo: nil, host: "127.0.0.1", port: 9200 }
 
   @doc """
-  Get default configuration for `ElasticSearch` connection.
+  Get default URI for `ElasticSearch` connection. Returns the value from `Application.get_env(:tirexs, :uri)`.
   """
   def config do
-    @config
+    Application.get_env(:tirexs, :uri)
   end
 
   @doc """
@@ -23,7 +20,7 @@ defmodule Tirexs.ElasticSearch do
   Arguments must match those in Elixir's `URI` module.
   """
   def config(opts) when is_list(opts) do
-    Map.merge config, Enum.into(opts, %{})
+    Map.merge(config, Enum.into(opts, %{}))
   end
 
   @doc false

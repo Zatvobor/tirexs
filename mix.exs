@@ -2,11 +2,15 @@ defmodule Tirexs.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :tirexs, version: "0.7.5", elixir: "~> 1.2.0", description: description, package: package, deps: deps ]
+    [ app: :tirexs, version: "0.7.6", elixir: "~> 1.2.0", description: description, package: package, deps: deps ]
   end
 
   def application do
-    [applications: [:exjsx, :inets]]
+    [ applications: [:exjsx, :inets], env: env ]
+  end
+
+  defp env do
+    [ uri: %URI{ scheme: "http", userinfo: nil, host: "127.0.0.1", port: 9200 } ]
   end
 
   defp deps do
