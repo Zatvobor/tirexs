@@ -1,7 +1,7 @@
 defmodule Tirexs.DSL do
   @moduledoc """
   This module represents a main entry point for defining DSL scenarios.
-  Check an `examples` directory which consists a DSL tempaltes for `mapping`, `settings`, `query` and `river`.
+  Check an `examples` directory which consists a DSL tempaltes for `mapping`, `settings`, `query`.
   """
 
 
@@ -25,7 +25,6 @@ defmodule Tirexs.DSL do
     cond do
       type[:settings]   -> Tirexs.ElasticSearch.Settings.create_resource(type, opts)
       type[:mapping]    -> Tirexs.Mapping.create_resource(type, opts)
-      type[:river]      -> Tirexs.River.create_resource(type, opts)
       type[:search]     -> Tirexs.Query.create_resource(type, opts)
       type[:percolator] -> Tirexs.Percolator.create_resource(type[:percolator], opts)
     end

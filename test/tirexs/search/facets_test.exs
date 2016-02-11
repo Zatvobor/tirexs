@@ -3,6 +3,7 @@ defmodule Tirexs.Search.FacetsTest do
   use ExUnit.Case
   import Tirexs.Search.Facets
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :simple_facets_dsl do
     facets = facets do
       tagFacet [path: "nested"] do
@@ -13,6 +14,7 @@ defmodule Tirexs.Search.FacetsTest do
     assert facets == [facets: [tagFacet: [terms: [field: "tag", size: 10, order: "term"], path: "nested"]]]
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :multi_facets do
     facets = facets do
       tagFacet do
@@ -26,6 +28,7 @@ defmodule Tirexs.Search.FacetsTest do
     assert facets == [facets: [tagFacet: [terms: [field: "tag", size: 10, order: "term"]], keywordFacet: [terms: [field: "keywords", all_terms: true]]]]
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :range do
     facets = facets do
       range1 do
@@ -36,6 +39,7 @@ defmodule Tirexs.Search.FacetsTest do
     assert facets == [facets: [range1: [range: [field: "field_name", ranges: [[to: 50],[from: 20, to: 70],[from: 70, to: 120],[from: 150]]]]]]
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :histogram do
     facets = facets do
       histo1 do
@@ -46,6 +50,7 @@ defmodule Tirexs.Search.FacetsTest do
     assert facets == [facets: [histo1: [histogram: [key_script: "doc['date'].date.minuteOfHour", value_script: "doc['num1'].value", params: [factor1: 2, factor2: 6]]]]]
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :date_histogram do
     facets = facets do
       histo1 do
@@ -56,6 +61,7 @@ defmodule Tirexs.Search.FacetsTest do
     assert facets == [facets: [histo1: [date_histogram: [field: "field_name", interval: "day", value_script: "doc['price'].value * 2"]]]]
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :statistical do
     facets = facets do
       stat1 do
@@ -66,6 +72,7 @@ defmodule Tirexs.Search.FacetsTest do
     assert facets == [facets: [stat1: [statistical: [script: "(doc['num1'].value + doc['num2'].value) * factor", params: [factor: 5]]]]]
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :terms_stats do
     facets = facets do
       tag_price_stats do
@@ -76,6 +83,7 @@ defmodule Tirexs.Search.FacetsTest do
     assert facets == [facets: [tag_price_stats: [terms_stats: [key_field: "tag", value_field: "price"]]]]
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :geo_distance do
     ranges = [[to: 10],[from: 20, to: 10],[from: 20, to: 100],[from: 100]]
     facets = facets do
@@ -87,6 +95,7 @@ defmodule Tirexs.Search.FacetsTest do
     assert facets == [facets: [geo1: [geo_distance: ["pin.location": [lat: 40, lon: 70], ranges: [[to: 10],[from: 20, to: 10],[from: 20, to: 100],[from: 100]]]]]]
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :filter do
     facets = facets do
       wow do
@@ -99,6 +108,7 @@ defmodule Tirexs.Search.FacetsTest do
     assert facets == [facets: [filter: [term: [tag: "wow"]]]]
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :query do
     facets = facets do
       wow_facet do
@@ -111,6 +121,7 @@ defmodule Tirexs.Search.FacetsTest do
     assert facets == [facets: [query: [term: [tag: "wow"]]]]
   end
 
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :facet_filter do
     facets = facets do
       facet1 [nested: "obj"] do

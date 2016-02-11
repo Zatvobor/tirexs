@@ -3,7 +3,7 @@ Code.require_file "../../test_helper.exs", __ENV__.file
 defmodule Tirexs.MappingsTest do
   use ExUnit.Case
 
-  import Tirexs.Mapping
+  use Tirexs.Mapping
 
   test :simple_dsl do
     index = [index: "bear_test"]
@@ -140,4 +140,32 @@ defmodule Tirexs.MappingsTest do
       assert index == [index: "bear_test", mapping: [properties: [mn_opts_: [type: "nested", properties: [uk: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]], ca: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]], us: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]]]], rev_history_: [type: "nested"]]]]
     end
 
+  test "put mapping and settings together" do
+    index = [index: "bear_test"]
+    settings do
+        analysis do
+            filter "edge_ngram", [type: "edgeNGram", min_gram: 1, max_gram: 15]
+            analyzer "autocomplete_analyzer",
+            [
+              filter: ["icu_normalizer", "icu_folding", "edge_ngram"],
+              tokenizer: "icu_tokenizer"
+            ]
+      end
+    end
+
+    mappings do
+      indexes "id", [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100],
+                                                   exact: [type: "string", index: "not_analyzed"]]]
+      indexes "title", type: "string"
+    end
+    assert index[:mapping] == [properties: [id: [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100], exact: [type: "string", index: "not_analyzed"]]], title: [type: "string"]]]
+    
+    assert index[:settings] == [analysis: [analyzer: [autocomplete_analyzer:
+          [filter: ["icu_normalizer",
+                   "icu_folding", "edge_ngram"], tokenizer: "icu_tokenizer"]],
+               filter: [edge_ngram: [type: "edgeNGram", min_gram: 1, max_gram:
+                   15]]],
+              index: []]
+
+  end
 end
