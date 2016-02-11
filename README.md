@@ -150,6 +150,11 @@ end
 {_, _, body} = Tirexs.Percolator.match(percolator, settings)
 ```
 
+Not sure?
+---------
+
+Look around using [https://hex.pm/packages?search=elasticsearch...](https://hex.pm/packages?search=elasticsearch&sort=downloads) to find out some other packages.
+
 Contributing
 ------------
 
