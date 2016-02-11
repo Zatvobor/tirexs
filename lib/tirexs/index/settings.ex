@@ -4,6 +4,7 @@ defmodule Tirexs.Index.Settings do
   import Tirexs.DSL.Logic
   import Tirexs.Index.Logic
 
+
   @doc false
   defmacro __using__(_) do
     quote do
@@ -11,6 +12,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
+  @doc false
   defmacro settings([do: block]) do
     quote do
       var!(index) = Dict.put(var!(index), :settings, [])
@@ -19,6 +21,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
+  @doc false
   defmacro filters([do: block]) do
     quote do
       if var!(index)[:settings][:analysis] == nil do
@@ -28,6 +31,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
+  @doc false
   defmacro analysis([do: block]) do
     quote do
       if var!(index)[:settings][:analysis] == nil do
@@ -37,6 +41,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
+  @doc false
   defmacro set(settings) do
     quote do
       settings = unquote(settings)
@@ -44,6 +49,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
+  @doc false
   defmacro analyzer(name, value) do
     quote do
       if var!(index)[:settings][:analysis][:analyzer] == nil do
@@ -54,6 +60,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
+  @doc false
   defmacro blocks(value) do
     quote do
       if var!(index)[:settings][:index][:blocks] == nil do
@@ -64,6 +71,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
+  @doc false
   defmacro cache(value) do
     quote do
       if var!(index)[:settings][:index][:cache] == nil do
@@ -75,6 +83,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
+  @doc false
   defmacro filter(name, value) do
     quote do
       if var!(index)[:settings][:analysis][:filter] == nil do
@@ -85,6 +94,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
+  @doc false
   defmacro tokenizer(name, value) do
     quote do
       if var!(index)[:settings][:analysis][:tokenizer] == nil do
@@ -95,6 +105,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
+  @doc false
   defmacro translog(value) do
     quote do
       if var!(index)[:settings][:index][:translog] == nil do
@@ -104,5 +115,4 @@ defmodule Tirexs.Index.Settings do
       var!(index) = add_index_setting(var!(index), :index, :translog, value)
     end
   end
-
 end

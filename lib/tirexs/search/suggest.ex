@@ -3,9 +3,21 @@ defmodule Tirexs.Search.Suggest do
 
   use Tirexs.DSL.Logic
 
-  alias Tirexs.Query, as: Query
-  alias Tirexs.Query.Filter, as: Filter
 
+  @doc false
+  defmacro suggest([do: block]) do
+    [suggest: extract(block)]
+  end
+
+  @doc false
+  defmacro suggest(options, [do: block]) do
+    [suggest: extract(block) ++ options]
+  end
+
+
+  alias Tirexs.{Query, Query.Filter}
+
+  @doc false
   def transpose(block) do
     case block do
       {:filter, _, [params]} -> Filter._filter(params[:do])
@@ -16,14 +28,7 @@ defmodule Tirexs.Search.Suggest do
     end
   end
 
-  defmacro suggest([do: block]) do
-    [suggest: extract(block)]
-  end
-
-  defmacro suggest(options, [do: block]) do
-    [suggest: extract(block) ++ options]
-  end
-
+  @doc false
   def _suggest(options, suggest_opts \\ []) do
     if is_list(options) do
       suggest_opts = Enum.fetch!(options, 0)
@@ -32,6 +37,7 @@ defmodule Tirexs.Search.Suggest do
     [suggest: extract(options) ++ suggest_opts]
   end
 
+  @doc false
   def make_suggest(name, options, suggest_opts \\ []) do
     if is_list(options) do
       suggest_opts = Enum.fetch!(options, 0)
@@ -39,6 +45,7 @@ defmodule Tirexs.Search.Suggest do
     end
       routers(name, options, suggest_opts)
   end
+
 
   defp routers(name, options, add_options) do
     case options do

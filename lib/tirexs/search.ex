@@ -3,13 +3,24 @@ defmodule Tirexs.Search do
 
   use Tirexs.DSL.Logic
 
-  alias Tirexs.Query, as: Query
-  alias Tirexs.Query.Filter, as: Filter
-  alias Tirexs.Search.Facets, as: Facets
-  alias Tirexs.Search.Suggest, as: Suggest
-  alias Tirexs.Search.Rescore, as: Rescore
+
+  @doc false
+  defmacro search([do: block]) do
+    [search: extract(block)]
+  end
+
+  @doc false
+  defmacro search(options, [do: block]) do
+    [options, index_opts] = extract_index_options(options)
+    [search: extract(block) ++ options] ++ index_opts
+  end
 
 
+  alias Tirexs.{Query, Query.Filter}
+  alias Tirexs.{Search.Facets, Search.Suggest, Search.Rescore}
+
+
+  @doc false
   def transpose(block) do
     case block do
       {:query, _, [params]}         -> Query._query(params[:do])
@@ -28,32 +39,27 @@ defmodule Tirexs.Search do
     end
   end
 
-
-  defmacro search([do: block]) do
-    [search: extract(block)]
-  end
-
-  defmacro search(options, [do: block]) do
-    [options, index_opts] = extract_index_options(options)
-    [search: extract(block) ++ options] ++ index_opts
-  end
-
+  @doc false
   def filters(params, _opts) do
     [filter: params]
   end
 
+  @doc false
   def highlight([do: block]) do
     [highlight: block]
   end
 
+  @doc false
   def sort([do: block]) do
     [sort: block]
   end
 
+  @doc false
   def script_fields([do: block]) do
     [script_fields: block]
   end
 
+  @doc false
   def extract_index_options(options, index_opts \\ []) do
     if options[:index] do
       index_opts = index_opts ++ [index: options[:index]]

@@ -1,12 +1,15 @@
 defmodule Tirexs.Index.Logic do
   @moduledoc false
 
+
+  @doc false
   def put_setting(index, type) do
     settings = index[:settings]
     settings = Dict.put(settings, type, [])
     Dict.put(index, :settings, settings)
   end
 
+  @doc false
   def put_index_setting(index, main_type, type) do
     index_settings = index[:settings][main_type]
     index_settings = Dict.put(index_settings, type, [])
@@ -14,12 +17,14 @@ defmodule Tirexs.Index.Logic do
     pass_settings(index, main_type, index_settings)
   end
 
+  @doc false
   def add_index_setting(index, value) do
     index_settings = index[:settings][:index]
 
     pass_settings(index, :index, index_settings ++ value)
   end
 
+  @doc false
   def add_index_setting(index, main_type, type, value) do
     main_index_settings = index[:settings][main_type]
     type_settings       = index[:settings][main_type][type]
@@ -28,6 +33,7 @@ defmodule Tirexs.Index.Logic do
     pass_settings(index, main_type, main_index_settings)
   end
 
+  @doc false
   def add_index_setting_nested_type(index, main_type, type, nested_type, value) do
     main_index_settings = index[:settings][main_type]
     type_settings       = index[:settings][main_type][type]

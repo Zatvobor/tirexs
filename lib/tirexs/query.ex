@@ -1,11 +1,7 @@
-require Tirexs.ElasticSearch
-
 defmodule Tirexs.Query do
-  require Record
-
-  #http://www.elasticsearch.org/guide/reference/query-dsl/
-
   @moduledoc false
+
+  require Record
 
   import Tirexs.DSL.Logic
   import Tirexs.Query.Logic
@@ -426,12 +422,13 @@ defmodule Tirexs.Query do
     { url, json } = { "#{url}/_search" <> to_param(opts, ""), to_resource_json(definition) }
     case Tirexs.ElasticSearch.post(url, json, settings) do
       {:ok, _, result} ->
-        count     = result[:hits][:total]
-        hits      = result[:hits][:hits]
-        facets    = result[:facets]
-        aggregations = result[:aggregations]
-        max_score = result[:hits][:max_score]
-        scroll_id = result[:_scroll_id]
+        count         = result[:hits][:total]
+        hits          = result[:hits][:hits]
+        facets        = result[:facets]
+        aggregations  = result[:aggregations]
+        max_score     = result[:hits][:max_score]
+        scroll_id     = result[:_scroll_id]
+
         result(count: count, hits: hits, facets: facets, aggregations: aggregations, max_score: max_score, _scroll_id: scroll_id)
       result  -> result
     end

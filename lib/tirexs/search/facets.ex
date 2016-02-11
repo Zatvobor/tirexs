@@ -3,8 +3,15 @@ defmodule Tirexs.Search.Facets do
 
   use Tirexs.DSL.Logic
 
-  alias Tirexs.Query, as: Query
+  @doc false
+  defmacro facets([do: block]) do
+    [facets: extract(block)]
+  end
 
+
+  alias Tirexs.{Query, Query.Filter}
+
+  @doc false
   def transpose(block) do
     case block do
       {:terms, _, [params]}           -> terms(params)
@@ -21,15 +28,12 @@ defmodule Tirexs.Search.Facets do
     end
   end
 
-
-  defmacro facets([do: block]) do
-    [facets: extract(block)]
-  end
-
+  @doc false
   def _facets(block) do
     [facets: extract(block)]
   end
 
+  @doc false
   def make_facet(name, options, facet_opts \\ []) do
     if is_list(options) do
       facet_opts = Enum.fetch!(options, 0)
@@ -38,44 +42,52 @@ defmodule Tirexs.Search.Facets do
     routers(name, options, facet_opts)
   end
 
+  @doc false
   def terms(options) do
     [terms: options]
   end
 
+  @doc false
   def terms(options, [do: block]) do
     [terms: options ++ block[:do]]
   end
 
+  @doc false
   def range(options) do
     [range: options]
   end
 
+  @doc false
   def histogram(options) do
     [histogram: options]
   end
 
+  @doc false
   def date_histogram(options) do
     [date_histogram: options]
   end
 
+  @doc false
   def statistical(options) do
     [statistical: options]
   end
 
+  @doc false
   def terms_stats(options) do
     [terms_stats: options]
   end
 
+  @doc false
   def geo_distance(options) do
     [geo_distance: options]
   end
 
+
   defp routers(name, options, add_options) do
     case options do
-      {:filter, _, [params]}        -> Tirexs.Query.Filter._filter(params[:do])
-      {:query, _, [params]}         -> Tirexs.Query._query(params[:do])
+      {:filter, _, [params]}        -> Filter._filter(params[:do])
+      {:query, _, [params]}         -> Query._query(params[:do])
       options                       -> Dict.put([], to_atom(name), extract(options) ++ add_options)
     end
   end
-
 end
