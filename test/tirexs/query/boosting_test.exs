@@ -1,10 +1,12 @@
 Code.require_file "../../../test_helper.exs", __ENV__.file
-defmodule Tirexs.Query.Bool.Boosting.Test do
+
+defmodule Tirexs.Query.BoostingTest do
   use ExUnit.Case
+
   import Tirexs.Query
 
 
-  test :boosting do
+  test "boosting in general" do
     query = query do
       boosting do
         positive do
@@ -15,10 +17,12 @@ defmodule Tirexs.Query.Bool.Boosting.Test do
         end
       end
     end
-    assert query == [query: [boosting: [positive: [match: [value: [query: "field"]]], negative: [match: [value: [query: "field"]]]]]]
+
+    expected = [query: [boosting: [positive: [match: [value: [query: "field"]]], negative: [match: [value: [query: "field"]]]]]]
+    assert query == expected
   end
 
-  test :boosting_with_opts do
+  test "boobsting w/ options" do
     query = query do
       boosting negative_boost: 2 do
         positive do
@@ -29,6 +33,8 @@ defmodule Tirexs.Query.Bool.Boosting.Test do
         end
       end
     end
-    assert query == [query: [boosting: [positive: [match: [value: [query: "field"]]], negative: [match: [value: [query: "field"]]], negative_boost: 2]]]
+
+    expected = [query: [boosting: [positive: [match: [value: [query: "field"]]], negative: [match: [value: [query: "field"]]], negative_boost: 2]]]
+    assert query == expected
   end
 end
