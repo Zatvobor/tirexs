@@ -278,8 +278,12 @@ defmodule Tirexs.Query do
     [rescore_query: extract(options) ++ rescore_opts]
   end
 
-  @doc false
+  @doc """
+  WARNING: this function is deprecated
+  """
   def facet_filter(options, facet_opts\\[]) do
+    IO.write :stderr, "warning: `Query.facet_filter` is deprecated, please use `Query.aggregation_filter` instead\n" <> Exception.format_stacktrace
+
     if is_list(options) do
       facet_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
