@@ -5,18 +5,18 @@ defmodule Tirexs.Mapping do
 
 
   @doc false
-  defmacro mappings([do: block]) do
-    mappings =  [properties: extract(block)]
+  defmacro __using__(_) do
     quote do
-      var!(index) = var!(index) ++ [mapping: unquote(mappings)]
+      import unquote(Tirexs.Index.Settings), only: :macros
+      import unquote(__MODULE__), only: :macros
     end
   end
 
   @doc false
-  defmacro __using__(_) do
+  defmacro mappings([do: block]) do
+    mappings =  [properties: extract(block)]
     quote do
-      use unquote(Tirexs.Index.Settings)
-      import unquote(__MODULE__), only: :macros
+      var!(index) = var!(index) ++ [mapping: unquote(mappings)]
     end
   end
 
@@ -56,14 +56,12 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def create_resource(definition, opts) do
-    index_settings = Keyword.get(definition, :settings)
     cond do
-      index_settings  ->
+      definition[:settings] ->
         url  = "#{definition[:index]}"
         json = to_resource_json(definition)
 
         post(url, json, opts)
-
       definition[:type] ->
         create_resource_settings(definition, opts)
 
@@ -77,8 +75,6 @@ defmodule Tirexs.Mapping do
 
         put(url, json, opts)
     end
-
-
   end
 
   @doc false
@@ -93,20 +89,17 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def to_resource_json(definition, type) do
-    index_settings = definition[:settings] != nil
-    json_dict =
-      case index_settings do
-        # settings and mappings
-        true ->
-          mappings_dict = Dict.put([], to_atom(type), definition[:mapping])
-          json_dict = Dict.put([], to_atom("mappings"), mappings_dict)
-
-          json_dict = Dict.put(json_dict, to_atom("settings"), definition[:settings])
-        # mapping
-        _ ->
-          Dict.put([], to_atom(type), definition[:mapping])
+    resource =
+      # definition w/ mappings and settings
+      if definition[:settings] != nil do
+        mappings_dict = Dict.put([], to_atom(type), definition[:mapping])
+        resource = Dict.put([], to_atom("mappings"), mappings_dict)
+        resource = Dict.put(resource, to_atom("settings"), definition[:settings])
+      # definition just only w/ mapping
+      else
+        Dict.put([], to_atom(type), definition[:mapping])
       end
 
-    JSX.encode!(json_dict)
+    JSX.encode!(resource)
   end
 end

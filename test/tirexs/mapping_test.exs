@@ -5,17 +5,25 @@ defmodule Tirexs.MappingsTest do
 
   use Tirexs.Mapping
 
-  test :simple_dsl do
+
+  test "mappings in general" do
     index = [index: "bear_test"]
     mappings do
-      indexes "id", [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100],
-                                                  exact: [type: "string", index: "not_analyzed"]]]
+      indexes "id", [
+        type: "multi_field",
+        fields: [
+          name_en: [ type: "string", analyzer: "analyzer_en", boost: 100],
+          exact: [type: "string", index: "not_analyzed"]
+        ]
+      ]
       indexes "title", type: "string"
     end
-    assert index[:mapping] == [properties: [id: [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100], exact: [type: "string", index: "not_analyzed"]]], title: [type: "string"]]]
+
+    expected = [properties: [id: [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100], exact: [type: "string", index: "not_analyzed"]]], title: [type: "string"]]]
+    assert index[:mapping] == expected
   end
 
-  test :nested_two_level_index_dsl do
+  test "mappings w/ nested indexes" do
     index = [index: "bear_test"]
     mappings do
       indexes "id", [type: "string", boost: 5, analizer: "good"]
@@ -27,10 +35,11 @@ defmodule Tirexs.MappingsTest do
       indexes "simple2", type: "long"
     end
 
-    assert index[:mapping] == [properties: [id: [type: "string", boost: 5, analizer: "good"], title: [type: "nested", properties: [set: [type: "string"], get: [type: "long"]]], simple: [type: "string"], simple2: [type: "long"]]]
+    expected = [properties: [id: [type: "string", boost: 5, analizer: "good"], title: [type: "nested", properties: [set: [type: "string"], get: [type: "long"]]], simple: [type: "string"], simple2: [type: "long"]]]
+    assert index[:mapping] == expected
   end
 
-  test :default_type do
+  test "mappings w/ nested indexes (default type)" do
     index = [index: "bear_test"]
     mappings do
       indexes "id", [type: "string", boost: 5, analizer: "good"]
@@ -42,10 +51,11 @@ defmodule Tirexs.MappingsTest do
       indexes "simple2", type: "long"
     end
 
-    assert index == [index: "bear_test", mapping: [properties: [id: [type: "string", boost: 5, analizer: "good"], title: [type: "object", properties: [set: [type: "string"], get: [type: "long"]]], simple: [type: "string"], simple2: [type: "long"]]]]
+    expected = [index: "bear_test", mapping: [properties: [id: [type: "string", boost: 5, analizer: "good"], title: [type: "object", properties: [set: [type: "string"], get: [type: "long"]]], simple: [type: "string"], simple2: [type: "long"]]]]
+    assert index == expected
   end
 
-  test :nested_deep_index_dsl do
+  test "mappings w/ deeply nested indexes" do
     index = [index: "bear_test"]
     mappings do
       indexes "id", [type: "string", boost: 5]
@@ -58,11 +68,12 @@ defmodule Tirexs.MappingsTest do
       indexes "simple", type: "string"
     end
 
-    assert index ==  [index: "bear_test", mapping: [properties: [id: [type: "string", boost: 5], title: [type: "nested", properties: [set: [type: "string", properties: [set2: [type: "string"]]], get: [type: "long"]]], simple: [type: "string"]]]]
+    expected = [index: "bear_test", mapping: [properties: [id: [type: "string", boost: 5], title: [type: "nested", properties: [set: [type: "string", properties: [set2: [type: "string"]]], get: [type: "long"]]], simple: [type: "string"]]]]
+    assert index == expected
   end
 
 
-  test :real_simple_example do
+  test "mappings example #1" do
     index = [index: "bear_test"]
     mappings do
       indexes "mn_opts_", [type: "nested"] do
@@ -83,89 +94,93 @@ defmodule Tirexs.MappingsTest do
       end
       indexes "rev_history_", type: "nested"
     end
-    assert index == [index: "bear_test", mapping: [properties: [mn_opts_: [type: "nested", properties: [uk: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]]]], rev_history_: [type: "nested"]]]]
 
+    expected = [index: "bear_test", mapping: [properties: [mn_opts_: [type: "nested", properties: [uk: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]]]], rev_history_: [type: "nested"]]]]
+    assert index == expected
   end
 
-  test :real_advanced_example do
-      index = [index: "bear_test"]
-      mappings do
-        indexes "mn_opts_", [type: "nested"] do
-          indexes "uk", [type: "nested"] do
-            indexes "credentials", [type: "nested"] do
-              index "available_from", type: "long"
-              index "buy", type: "nested"
-              index "dld", type: "nested"
-              index "str", type: "nested"
-              index "t2p", type: "nested"
-              index "sby", type: "nested"
-              index "spl", type: "nested"
-              index "spd", type: "nested"
-              index "pre", type: "nested"
-              index "fst", type: "nested"
-            end
-          end
-          indexes "ca", [type: "nested"] do
-            indexes "credentials", [type: "nested"] do
-              index "available_from", type: "long"
-              index "buy", type: "nested"
-              index "dld", type: "nested"
-              index "str", type: "nested"
-              index "t2p", type: "nested"
-              index "sby", type: "nested"
-              index "spl", type: "nested"
-              index "spd", type: "nested"
-              index "pre", type: "nested"
-              index "fst", type: "nested"
-            end
-          end
-          indexes "us", [type: "nested"] do
-            indexes "credentials", [type: "nested"] do
-              index "available_from", type: "long"
-              index "buy", type: "nested"
-              index "dld", type: "nested"
-              index "str", type: "nested"
-              index "t2p", type: "nested"
-              index "sby", type: "nested"
-              index "spl", type: "nested"
-              index "spd", type: "nested"
-              index "pre", type: "nested"
-              index "fst", type: "nested"
-            end
+  test "mappings example #2" do
+    index = [index: "bear_test"]
+    mappings do
+      indexes "mn_opts_", [type: "nested"] do
+        indexes "uk", [type: "nested"] do
+          indexes "credentials", [type: "nested"] do
+            index "available_from", type: "long"
+            index "buy", type: "nested"
+            index "dld", type: "nested"
+            index "str", type: "nested"
+            index "t2p", type: "nested"
+            index "sby", type: "nested"
+            index "spl", type: "nested"
+            index "spd", type: "nested"
+            index "pre", type: "nested"
+            index "fst", type: "nested"
           end
         end
-        index "rev_history_", type: "nested"
+        indexes "ca", [type: "nested"] do
+          indexes "credentials", [type: "nested"] do
+            index "available_from", type: "long"
+            index "buy", type: "nested"
+            index "dld", type: "nested"
+            index "str", type: "nested"
+            index "t2p", type: "nested"
+            index "sby", type: "nested"
+            index "spl", type: "nested"
+            index "spd", type: "nested"
+            index "pre", type: "nested"
+            index "fst", type: "nested"
+          end
+        end
+        indexes "us", [type: "nested"] do
+          indexes "credentials", [type: "nested"] do
+            index "available_from", type: "long"
+            index "buy", type: "nested"
+            index "dld", type: "nested"
+            index "str", type: "nested"
+            index "t2p", type: "nested"
+            index "sby", type: "nested"
+            index "spl", type: "nested"
+            index "spd", type: "nested"
+            index "pre", type: "nested"
+            index "fst", type: "nested"
+          end
+        end
       end
-
-      assert index == [index: "bear_test", mapping: [properties: [mn_opts_: [type: "nested", properties: [uk: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]], ca: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]], us: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]]]], rev_history_: [type: "nested"]]]]
+      index "rev_history_", type: "nested"
     end
+
+    expected = [index: "bear_test", mapping: [properties: [mn_opts_: [type: "nested", properties: [uk: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]], ca: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]], us: [type: "nested", properties: [credentials: [type: "nested", properties: [available_from: [type: "long"], buy: [type: "nested"], dld: [type: "nested"], str: [type: "nested"], t2p: [type: "nested"], sby: [type: "nested"], spl: [type: "nested"], spd: [type: "nested"], pre: [type: "nested"], fst: [type: "nested"]]]]]]], rev_history_: [type: "nested"]]]]
+    assert index == expected
+  end
 
   test "put mapping and settings together" do
     index = [index: "bear_test"]
     settings do
-        analysis do
-            filter "edge_ngram", [type: "edgeNGram", min_gram: 1, max_gram: 15]
-            analyzer "autocomplete_analyzer",
-            [
-              filter: ["icu_normalizer", "icu_folding", "edge_ngram"],
-              tokenizer: "icu_tokenizer"
-            ]
+      analysis do
+        filter "edge_ngram", [type: "edgeNGram", min_gram: 1, max_gram: 15]
+        analyzer "autocomplete_analyzer",
+        [
+          filter: ["icu_normalizer", "icu_folding", "edge_ngram"],
+          tokenizer: "icu_tokenizer"
+        ]
       end
     end
 
     mappings do
-      indexes "id", [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100],
-                                                   exact: [type: "string", index: "not_analyzed"]]]
+      indexes "id", [
+        type: "multi_field",
+        fields: [
+          name_en: [type: "string", analyzer: "analyzer_en", boost: 100],
+          exact: [type: "string", index: "not_analyzed"]
+        ]
+      ]
       indexes "title", type: "string"
     end
-    assert index[:mapping] == [properties: [id: [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100], exact: [type: "string", index: "not_analyzed"]]], title: [type: "string"]]]
-    
-    assert index[:settings] == [analysis: [analyzer: [autocomplete_analyzer:
-          [filter: ["icu_normalizer",
-                   "icu_folding", "edge_ngram"], tokenizer: "icu_tokenizer"]],
-               filter: [edge_ngram: [type: "edgeNGram", min_gram: 1, max_gram:
-                   15]]],
-              index: []]
 
+    expected = [properties: [id: [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100], exact: [type: "string", index: "not_analyzed"]]], title: [type: "string"]]]
+    assert index[:mapping] == expected
+
+    expected = [analysis: [analyzer: [autocomplete_analyzer: [filter: ["icu_normalizer", "icu_folding", "edge_ngram"], tokenizer: "icu_tokenizer"]], filter: [edge_ngram: [type: "edgeNGram", min_gram: 1, max_gram: 15]]], index: []]
+    assert index[:settings] == expected
   end
 end
