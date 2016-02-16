@@ -50,7 +50,7 @@ defmodule Tirexs.Bulk do
 
       header = [_index: index, _type: type, _id: id ]
       if retry_on_conflict do
-        header = Dict.put(header, :retry_on_conflict, retry_on_conflict)
+        header = Dict.put(header, :_retry_on_conflict, retry_on_conflict)
       end
 
       [document, meta] = meta([:_version, :_routing, :_percolate, :_parent, :_timestamp, :_ttl], document, header)
