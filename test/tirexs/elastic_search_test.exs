@@ -4,18 +4,6 @@ defmodule Tirexs.ElasticSearchTest do
   import Tirexs.ElasticSearch
 
 
-  @uri_environment Application.get_env(:tirexs, :uri)
-
-
-  test "`uri` environment variable" do
-    assert @uri_environment == %URI{ scheme: "http", userinfo: nil, host: "127.0.0.1", port: 9200 }
-  end
-
-  test "config/0" do
-    actual = config()
-    assert actual == @uri_environment
-  end
-
   test "make_url/0 by default" do
     actual = make_url("articles", config())
     assert actual == "http://127.0.0.1:9200/articles"
