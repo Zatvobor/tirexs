@@ -75,17 +75,20 @@ defmodule Tirexs.ElasticSearch do
 
   @doc false
   def do_request(url, method, body \\ []) do
-    :inets.start()
     { url, content_type, options } = { String.to_char_list(url), 'application/json', [{:body_format, :binary}] }
     case method do
-      :get    -> response(:httpc.request(method, {url, []}, [], []))
-      :head   -> response(:httpc.request(method, {url, []}, [], []))
-      :put    -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
-      :post   -> response(:httpc.request(method, {url, make_headers, content_type, body}, [], options))
-      :delete -> response(:httpc.request(method, {url, make_headers},[],[]))
+      :get    -> ( request(method, {url, []}, [], []) |> response() )
+      :head   -> ( request(method, {url, []}, [], []) |> response() )
+      :delete -> ( request(method, {url, make_headers},[],[]) |> response() )
+      :put    -> ( request(method, {url, make_headers, content_type, body}, [], options) |> response() )
+      :post   -> ( request(method, {url, make_headers, content_type, body}, [], options) |> response() )
     end
   end
 
+
+  defp request(method, request, http_options, options) do
+    :httpc.request(method, request, http_options, options)
+  end
 
   defp response(req) do
     case req do
