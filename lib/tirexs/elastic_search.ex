@@ -34,35 +34,49 @@ defmodule Tirexs.ElasticSearch do
 
   @doc false
   def get(query_url, config) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.get/2` is deprecated, please use `Tirexs.HTTP.get/2` instead\n" <> Exception.format_stacktrace
     do_request(make_url(query_url, config), :get)
   end
 
   @doc false
-  def put(query_url, config), do: put(query_url, [], config)
+  def put(query_url, config) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.put/2` is deprecated, please use `Tirexs.HTTP.put/2` instead\n" <> Exception.format_stacktrace
+    put(query_url, [], config)
+  end
 
   def put(query_url, body, config) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.put/3` is deprecated, please use `Tirexs.HTTP.put/3` instead\n" <> Exception.format_stacktrace
     unless body == [], do: body = to_string(body)
     do_request(make_url(query_url, config), :put, body)
   end
 
   @doc false
-  def delete(query_url, config), do: delete(query_url, [], config)
+  def delete(query_url, config) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.delete/2` is deprecated, please use `Tirexs.HTTP.delete/2` instead\n" <> Exception.format_stacktrace
+    delete(query_url, [], config)
+  end
 
   @doc false
   def delete(query_url, body, config) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.delete/3` is deprecated, please use `Tirexs.HTTP.delete/3` instead\n" <> Exception.format_stacktrace
     unless body == [], do: body = to_string(body)
     do_request(make_url(query_url, config), :delete, body)
   end
 
   @doc false
   def head(query_url, config) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.head/2` is deprecated, please use `Tirexs.HTTP.head/2` instead\n" <> Exception.format_stacktrace
     do_request(make_url(query_url, config), :head)
   end
 
   @doc false
-  def post(query_url, config), do: post(query_url, [], config)
+  def post(query_url, config) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.post/2` is deprecated, please use `Tirexs.HTTP.post/2` instead\n" <> Exception.format_stacktrace
+    post(query_url, [], config)
+  end
 
   def post(query_url, body, config) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.post/3` is deprecated, please use `Tirexs.HTTP.post/3` instead\n" <> Exception.format_stacktrace
     unless body == [], do: body = to_string(body)
     url = make_url(query_url, config)
     do_request(url, :post, body)
