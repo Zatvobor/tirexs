@@ -9,6 +9,12 @@ defmodule Tirexs.HTTP do
   def head(url_or_path_or_uri) do
     do_request(:head, url(url_or_path_or_uri))
   end
+  def head!(path, uri) when is_binary(path) and is_map(uri) do
+    ok!(head(path, uri))
+  end
+  def head!(url_or_path_or_uri) do
+    ok!(head(url_or_path_or_uri))
+  end
 
   @doc false
   def get(path, uri) when is_binary(path) and is_map(uri) do
@@ -115,6 +121,23 @@ defmodule Tirexs.HTTP do
       _ -> :error
     end
   end
+
+  @doc false
+  def ok?(response) do
+    case response do
+      { :error, _, _ } -> false
+      _                -> true
+    end
+  end
+
+  @doc false
+  def ok!(response) do
+    case response do
+      { :error, _, error } -> raise to_string(error)
+      _                    -> response
+    end
+  end
+
 
   @doc false
   def headers do
