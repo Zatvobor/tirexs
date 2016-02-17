@@ -5,6 +5,7 @@ defmodule Tirexs.ElasticSearch do
   Get default URI for `ElasticSearch` connection. Returns the value from `Application.get_env(:tirexs, :uri)`.
   """
   def config do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.config/0` is deprecated, please use `Tirexs.get_uri_env/0` instead\n" <> Exception.format_stacktrace
     Application.get_env(:tirexs, :uri)
   end
 
@@ -12,6 +13,7 @@ defmodule Tirexs.ElasticSearch do
   Set `ElasticSearch` connection from URL.
   """
   def config(url) when is_bitstring(url) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.config/1` is deprecated, and will be removed\n" <> Exception.format_stacktrace
     URI.parse(url)
   end
 
@@ -20,11 +22,13 @@ defmodule Tirexs.ElasticSearch do
   Arguments must match those in Elixir's `URI` module.
   """
   def config(opts) when is_list(opts) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.config/1` is deprecated, and will be removed\n" <> Exception.format_stacktrace
     Map.merge(config, Enum.into(opts, %{}))
   end
 
   @doc false
   def config(config, part) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.config/1` is deprecated, and will be removed\n" <> Exception.format_stacktrace
     config[part]
   end
 
