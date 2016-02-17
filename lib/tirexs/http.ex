@@ -23,10 +23,13 @@ defmodule Tirexs.HTTP do
     do_request(:put, url(path, uri), body)
   end
   def put(path, uri) when is_binary(path) and is_map(uri) do
-    do_request(:put, url(path, uri), [])
+    do_request(:put, url(path, uri))
   end
   def put(url_or_path_or_uri, body) when is_list(body) do
     do_request(:put, url(url_or_path_or_uri), body)
+  end
+  def put(url_or_path_or_uri) do
+    do_request(:put, url(url_or_path_or_uri))
   end
 
   @doc false
@@ -35,24 +38,22 @@ defmodule Tirexs.HTTP do
     do_request(:post, url(path, uri), body)
   end
   def post(path, uri) when is_binary(path) and is_map(uri) do
-    do_request(:post, url(path, uri), [])
+    do_request(:post, url(path, uri))
   end
   def post(url_or_path_or_uri, body) when is_list(body) do
     unless body == [], do: body = to_string(body)
     do_request(:post, url(url_or_path_or_uri), body)
   end
+  def post(url_or_path_or_uri) do
+    do_request(:post, url(url_or_path_or_uri))
+  end
 
   @doc false
-  def delete(path, uri, body) when is_binary(path) and is_map(uri) do
-    unless body == [], do: body = to_string(body)
-    do_request(:delete, url(path, uri), body)
-  end
   def delete(path, uri) when is_binary(path) and is_map(uri) do
-    do_request(:delete, url(path, uri), [])
+    do_request(:delete, url(path, uri))
   end
-  def delete(url_or_path_or_uri, body) when is_list(body) do
-    unless body == [], do: body = to_string(body)
-    do_request(:delete, url(url_or_path_or_uri), body)
+  def delete(url_or_path_or_uri) do
+    do_request(:delete, url(url_or_path_or_uri))
   end
 
   @doc false

@@ -11,39 +11,6 @@ defmodule Acceptances.ElasticSearchTest do
   import Tirexs.Search
 
 
-  test :get_elastic_search_server do
-    settings = Tirexs.ElasticSearch.config()
-    {:error, _, _}  = get("missing_index", settings)
-    {:ok, _, body}  = get("", settings)
-
-    assert body[:tagline] == "You Know, for Search"
-  end
-
-  test :create_index do
-    settings = Tirexs.ElasticSearch.config()
-    delete("bear_test", settings)
-    {:ok, _, body} = put("bear_test", settings)
-    assert body[:acknowledged] == true
-    delete("bear_test", settings)
-  end
-
-  test :delete_index do
-    settings = Tirexs.ElasticSearch.config()
-    put("bear_test", settings)
-    {:ok, _, body} = delete("bear_test", settings)
-    assert body[:acknowledged] == true
-  end
-
-  test :head do
-    settings = Tirexs.ElasticSearch.config()
-    delete("bear_test", settings)
-    assert exist?("bear_test", settings) == false
-
-    put("bear_test", settings)
-    assert exist?("bear_test", settings) == true
-    delete("bear_test", settings)
-  end
-
   @tag skip: "facets were deprecated and removed in 2.0 core"
   test :create_mapping_search do
     settings = Tirexs.ElasticSearch.config()
