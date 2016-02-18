@@ -3,7 +3,7 @@ Code.require_file "../../test_helper.exs", __ENV__.file
 defmodule Acceptances.ElasticSearchTest do
 
   use ExUnit.Case
-  import Tirexs.Mapping, only: :macros
+  use Tirexs.Mapping, only: :macros
   import Tirexs.Bulk
   import Tirexs.ElasticSearch
   require Tirexs.ElasticSearch
@@ -11,71 +11,7 @@ defmodule Acceptances.ElasticSearchTest do
   import Tirexs.Search
 
 
-  test :get_elastic_search_server do
-    settings = Tirexs.ElasticSearch.config()
-    {:error, _, _}  = get("missing_index", settings)
-    {:ok, _, body}  = get("", settings)
-
-    assert body[:tagline] == "You Know, for Search"
-
-  end
-
-  test :create_index do
-    settings = Tirexs.ElasticSearch.config()
-    delete("bear_test", settings)
-    {:ok, _, body} = put("bear_test", settings)
-    assert body[:acknowledged] == true
-    delete("bear_test", settings)
-  end
-
-  test :delete_index do
-    settings = Tirexs.ElasticSearch.config()
-    put("bear_test", settings)
-    {:ok, _, body} = delete("bear_test", settings)
-    assert body[:acknowledged] == true
-  end
-
-
-  test :head do
-    settings = Tirexs.ElasticSearch.config()
-    delete("bear_test", settings)
-    assert exist?("bear_test", settings) == false
-
-    put("bear_test", settings)
-    assert exist?("bear_test", settings) == true
-    delete("bear_test", settings)
-  end
-
-  test :create_type_mapping do
-    settings = Tirexs.ElasticSearch.config()
-    index = [index: "bear_test", type: "bear_type"]
-      mappings do
-        indexes "mn_opts_", [type: "object"] do
-          indexes "uk", [type: "object"] do
-            indexes "credentials", [type: "object"] do
-              indexes "available_from", type: "long"
-              indexes "buy", type: "object"
-              indexes "dld", type: "object"
-              indexes "str", type: "object"
-              indexes "t2p", type: "object"
-              indexes "sby", type: "object"
-              indexes "spl", type: "object"
-              indexes "spd", type: "object"
-              indexes "pre", type: "object"
-              indexes "fst", type: "object"
-            end
-          end
-        end
-        indexes "rev_history_", type: "object"
-      end
-
-    {:ok, _, body} = Tirexs.Mapping.create_resource(index, settings)
-
-    assert body[:acknowledged] == true
-
-    delete("bear_test", settings)
-  end
-
+  @tag skip: "facets were deprecated and removed in 2.0 core"
   test :create_mapping_search do
     settings = Tirexs.ElasticSearch.config()
 
@@ -134,6 +70,5 @@ defmodule Acceptances.ElasticSearchTest do
 
     assert Tirexs.Query.result(result, :count) == 1
     assert List.first(Tirexs.Query.result(result, :hits))[:_source][:id] == 2
-
   end
 end

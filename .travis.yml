@@ -1,9 +1,13 @@
-sudo: false
+sudo: required
 language: elixir
 elixir:
   - 1.2.0
-services:
-  - elasticsearch
+
+before_install:
+  - curl -O https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.1.1/elasticsearch-2.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-2.1.1.deb
+  - sudo service elasticsearch start
+  # - wget -nv --tries 4 --retry-connrefused --no-check-certificate 127.0.0.1:9200
+
 notifications:
   email: false
   slack:

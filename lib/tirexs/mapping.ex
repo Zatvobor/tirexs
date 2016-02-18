@@ -5,6 +5,14 @@ defmodule Tirexs.Mapping do
 
 
   @doc false
+  defmacro __using__(_) do
+    quote do
+      import unquote(Tirexs.Index.Settings), only: :macros
+      import unquote(__MODULE__), only: :macros
+    end
+  end
+
+  @doc false
   defmacro mappings([do: block]) do
     mappings =  [properties: extract(block)]
     quote do
@@ -14,7 +22,6 @@ defmodule Tirexs.Mapping do
 
 
   import Tirexs.ElasticSearch
-
 
   @doc false
   def transpose(block) do
@@ -49,18 +56,24 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def create_resource(definition, opts) do
-    if definition[:type] do
-      create_resource_settings(definition, opts)
+    cond do
+      definition[:settings] ->
+        url  = "#{definition[:index]}"
+        json = to_resource_json(definition)
 
-      url  = "#{definition[:index]}/#{definition[:type]}/_mapping"
-      json = to_resource_json(definition)
+        post(url, json, opts)
+      definition[:type] ->
+        create_resource_settings(definition, opts)
 
-      put(url, json, opts)
-    else
-      url  = "#{definition[:index]}/_mapping"
-      json = to_resource_json(definition, definition[:index])
+        url  = "#{definition[:index]}/#{definition[:type]}/_mapping"
+        json = to_resource_json(definition)
 
-      put(url, json, opts)
+        put(url, json, opts)
+      true ->
+        url  = "#{definition[:index]}/_mapping"
+        json = to_resource_json(definition, definition[:index])
+
+        put(url, json, opts)
     end
   end
 
@@ -76,7 +89,17 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def to_resource_json(definition, type) do
-    json_dict = Dict.put([], to_atom(type), definition[:mapping])
-    JSX.encode!(json_dict)
+    resource =
+      # definition w/ mappings and settings
+      if definition[:settings] != nil do
+        mappings_dict = Dict.put([], to_atom(type), definition[:mapping])
+        resource = Dict.put([], to_atom("mappings"), mappings_dict)
+        resource = Dict.put(resource, to_atom("settings"), definition[:settings])
+      # definition just only w/ mapping
+      else
+        Dict.put([], to_atom(type), definition[:mapping])
+      end
+
+    JSX.encode!(resource)
   end
 end

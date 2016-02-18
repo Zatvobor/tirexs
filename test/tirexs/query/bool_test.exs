@@ -1,11 +1,12 @@
 Code.require_file "../../../test_helper.exs", __ENV__.file
-defmodule Tirexs.Query.Bool.Test do
+
+defmodule Tirexs.Query.BoolTest do
   use ExUnit.Case
+
   import Tirexs.Query
 
-  @url "labeled/track"
 
-  test :simple_bool do
+  test "bool clause w/ single occurrence type" do
     query = query do
       bool do
         must do
@@ -14,10 +15,11 @@ defmodule Tirexs.Query.Bool.Test do
       end
     end
 
-    assert query == [query: [bool: [must: [[match: [artist_uri: [query: "medianet:artist:261633", operator: "and"]]]]]]]
+    expected = [query: [bool: [must: [[match: [artist_uri: [query: "medianet:artist:261633", operator: "and"]]]]]]]
+    assert query == expected
   end
 
-  test :advance_bool do
+  test "bool clause w/ multiple occurrence types" do
     query = query do
       bool do
         must do
@@ -40,6 +42,7 @@ defmodule Tirexs.Query.Bool.Test do
       end
     end
 
-    assert query == [query: [bool: [must: [[match: [artist: [query: "Madonna", operator: "and"]]],[match: [title: [query: "My", operator: "and"]]],[match: [color_tune: [query: "red,orange"]]],[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]],[range: [release_year: [from: 1950, to: 2013]]],[range: [energy_mood: [from: 0, to: 30]]]], should: [[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]],[range: [release_year: [from: 1950, to: 2013]]]], must_not: [[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]]]]]]
+    expected = [query: [bool: [must: [[match: [artist: [query: "Madonna", operator: "and"]]],[match: [title: [query: "My", operator: "and"]]],[match: [color_tune: [query: "red,orange"]]],[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]],[range: [release_year: [from: 1950, to: 2013]]],[range: [energy_mood: [from: 0, to: 30]]]], should: [[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]],[range: [release_year: [from: 1950, to: 2013]]]], must_not: [[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]]]]]]
+    assert query == expected
   end
 end

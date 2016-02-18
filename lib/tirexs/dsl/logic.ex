@@ -68,11 +68,7 @@ defmodule Tirexs.DSL.Logic do
   @doc false
   def extract_do(block, position \\ 0) do
     element = Enum.fetch!(block, position)
-    if element[:do] != nil do
-      element[:do]
-    else
-      element
-    end
+    element[:do] || element
   end
 
   @doc false

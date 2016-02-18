@@ -1,17 +1,21 @@
 Code.require_file "../../test_helper.exs", __ENV__.file
+
 defmodule Tirexs.QueryTest do
   use ExUnit.Case
+
   import Tirexs.Query
 
-  test :match_query do
+
+  test "query w/ match" do
     query = query do
       match "message", "this is a test", operator: "and"
     end
 
-    assert query == [query: [match: [message: [query: "this is a test", operator: "and"]]]]
+    expected = [query: [match: [message: [query: "this is a test", operator: "and"]]]]
+    assert query == expected
   end
 
-  test :range_query do
+  test "query w/ range" do
     query = query do
       range "age", from: 10,
                    to: 20,
@@ -20,42 +24,47 @@ defmodule Tirexs.QueryTest do
                    boost: 2.0
     end
 
-    assert query == [query: [range: [age: [from: 10, to: 20, include_lower: true, include_upper: false, boost: 2.0]]]]
+    expected = [query: [range: [age: [from: 10, to: 20, include_lower: true, include_upper: false, boost: 2.0]]]]
+    assert query == expected
   end
 
-  test :multi_match do
+  test "query w/ multi_match" do
     query = query do
       multi_match "this is a test", ["subject", "message"]
     end
 
-    assert query == [query: [multi_match: [query: "this is a test", fields: ["subject","message"]]]]
+    expected = [query: [multi_match: [query: "this is a test", fields: ["subject","message"]]]]
+    assert query == expected
   end
 
-  test :ids do
+  test "query w/ ids" do
     query = query do
       ids "my_type", ["1", "4", "100"]
     end
 
-    assert query == [query: [ids: [type: "my_type", values: ["1","4","100"]]]]
+    expected = [query: [ids: [type: "my_type", values: ["1","4","100"]]]]
+    assert query == expected
   end
 
-  test :query_string do
+  test "query w/ query_string" do
     query = query do
       query_string "this AND that OR thus", [default_field: "content"]
     end
 
-    assert query == [query: [query_string: [query: "this AND that OR thus", default_field: "content"]]]
+    expected = [query: [query_string: [query: "this AND that OR thus", default_field: "content"]]]
+    assert query == expected
   end
 
-  test :string do
+  test "query w/ string" do
     query = query do
       string "this AND that OR thus", [default_field: "content"]
     end
 
-    assert query == [query: [query_string: [query: "this AND that OR thus", default_field: "content"]]]
+    expected = [query: [query_string: [query: "this AND that OR thus", default_field: "content"]]]
+    assert query == expected
   end
 
-  test :custom_score do
+  test "query w/ custom_score" do
     query = query do
       custom_score [script: "_score * doc[\"type\"].value"] do
         query do
@@ -64,10 +73,11 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [custom_score: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], script: "_score * doc[\"type\"].value"]]]
+    expected = [query: [custom_score: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], script: "_score * doc[\"type\"].value"]]]
+    assert query == expected
   end
 
-  test :custom_boost_factor do
+  test "query w/ custom_boost_factor" do
     query = query do
       custom_boost_factor [boost_factor: 5.2] do
         query do
@@ -76,10 +86,11 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [custom_boost_factor: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], boost_factor: 5.2]]]
+    expected = [query: [custom_boost_factor: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], boost_factor: 5.2]]]
+    assert query == expected
   end
 
-  test :constant_score do
+  test "query w/ constant_score" do
     query = query do
       constant_score [boost: 1.2] do
         query do
@@ -88,50 +99,56 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [constant_score: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], boost: 1.2]]]
+    expected = [query: [constant_score: [query: [query_string: [query: "this AND that OR thus", default_field: "artist_name"]], boost: 1.2]]]
+    assert query == expected
   end
 
-  test :field do
+  test "query w/ field" do
     query = query do
       field "name.first", [query: "+something -else", boost: 2.0, enable_position_increments: false]
     end
 
-    assert query == [query: [field: ["name.first": [query: "+something -else", boost: 2.0, enable_position_increments: false]]]]
+    expected = [query: [field: ["name.first": [query: "+something -else", boost: 2.0, enable_position_increments: false]]]]
+    assert query == expected
   end
 
-  test :flt do
+  test "query w/ flt" do
     query = query do
       flt "text like this one", ["name.first", "name.last"], max_query_terms: 12
     end
 
-    assert query == [query: [fuzzy_like_this: [like_text: "text like this one", fields: ["name.first","name.last"], max_query_terms: 12]]]
+    expected = [query: [fuzzy_like_this: [like_text: "text like this one", fields: ["name.first","name.last"], max_query_terms: 12]]]
+    assert query == expected
   end
 
-  test :flt_field do
+  test "query w/ flt_field" do
     query = query do
       flt_field "name.first", [like_text: "text like this one", max_query_terms: 12]
     end
 
-    assert query == [query: [fuzzy_like_this_field: ["name.first": [like_text: "text like this one", max_query_terms: 12]]]]
+    expected = [query: [fuzzy_like_this_field: ["name.first": [like_text: "text like this one", max_query_terms: 12]]]]
+    assert query == expected
   end
 
-  test :fuzzy do
+  test "query w/ fuzzy" do
     query = query do
       fuzzy "user", "ki"
     end
 
-    assert query == [query: [fuzzy: [user: "ki"]]]
+    expected = [query: [fuzzy: [user: "ki"]]]
+    assert query == expected
   end
 
-  test :fuzzy_with_opts do
+  test "query w/ fuzzy_with_opts" do
     query = query do
       fuzzy "user", [value: "ki", boost: 1.0, min_similarity: 0.5, prefix_length: 0]
     end
 
-    assert query == [query: [fuzzy: [user: [value: "ki", boost: 1.0, min_similarity: 0.5, prefix_length: 0]]]]
+    expected = [query: [fuzzy: [user: [value: "ki", boost: 1.0, min_similarity: 0.5, prefix_length: 0]]]]
+    assert query == expected
   end
 
-  test :has_child do
+  test "query w/ has_child" do
     query = query do
       has_child [type: "blog_tag", score_type: "sum"] do
         query do
@@ -140,10 +157,11 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [has_child: [query: [term: [tag: "something"]], type: "blog_tag", score_type: "sum"]]]
+    expected = [query: [has_child: [query: [term: [tag: "something"]], type: "blog_tag", score_type: "sum"]]]
+    assert query == expected
   end
 
-  test :has_parent do
+  test "query w/ has_parent" do
     query = query do
       has_parent [parent_type: "blog", score_type: "score"] do
         query do
@@ -152,10 +170,11 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [has_parent: [query: [term: [tag: "something"]], parent_type: "blog", score_type: "score"]]]
+    expected = [query: [has_parent: [query: [term: [tag: "something"]], parent_type: "blog", score_type: "score"]]]
+    assert query == expected
   end
 
-  test :match_all do
+  test "query w/ match_all" do
     query = query do
       match_all
     end
@@ -163,7 +182,7 @@ defmodule Tirexs.QueryTest do
     assert query == [query: [match_all: []]]
   end
 
-  test :match_all_with_options do
+  test "query w/ match_all_with_options" do
     query = query do
       match_all norms_field: "my_field", boost: 1.2
     end
@@ -171,31 +190,34 @@ defmodule Tirexs.QueryTest do
     assert query == [query: [match_all: [norms_field: "my_field", boost: 1.2]]]
   end
 
-  test :mlt do
+  test "query w/ mlt" do
     query = query do
       mlt "text like this one", ["name.first", "name.last"], min_term_freq: 1
     end
 
-    assert query == [query: [more_like_this: [like_text: "text like this one", fields: ["name.first","name.last"], min_term_freq: 1]]]
+    expected = [query: [more_like_this: [like_text: "text like this one", fields: ["name.first","name.last"], min_term_freq: 1]]]
+    assert query == expected
   end
 
-  test :mlt_field do
+  test "query w/ mlt_field" do
     query = query do
       mlt_field "name.first", [like_text: "text like this one", min_term_freq: 1]
     end
 
-    assert query == [query: [more_like_this_field: ["name.first": [like_text: "text like this one", min_term_freq: 1]]]]
+    expected = [query: [more_like_this_field: ["name.first": [like_text: "text like this one", min_term_freq: 1]]]]
+    assert query == expected
   end
 
-  test :prefix do
+  test "query w/ prefix" do
     query = query do
       prefix "user", "ki"
     end
 
-    assert query == [query: [prefix: [user: "ki"]]]
+    expected = [query: [prefix: [user: "ki"]]]
+    assert query == expected
   end
 
-  test :span_first do
+  test "query w/ span_first" do
     query = query do
       span_first  [end: 3] do
         match do
@@ -204,24 +226,26 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [span_first: [match: [span_term: [user: "kimchy"]], end: 3]]]
+    expected = [query: [span_first: [match: [span_term: [user: "kimchy"]], end: 3]]]
+    assert query == expected
   end
 
-  test :span_near do
+  test "query w/ span_near" do
     query = query do
-        span_near [slop: 12, in_order: false, collect_payloads: false] do
-          clauses do
-            span_term "field", "value1"
-            span_term "field", "value2"
-            span_term "field", "value3"
-          end
+      span_near [slop: 12, in_order: false, collect_payloads: false] do
+        clauses do
+          span_term "field", "value1"
+          span_term "field", "value2"
+          span_term "field", "value3"
         end
       end
+    end
 
-    assert query == [query: [span_near: [clauses: [[span_term: [field: "value1"]],[span_term: [field: "value2"]],[span_term: [field: "value3"]]], slop: 12, in_order: false, collect_payloads: false]]]
+    expected = [query: [span_near: [clauses: [[span_term: [field: "value1"]],[span_term: [field: "value2"]],[span_term: [field: "value3"]]], slop: 12, in_order: false, collect_payloads: false]]]
+    assert query == expected
   end
 
-  test :span_not do
+  test "query w/ span_not" do
     query = query do
       span_not do
         include do
@@ -233,24 +257,26 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [span_not: [include: [span_term: [field: "value1"]], exclude: [span_term: [field: "value2"]]]]]
+    expected = [query: [span_not: [include: [span_term: [field: "value1"]], exclude: [span_term: [field: "value2"]]]]]
+    assert query == expected
   end
 
-  test :span_or do
+  test "query w/ span_or" do
     query = query do
-          span_or do
-            clauses do
-              span_term "field", "value1"
-              span_term "field", "value2"
-              span_term "field", "value3"
-            end
-          end
+      span_or do
+        clauses do
+          span_term "field", "value1"
+          span_term "field", "value2"
+          span_term "field", "value3"
         end
+      end
+    end
 
-    assert query == [query: [span_or: [clauses: [[span_term: [field: "value1"]],[span_term: [field: "value2"]],[span_term: [field: "value3"]]]]]]
+    expected = [query: [span_or: [clauses: [[span_term: [field: "value1"]],[span_term: [field: "value2"]],[span_term: [field: "value3"]]]]]]
+    assert query == expected
   end
 
-  test :span_term do
+  test "query w/ span_term" do
     query = query do
       span_term "field", [value: "value1", boost: 2.0]
     end
@@ -258,7 +284,7 @@ defmodule Tirexs.QueryTest do
     assert query == [query: [span_term: [field: [value: "value1", boost: 2.0]]]]
   end
 
-  test :terms do
+  test "query w/ terms" do
     query = query do
       terms "tags", ["blue", "pill"], minimum_match: 1
     end
@@ -266,7 +292,7 @@ defmodule Tirexs.QueryTest do
     assert query == [query: [terms: [tags: ["blue","pill"], minimum_match: 1]]]
   end
 
-  test :top_children do
+  test "query w/ top_children" do
     query = query do
       top_children [type: "blog_tag", score: "max", factor: 5, incremental_factor: 2] do
         query do
@@ -275,18 +301,20 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [top_children: [query: [term: [tag: "something"]], type: "blog_tag", score: "max", factor: 5, incremental_factor: 2]]]
+    expected = [query: [top_children: [query: [term: [tag: "something"]], type: "blog_tag", score: "max", factor: 5, incremental_factor: 2]]]
+    assert query == expected
   end
 
-  test :wildcard do
+  test "query w/ wildcard" do
     query = query do
       wildcard "user", "ki*y"
     end
 
-    assert query == [query: [wildcard: [user: "ki*y"]]]
+    expected = [query: [wildcard: [user: "ki*y"]]]
+    assert query == expected
   end
 
-  test :indices do
+  test "query w/ indices and no_match_query" do
     query = query do
       indices [indices: ["index1", "index2"]] do
         query do
@@ -298,10 +326,11 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [indices: [query: [term: [tag: "wow"]], no_match_query: [term: [tag: "kow"]], indices: ["index1","index2"]]]]
+    expected = [query: [indices: [query: [term: [tag: "wow"]], no_match_query: [term: [tag: "kow"]], indices: ["index1","index2"]]]]
+    assert query == expected
   end
 
-  test :indices_with_default do
+  test "query w/ indices and no_match_query w/ none" do
     query = query do
       indices [indices: ["index1", "index2"]] do
         query do
@@ -313,34 +342,38 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [indices: [query: [term: [tag: "wow"]], no_match_query: "none", indices: ["index1","index2"]]]]
+    expected = [query: [indices: [query: [term: [tag: "wow"]], no_match_query: "none", indices: ["index1","index2"]]]]
+    assert query == expected
   end
 
-  test :text do
+  test "query w/ text" do
     query = query do
       text "message", "this is a test"
     end
 
-    assert query == [query: [text: [message: "this is a test"]]]
+    expected = [query: [text: [message: "this is a test"]]]
+    assert query == expected
   end
 
-  test :text_phrase do
+  test "query w/ text_phrase" do
     query = query do
       text_phrase "message", "this is a test"
     end
 
-    assert query == [query: [text_phrase: [message: "this is a test"]]]
+    expected = [query: [text_phrase: [message: "this is a test"]]]
+    assert query == expected
   end
 
-  test :text_phrase_prefix do
+  test "query w/ text_phrase_prefix" do
     query = query do
       text_phrase_prefix "message", [query: "this is a test", max_expansions: 10]
     end
 
-    assert query == [query: [text_phrase_prefix: [message: [query: "this is a test", max_expansions: 10]]]]
+    expected = [query: [text_phrase_prefix: [message: [query: "this is a test", max_expansions: 10]]]]
+    assert query == expected
   end
 
-  test :geo_shape do
+  test "query w/ geo_shape" do
     query = query do
       geo_shape do
         location [relation: "contains"] do
@@ -349,10 +382,11 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [geo_shape: [location: [shape: [type: "type", coordinates: [[-45.0,45.0],[45.0,-45.0]]], relation: "contains"]]]]
+    expected = [query: [geo_shape: [location: [shape: [type: "type", coordinates: [[-45.0,45.0],[45.0,-45.0]]], relation: "contains"]]]]
+    assert query == expected
   end
 
-  test :filtered do
+  test "query w/ filtered" do
     query = query do
       filtered do
         query do
@@ -364,10 +398,11 @@ defmodule Tirexs.QueryTest do
       end
     end
 
-    assert query == [query: [filtered: [query: [term: [tag: "wow"]], filter: [range: [age: [from: 10, to: 20]]]]]]
+    expected = [query: [filtered: [query: [term: [tag: "wow"]], filter: [range: [age: [from: 10, to: 20]]]]]]
+    assert query == expected
   end
 
-  test :nested do
+  test "query w/ nested" do
     query = query do
       nested [path: "obj1", _cache: true] do
         query do
@@ -380,35 +415,35 @@ defmodule Tirexs.QueryTest do
         end
       end
     end
-    assert query == [query: [nested: [query: [bool: [must: [[match: ["obj1.name": [query: "blue"]]],[range: ["obj1.count": [gt: 5]]]]]], path: "obj1", _cache: true]]]
+
+    expected = [query: [nested: [query: [bool: [must: [[match: ["obj1.name": [query: "blue"]]],[range: ["obj1.count": [gt: 5]]]]]], path: "obj1", _cache: true]]]
+    assert query == expected
   end
 
-  test :custom_filters_score do
+  test "query w/ custom_filters_score" do
     query = query do
-          custom_filters_score [score_mode: "first"] do
-            query do
-              match_all
+      custom_filters_score [score_mode: "first"] do
+        query do
+          match_all
+        end
+        filters do
+          group do
+            filter do
+              range "age", [from: 0, to: 10]
             end
-            filters do
-              group do
-                filter do
-                  range "age", [from: 0, to: 10]
-                end
-                boost 1
-              end
-              group do
-                filter do
-                  range "age", [from: 0, to: 10]
-                end
-                boost 2
-              end
+            boost 1
+          end
+          group do
+            filter do
+              range "age", [from: 0, to: 10]
             end
+            boost 2
           end
         end
+      end
+    end
 
-    assert query == [query: [custom_filters_score: [filters: [[filter: [range: [age: [from: 0, to: 10]]], boost: 1],[filter: [range: [age: [from: 0, to: 10]]], boost: 2]], query: [match_all: []], score_mode: "first"]]]
-
+    expected = [query: [custom_filters_score: [filters: [[filter: [range: [age: [from: 0, to: 10]]], boost: 1],[filter: [range: [age: [from: 0, to: 10]]], boost: 2]], query: [match_all: []], score_mode: "first"]]]
+    assert query == expected
   end
-
-
 end
