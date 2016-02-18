@@ -55,11 +55,13 @@ defmodule Tirexs.Manage do
 
   @doc false
   def refresh(index, settings) when is_binary(index) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.refresh/2` is deprecated, please use `Tirexs.Resources.refresh/2` instead\n" <> Exception.format_stacktrace
     Tirexs.ElasticSearch.post(to_string(index) <> "/_refresh", settings)
   end
 
   @doc false
   def refresh(indexes, settings) when is_list(indexes) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.refresh/2` is deprecated, please use `Tirexs.Resources.refresh/2` instead\n" <> Exception.format_stacktrace
     indexes = Enum.join(indexes, ",")
     refresh(indexes, settings)
   end
