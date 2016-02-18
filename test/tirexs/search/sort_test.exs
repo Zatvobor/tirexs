@@ -19,7 +19,7 @@ defmodule Tirexs.Search.SortTest do
     assert sort == expected
   end
 
-  test "sort w/ srcipt" do
+  test "sort w/ script" do
     sort = sort do
       [
         _script: [script: "doc['field_name'].value * factor", type: "number", params: [factor: 1.1]],
