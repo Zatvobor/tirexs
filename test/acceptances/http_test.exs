@@ -37,8 +37,14 @@ defmodule Acceptances.HTTPTest do
     { :ok, 200, _ } = delete("/bear_test")
   end
 
-  test "posts some resource" do
+  test "posts and puts some resources" do
     { :ok, 200, _ } = put("/bear_test")
     { :ok, 200, _ } = post("/bear_test/_refresh")
   end
+
+  @tag skip: "pending"
+  test "posts some resource with body"
+
+  @tag skip: "pending"
+  test "puts some resource with body"
 end
