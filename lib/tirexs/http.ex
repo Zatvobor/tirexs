@@ -96,7 +96,7 @@ defmodule Tirexs.HTTP do
 
   @doc false
   def request(method, request, http_options, options) do
-    :application.ensure_all_started(:tirexs)
+    { :ok, _ } = :application.ensure_all_started(:tirexs)
     :httpc.request(method, request, http_options, options)
   end
 
