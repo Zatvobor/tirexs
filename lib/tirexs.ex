@@ -14,6 +14,13 @@ defmodule Tirexs do
 
   @doc false
   def get_uri_env() do
-    get_env(:uri)
+    uri = get_env(:uri)
+    if Keyword.keyword?(uri) do
+      Enum.reduce uri, %URI{}, fn ({key, value}, uri_struct) ->
+        %{ uri_struct | key => value }
+      end
+    else
+      uri
+    end
   end
 end
