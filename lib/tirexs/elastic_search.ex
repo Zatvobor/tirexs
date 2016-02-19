@@ -5,7 +5,14 @@ defmodule Tirexs.ElasticSearch do
   Get default URI for `ElasticSearch` connection. Returns the value from `Application.get_env(:tirexs, :uri)`.
   """
   def config do
-    Application.get_env(:tirexs, :uri)
+    uri = Application.get_env(:tirexs, :uri)
+    if Keyword.keyword?(uri) do
+      Enum.reduce uri, %URI{}, fn ({key, value}, uri_struct) ->
+        %{ uri_struct | key => value }
+      end
+    else
+      uri
+    end
   end
 
   @doc """
