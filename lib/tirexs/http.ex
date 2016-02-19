@@ -123,12 +123,12 @@ defmodule Tirexs.HTTP do
 
   @doc false
   def decode(json, opts \\ [{:labels, :atom}]) do
-    JSX.decode(to_string(json), opts)
+    JSX.decode!(to_string(json), opts)
   end
 
   @doc false
   def encode(term, opts \\ []) do
-    JSX.encode(term, opts)
+    JSX.encode!(term, opts)
   end
 
 
