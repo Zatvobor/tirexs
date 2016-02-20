@@ -37,14 +37,34 @@ defmodule Acceptances.HTTPTest do
     { :ok, 200, _ } = delete("/bear_test")
   end
 
-  test "posts and puts some resources" do
+  test "puts and posts some resources" do
     { :ok, 200, _ } = put("/bear_test")
     { :ok, 200, _ } = post("/bear_test/_refresh")
   end
 
-  @tag skip: "pending"
-  test "posts some resource with body"
+  test "puts and posts empty resource as list" do
+    { :ok, 200, _ } = put("/bear_test", [])
+    { :ok, 200, _ } = post("/bear_test/_refresh", [])
+  end
 
-  @tag skip: "pending"
-  test "puts some resource with body"
+  test "puts and posts empty resource as map" do
+    { :ok, 200, _ } = put("/bear_test", %{})
+    { :ok, 200, _ } = post("/bear_test/_refresh", %{})
+  end
+
+  test "puts some resource with body as list" do
+    { :ok, 201, _ } = put("/bear_test/my_type/1", [user: "kimchy", id: 1])
+  end
+
+  test "puts some resource with body as map" do
+    { :ok, 201, _ } = put("/bear_test/my_type/1", %{user: "kimchy", id: 1})
+  end
+
+  test "posts some resource with body as list" do
+    { :ok, 201, _ } = post("/bear_test/my_type", [user: "kimchy"])
+  end
+
+  test "posts some resource with body as map" do
+    { :ok, 201, _ } = post("/bear_test/my_type", %{user: "kimchy"})
+  end
 end
