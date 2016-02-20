@@ -109,6 +109,12 @@ defmodule Tirexs.HTTP do
   end
 
   @doc false
+  def url(path, params, %URI{} = uri) when is_binary(path) and is_binary(params) do
+    url(path, %URI{ uri | query: params })
+  end
+  def url(path, params, %URI{} = uri) when is_binary(path) do
+    url(path, %URI{ uri | query: URI.encode_query(params) })
+  end
   def url(path, %URI{} = uri) when is_binary(path) do
     { default, given } = { Tirexs.get_uri_env(), __normalize_path__(uri) }
     %URI{ __merge__(default, given) | path: __normalize_path__(path) } |> to_string
