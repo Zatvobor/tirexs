@@ -61,4 +61,49 @@ defmodule Tirexs.HTTPTest do
     actual = url("articles", %URI{ host: "example.com", port: 80 })
     assert actual == "http://example.com/articles"
   end
+
+  test "decode/1 {\"hello\":\"world\"}" do
+    actual = decode("{\"hello\":\"world\"}")
+    assert actual == %{hello: "world"}
+  end
+
+  test "decode/1 {\"hello\":\"world\"} as list" do
+    actual = decode("{\"hello\":\"world\"}")
+    assert Map.to_list(actual) == [hello: "world"]
+  end
+
+  test "decode/1 \"hello\"" do
+    actual = decode("\"hello\"")
+    assert actual == "hello"
+  end
+
+  test "encode/1 %{hello: \"world\"} as map" do
+    actual = encode(%{hello: "world"})
+    assert actual == "{\"hello\":\"world\"}"
+  end
+
+  test "encode/1 %{hello: 'world'} as map" do
+    actual = encode(%{hello: 'world'})
+    assert actual == "{\"hello\":[119,111,114,108,100]}"
+  end
+
+  test "encode/1 [hello: \"world\"] as list" do
+    actual = encode([hello: "world"])
+    assert actual == "{\"hello\":\"world\"}"
+  end
+
+  test "encode/1 []" do
+    actual = encode([])
+    assert actual == "[]"
+  end
+
+  test "encode/1 %{}" do
+    actual = encode(%{})
+    assert actual == "{}"
+  end
+
+  test "encode/1 \"hello\" as binary" do
+    actual = encode("hello")
+    assert actual == "\"hello\""
+  end
 end
