@@ -63,6 +63,16 @@ defmodule Tirexs.HTTPTest do
     assert actual == "http://example.com:9200/articles/document/1?_source=false"
   end
 
+  test "url/2 by '/articles/document/1' and [_source: false] and uri by default" do
+    actual = url("/articles/document/1", [_source: false])
+    assert actual == "http://127.0.0.1:9200/articles/document/1?_source=false"
+  end
+
+  test "url/2 by '/articles/document/1' and %{_source: false} and uri by default" do
+    actual = url("/articles/document/1", %{_source: false})
+    assert actual == "http://127.0.0.1:9200/articles/document/1?_source=false"
+  end
+
   test "url/2 by '/articles/document/1' and uri by default" do
     actual = url("/articles/document/1", Tirexs.get_uri_env())
     assert actual == "http://127.0.0.1:9200/articles/document/1"

@@ -32,6 +32,24 @@ defmodule Acceptances.HTTPTest do
     {:ok, 200, _ }  = get("")
   end
 
+  test "gets some resources with params" do
+    { :ok, 201, _ } = put("/bear_test/my_type/1", [user: "kimchy", id: 1])
+    { :ok, 200, %{_source: source} }  = get("/bear_test/my_type/1?_source=unknown")
+    assert Map.size(source) == 0
+  end
+
+  test "gets some resources with params as list" do
+    { :ok, 201, _ } = put("/bear_test/my_type/1", [user: "kimchy", id: 1])
+    { :ok, 200, %{_source: source} }  = get("/bear_test/my_type/1", [_source: "unknown"])
+    assert Map.size(source) == 0
+  end
+
+  test "gets some resources with params as map" do
+    { :ok, 201, _ } = put("/bear_test/my_type/1", [user: "kimchy", id: 1])
+    { :ok, 200, %{_source: source} }  = get("/bear_test/my_type/1", %{_source: "unknown"})
+    assert Map.size(source) == 0
+  end
+
   test "deletes resource" do
     { :ok, 200, _ } = put("/bear_test")
     { :ok, 200, _ } = delete("/bear_test")

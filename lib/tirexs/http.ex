@@ -3,8 +3,14 @@ defmodule Tirexs.HTTP do
 
 
   @doc false
+  def head(path, params, %URI{} = uri) when is_binary(path) do
+    do_request(:head, url(path, params, uri))
+  end
   def head(path, %URI{} = uri) when is_binary(path) do
     do_request(:head, url(path, uri))
+  end
+  def head(url_or_path_or_uri, params) do
+    do_request(:head, url(url_or_path_or_uri, params))
   end
   def head(url_or_path_or_uri) do
     do_request(:head, url(url_or_path_or_uri))
@@ -17,8 +23,14 @@ defmodule Tirexs.HTTP do
   end
 
   @doc false
+  def get(path, params, %URI{} = uri) when is_binary(path) do
+    do_request(:get, url(path, params, uri))
+  end
   def get(path, %URI{} = uri) when is_binary(path) do
     do_request(:get, url(path, uri))
+  end
+  def get(url_or_path_or_uri, params) do
+    do_request(:get, url(url_or_path_or_uri, params))
   end
   def get(url_or_path_or_uri) do
     do_request(:get, url(url_or_path_or_uri))
@@ -101,8 +113,14 @@ defmodule Tirexs.HTTP do
   end
 
   @doc false
+  def delete(path, params, %URI{} = uri) when is_binary(path) do
+    do_request(:delete, url(path, params, uri))
+  end
   def delete(path, %URI{} = uri) when is_binary(path) do
     do_request(:delete, url(path, uri))
+  end
+  def delete(url_or_path_or_uri, params) do
+    do_request(:delete, url(url_or_path_or_uri, params))
   end
   def delete(url_or_path_or_uri) do
     do_request(:delete, url(url_or_path_or_uri))
@@ -118,6 +136,16 @@ defmodule Tirexs.HTTP do
   def url(path, %URI{} = uri) when is_binary(path) do
     { default, given } = { Tirexs.get_uri_env(), __normalize_path__(uri) }
     %URI{ __merge__(default, given) | path: __normalize_path__(path) } |> to_string
+  end
+  def url(url_or_path, params) when is_binary(url_or_path) and is_binary(params) do
+    location = %URI{ URI.parse(url_or_path) | query: params }
+    { default, given } = { Tirexs.get_uri_env(), __normalize_path__(location) }
+    __merge__(default, given) |> to_string
+  end
+  def url(url_or_path, params) when is_binary(url_or_path) do
+    location = %URI{ URI.parse(url_or_path) | query: URI.encode_query(params) }
+    { default, given } = { Tirexs.get_uri_env(), __normalize_path__(location) }
+    __merge__(default, given) |> to_string
   end
   def url(url_or_path) when is_binary(url_or_path) do
     { default, given } = { Tirexs.get_uri_env(), __normalize_path__(URI.parse(url_or_path)) }
