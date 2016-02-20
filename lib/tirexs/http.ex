@@ -3,13 +3,13 @@ defmodule Tirexs.HTTP do
 
 
   @doc false
-  def head(path, uri) when is_binary(path) and is_map(uri) do
+  def head(path, %URI{} = uri) when is_binary(path) do
     do_request(:head, url(path, uri))
   end
   def head(url_or_path_or_uri) do
     do_request(:head, url(url_or_path_or_uri))
   end
-  def head!(path, uri) when is_binary(path) and is_map(uri) do
+  def head!(path, %URI{} = uri) when is_binary(path) do
     ok!(head(path, uri))
   end
   def head!(url_or_path_or_uri) do
@@ -17,7 +17,7 @@ defmodule Tirexs.HTTP do
   end
 
   @doc false
-  def get(path, uri) when is_binary(path) and is_map(uri) do
+  def get(path, %URI{} = uri) when is_binary(path) do
     do_request(:get, url(path, uri))
   end
   def get(url_or_path_or_uri) do
@@ -25,20 +25,32 @@ defmodule Tirexs.HTTP do
   end
 
   @doc false
-  def put(path, uri, body) when is_binary(path) and is_map(uri) and is_list(body) do
-    if body == [], do: do_request(:put, url(path, uri)), else: put(path, uri, encode(body))
-  end
-  def put(path, uri, body) when is_binary(path) and is_map(uri) and is_map(body) do
-    put(path, uri, encode(body))
-  end
-  def put(path, uri, body) when is_binary(path) and is_map(uri) and is_binary(body) do
-    do_request(:put, url(path, uri), body)
-  end
-  def put(path, uri) when is_binary(path) and is_map(uri) do
+  def put(path, %URI{} = uri, []) when is_binary(path) do
     do_request(:put, url(path, uri))
   end
+  def put(path, %URI{} = uri, body) when is_binary(path) and is_list(body) do
+    put(path, uri, encode(body))
+  end
+  def put(path, %URI{} = uri, %{}) when is_binary(path) do
+    do_request(:put, url(path, uri))
+  end
+  def put(path, %URI{} = uri, body) when is_binary(path) and is_map(body) do
+    put(path, uri, encode(body))
+  end
+  def put(path, %URI{} = uri, body) when is_binary(path) and is_binary(body) do
+    do_request(:put, url(path, uri), body)
+  end
+  def put(path, %URI{} = uri) when is_binary(path) and is_map(uri) do
+    do_request(:put, url(path, uri))
+  end
+  def put(url_or_path_or_uri, []) do
+    do_request(:put, url(url_or_path_or_uri))
+  end
   def put(url_or_path_or_uri, body) when is_list(body) do
-    if body == [], do: do_request(:put, url(url_or_path_or_uri)), else: put(url_or_path_or_uri, encode(body))
+    put(url_or_path_or_uri, encode(body))
+  end
+  def put(url_or_path_or_uri, %{}) do
+    do_request(:put, url(url_or_path_or_uri))
   end
   def put(url_or_path_or_uri, body) when is_map(body) do
     put(url_or_path_or_uri, encode(body))
@@ -51,20 +63,32 @@ defmodule Tirexs.HTTP do
   end
 
   @doc false
-  def post(path, uri, body) when is_binary(path) and is_map(uri) and is_list(body) do
-    if body == [], do: do_request(:post, url(path, uri)), else: post(path, uri, encode(body))
-  end
-  def post(path, uri, body) when is_binary(path) and is_map(uri) and is_map(body) do
-    post(path, uri, encode(body))
-  end
-  def post(path, uri, body) when is_binary(path) and is_map(uri) and is_binary(body) do
-    do_request(:post, url(path, uri), body)
-  end
-  def post(path, uri) when is_binary(path) and is_map(uri) do
+  def post(path, %URI{} = uri, []) when is_binary(path) do
     do_request(:post, url(path, uri))
   end
+  def post(path, %URI{} = uri, body) when is_binary(path) and is_list(body) do
+    post(path, uri, encode(body))
+  end
+  def post(path, %URI{} = uri, %{}) when is_binary(path) do
+    do_request(:post, url(path, uri))
+  end
+  def post(path, %URI{} = uri, body) when is_binary(path) and is_map(body) do
+    post(path, uri, encode(body))
+  end
+  def post(path, %URI{} = uri, body) when is_binary(path) and is_binary(body) do
+    do_request(:post, url(path, uri), body)
+  end
+  def post(path, %URI{} = uri) when is_binary(path) and is_map(uri) do
+    do_request(:post, url(path, uri))
+  end
+  def post(url_or_path_or_uri, []) do
+    do_request(:post, url(url_or_path_or_uri))
+  end
   def post(url_or_path_or_uri, body) when is_list(body) do
-    if body == [], do: do_request(:post, url(url_or_path_or_uri)), else: post(url_or_path_or_uri, encode(body))
+    post(url_or_path_or_uri, encode(body))
+  end
+  def post(url_or_path_or_uri, %{}) do
+    do_request(:post, url(url_or_path_or_uri))
   end
   def post(url_or_path_or_uri, body) when is_map(body) do
     post(url_or_path_or_uri, encode(body))
@@ -77,7 +101,7 @@ defmodule Tirexs.HTTP do
   end
 
   @doc false
-  def delete(path, uri) when is_binary(path) and is_map(uri) do
+  def delete(path, %URI{} = uri) when is_binary(path) do
     do_request(:delete, url(path, uri))
   end
   def delete(url_or_path_or_uri) do
@@ -85,7 +109,7 @@ defmodule Tirexs.HTTP do
   end
 
   @doc false
-  def url(path, uri) when is_binary(path) and is_map(uri) do
+  def url(path, %URI{} = uri) when is_binary(path) do
     { default, given } = { Tirexs.get_uri_env(), __normalize_path__(uri) }
     %URI{ __merge__(default, given) | path: __normalize_path__(path) } |> to_string
   end
@@ -93,7 +117,7 @@ defmodule Tirexs.HTTP do
     { default, given } = { Tirexs.get_uri_env(), __normalize_path__(URI.parse(url_or_path)) }
     __merge__(default, given) |> to_string
   end
-  def url(uri) when is_map(uri) do
+  def url(%URI{} = uri) do
     { default, given } = { Tirexs.get_uri_env(), __normalize_path__(uri) }
     __merge__(default, given) |> to_string
   end
