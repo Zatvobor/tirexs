@@ -15,12 +15,9 @@ defmodule Tirexs.HTTP do
   def head(url_or_path_or_uri) do
     do_request(:head, url(url_or_path_or_uri))
   end
-  def head!(path, %URI{} = uri) when is_binary(path) do
-    ok!(head(path, uri))
-  end
-  def head!(url_or_path_or_uri) do
-    ok!(head(url_or_path_or_uri))
-  end
+  def head!(a, b, c), do: ok!(head(a, b, c))
+  def head!(a, b), do: ok!(head(a, b))
+  def head!(a), do: ok!(head(a))
 
   @doc false
   def get(path, params, %URI{} = uri) when is_binary(path) do
@@ -35,6 +32,9 @@ defmodule Tirexs.HTTP do
   def get(url_or_path_or_uri) do
     do_request(:get, url(url_or_path_or_uri))
   end
+  def get!(a, b, c), do: ok!(get(a, b, c))
+  def get!(a, b), do: ok!(get(a, b))
+  def get!(a), do: ok!(get(a))
 
   @doc false
   def put(path, %URI{} = uri, []) when is_binary(path) do
@@ -73,6 +73,9 @@ defmodule Tirexs.HTTP do
   def put(url_or_path_or_uri) do
     do_request(:put, url(url_or_path_or_uri))
   end
+  def put!(a, b, c), do: ok!(put(a, b, c))
+  def put!(a, b), do: ok!(put(a, b))
+  def put!(a), do: ok!(put(a))
 
   @doc false
   def post(path, %URI{} = uri, []) when is_binary(path) do
@@ -111,6 +114,9 @@ defmodule Tirexs.HTTP do
   def post(url_or_path_or_uri) do
     do_request(:post, url(url_or_path_or_uri))
   end
+  def post!(a, b, c), do: ok!(post(a, b, c))
+  def post!(a, b), do: ok!(post(a, b))
+  def post!(a), do: ok!(post(a))
 
   @doc false
   def delete(path, params, %URI{} = uri) when is_binary(path) do
@@ -125,6 +131,9 @@ defmodule Tirexs.HTTP do
   def delete(url_or_path_or_uri) do
     do_request(:delete, url(url_or_path_or_uri))
   end
+  def delete!(a, b, c), do: ok!(delete(a, b, c))
+  def delete!(a, b), do: ok!(delete(a, b))
+  def delete!(a), do: ok!(delete(a))
 
   @doc false
   def url(path, params, %URI{} = uri) when is_binary(path) and is_binary(params) do

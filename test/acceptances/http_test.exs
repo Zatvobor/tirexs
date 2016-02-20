@@ -16,15 +16,29 @@ defmodule Acceptances.HTTPTest do
     { :error, 404, _ } = head("unknown")
   end
 
+  test "tries! to get some head for resource" do
+    assert_raise(RuntimeError, fn -> head!("unknown") end)
+  end
+
   test "gets some head for particular resource" do
     { :ok, 200, _ } = put("bear_test")
     { :ok, 200, _ } = head("bear_test", @uri_environment)
     { :ok, 200, _ } = head("bear_test")
+    { :ok, 200, _ } = head!("bear_test")
+  end
+
+  test "gets! some head for particular resource" do
+    { :ok, 200, _ } = put("bear_test")
+    head!("bear_test")
   end
 
   test "tries to get some resources" do
     {:error, 404, _ }  = get("missing_index", @uri_environment)
     {:error, 404, _ }  = get("missing_index")
+  end
+
+  test "tries! to get some resources" do
+    assert_raise(RuntimeError, fn -> get!("missing_index") end)
   end
 
   test "gets some resources" do
@@ -55,9 +69,22 @@ defmodule Acceptances.HTTPTest do
     { :ok, 200, _ } = delete("/bear_test")
   end
 
+  test "tries! delete resource" do
+    assert_raise(RuntimeError, fn -> delete!("/unknown") end)
+  end
+
   test "puts and posts some resources" do
     { :ok, 200, _ } = put("/bear_test")
     { :ok, 200, _ } = post("/bear_test/_refresh")
+  end
+
+  test "puts! and posts! some resources" do
+    put!("/bear_test")
+    post!("/bear_test/_refresh")
+  end
+
+  test "tries puts! and posts! some resources" do
+    assert_raise(RuntimeError, fn -> post!("/bear_test/_refresh") end)
   end
 
   test "puts and posts empty resource as list" do
