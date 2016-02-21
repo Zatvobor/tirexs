@@ -124,7 +124,7 @@ defmodule Tirexs.ElasticSearch do
     end
   end
 
-  def get_body_json(body), do: JSX.decode!(to_string(body), [{:labels, :atom}])
+  def get_body_json(body), do: Tirexs.HTTP.decode(body)
 
   def make_url(query_url, config) do
     %URI{config | path: "/#{query_url}"} |> to_string

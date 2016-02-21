@@ -57,7 +57,7 @@ defmodule Tirexs.Bulk do
       header = Dict.put([], action, meta)
 
       output = []
-      output =  output ++ [JSX.encode!(header)]
+      output =  output ++ [Tirexs.HTTP.encode(header)]
       unless action == :delete do
         output =  output ++ [convert_document_to_json(document)]
       end
@@ -89,7 +89,7 @@ defmodule Tirexs.Bulk do
 
   @doc false
   def convert_document_to_json(document) do
-    JSX.encode!(document)
+    Tirexs.HTTP.encode(document)
   end
 
   @doc false
