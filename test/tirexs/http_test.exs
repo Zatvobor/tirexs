@@ -138,22 +138,22 @@ defmodule Tirexs.HTTPTest do
     assert actual == "http://127.0.0.1:92/articles/document/1?_source=false"
   end
 
-  test "decode/1 {\"hello\":\"world\"}" do
+  test ~S(decode/1 {"hello":"world"}) do
     actual = decode("{\"hello\":\"world\"}")
     assert actual == %{hello: "world"}
   end
 
-  test "decode/1 {\"hello\":\"world\"} as list" do
+  test ~S(decode/1 {"hello":"world"} as list) do
     actual = decode("{\"hello\":\"world\"}")
     assert Map.to_list(actual) == [hello: "world"]
   end
 
-  test "decode/1 \"hello\"" do
+  test ~S(decode/1 "hello" string) do
     actual = decode("\"hello\"")
     assert actual == "hello"
   end
 
-  test "encode/1 %{hello: \"world\"} as map" do
+  test ~S(encode/1 %{hello: "world"} as map) do
     actual = encode(%{hello: "world"})
     assert actual == "{\"hello\":\"world\"}"
   end
@@ -163,7 +163,7 @@ defmodule Tirexs.HTTPTest do
     assert actual == "{\"hello\":[119,111,114,108,100]}"
   end
 
-  test "encode/1 [hello: \"world\"] as list" do
+  test ~S(encode/1 [hello: "world"] as list) do
     actual = encode([hello: "world"])
     assert actual == "{\"hello\":\"world\"}"
   end
@@ -178,7 +178,7 @@ defmodule Tirexs.HTTPTest do
     assert actual == "{}"
   end
 
-  test "encode/1 \"hello\" as binary" do
+  test ~S(encode/1 "hello" as binary) do
     actual = encode("hello")
     assert actual == "\"hello\""
   end
