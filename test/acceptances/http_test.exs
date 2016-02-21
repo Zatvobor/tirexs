@@ -101,15 +101,95 @@ defmodule Acceptances.HTTPTest do
     { :ok, 201, _ } = put("/bear_test/my_type/1", [user: "kimchy", id: 1])
   end
 
+  test "puts! some resource with body as list" do
+    put!("/bear_test/my_type/1", [user: "kimchy", id: 1])
+  end
+
   test "puts some resource with body as map" do
     { :ok, 201, _ } = put("/bear_test/my_type/1", %{user: "kimchy", id: 1})
+  end
+
+  test "puts! some resource with body as map" do
+    put!("/bear_test/my_type/1", %{user: "kimchy", id: 1})
+  end
+
+  test "puts some resource with parameter query and body as list" do
+    put!("/bear_test/my_type/1", [user: "kimchy", id: 1])
+    put!("/bear_test/my_type/1?version=1", [user: "kimchy", id: 1])
+  end
+
+  test "tries put some resource with parameter query and body as list" do
+    put!("/bear_test/my_type/1", [user: "kimchy", id: 1])
+    assert_raise(RuntimeError, fn ->
+      put!("/bear_test/my_type/1?version=2", [user: "kimchy", id: 1])
+    end)
+  end
+
+  test "puts some resource with parameter list and body as list" do
+    put!("/bear_test/my_type/1", [user: "kimchy", id: 1])
+    put!("/bear_test/my_type/1", [version: 1], [user: "kimchy", id: 1])
+  end
+
+  test "tries put some resource with parameter list and body as list" do
+    put!("/bear_test/my_type/1", [user: "kimchy", id: 1])
+    assert_raise(RuntimeError, fn ->
+      put!("/bear_test/my_type/1", [version: 2], [user: "kimchy", id: 1])
+    end)
+  end
+
+  test "puts some resource with parameter map and body as map" do
+    put!("/bear_test/my_type/1", %{user: "kimchy", id: 1})
+    put!("/bear_test/my_type/1", %{version: 1}, %{user: "kimchy", id: 1})
+  end
+
+  test "tries put some resource with parameter map and body as map" do
+    put!("/bear_test/my_type/1", %{user: "kimchy", id: 1})
+    assert_raise(RuntimeError, fn ->
+      put!("/bear_test/my_type/1", %{version: 2}, %{user: "kimchy", id: 1})
+    end)
   end
 
   test "posts some resource with body as list" do
     { :ok, 201, _ } = post("/bear_test/my_type", [user: "kimchy"])
   end
 
+  test "posts! some resource with body as list" do
+    post!("/bear_test/my_type", [user: "kimchy"])
+  end
+
+  test "posts! some resource with query parameter and body as list" do
+    post!("/bear_test/my_type?routing=kimchy", [user: "kimchy"])
+  end
+
+  @tag skip: "pending"
+  test "tries posts! some resource with query parameter and body as list"
+
+  test "posts! some resource with query parameter list and body as list" do
+    post!("/bear_test/my_type", [routing: "kimchy"], [user: "kimchy"])
+  end
+
+  @tag skip: "pending"
+  test "tries posts! some resource with query parameter list and body as list"
+
   test "posts some resource with body as map" do
     { :ok, 201, _ } = post("/bear_test/my_type", %{user: "kimchy"})
   end
+
+  test "posts! some resource with body as map" do
+    post!("/bear_test/my_type", %{user: "kimchy"})
+  end
+
+  test "posts! some resource with query parameter and body as map" do
+    post!("/bear_test/my_type?routing=kimchy", %{user: "kimchy"})
+  end
+
+  @tag skip: "pending"
+  test "tries posts! some resource with query parameter and body as map"
+
+  test "posts! some resource with query parameter map and body as map" do
+    post!("/bear_test/my_type", %{routing: "kimchy"},  %{user: "kimchy"})
+  end
+
+  @tag skip: "pending"
+  test "tries posts! some resource with query parameter map and body as map"
 end
