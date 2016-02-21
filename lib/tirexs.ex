@@ -1,5 +1,14 @@
 defmodule Tirexs do
-  @moduledoc false
+  @moduledoc ~S"""
+  Tirexs is split into several components:
+
+    * `Tirexs.HTTP` - the elasticsearch REST APIs are exposed using JSON over HTTP.
+      The bare-bone for sending and getting back HTTP responses.
+
+  Please check https://github.com/Zatvobor/tirexs/tree/master/examples for getting
+  more details what exactly Tirexs does for you.
+
+  """
 
 
   @doc false
