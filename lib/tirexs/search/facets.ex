@@ -1,10 +1,13 @@
 defmodule Tirexs.Search.Facets do
-  @moduledoc false
+  @moduledoc ~S"""
+    WARNING: this module is deprecated.
+  """
 
   use Tirexs.DSL.Logic
 
   @doc false
   defmacro facets([do: block]) do
+    IO.write :stderr, "warning: `Facets.facets/1` is deprecated, please use `Aggregations.aggs/1` instead\n" <> Exception.format_stacktrace
     [facets: extract(block)]
   end
 
@@ -30,11 +33,13 @@ defmodule Tirexs.Search.Facets do
 
   @doc false
   def _facets(block) do
+    IO.write :stderr, "warning: `Facets.facets/1` is deprecated, please use `Aggregations.aggs/1` instead\n" <> Exception.format_stacktrace
     [facets: extract(block)]
   end
 
   @doc false
   def make_facet(name, options, facet_opts \\ []) do
+    IO.write :stderr, "warning: `Facets.make_facet/3` is deprecated, please use `Aggregations.make_aggs/3` instead\n" <> Exception.format_stacktrace
     if is_list(options) do
       facet_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
