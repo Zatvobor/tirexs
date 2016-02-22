@@ -301,24 +301,15 @@ defmodule Tirexs.HTTP do
   Returns `false` if `{ :error, _, _ } = response`, otherwise returns `true`.
 
   """
-  def ok?(response) do
-    case response do
-      { :error, _, _ } -> false
-      _                -> true
-    end
-  end
+  def ok?({ :error, _, _ }), do: false
+  def ok?({ :ok, _, _ }), do: true
 
   @doc """
   Raises `RuntimeError` if `{ :error, _, _ } = response`, otherwise returns `response` back.
 
   """
-  def ok!(response) do
-    case response do
-      { :error, _, error } -> raise to_string(error)
-      _                    -> response
-    end
-  end
-
+  def ok!({ :error, _, error }), do: raise inspect(error)
+  def ok!({ :ok, _, _ } = response), do: response
 
   @doc false
   def do_request(method, url, body \\ []) do
@@ -343,17 +334,13 @@ defmodule Tirexs.HTTP do
     case req do
       {:ok, { {_, status, _}, _, body}} ->
         if round(status / 100) == 4 || round(status / 100) == 5 do
-          { :error, status, body }
+          __response__(:error, status, body)
         else
-          case body do
-            [] -> { :ok, status, [] }
-            _  -> { :ok, status, decode(body) }
-          end
+          __response__(:ok, status, body)
         end
       _ -> :error
     end
   end
-
 
   @doc false
   def headers do
@@ -384,4 +371,7 @@ defmodule Tirexs.HTTP do
     if String.starts_with?(path, "/"), do: path, else: "/" <> path
   end
   defp __normalize_path__(path), do: path
+
+  defp __response__(state, status, []), do: { state, status, [] }
+  defp __response__(state, status, body), do: { state, status, decode(body) }
 end
