@@ -12,16 +12,19 @@ defmodule Tirexs do
 
 
   @doc false
+  @spec get_all_env() :: [{atom, term}]
   def get_all_env() do
     Application.get_all_env(:tirexs)
   end
 
   @doc false
+  @spec get_env(atom) :: any | nil
   def get_env(key) do
     Application.get_env(:tirexs, key)
   end
 
   @doc false
+  @spec get_uri_env() :: URI.t
   def get_uri_env() do
     get_env(:uri)
   end
