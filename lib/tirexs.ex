@@ -25,4 +25,17 @@ defmodule Tirexs do
   def get_uri_env() do
     get_env(:uri)
   end
+
+  @doc """
+  Utilities for managing code compilation, code evaluation and code loading, useful if
+  you want to load DSL flavored things from standalone files.
+
+  ## Examples
+
+      Path.expand("examples/mapping.exs") |> Tirexs.load_file
+
+  These functions just delegate to `Code` module.
+
+  """
+  defdelegate [load_file(file), load_file(file, relative_to)], to: Code
 end

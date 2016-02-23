@@ -6,7 +6,7 @@
 #
 # Run this example from Elixir environment (`iex -S mix`):
 #
-#   iex> Tirexs.Loader.load Path.expand("examples/settings.exs")
+#   iex> Path.expand("examples/settings.exs") |> Tirexs.load_file
 #
 Tirexs.DSL.define [index: "bear_test"], fn(index, elastic_settings) ->
   import Tirexs.Index.Settings
@@ -26,7 +26,8 @@ Tirexs.DSL.define [index: "bear_test"], fn(index, elastic_settings) ->
   end
 
   # Below a couple of code lines which could be useful for debugging and getting actual JSON string
-  # url  = Tirexs.ElasticSearch.make_url(index[:index], elastic_settings)
+
+  # url  = Tirexs.HTTP.url(index[:index])
   # json = JSX.prettify!(Tirexs.ElasticSearch.Settings.to_resource_json(index))
   # IO.puts "\n# => curl -X PUT -d '#{json}' #{url}"
 
