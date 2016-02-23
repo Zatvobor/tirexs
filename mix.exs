@@ -10,7 +10,7 @@ defmodule Tirexs.Mixfile do
   end
 
   defp env do
-    [ uri: %URI{ scheme: "http", host: "127.0.0.1", port: 9200 } ]
+    [ uri: %URI{ authority: "127.0.0.1:9200", scheme: "http", host: "127.0.0.1", port: 9200 } ]
   end
 
   defp deps do
