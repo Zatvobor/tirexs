@@ -2,16 +2,13 @@
 # Run this example from console manually:
 #
 #   $ mix run -r examples/mapping.exs
-#   # => curl -X PUT -d '{"dsl": {"properties": {"mn_opts_": {"type": "nested","properties": {"uk": {"type": "object","properties": {"credentials": {"type": "object","properties": {"available_from": {"type": "long"},"buy": {"type": "object"},"str": {"type": "object"}}}}}}},"rev_history_": {"type": "object"}}}}' http://127.0.0.1:9200/bear_test
+#   # => curl -X PUT -d '{ "dsl": { "properties": { "mn_opts_": { "type": "nested", "properties": { "uk": { "type": "object", "properties": { "credentials": { "type": "object", "properties": { "available_from": { "type": "long" }, "buy": { "type": "object" }, "str": { "type": "object" } } } } } } }, "rev_history_": { "type": "object" } } } }' http://127.0.0.1:9200/bear_test
 #
 # Run this example from Elixir environment (`iex -S mix`):
 #
-#   iex> Tirexs.Loader.load Path.expand("examples/mapping.exs")
+#   iex> Path.expand("examples/mapping.exs") |> Tirexs.load_file
 #
-settings = Tirexs.ElasticSearch.config(user: "kimchy")
-Tirexs.ElasticSearch.delete("bear_test", settings)
-
-Tirexs.DSL.define [type: "dsl", index: "bear_test"], fn(index, _) ->
+Tirexs.DSL.define [type: "dsl", index: "bear_test"], fn(index, settings) ->
   import Tirexs.Mapping
 
   mappings do
@@ -30,7 +27,7 @@ Tirexs.DSL.define [type: "dsl", index: "bear_test"], fn(index, _) ->
 
   # Below a couple of code lines which could be useful for debugging and getting actual JSON string
 
-  # url  = Tirexs.ElasticSearch.make_url(index[:index], settings)
+  # url  = Tirexs.HTTP.url(index[:index])
   # json = JSX.prettify!(Tirexs.Mapping.to_resource_json(index))
   # IO.puts "\n# => curl -X PUT -d '#{json}' #{url}"
 

@@ -100,6 +100,6 @@ defmodule Tirexs.Mapping do
         Dict.put([], to_atom(type), definition[:mapping])
       end
 
-    JSX.encode!(resource)
+    Tirexs.HTTP.encode(resource)
   end
 end

@@ -435,5 +435,5 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def to_resource_json(definition), do: JSX.encode!(definition[:search])
+  def to_resource_json(definition), do: Tirexs.HTTP.encode(definition[:search])
 end

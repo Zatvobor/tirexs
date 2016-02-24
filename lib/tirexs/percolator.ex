@@ -47,7 +47,7 @@ defmodule Tirexs.Percolator do
     definition = Dict.delete(definition, :index)
     definition = Dict.delete(definition, :type)
     definition = Dict.delete(definition, :name)
-    JSX.encode!(definition)
+    Tirexs.HTTP.encode(definition)
   end
 
   @doc false

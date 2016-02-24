@@ -6,7 +6,7 @@
 #
 # Run this example from Elixir environment (`iex -S mix`):
 #
-#   iex> Tirexs.Loader.load Path.expand("examples/percolator.exs")
+#   iex> Path.expand("examples/percolator.exs") |> Tirexs.load_file
 #
 Tirexs.DSL.define fn(settings) ->
   import Tirexs.Percolator
@@ -19,7 +19,7 @@ Tirexs.DSL.define fn(settings) ->
 
   # Below a couple of code lines which could be useful for debugging and getting actual JSON string
 
-  # url  = Tirexs.ElasticSearch.make_url("test/.percolator/1", settings)
+  # url  = Tirexs.HTTP.url("test/.percolator/1")
   # json = JSX.prettify!(Tirexs.Percolator.to_resource_json(query))
   # IO.puts "\n# => curl -X PUT -d '#{json}' #{url}"
 

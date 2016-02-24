@@ -84,6 +84,7 @@ defmodule Tirexs.ElasticSearch do
 
   @doc false
   def exist?(url, settings) do
+    IO.write :stderr, "warning: `Tirexs.Elasticsearch.exist?/2` is deprecated, please use `Tirexs.HTTP.exist?/2` instead\n" <> Exception.format_stacktrace
     case head(url, settings) do
       {:error, _, _} -> false
       _ -> true
@@ -123,7 +124,7 @@ defmodule Tirexs.ElasticSearch do
     end
   end
 
-  def get_body_json(body), do: JSX.decode!(to_string(body), [{:labels, :atom}])
+  def get_body_json(body), do: Tirexs.HTTP.decode(body)
 
   def make_url(query_url, config) do
     %URI{config | path: "/#{query_url}"} |> to_string
