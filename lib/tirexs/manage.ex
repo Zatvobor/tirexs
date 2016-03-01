@@ -1,5 +1,5 @@
 defmodule Tirexs.Manage do
-  @moduledoc false
+  @moduledoc "warning: This module is completely outdated and will be removed in `v0.8.0`"
 
   import Tirexs.DSL.Logic
 
@@ -33,6 +33,7 @@ defmodule Tirexs.Manage do
 
   @doc false
   def aliases(aliases_params, settings) do
+    IO.write :stderr, "warning: `Tirexs.ElasticSearch.aliases/2` is deprecated, please use `Tirexs.Resources.APIs._aliases/2` instead\n" <> Exception.format_stacktrace
     Tirexs.ElasticSearch.post("_aliases", JSX.encode!(aliases_params), settings)
   end
 
@@ -55,11 +56,13 @@ defmodule Tirexs.Manage do
 
   @doc false
   def refresh(index, settings) when is_binary(index) do
+    IO.write :stderr, "warning: `Tirexs.ElasticSearch.refresh/2` is deprecated, please use `Tirexs.Resources.APIs._refresh/2` instead\n" <> Exception.format_stacktrace
     Tirexs.ElasticSearch.post(to_string(index) <> "/_refresh", settings)
   end
 
   @doc false
   def refresh(indexes, settings) when is_list(indexes) do
+    IO.write :stderr, "warning: `Tirexs.ElasticSearch.refresh/2` is deprecated, please use `Tirexs.Resources.APIs._refresh/2` instead\n" <> Exception.format_stacktrace
     indexes = Enum.join(indexes, ",")
     refresh(indexes, settings)
   end
