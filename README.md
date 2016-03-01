@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/Zatvobor/tirexs.svg?branch=master)](https://travis-ci.org/Zatvobor/tirexs) [![HEX version](https://img.shields.io/hexpm/v/tirexs.svg)](https://hex.pm/packages/tirexs) [![HEX downloads](https://img.shields.io/hexpm/dw/tirexs.svg)](https://hex.pm/packages/tirexs)
-
 tirexs
 ======
 
@@ -7,6 +6,7 @@ An Elixir flavored DSL for building JSON based settings, mappings, queries, perc
 
 _Hint: Check out [/examples](/examples) directory as a quick intro._
 
+[![Gitter](https://badges.gitter.im/Zatvobor/tirexs.svg)](https://gitter.im/Zatvobor/tirexs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Walk-through a code
 -------------------
