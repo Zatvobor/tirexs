@@ -4,6 +4,28 @@ defmodule Tirexs.Resources.Indicies do
   import Tirexs.Resources, only: [urn: 1, urn: 2, urn: 3, urn: 4, __c: 2]
 
 
+  ## Mapping Management
+
+  @doc false
+  @r [action: "/_mapping", bump: :put, bump!: :put!]
+  def _mapping(a, b, c), do: __c(urn(a, @r[:action], b, c), @r)
+  def _mapping(a, b), do: __c(urn(a, @r[:action], b), @r)
+  def _mapping({a}), do: __c(urn(@r[:action], {a}), @r)
+  def _mapping(a), do: __c(urn(a, @r[:action]), @r)
+  def _mapping(), do: __c(urn(@r[:action]), @r)
+
+  @doc false
+  def _all_mapping(), do: _mapping("_all")
+
+  @doc false
+  @r [action: "/_mapping/field", bump: :get, bump!: :get!]
+  def _field_mapping(a, b, c, {d}), do: __c(urn([a, "_mapping", b, "field", c, {d}]), @r)
+  def _field_mapping(a, b, c), do: __c(urn([a, "_mapping", b, "field", c]), @r)
+  def _field_mapping(a, {b}), do: __c(urn(@r[:action], a, {b}), @r)
+  def _field_mapping(a, b), do: __c(urn(a, @r[:action], b), @r)
+  def _field_mapping(a), do: __c(urn(a, @r[:action]), @r)
+
+
   ## Index Settings
 
   @doc false
@@ -38,6 +60,7 @@ defmodule Tirexs.Resources.Indicies do
   def _settings(a), do: __c(urn(a, @r[:action]), @r)
   def _settings(), do: __c(urn(@r[:action]), @r)
 
+
   ## Index Management
 
   @doc false
@@ -55,6 +78,7 @@ defmodule Tirexs.Resources.Indicies do
   def _close({a}), do: __c(urn(@r[:action], {a}), @r)
   def _close(a), do: __c(urn(a, @r[:action]), @r)
   def _close(), do: __c(urn(@r[:action]), @r)
+
 
   ## Alias Management
 

@@ -5,6 +5,13 @@ defmodule Tirexs.Resources.APIs do
   alias Tirexs.Resources.Indicies
 
 
+  ## Mapping Management
+
+  @doc false
+  defdelegate [ _all_mapping() ], to: Indicies
+  defdelegate [ _mapping(), _mapping(a), _mapping(a, b), _mapping(a, b, c) ], to: Indicies
+  defdelegate [ _field_mapping(a), _field_mapping(a, b), _field_mapping(a, b, c),  _field_mapping(a, b, c)], to: Indicies
+
   ## Index Settings
 
   @doc false
