@@ -40,12 +40,12 @@ defmodule Tirexs.Mapping do
         if options[:do] != nil do
           block = options
           options = [type: "object"]
-          Dict.put([], to_atom(name), options ++ [properties: extract(block[:do])])
+          [ {to_atom(name), options ++ [properties: extract(block[:do])]} ]
         else
-          Dict.put([], to_atom(name), options)
+          [ {to_atom(name), options} ]
         end
       [name, options, block] ->
-        Dict.put([], to_atom(name), options ++ [properties: extract(block[:do])])
+        [ {to_atom(name), options ++ [properties: extract(block[:do])]} ]
     end
   end
 
@@ -86,17 +86,12 @@ defmodule Tirexs.Mapping do
 
   @doc false
   def to_resource_json(definition, type) do
-    resource =
-      # definition w/ mappings and settings
-      if definition[:settings] != nil do
-        mappings_dict = Dict.put([], to_atom(type), definition[:mapping])
-        resource = Dict.put([], to_atom("mappings"), mappings_dict)
-        resource = Dict.put(resource, to_atom("settings"), definition[:settings])
-      # definition just only w/ mapping
-      else
-        Dict.put([], to_atom(type), definition[:mapping])
-      end
-
-    HTTP.encode(resource)
+    # definition w/ mappings and settings
+    if definition[:settings] != nil do
+      [ {:mappings, [{to_atom(type), definition[:mapping]}]}, {:settings, definition[:settings]} ]
+    # definition just only w/ mapping
+    else
+      [ {to_atom(type), definition[:mapping]} ]
+    end
   end
 end
