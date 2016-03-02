@@ -1,18 +1,21 @@
-Code.require_file "../../test_helper.exs", __ENV__.file
-
 defmodule Acceptances.ScrollTest do
   use ExUnit.Case
+
+
   import Tirexs.Search
   import Tirexs.Bulk
-  require Tirexs.ElasticSearch
+
   require Tirexs.Query
 
+  alias Tirexs.{HTTP, Query}
+
+
+  setup do
+    HTTP.delete("bear_test") && :ok
+  end
+
   test :scroll do
-
-    settings = Tirexs.ElasticSearch.config()
-    Tirexs.ElasticSearch.delete("bear_test", settings)
-
-    Tirexs.Bulk.store [index: "bear_test", refresh: false], settings do
+    Tirexs.Bulk.store [index: "bear_test", refresh: true] do
       create id: 1, title: "bar1", description: "foo bar test"
       create id: 2, title: "bar2", description: "foo bar test"
       create id: 3, title: "bar3", description: "foo bar test"
@@ -28,16 +31,15 @@ defmodule Acceptances.ScrollTest do
       index  id: 90, title: "barww"
     end
 
-    Tirexs.Manage.refresh("bear_test", settings)
-
     s = search [index: "bear_test"] do
       query do
         string "bar7"
       end
     end
 
-    body = Tirexs.Query.create_resource(s, settings, [scroll: "5m"])
-    assert Tirexs.Query.result(body, :_scroll_id) != nil
+    settings = Tirexs.get_uri_env()
+    body = Query.create_resource(s, settings, [scroll: "5m"])
+    assert Query.result(body, :_scroll_id)
   end
 
 end

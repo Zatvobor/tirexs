@@ -1,8 +1,8 @@
 defmodule Tirexs.Mapping do
   @moduledoc false
 
-  use Tirexs.DSL.Logic
 
+  use Tirexs.DSL.Logic
 
   @doc false
   defmacro __using__(_) do
@@ -21,7 +21,7 @@ defmodule Tirexs.Mapping do
   end
 
 
-  import Tirexs.ElasticSearch
+  alias Tirexs.{Resources, HTTP}
 
   @doc false
   def transpose(block) do
@@ -50,36 +50,33 @@ defmodule Tirexs.Mapping do
   end
 
   @doc false
-  def create_resource(definition) do
-    create_resource(definition, config())
-  end
-
-  @doc false
-  def create_resource(definition, opts) do
+  def create_resource(definition, uri \\ Tirexs.get_uri_env()) do
     cond do
       definition[:settings] ->
-        url  = "#{definition[:index]}"
-        json = to_resource_json(definition)
+        path = "#{definition[:index]}"
+        body = to_resource_json(definition)
 
-        post(url, json, opts)
+        HTTP.post(path, uri, body)
       definition[:type] ->
-        create_resource_settings(definition, opts)
+        create_resource_settings(definition, uri)
 
-        url  = "#{definition[:index]}/#{definition[:type]}/_mapping"
-        json = to_resource_json(definition)
+        path = "#{definition[:index]}/#{definition[:type]}/_mapping"
+        body = to_resource_json(definition)
 
-        put(url, json, opts)
+        HTTP.put(path, uri, body)
       true ->
-        url  = "#{definition[:index]}/_mapping"
-        json = to_resource_json(definition, definition[:index])
+        path = "#{definition[:index]}/_mapping"
+        body = to_resource_json(definition, definition[:index])
 
-        put(url, json, opts)
+        HTTP.put(path, uri, body)
     end
   end
 
   @doc false
-  def create_resource_settings(definition, opts) do
-    unless exist?(definition[:index], opts), do: put(definition[:index], opts)
+  def create_resource_settings(definition, uri \\ Tirexs.get_uri_env()) do
+    unless Resources.exists?(definition[:index], uri) do
+      HTTP.put(definition[:index], uri)
+    end
   end
 
   @doc false
@@ -100,6 +97,6 @@ defmodule Tirexs.Mapping do
         Dict.put([], to_atom(type), definition[:mapping])
       end
 
-    Tirexs.HTTP.encode(resource)
+    HTTP.encode(resource)
   end
 end

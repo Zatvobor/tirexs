@@ -85,7 +85,7 @@ defmodule Tirexs.ElasticSearch do
 
   @doc false
   def exist?(url, settings) do
-    IO.write :stderr, "warning: `Tirexs.ElasticSearch.exist?/2` is deprecated, please use `Tirexs.HTTP.exist?/2` instead\n" <> Exception.format_stacktrace
+    IO.write :stderr, "warning: `Tirexs.ElasticSearch.exist?/2` is deprecated, please use `Tirexs.Resources.exists?/2` instead\n" <> Exception.format_stacktrace
     case head(url, settings) do
       {:error, _, _} -> false
       _ -> true

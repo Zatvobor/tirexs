@@ -1,15 +1,16 @@
-Code.require_file "../../test_helper.exs", __ENV__.file
 defmodule Tirexs.PercolatorTest do
   use ExUnit.Case
+
   import Tirexs.Bulk
   import Tirexs.Percolator
-  require Tirexs.ElasticSearch
+
+  alias Tirexs.{HTTP, Percolator}
+
 
   test :percolator do
-    settings = Tirexs.ElasticSearch.config()
-    Tirexs.ElasticSearch.delete("my-index/.percolator/1", settings)
+    HTTP.delete("my-index/.percolator/1")
 
-    Tirexs.Bulk.store [index: "my-index", refresh: false], settings do
+    Tirexs.Bulk.store [index: "my-index", refresh: false] do
       create id: 1, message: "foo bar test"
       create id: 2, message: "bar bar test"
       create id: 3, message: "Old bonsai tree is down"
@@ -21,7 +22,7 @@ defmodule Tirexs.PercolatorTest do
       end
     end
 
-    {_, _, body} = Tirexs.Percolator.create_resource(percolator, settings)
+    {_, _, body} = Percolator.create_resource(percolator)
 
     assert body[:created]
     assert body[:_id]   == "1"
@@ -32,7 +33,7 @@ defmodule Tirexs.PercolatorTest do
       end
     end
 
-    {_, _, body} = Tirexs.Percolator.match(percolator, settings)
+    {_, _, body} = Percolator.match(percolator)
 
     assert body[:total] == 1
   end

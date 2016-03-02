@@ -1,18 +1,13 @@
-Code.require_file "../../test_helper.exs", __ENV__.file
-
 defmodule Acceptances.MappingTest do
   use ExUnit.Case
 
+  use Tirexs.Mapping
+  alias Tirexs.{HTTP, Resources}
 
-  alias Tirexs.{ElasticSearch, Manage}
 
   setup_all do
-    ElasticSearch.delete("bear_test", ElasticSearch.config())
-    :ok
+    HTTP.delete("bear_test") && :ok
   end
-
-
-  use Tirexs.Mapping
 
   test "mappings definition (basic)" do
     index = [index: "bear_test", type: "bear_type"]
@@ -42,8 +37,7 @@ defmodule Acceptances.MappingTest do
   end
 
   test "create mapping and settings" do
-    es_settings = ElasticSearch.config()
-    ElasticSearch.delete("articles", es_settings)
+    HTTP.delete("articles")
 
     index = [index: "articles", type: "article"]
     settings do
@@ -69,9 +63,9 @@ defmodule Acceptances.MappingTest do
 
     Tirexs.Mapping.create_resource(index)
 
-    Manage.refresh("articles", es_settings)
+    Resources.bump!._refresh("articles")
 
-    {:ok, 200, response} = ElasticSearch.get("articles", es_settings)
+    {:ok, 200, response} = HTTP.get("articles")
 
     settings = response[:articles][:settings]
     mappings = response[:articles][:mappings]

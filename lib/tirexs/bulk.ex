@@ -5,11 +5,18 @@ defmodule Tirexs.Bulk do
 
 
   @doc false
-  defmacro store(options, settings, [do: block]) do
+  defmacro store(options, uri, [do: block]) do
     documents = extract_block(block)
     quote do
-      [documents, options, settings] = [unquote(documents), unquote(options), unquote(settings)]
-      bulk(documents, options, settings)
+      [documents, options, uri] = [unquote(documents), unquote(options), unquote(uri)]
+      bulk(documents, options, uri)
+    end
+  end
+
+  @doc false
+  defmacro store(options, [do: block]) do
+    quote do
+      store(unquote(options), Tirexs.get_uri_env(), [do: unquote(block)])
     end
   end
 
