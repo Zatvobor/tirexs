@@ -1,24 +1,38 @@
 defmodule Tirexs.Resources do
-  @moduledoc false
+  @moduledoc """
+  The intend is to provide an abstraction for dealing with ES resources.
+
+  The interface of this module is aware about elasticsearch REST APIs conventions.
+  Meanwhile, a `Tirexs.HTTP` provides just a general interface.
+
+  """
 
   import Tirexs.HTTP
 
 
-  @doc false
-  def exists?(path, uri) when is_binary(path) and is_map(uri) do
-    ok?(head(path, uri))
-  end
-  def exists?(url_or_path_or_uri) do
-    ok?(head(url_or_path_or_uri))
-  end
-  def exists!(path, uri) when is_binary(path) and is_map(uri) do
-    head!(path, uri)
-  end
-  def exists!(url_or_path_or_uri) do
-    head!(url_or_path_or_uri)
-  end
+  @doc "the same as `ok?(head(path, uri))`"
+  def exists?(path, uri), do: ok?(head(path, uri))
+  def exists?(url_or_path_or_uri), do: ok?(head(url_or_path_or_uri))
 
-  @doc false
+  @doc "the same as `head!(path, uri)`"
+  def exists!(path, uri), do: head!(path, uri)
+  def exists!(url_or_path_or_uri), do: head!(url_or_path_or_uri)
+
+  @doc """
+  Composes an URN from parts into request ready path as a binary string.
+
+  ## Examples:
+
+      iex> urn ["bear_test", "/_alias", ["2015", "2016"]]
+      "bear_test/_alias/2015,2016"
+
+      iex> urn [["bear_test", "another_bear_test"], "_refresh", { [ignore_unavailable: true] }]
+      "bear_test,another_bear_test/_refresh?ignore_unavailable=true"
+
+      iex> urn("bear_test", "bear_type", "10", "_explain?analyzer=some")
+      "bear_test/bear_type/10/_explain?analyzer=some"
+
+  """
   def urn(part) when is_binary(part) do
     normalize(part)
   end
@@ -47,7 +61,27 @@ defmodule Tirexs.Resources do
   def pluralize(resource) when is_binary(resource), do: resource
   def pluralize(resource), do: Enum.join(resource, ",")
 
-  @doc false
+  @doc """
+  Tries to bump resource. This one just makes a request and behaves like a proxy to
+  one of avalable resource helper. You're able to bump any resources which are defined in
+  `Tirexs.Resources.APIs`.
+
+  Let's consider the following use case:
+
+      iex> path = Tirexs.Resources.APIs._refresh(["bear_test", "duck_test"], { [force: false] })
+      "bear_test,duck_test/_refresh?force=false"
+
+      iex> Tirexs.HTTP.post(path)
+      { :ok, 200, ... }
+
+  With bump, the same is:
+
+      iex> bump._refresh(["bear_test", "duck_test"], { [force: false] })
+      { :ok, 200, ... }
+
+  Play with resources you have and see what kind of HTTP verb is used.
+
+  """
   def bump(), do: __t(:bump)
   def bump(uri), do: __t(:bump, uri)
   def bump!(), do: __t(:bump!)

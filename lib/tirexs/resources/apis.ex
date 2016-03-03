@@ -1,6 +1,41 @@
 defmodule Tirexs.Resources.APIs do
-  @moduledoc false
+  @moduledoc """
+  This module provides a set of API helpers. Helpers are useful for buiding
+  an URN part of particular request. Most commonly the result of this would
+  be used for dealing directly with variety of available `Tirexs.HTTP` functions.
 
+  ## Examples:
+
+      iex> APIs._refresh({ [force: true] })
+      "_refresh?force=true"
+
+      iex> APIs._refresh(["bear_test", "duck_test"], { [force: false] })
+      "bear_test,duck_test/_refresh?force=false"
+
+      iex> APIs._field_mapping(["bear_test", "duck_test"], "message", {[ ignore_unavailable: true ]})
+      "bear_test,duck_test/_mapping/message/field?ignore_unavailable=true"
+
+      iex> APIs._field_mapping("_all", "tw*", ["*.id", "*.text"])
+      "_all/_mapping/tw*/field/*.id,*.text"
+
+  NOTICE: All of helpers have the same interface, behaviour and almost don't care about the details.
+  It means, you have a chance to create a complety unsupported API call.
+
+  ## For instance:
+
+      iex> APIs._refresh(["bear_test", "duck_test"], ["a", "b"], {[ human: true ]})
+      "bear_test,duck_test/_refresh/a,b?human=true"
+
+
+  A `Tirexs.Resources.urn/x` is responsible for concatenation parts all together.
+
+  ## Feature requests
+
+  Feature requests are welcome and should be discussed. But take a moment to find
+  out whether your idea fits with the scope and aims of the project. Please provide
+  as much detail and context as possible (from `CONTRIBUTING.md`).
+
+  """
 
   alias Tirexs.Resources.Indicies
 
