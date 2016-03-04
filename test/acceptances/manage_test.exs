@@ -105,6 +105,22 @@ defmodule Acceptances.ManageTest do
     assert Dict.get(body, :matched) == false
   end
 
+  test :aliases do
+    queries = aliases do
+      add    index: "bear_test", alias: "bear_test_alias"
+    end
+    Tirexs.Manage.aliases queries, @settings
+
+    queries = aliases do
+      remove index: "bear_test", alias: "bear_test_alias"
+      add    index: "bear_test", alias: "bear_test_alias1"
+    end
+    Tirexs.Manage.aliases queries, @settings
+
+    {_, _, body} = Tirexs.ElasticSearch.get("_aliases", @settings)
+    assert body[:bear_test] == %{aliases: %{bear_test_alias1: %{}}}
+  end
+
   test :update do
     Tirexs.ElasticSearch.put("bear_test/my_type", @settings)
     doc = [user: "kimchy", counter: 1, post_date: "2009-11-15T14:12:12", message: "trying out Elastic Search", id: 1]
