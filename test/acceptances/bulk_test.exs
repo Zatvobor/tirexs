@@ -1,17 +1,16 @@
-Code.require_file "../../test_helper.exs", __ENV__.file
-
 defmodule Acceptances.BulkTest do
   use ExUnit.Case
 
   import Tirexs.Bulk
+  alias Tirexs.{HTTP, Resources}
 
+
+  setup do
+    HTTP.delete("bear_test") && :ok
+  end
 
   test "bulk store" do
-    uri = Tirexs.get_uri_env()
-
-    Tirexs.ElasticSearch.delete("bear_test", uri)
-
-    Tirexs.Bulk.store [index: "bear_test", refresh: false], uri do
+    store [index: "bear_test", refresh: true] do
       create id: 1, title: "bar1", description: "foo bar test"
       create id: 2, title: "bar2", description: "foo bar test"
       create id: 3, title: "bar3", description: "foo bar test"
@@ -27,25 +26,21 @@ defmodule Acceptances.BulkTest do
       index  id: 90, title: "barww"
     end
 
-    Tirexs.Manage.refresh("bear_test", uri)
-    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", uri)
+    {_, _, body} = HTTP.get("bear_test/_count")
     assert body[:count] == 11
   end
 
   test "bulk update" do
-    uri = Tirexs.get_uri_env()
-    Tirexs.ElasticSearch.delete("bear_test", uri)
-
-    Tirexs.Bulk.store [index: "bear_test", refresh: false], uri do
+    store [index: "bear_test"] do
       create id: 1, title: "bar1", description: "foo bar test"
       create id: 2, title: "bar2", description: "foo bar test"
     end
 
-    Tirexs.Bulk.store [index: "bear_test", type: "document", id: 1, retry_on_conflict: 1, refresh: true], uri do
+    store [index: "bear_test", type: "document", id: 1, retry_on_conflict: 1, refresh: true] do
       update doc: [id: 1, title: "[updated] bar1"]
     end
 
-    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/document/1/_source", uri)
+    {_, _, body} = HTTP.get("bear_test/document/1/_source")
     assert body[:title] == "[updated] bar1"
   end
 end

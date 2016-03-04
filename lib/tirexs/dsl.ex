@@ -7,7 +7,7 @@ defmodule Tirexs.DSL do
 
   @doc false
   def define(type, resource) do
-    elastic_settings = Tirexs.ElasticSearch.config()
+    elastic_settings = Tirexs.get_uri_env()
     case resource.(type, elastic_settings) do
       { type, elastic_settings } -> create_resource(type, elastic_settings)
     end
@@ -15,7 +15,7 @@ defmodule Tirexs.DSL do
 
   @doc false
   def define(resource) do
-    elastic_settings = Tirexs.ElasticSearch.config()
+    elastic_settings = Tirexs.get_uri_env()
     case resource.(elastic_settings) do
       { type, elastic_settings } -> create_resource(type, elastic_settings)
     end

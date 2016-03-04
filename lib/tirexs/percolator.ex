@@ -2,6 +2,7 @@ defmodule Tirexs.Percolator do
   @moduledoc false
 
   use Tirexs.DSL.Logic
+  alias Tirexs.{HTTP}
 
 
   @doc false
@@ -35,11 +36,11 @@ defmodule Tirexs.Percolator do
   end
 
   @doc false
-  def create_resource(definition, settings) do
-    url  = "#{definition[:index]}/.percolator/#{definition[:name]}"
-    json = to_resource_json(definition)
+  def create_resource(definition, uri \\ Tirexs.get_uri_env()) do
+    path = "#{definition[:index]}/.percolator/#{definition[:name]}"
+    body = to_resource_json(definition)
 
-    Tirexs.ElasticSearch.put(url, json, settings)
+    HTTP.put(path, uri, body)
   end
 
   @doc false
@@ -47,14 +48,15 @@ defmodule Tirexs.Percolator do
     definition = Dict.delete(definition, :index)
     definition = Dict.delete(definition, :type)
     definition = Dict.delete(definition, :name)
-    Tirexs.HTTP.encode(definition)
+
+    HTTP.encode(definition)
   end
 
   @doc false
-  def match(definition, settings) do
-    url  = "#{definition[:index]}/#{definition[:type]}/_percolate"
-    json = to_resource_json(definition)
+  def match(definition, uri \\ Tirexs.get_uri_env()) do
+    path = "#{definition[:index]}/#{definition[:type]}/_percolate"
+    body = to_resource_json(definition)
 
-    Tirexs.ElasticSearch.post(url, json, settings)
+    HTTP.post(path, uri, body)
   end
 end

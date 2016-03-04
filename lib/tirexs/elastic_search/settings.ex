@@ -1,22 +1,19 @@
 defmodule Tirexs.ElasticSearch.Settings do
   @moduledoc false
 
-  import Tirexs.ElasticSearch
+  alias Tirexs.{Resources, HTTP}
 
 
   @doc false
-  def create_resource(definition) do
-    create_resource(definition, config())
-  end
-
-  @doc false
-  def create_resource(definition, opts) do
-    if exist?(definition[:index], opts), do: delete(definition[:index], opts)
-    post(definition[:index], to_resource_json(definition), opts)
+  def create_resource(definition, uri \\ Tirexs.get_uri_env()) do
+    if Resources.exists?(definition[:index], uri) do
+      HTTP.delete(definition[:index], uri)
+    end
+    HTTP.post(definition[:index], to_resource_json(definition), uri)
   end
 
   @doc false
   def to_resource_json(definition) do
-    Tirexs.HTTP.encode([settings: definition[:settings]])
+    HTTP.encode([settings: definition[:settings]])
   end
 end

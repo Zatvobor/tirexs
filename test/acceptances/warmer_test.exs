@@ -1,25 +1,17 @@
-Code.require_file "../../test_helper.exs", __ENV__.file
 defmodule Acceptances.WarmerTest do
   use ExUnit.Case
-  import TestHelpers
 
-  import Tirexs.Search.Warmer
-  require Tirexs.ElasticSearch
 
-  @settings Tirexs.ElasticSearch.config()
+  alias Tirexs.{HTTP}
+
 
   setup do
-    on_exit fn ->
-      remove_index("bear_test", @settings)
-      :ok
-    end
-
-    :ok
+    HTTP.delete("bear_test") && :ok
   end
 
-  test :create_warmer do
-    Tirexs.ElasticSearch.delete("bear_test", @settings)
+  import Tirexs.Search.Warmer
 
+  test :create_warmer do
     warmers = warmers do
       warmer_1 [types: []] do
         source do
@@ -35,8 +27,8 @@ defmodule Acceptances.WarmerTest do
       end
     end
 
-    Tirexs.ElasticSearch.put("bear_test", JSX.encode!(warmers), @settings)
-    {:ok, 200, body} = Tirexs.ElasticSearch.get("bear_test/_warmer/warmer_1", @settings)
+    HTTP.put!("bear_test", warmers)
+    {:ok, 200, body} = HTTP.get("bear_test/_warmer/warmer_1")
     assert Dict.get(body, :bear_test) |> Dict.get(:warmers) == %{warmer_1: %{types: [], source: %{query: %{match_all: []}, facets: %{facet_1: %{terms: %{field: "field"}}}}}}
   end
 end

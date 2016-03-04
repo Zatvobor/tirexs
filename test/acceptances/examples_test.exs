@@ -8,17 +8,17 @@ defmodule Acceptances.ExamplesTest do
 
   test ~S(loads "examples/mapping.exs") do
     Path.expand("examples/mapping.exs") |> Tirexs.load_file
-    Tirexs.HTTP.head!("bear_test")
+    Tirexs.Resources.exists!("bear_test")
   end
 
   test ~S(loads "examples/mapping_with_settings.exs") do
     Path.expand("examples/mapping_with_settings.exs") |> Tirexs.load_file
-    Tirexs.HTTP.head!("bear_test")
+    Tirexs.Resources.exists!("bear_test")
   end
 
   test ~S(loads "examples/settings.exs") do
     Path.expand("examples/settings.exs") |> Tirexs.load_file
-    Tirexs.HTTP.head!("bear_test")
+    Tirexs.Resources.exists!("bear_test")
   end
 
   test ~S(loads "examples/search.exs") do
