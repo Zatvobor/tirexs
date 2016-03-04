@@ -50,4 +50,7 @@ defmodule Tirexs do
 
   """
   defdelegate [load_file(file), load_file(file, relative_to)], to: Code
+
+  @doc false
+  defdelegate [bump(), bump(uri), bump!(), bump!(uri)], to: Tirexs.Resources
 end
