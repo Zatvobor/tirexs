@@ -37,8 +37,14 @@ defmodule Tirexs.Resources.APIs do
 
   """
 
-  alias Tirexs.Resources.Indices
+  alias Tirexs.Resources.Search
 
+
+  @doc false
+  defdelegate [ _explain(a,b), _explain(a,b,c,d) ], to: Search
+
+
+  alias Tirexs.Resources.Indices
 
   ## Mapping Management
 
