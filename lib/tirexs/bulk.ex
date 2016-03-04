@@ -8,6 +8,8 @@ defmodule Tirexs.Bulk do
     documents = extract_block(block)
     quote do
       [documents, options, settings] = [unquote(documents), unquote(options), unquote(settings)]
+      # Wrap documents if not in a list (note that each item is a keyword list)
+      unless hd(documents) |> is_list, do: documents = [documents]
       bulk(documents, options, settings)
     end
   end
@@ -46,7 +48,7 @@ defmodule Tirexs.Bulk do
       action_header = Keyword.put(action_header, :_retry_on_conflict, Keyword.get(opts, :retry_on_conflict))
     end
     doc_info = [doc: doc]
-    if Keyword.get(opts, :upsert), do: doc_info = Keyword.put(doc, :doc_as_upsert, true)
+    if Keyword.get(opts, :upsert), do: doc_info = Keyword.put(doc_info, :doc_as_upsert, true)
     [action_header, doc_info]
   end
 
