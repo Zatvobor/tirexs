@@ -2,7 +2,7 @@ defmodule Tirexs.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :tirexs, version: "0.7.6", elixir: "~> 1.2.0", description: description, package: package, deps: deps ]
+    [ app: :tirexs, version: "0.7.7", elixir: "~> 1.2.0", description: description, package: package, deps: deps ]
   end
 
   def application do
