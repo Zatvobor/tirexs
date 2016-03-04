@@ -9,7 +9,7 @@ defmodule Tirexs.HTTP do
   available with bangs functions. The bang! functions could raise a RuntimeError.
 
       iex> get("unknown")
-      {:error, 404, _ }
+      {:error, 404, ... }
 
       iex> get!("unknown")
       ** (RuntimeError) {"error":{"root_cause": [{"type":"index_not_found_exception" ... }]
@@ -17,8 +17,9 @@ defmodule Tirexs.HTTP do
   The common set of allowed parameters are `path`, `params`, `uri` and `body`.
 
       iex> { :ok, 200, _ } = get("/bear_test/my_type/1")
-      iex> { :ok, 200, _ } = put("/bear_test/my_type/1", [version: 2], [user: "kimchy", id: 1])
-      iex> { :ok, 200, _ } = put("/bear_test/my_type/1", [version: 2], %URI{ host: "example.com" }, [user: "kimchy", id: 1])
+
+      iex> { :ok, 200, _ } = put("/bear_test/my_type/1", [version: 2], [user: "kimchy"])
+      iex> { :ok, 200, _ } = put("/bear_test/my_type/1", [version: 2], %URI{ host: "example.com" }, [user: "kimchy"])
 
   The `uri` parameter has a special purpose. You can use it for overriding any fields
   from application's environment uri (`Tirexs.get_uri_env/0`).
@@ -35,9 +36,10 @@ defmodule Tirexs.HTTP do
   A query params could be as a part of `path` or used as a standalone `params`. A `body` param is allowed
   to be a `%{}` or `[]`.
 
-      iex> put("/bear_test/my_type/1?version=2", [user: "kimchy", id: 1])
-      iex> put("/bear_test/my_type/1", [version: 2], [user: "kimchy", id: 1])
-      iex> put("/bear_test/my_type/1", %{version: 2}, %{user: "kimchy", id: 1})
+      iex> put("/bear_test/my_type/1?version=2", [user: "kimchy"])
+      iex> put("/bear_test/my_type/1", [version: 2], [user: "kimchy"])
+      iex> put("/bear_test/my_type/1", %{version: 2}, %{user: "kimchy"})
+
   """
 
 
