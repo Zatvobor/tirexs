@@ -419,6 +419,7 @@ defmodule Tirexs.Query do
       "#{definition[:index]}"
     end
 
+    IO.write :stderr, "warning: `/_search` is deprecated, please use `Tirexs.Resources.APIs._search/2` instead\n" <> Exception.format_stacktrace
     { url, json } = { "#{url}/_search" <> to_param(opts, ""), to_resource_json(definition) }
     case Tirexs.ElasticSearch.post(url, json, settings) do
       {:ok, _, result} ->
