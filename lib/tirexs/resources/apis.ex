@@ -41,7 +41,7 @@ defmodule Tirexs.Resources.APIs do
 
 
   @doc false
-  defdelegate [ _explain(a,b), _explain(a,b,c,d) ], to: Search
+  defdelegate [ _explain(a), _explain(a,b), _explain(a,b,c), _explain(a,b,c,d) ], to: Search
 
 
   alias Tirexs.Resources.Indices
