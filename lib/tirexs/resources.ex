@@ -79,6 +79,11 @@ defmodule Tirexs.Resources do
       iex> bump._refresh(["bear_test", "duck_test"], { [force: false] })
       { :ok, 200, ... }
 
+  It is also available for bumping some resources with request body:
+
+      iex> search = [query: [ term: [ user: "zatvobor" ] ] ]
+      iex> bump(search)._count("bear_test", "my_type")
+
   Play with resources you have and see what kind of HTTP verb is used.
 
   """
