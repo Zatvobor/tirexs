@@ -79,8 +79,28 @@ defmodule Tirexs.Resources.SearchTest do
     assert actual == "twitter/_count?lowercase_expanded_terms=true"
   end
 
-  test ~S| functions like a '_validate_query("twitter", "tweet", { [lowercase_expanded_terms: true] })' | do
+  test ~S| functions like a '_count("twitter", "tweet", { [lowercase_expanded_terms: true] })' | do
     actual = Search._count("twitter", "tweet", { [lowercase_expanded_terms: true] })
     assert actual == "twitter/tweet/_count?lowercase_expanded_terms=true"
+  end
+
+  test ~S| functions like a '_search_exists("twitter")' | do
+    actual = Search._search_exists("twitter")
+    assert actual == "twitter/_search/exists"
+  end
+
+  test ~S| functions like a '_search_exists("twitter", "tweet")' | do
+    actual = Search._search_exists("twitter", "tweet")
+    assert actual == "twitter/tweet/_search/exists"
+  end
+
+  test ~S| functions like a '_search_exists("twitter/tweet", { [q: "user:kimchy"] })' | do
+    actual = Search._search_exists("twitter/tweet", { [q: "user:kimchy"] })
+    assert actual == "twitter/tweet/_search/exists?q=user%3Akimchy"
+  end
+
+  test ~S| functions like a '_search_exists("twitter", "tweet", { [q: "user:kimchy"] })' | do
+    actual = Search._search_exists("twitter", "tweet", { [q: "user:kimchy"] })
+    assert actual == "twitter/tweet/_search/exists?q=user%3Akimchy"
   end
 end
