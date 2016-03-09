@@ -90,7 +90,7 @@ defmodule Tirexs.Resources.Indices do
   ## Alias Management
 
   @doc false
-  @r [action: "/_aliases"]
+  @r [action: "/_aliases",  bump: :post, bump!: :post!]
   def _aliases(a, b, c), do: __c(urn(a, @r[:action], b, c), @r)
   def _aliases(a, b), do: __c(urn(a, @r[:action], b), @r)
   def _aliases({a}), do: __c(urn(@r[:action], {a}), @r)
