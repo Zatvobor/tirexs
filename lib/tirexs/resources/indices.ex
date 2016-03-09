@@ -1,4 +1,4 @@
-defmodule Tirexs.Resources.Indicies do
+defmodule Tirexs.Resources.Indices do
   @moduledoc """
   Provides URN builders for indices APIs.
 

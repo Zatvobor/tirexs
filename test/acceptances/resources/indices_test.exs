@@ -1,4 +1,4 @@
-defmodule Acceptances.Resources.IndiciesTest do
+defmodule Acceptances.Resources.IndicesTest do
   use ExUnit.Case
 
   alias Tirexs.{HTTP, Resources}
