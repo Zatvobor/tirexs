@@ -34,4 +34,9 @@ defmodule Acceptances.Resources.SearchTest do
     { :ok, 200, r } = Resources.bump(search)._explain("bear_test/my_type/2")
     assert r[:matched]
   end
+
+  test "_search_shards/2" do
+    { :ok, 200, _ } = HTTP.put("/bear_test")
+    { :ok, 200, _ } = Resources.bump._search_shards("bear_test", { [local: true] })
+  end
 end
