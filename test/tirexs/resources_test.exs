@@ -1,7 +1,6 @@
 defmodule Tirexs.ResourcesTest do
   use ExUnit.Case
 
-  # alias Tirexs.{HTTP, Resources}
   import Tirexs.Resources
 
 
