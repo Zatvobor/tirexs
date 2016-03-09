@@ -42,4 +42,13 @@ defmodule Tirexs.Resources.Search do
   def _count({a}), do: __c(urn([@r[:action], {a}]), @r)
   def _count(a), do: __c(urn([a, @r[:action]]), @r)
   def _count(), do: __c(urn([@r[:action]]), @r)
+
+  @doc false
+  @r [action: "/_search/exists", bump: :post, bump!: :post!]
+  def _search_exists(a, b, c), do: __c(urn([a, b, @r[:action], c]), @r)
+  def _search_exists(a, {b}), do: __c(urn([a, @r[:action], {b}]), @r)
+  def _search_exists(a, b), do: __c(urn([a, b, @r[:action]]), @r)
+  def _search_exists({a}), do: __c(urn([@r[:action], {a}]), @r)
+  def _search_exists(a), do: __c(urn([a, @r[:action]]), @r)
+  def _search_exists(), do: __c(urn([@r[:action]]), @r)
 end
