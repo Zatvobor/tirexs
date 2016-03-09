@@ -103,4 +103,39 @@ defmodule Tirexs.Resources.SearchTest do
     actual = Search._search_exists("twitter", "tweet", { [q: "user:kimchy"] })
     assert actual == "twitter/tweet/_search/exists?q=user%3Akimchy"
   end
+
+  test ~S| functions like a '_search({ [q: "tag:wow"] })' | do
+    actual = Search._search({ [q: "tag:wow"] })
+    assert actual == "_search?q=tag%3Awow"
+  end
+
+  test ~S| functions like a '_search("twitter")' | do
+    actual = Search._search("twitter")
+    assert actual == "twitter/_search"
+  end
+
+  test ~S| functions like a '_search("twitter", "tweet")' | do
+    actual = Search._search("twitter", "tweet")
+    assert actual == "twitter/tweet/_search"
+  end
+
+  test ~S| functions like a '_search("twitter", ["tweet","user"])' | do
+    actual = Search._search("twitter", ["tweet","user"])
+    assert actual == "twitter/tweet,user/_search"
+  end
+
+  test ~S| functions like a '_search("twitter", ["tweet","user"], { [q: "user:kimchy"] })' | do
+    actual = Search._search("twitter", ["tweet","user"], { [q: "user:kimchy"] })
+    assert actual == "twitter/tweet,user/_search?q=user%3Akimchy"
+  end
+
+  test ~S| functions like a '_search("twitter/tweet", { [q: "user:kimchy"] })' | do
+    actual = Search._search("twitter/tweet", { [q: "user:kimchy"] })
+    assert actual == "twitter/tweet/_search?q=user%3Akimchy"
+  end
+
+  test ~S| functions like a '_search("twitter", "tweet", { [q: "user:kimchy"] })' | do
+    actual = Search._search("twitter", "tweet", { [q: "user:kimchy"] })
+    assert actual == "twitter/tweet/_search?q=user%3Akimchy"
+  end
 end
