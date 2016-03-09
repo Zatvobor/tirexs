@@ -63,4 +63,24 @@ defmodule Tirexs.Resources.SearchTest do
     actual = Search._validate_query("twitter", "tweet", { [explain: true] })
     assert actual == "twitter/tweet/_validate/query?explain=true"
   end
+
+  test ~S| functions like a '_count("twitter")' | do
+    actual = Search._count("twitter")
+    assert actual == "twitter/_count"
+  end
+
+  test ~S| functions like a '_count("twitter", "tweet")' | do
+    actual = Search._count("twitter", "tweet")
+    assert actual == "twitter/tweet/_count"
+  end
+
+  test ~S| functions like a '_count("twitter", { [lowercase_expanded_terms: true] })' | do
+    actual = Search._count("twitter", { [lowercase_expanded_terms: true] })
+    assert actual == "twitter/_count?lowercase_expanded_terms=true"
+  end
+
+  test ~S| functions like a '_validate_query("twitter", "tweet", { [lowercase_expanded_terms: true] })' | do
+    actual = Search._count("twitter", "tweet", { [lowercase_expanded_terms: true] })
+    assert actual == "twitter/tweet/_count?lowercase_expanded_terms=true"
+  end
 end

@@ -6,6 +6,7 @@ defmodule Tirexs.Manage do
 
   @doc false
   def count(options, settings) do
+    IO.write :stderr, "warning: `Tirexs.ElasticSearch.count/2` is deprecated, please use `Tirexs.Resources.APIs._count/2` instead\n" <> Exception.format_stacktrace
     execute_get_if_body_empty_and_post_otherwise("_count", options, settings)
   end
 

@@ -62,4 +62,11 @@ defmodule Acceptances.Resources.SearchTest do
     { :ok, 200, r } = Resources.bump(search)._validate_query("bear_test")
     assert r[:valid]
   end
+
+  test "_count/2" do
+    { :ok, 201, _ } = HTTP.put("/bear_test/my_type/2?refresh=true", [user: "zatvobor"])
+    search          = [query: [ term: [ user: "zatvobor" ] ]]
+    { :ok, 200, r } = Resources.bump(search)._count("bear_test", "my_type")
+    assert r[:count] == 1
+  end
 end
