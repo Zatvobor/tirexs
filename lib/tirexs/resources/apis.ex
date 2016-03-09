@@ -42,6 +42,7 @@ defmodule Tirexs.Resources.APIs do
 
   @doc false
   defdelegate [ _explain(a), _explain(a,b), _explain(a,b,c), _explain(a,b,c,d) ], to: Search
+  defdelegate [ _search_shards(a), _search_shards(a,b), _search_shards(a,b,c) ], to: Search
 
 
   alias Tirexs.Resources.Indices

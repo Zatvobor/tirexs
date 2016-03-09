@@ -93,10 +93,11 @@ defmodule Tirexs.Resources do
 
 
   @doc false
-  def __c(urn, meta) do
+  def __c(urn, meta) when is_binary(urn) do
     if ctx = Process.delete(:tirexs_resources_chain) do
-      args = case urn do
-        urn when is_binary(urn) -> [ urn, ctx[:uri], ctx[:body] ]
+      args = case { urn, ctx[:body] } do
+        { urn, [] }   -> [ urn, ctx[:uri] ]
+        { urn, body } -> [ urn, ctx[:uri], body ]
       end
       Kernel.apply(Tirexs.HTTP, meta[ctx[:label]], args)
     else
