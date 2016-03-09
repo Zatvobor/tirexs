@@ -39,4 +39,14 @@ defmodule Acceptances.Resources.SearchTest do
     { :ok, 200, _ } = HTTP.put("/bear_test")
     { :ok, 200, _ } = Resources.bump._search_shards("bear_test", { [local: true] })
   end
+
+  test "_field_stats/0" do
+    { :ok, 200, _ } = HTTP.put("/bear_test")
+    { :ok, 200, _ } = Resources.bump([fields: ["rating"]])._field_stats()
+  end
+
+  test "_field_stats/2" do
+    { :ok, 200, _ } = HTTP.put("/bear_test")
+    { :ok, 200, _ } = Resources.bump._field_stats("bear_test", { [fields: "some"] })
+  end
 end
