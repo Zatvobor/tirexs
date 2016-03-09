@@ -83,17 +83,20 @@ defmodule Tirexs.Resources do
 
   """
   def bump(), do: __t(:bump)
-  def bump(uri), do: __t(:bump, uri)
+  def bump(%URI{} = uri), do: __t(:bump, [], uri)
+  def bump(body), do: __t(:bump, body)
+  def bump(body, %URI{} = uri), do: __t(:bump, body, uri)
   def bump!(), do: __t(:bump!)
-  def bump!(uri), do: __t(:bump!, uri)
+  def bump!(%URI{} = uri), do: __t(:bump!, [], uri)
+  def bump!(body), do: __t(:bump!, body)
+  def bump!(body, %URI{} = uri), do: __t(:bump!, body, uri)
 
 
   @doc false
   def __c(urn, meta) do
     if ctx = Process.delete(:tirexs_resources_chain) do
       args = case urn do
-        urn when is_binary(urn) -> [ urn, ctx[:uri] ]
-        [ urn, body ]           -> [ urn, ctx[:uri], body ]
+        urn when is_binary(urn) -> [ urn, ctx[:uri], ctx[:body] ]
       end
       Kernel.apply(Tirexs.HTTP, meta[ctx[:label]], args)
     else
@@ -102,8 +105,8 @@ defmodule Tirexs.Resources do
   end
 
   @doc false
-  defp __t(label, uri \\ Tirexs.ENV.get_uri_env()) do
-    Process.put(:tirexs_resources_chain, [label: label, uri: uri])
+  defp __t(label, body \\ [], %URI{} = uri \\ Tirexs.ENV.get_uri_env()) do
+    Process.put(:tirexs_resources_chain, [label: label, body: body, uri: uri])
     Tirexs.Resources.APIs
   end
 end
