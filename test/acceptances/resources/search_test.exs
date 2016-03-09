@@ -63,6 +63,25 @@ defmodule Acceptances.Resources.SearchTest do
     assert r[:valid]
   end
 
+  test "_validate_query/0 with request body as macro" do
+    { :ok, 201, _ } = HTTP.put("/bear_test/my_type/2?refresh=true", [user: "zatvobor", message: "trying out Elastic Search"])
+
+    import Tirexs.Query, only: :macros
+    query = query do
+      filtered do
+        query do
+          query_string "*:*"
+        end
+        filter do
+          term "user", "kimchy"
+        end
+      end
+    end
+
+    { :ok, 200, r } = Resources.bump(query)._validate_query("bear_test")
+    assert r[:valid]
+  end
+
   test "_count/2" do
     { :ok, 201, _ } = HTTP.put("/bear_test/my_type/2?refresh=true", [user: "zatvobor"])
     search          = [query: [ term: [ user: "zatvobor" ] ]]
