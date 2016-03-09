@@ -33,4 +33,14 @@ defmodule Tirexs.Resources.SearchTest do
     actual = Search._search_shards("twitter", "tweet")
     assert actual == "twitter/tweet/_search_shards"
   end
+
+  test ~S| functions like a '_field_stats(["index1", "index2"])' | do
+    actual = Search._field_stats(["index1", "index2"])
+    assert actual == "index1,index2/_field_stats"
+  end
+
+  test ~S| functions like a '_field_stats("bear_test", { [fields: "rating"] })' | do
+    actual = Search._field_stats("bear_test", { [fields: "rating"] })
+    assert actual == "bear_test/_field_stats?fields=rating"
+  end
 end
