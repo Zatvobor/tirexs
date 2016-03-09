@@ -33,4 +33,13 @@ defmodule Tirexs.Resources.Search do
   def _validate_query({a}), do: __c(urn([@r[:action], {a}]), @r)
   def _validate_query(a), do: __c(urn([a, @r[:action]]), @r)
   def _validate_query(), do: __c(urn([@r[:action]]), @r)
+
+  @doc false
+  @r [action: "/_count", bump: :post, bump!: :post!]
+  def _count(a, b, c), do: __c(urn([a, b, @r[:action], c]), @r)
+  def _count(a, {b}), do: __c(urn([a, @r[:action], {b}]), @r)
+  def _count(a, b), do: __c(urn([a, b, @r[:action]]), @r)
+  def _count({a}), do: __c(urn([@r[:action], {a}]), @r)
+  def _count(a), do: __c(urn([a, @r[:action]]), @r)
+  def _count(), do: __c(urn([@r[:action]]), @r)
 end
