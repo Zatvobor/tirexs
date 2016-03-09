@@ -24,4 +24,13 @@ defmodule Tirexs.Resources.Search do
   def _field_stats({a}), do: __c(urn([@r[:action], {a}]), @r)
   def _field_stats(a), do: __c(urn([a, @r[:action]]), @r)
   def _field_stats(), do: __c(urn([@r[:action]]), @r)
+
+  @doc false
+  @r [action: "/_validate/query", bump: :post, bump!: :post!]
+  def _validate_query(a, b, c), do: __c(urn([a, b, @r[:action], c]), @r)
+  def _validate_query(a, {b}), do: __c(urn([a, @r[:action], {b}]), @r)
+  def _validate_query(a, b), do: __c(urn([a, b, @r[:action]]), @r)
+  def _validate_query({a}), do: __c(urn([@r[:action], {a}]), @r)
+  def _validate_query(a), do: __c(urn([a, @r[:action]]), @r)
+  def _validate_query(), do: __c(urn([@r[:action]]), @r)
 end

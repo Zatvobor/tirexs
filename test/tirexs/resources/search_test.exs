@@ -43,4 +43,24 @@ defmodule Tirexs.Resources.SearchTest do
     actual = Search._field_stats("bear_test", { [fields: "rating"] })
     assert actual == "bear_test/_field_stats?fields=rating"
   end
+
+  test ~S| functions like a '_validate_query("twitter")' | do
+    actual = Search._validate_query("twitter")
+    assert actual == "twitter/_validate/query"
+  end
+
+  test ~S| functions like a '_validate_query("twitter", "tweet")' | do
+    actual = Search._validate_query("twitter", "tweet")
+    assert actual == "twitter/tweet/_validate/query"
+  end
+
+  test ~S| functions like a '_validate_query("twitter", { [explain: true] })' | do
+    actual = Search._validate_query("twitter", { [explain: true] })
+    assert actual == "twitter/_validate/query?explain=true"
+  end
+
+  test ~S| functions like a '_validate_query("twitter", "tweet", { [explain: true] })' | do
+    actual = Search._validate_query("twitter", "tweet", { [explain: true] })
+    assert actual == "twitter/tweet/_validate/query?explain=true"
+  end
 end
