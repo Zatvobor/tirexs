@@ -83,6 +83,11 @@ defmodule Tirexs.Resources do
 
       iex> search = [query: [ term: [ user: "zatvobor" ] ] ]
       iex> bump(search)._count("bear_test", "my_type")
+      { :ok, 200, ... }
+
+      iex> payload = "{ \"index\": { \"_id\": \"2\" }}\n{ \"title\": \"My second blog post\" }\n"
+      iex> bump(payload)._bulk("website", "blog", { [refresh: true] })
+      { :ok, 200, ... }
 
   Play with resources you have and see what kind of HTTP verb is used.
 
