@@ -79,21 +79,35 @@ defmodule Tirexs.Resources do
       iex> bump._refresh(["bear_test", "duck_test"], { [force: false] })
       { :ok, 200, ... }
 
+  It is also available for bumping some resources with request body:
+
+      iex> search = [query: [ term: [ user: "zatvobor" ] ] ]
+      iex> bump(search)._count("bear_test", "my_type")
+      { :ok, 200, ... }
+
+      iex> payload = "{ \"index\": { \"_id\": \"2\" }}\n{ \"title\": \"My second blog post\" }\n"
+      iex> bump(payload)._bulk("website", "blog", { [refresh: true] })
+      { :ok, 200, ... }
+
   Play with resources you have and see what kind of HTTP verb is used.
 
   """
   def bump(), do: __t(:bump)
-  def bump(uri), do: __t(:bump, uri)
+  def bump(%URI{} = uri), do: __t(:bump, [], uri)
+  def bump(body), do: __t(:bump, body)
+  def bump(body, %URI{} = uri), do: __t(:bump, body, uri)
   def bump!(), do: __t(:bump!)
-  def bump!(uri), do: __t(:bump!, uri)
+  def bump!(%URI{} = uri), do: __t(:bump!, [], uri)
+  def bump!(body), do: __t(:bump!, body)
+  def bump!(body, %URI{} = uri), do: __t(:bump!, body, uri)
 
 
   @doc false
-  def __c(urn, meta) do
+  def __c(urn, meta) when is_binary(urn) do
     if ctx = Process.delete(:tirexs_resources_chain) do
-      args = case urn do
-        urn when is_binary(urn) -> [ urn, ctx[:uri] ]
-        [ urn, body ]           -> [ urn, ctx[:uri], body ]
+      args = case { urn, ctx[:body] } do
+        { urn, [] }   -> [ urn, ctx[:uri] ]
+        { urn, body } -> [ urn, ctx[:uri], body ]
       end
       Kernel.apply(Tirexs.HTTP, meta[ctx[:label]], args)
     else
@@ -102,8 +116,8 @@ defmodule Tirexs.Resources do
   end
 
   @doc false
-  defp __t(label, uri \\ Tirexs.ENV.get_uri_env()) do
-    Process.put(:tirexs_resources_chain, [label: label, uri: uri])
+  defp __t(label, body \\ [], %URI{} = uri \\ Tirexs.ENV.get_uri_env()) do
+    Process.put(:tirexs_resources_chain, [label: label, body: body, uri: uri])
     Tirexs.Resources.APIs
   end
 end

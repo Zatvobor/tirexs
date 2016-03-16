@@ -138,24 +138,24 @@ defmodule Tirexs.HTTPTest do
     assert actual == "http://127.0.0.1:92/articles/document/1?_source=false"
   end
 
-  test ~S(decode/1 {"hello":"world"}) do
-    actual = decode("{\"hello\":\"world\"}")
+  test ~S'decode/1 {"hello":"world"}' do
+    actual = decode(~S'{"hello":"world"}')
     assert actual == %{hello: "world"}
   end
 
-  test ~S(decode/1 {"hello":"world"} as list) do
-    actual = decode("{\"hello\":\"world\"}")
+  test ~S'decode/1 {"hello":"world"} as list' do
+    actual = decode(~S'{"hello":"world"}')
     assert Map.to_list(actual) == [hello: "world"]
   end
 
-  test ~S(decode/1 "hello" string) do
+  test ~S'decode/1 "hello" string' do
     actual = decode("\"hello\"")
     assert actual == "hello"
   end
 
-  test ~S(encode/1 %{hello: "world"} as map) do
+  test ~S'encode/1 %{hello: "world"} as map' do
     actual = encode(%{hello: "world"})
-    assert actual == "{\"hello\":\"world\"}"
+    assert actual == ~S'{"hello":"world"}'
   end
 
   test "encode/1 %{hello: 'world'} as map" do
@@ -163,9 +163,14 @@ defmodule Tirexs.HTTPTest do
     assert actual == "{\"hello\":[119,111,114,108,100]}"
   end
 
-  test ~S(encode/1 [hello: "world"] as list) do
+  test ~S'encode/1 [hello: "world"] as list' do
     actual = encode([hello: "world"])
-    assert actual == "{\"hello\":\"world\"}"
+    assert actual == ~S'{"hello":"world"}'
+  end
+
+  test ~S'encode/1 [query: [ term: [ message: "search" ] ]] as list' do
+    actual = encode([query: [ term: [ message: "search" ] ]])
+    assert actual == ~S'{"query":{"term":{"message":"search"}}}'
   end
 
   test "encode/1 []" do
