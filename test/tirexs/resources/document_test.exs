@@ -28,4 +28,24 @@ defmodule Tirexs.Resources.DocumentTest do
     actual = Document._bulk("twitter", "tweet", { [refresh: true] })
     assert actual == "twitter/tweet/_bulk?refresh=true"
   end
+
+  test ~S| functions like a '_source("twitter/tweet/1")' | do
+    actual = Document._source("twitter/tweet/1")
+    assert actual == "twitter/tweet/1/_source"
+  end
+
+  test ~S| functions like a '_source("twitter/tweet/1", { [refresh: true] })' | do
+    actual = Document._source("twitter/tweet/1", { [refresh: true] })
+    assert actual == "twitter/tweet/1/_source?refresh=true"
+  end
+
+  test ~S| functions like a '_source("twitter", "tweet", "1")' | do
+    actual = Document._source("twitter", "tweet", "1")
+    assert actual == "twitter/tweet/1/_source"
+  end
+
+  test ~S| functions like a '_source("twitter", "tweet", "1", { [refresh: true] })' | do
+    actual = Document._source("twitter", "tweet", "1", { [refresh: true] })
+    assert actual == "twitter/tweet/1/_source?refresh=true"
+  end
 end

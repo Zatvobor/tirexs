@@ -41,6 +41,7 @@ defmodule Tirexs.Resources.APIs do
 
   @doc false
   defdelegate [ _bulk(), _bulk(a), _bulk(a,b), _bulk(a,b,c) ], to: Document
+  defdelegate [ _source(a), _source(a,b), _source(a,b,c), _source(a,b,c,d) ], to: Document
 
 
   alias Tirexs.Resources.Search
