@@ -16,10 +16,11 @@ defmodule Tirexs.HTTP do
 
   The common set of allowed parameters are `path`, `params`, `uri` and `body`.
 
-      iex> { :ok, 200, _ } = get("/bear_test/my_type/1")
+      iex> get("/bear_test/my_type/1")
+      iex> get("/articles/document/1", [_source: false])
 
-      iex> { :ok, 200, _ } = put("/bear_test/my_type/1", [version: 2], [user: "kimchy"])
-      iex> { :ok, 200, _ } = put("/bear_test/my_type/1", [version: 2], %URI{ host: "example.com" }, [user: "kimchy"])
+      iex> put("/bear_test/my_type/1", [version: 2], [user: "kimchy"])
+      iex> put("/bear_test/my_type/1", [version: 2], %URI{ host: "example.com" }, [user: "kimchy"])
 
   The `uri` parameter has a special purpose. You can use it for overriding any fields
   from application's environment uri (`Tirexs.get_uri_env/0`).
@@ -27,10 +28,10 @@ defmodule Tirexs.HTTP do
       iex> Tirexs.get_uri_env()
       %URI{host: "127.0.0.1", port: 9200, scheme: "http"}
 
-      iex> get("/articles/document/1")
-      "http://127.0.0.1:9200/articles/document/1?_source=false"
+      iex> url("/articles/document/1")
+      "http://127.0.0.1:9200/articles/document/1"
 
-      iex> get("/articles/document/1", %URI{ port: 92 })
+      iex> url("/articles/document/1", %URI{ port: 92, query: "_source=false" })
       "http://127.0.0.1:92/articles/document/1?_source=false"
 
   A query params could be as a part of `path` or used as a standalone `params`. A `body` param is allowed
