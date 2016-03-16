@@ -16,6 +16,7 @@ defmodule Tirexs.Resources.Indices do
   @doc false
   @r [action: "/_mapping", bump: :put, bump!: :put!]
   def _mapping(a, b, c), do: __c(urn(a, @r[:action], b, c), @r)
+  def _mapping(a, {b}), do: __c(urn(a, @r[:action], {b}), @r)
   def _mapping(a, b), do: __c(urn(a, @r[:action], b), @r)
   def _mapping({a}), do: __c(urn(@r[:action], {a}), @r)
   def _mapping(a), do: __c(urn(a, @r[:action]), @r)

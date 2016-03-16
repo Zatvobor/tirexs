@@ -1,32 +1,36 @@
 defmodule Tirexs.DSL do
   @moduledoc """
   This module represents a main entry point for defining DSL scenarios.
-  Check an `examples` directory which consists a DSL tempaltes for `mapping`, `settings`, `query`.
+
+  Check an `examples` directory which consists a DSL templates for `mapping`,
+  `settings` and `query` definitions.
+
   """
 
 
   @doc false
-  def define(type, resource) do
-    elastic_settings = Tirexs.get_uri_env()
-    case resource.(type, elastic_settings) do
-      { type, elastic_settings } -> create_resource(type, elastic_settings)
+  def define(definition, definition_fn) do
+    uri = Tirexs.get_uri_env()
+    case definition_fn.(definition, uri) do
+      { definition, uri } -> create_resource(definition, uri)
     end
   end
 
   @doc false
-  def define(resource) do
-    elastic_settings = Tirexs.get_uri_env()
-    case resource.(elastic_settings) do
-      { type, elastic_settings } -> create_resource(type, elastic_settings)
+  def define(definition_fn) do
+    uri = Tirexs.get_uri_env()
+    case definition_fn.(uri) do
+      { definition, uri } -> create_resource(definition, uri)
     end
   end
 
-  defp create_resource(type, opts) do
+
+  defp create_resource(definition, uri) do
     cond do
-      type[:settings]   -> Tirexs.ElasticSearch.Settings.create_resource(type, opts)
-      type[:mapping]    -> Tirexs.Mapping.create_resource(type, opts)
-      type[:search]     -> Tirexs.Query.create_resource(type, opts)
-      type[:percolator] -> Tirexs.Percolator.create_resource(type[:percolator], opts)
+      definition[:settings]   -> Tirexs.ElasticSearch.Settings.create_resource(definition, uri)
+      definition[:mapping]    -> Tirexs.Mapping.create_resource(definition, uri)
+      definition[:search]     -> Tirexs.Query.create_resource(definition, uri)
+      definition[:percolator] -> Tirexs.Percolator.create_resource(definition[:percolator], uri)
     end
   end
 end
