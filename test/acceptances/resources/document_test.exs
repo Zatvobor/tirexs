@@ -8,6 +8,33 @@ defmodule Acceptances.Resources.DocumentTest do
     HTTP.delete("bear_test") && :ok
   end
 
+  test "_mget/0 w/ raw request body" do
+    { :ok, 201, _ } = HTTP.put("/bear_test/my_type/1?refresh=true", [user: "kimchy"])
+    request = ~S'''
+    {"docs" : [{"_index":"bear_test", "_type":"my_type", "_id":"1"}]}
+    '''
+    { :ok, 200, %{docs: [%{found: found}]} } = Resources.bump(request)._mget()
+    assert found
+  end
+
+  test "_mget/1 w/ raw request body" do
+    { :ok, 201, _ } = HTTP.put("/bear_test/my_type/1?refresh=true", [user: "kimchy"])
+    request = ~S'''
+    {"docs" : [{"_type":"my_type", "_id":"1"}]}
+    '''
+    { :ok, 200, %{docs: [%{found: found}]} } = Resources.bump(request)._mget("bear_test")
+    assert found
+  end
+
+  test "_mget/2 w/ raw request body" do
+    { :ok, 201, _ } = HTTP.put("/bear_test/my_type/1?refresh=true", [user: "kimchy"])
+    request = ~S'''
+    {"docs" : [{"_id":"1"}]}
+    '''
+    { :ok, 200, %{docs: [%{found: found}]} } = Resources.bump(request)._mget("bear_test", "my_type")
+    assert found
+  end
+
   test "_bulk/0 and payload as a string" do
     payload = ~S'''
     { "index": { "_index": "website", "_type": "blog", "_id": "1" }}

@@ -4,30 +4,56 @@ defmodule Tirexs.Resources.DocumentTest do
   alias Tirexs.Resources.Document
 
 
+  @resources [ "_bulk", "_mget" ]
+
   test ~S| functions like a '_bulk()' | do
-    actual = Document._bulk()
-    assert actual == "_bulk"
+    Enum.each @resources, fn(resource) ->
+      # actual = Document._bulk()
+      actual = Kernel.apply(Document, String.to_atom(resource), [])
+      assert actual == "#{resource}"
+    end
   end
 
   test ~S| functions like a '_bulk("twitter")' | do
-    actual = Document._bulk("twitter")
-    assert actual == "twitter/_bulk"
+    Enum.each @resources, fn(resource) ->
+      # actual = Document._bulk("twitter")
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter"])
+      assert actual == "twitter/#{resource}"
+    end
+  end
+
+  test ~S| functions like a '_bulk("twitter/tweet")' | do
+    Enum.each @resources, fn(resource) ->
+      # actual = Document._bulk("twitter/tweet")
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter/tweet"])
+      assert actual == "twitter/tweet/#{resource}"
+    end
+  end
+
+  test ~S| functions like a '_bulk("twitter/tweet", { [refresh: true] })' | do
+    Enum.each @resources, fn(resource) ->
+      # actual = Document._bulk("twitter/tweet", { [refresh: true] })
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter/tweet", { [refresh: true] }])
+      assert actual == "twitter/tweet/#{resource}?refresh=true"
+    end
   end
 
   test ~S| functions like a '_bulk("twitter", "tweet")' | do
-    actual = Document._bulk("twitter", "tweet")
-    assert actual == "twitter/tweet/_bulk"
-  end
-
-  test ~S| functions like a '_bulk("twitter", { [refresh: true] })' | do
-    actual = Document._bulk("twitter", { [refresh: true] })
-    assert actual == "twitter/_bulk?refresh=true"
+    Enum.each @resources, fn(resource) ->
+      # actual = Document._bulk("twitter", "tweet")
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter", "tweet"])
+      assert actual == "twitter/tweet/#{resource}"
+    end
   end
 
   test ~S| functions like a '_bulk("twitter", "tweet", { [refresh: true] })' | do
-    actual = Document._bulk("twitter", "tweet", { [refresh: true] })
-    assert actual == "twitter/tweet/_bulk?refresh=true"
+    Enum.each @resources, fn(resource) ->
+      # actual = Document._bulk("twitter", "tweet", { [refresh: true] })
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter", "tweet", { [refresh: true] }])
+      assert actual == "twitter/tweet/#{resource}?refresh=true"
+    end
   end
+
 
   test ~S| functions like a '_source("twitter/tweet/1")' | do
     actual = Document._source("twitter/tweet/1")
