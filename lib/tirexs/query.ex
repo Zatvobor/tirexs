@@ -1,12 +1,8 @@
 defmodule Tirexs.Query do
   @moduledoc false
 
-  require Record
-
   import Tirexs.DSL.Logic
   import Tirexs.Query.Logic
-
-  Record.defrecord :result, [count: 0, max_score: nil, facets: [], aggregations: [], hits: [], _scroll_id: nil]
 
 
   @doc false
@@ -407,34 +403,18 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def create_resource(definition) do
-    create_resource(definition, Tirexs.ElasticSearch.config())
+  def create_resource(definition, params) when is_list(params) do
+    create_resource(definition, Tirexs.get_uri_env(), params)
   end
 
   @doc false
-  def create_resource(definition, settings, opts\\[]) do
-    url = if definition[:type] do
+  def create_resource(definition, %URI{} = uri \\ Tirexs.get_uri_env(), params \\ []) do
+    urn = if definition[:type] do
       "#{definition[:index]}/#{definition[:type]}"
     else
       "#{definition[:index]}"
     end
-
-    IO.write :stderr, "warning: `/_search` is deprecated, please use `Tirexs.Resources.APIs._search/2` instead\n" <> Exception.format_stacktrace
-    { url, json } = { "#{url}/_search" <> to_param(opts, ""), to_resource_json(definition) }
-    case Tirexs.ElasticSearch.post(url, json, settings) do
-      {:ok, _, result} ->
-        count         = result[:hits][:total]
-        hits          = result[:hits][:hits]
-        facets        = result[:facets]
-        aggregations  = result[:aggregations]
-        max_score     = result[:hits][:max_score]
-        scroll_id     = result[:_scroll_id]
-
-        result(count: count, hits: hits, facets: facets, aggregations: aggregations, max_score: max_score, _scroll_id: scroll_id)
-      result  -> result
-    end
+    search = definition[:search]
+    Tirexs.bump(search, uri)._search(urn, {params})
   end
-
-  @doc false
-  def to_resource_json(definition), do: Tirexs.HTTP.encode(definition[:search])
 end

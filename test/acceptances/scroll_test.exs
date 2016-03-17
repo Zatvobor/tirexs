@@ -7,11 +7,9 @@ defmodule Acceptances.ScrollTest do
 
   require Tirexs.Query
 
-  alias Tirexs.{HTTP, Query}
-
 
   setup do
-    HTTP.delete("bear_test") && :ok
+    Tirexs.HTTP.delete("bear_test") && :ok
   end
 
   test :scroll do
@@ -32,17 +30,16 @@ defmodule Acceptances.ScrollTest do
       delete([ [ id: 11 ] ])
       index([ [ id: 90, title: "barww" ] ])
     end
-
     Tirexs.bump!(payload)._bulk({[refresh: true]})
 
-    s = search([index: "bear_test"]) do
+    request = search([index: "bear_test"]) do
       query do
         string "bar7"
       end
     end
+    # { :ok, 200, r } = Query.create_resource(request, [scroll: "5m"])
+    { :ok, 200, r } = Tirexs.bump(request[:search])._search("bear_test", {[scroll: "5m"]})
 
-    settings = Tirexs.get_uri_env()
-    body = Query.create_resource(s, settings, [scroll: "5m"])
-    assert Query.result(body, :_scroll_id)
+    assert r[:_scroll_id]
   end
 end

@@ -102,4 +102,16 @@ defmodule Acceptances.Resources.SearchTest do
     { :ok, 200, r } = Resources.bump(search)._search("bear_test", "my_type")
     assert r[:hits][:total] == 1
   end
+
+  test "_search/2 with macro" do
+    import Tirexs.Search
+    { :ok, 201, _ } = HTTP.put("/bear_test/my_type/2?refresh=true", [user: "zatvobor"])
+    request = search do
+      query do
+        term "user", "zatvobor"
+      end
+    end
+    { :ok, 200, r } = Resources.bump(request[:search])._search("bear_test", "my_type")
+    assert r[:hits][:total] == 1
+  end
 end
