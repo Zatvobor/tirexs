@@ -10,6 +10,20 @@ defmodule Tirexs.Resources.Document do
 
 
   @doc false
+  @r [bump: :get, bump!: :get!]
+  def index(a, b, c, d), do: __c(urn([a, b, c, d]), @r)
+  def index(a, b, c), do: __c(urn([a, b, c]), @r)
+  def index(a, b), do: __c(urn([a, b]), @r)
+  def index(a), do: __c(urn([a]), @r)
+  
+  @doc false
+  @r [bump: :get, bump!: :get!]
+  def doc(a, b, c, d), do: __c(urn([a, b, c, d]), @r)
+  def doc(a, b, c), do: __c(urn([a, b, c]), @r)
+  def doc(a, b), do: __c(urn([a, b]), @r)
+  def doc(a), do: __c(urn([a]), @r)
+
+  @doc false
   @r [action: "/_bulk", bump: :post, bump!: :post!]
   def _bulk(a, b, c), do: __c(urn([a, b, @r[:action], c]), @r)
   def _bulk(a, {b}), do: __c(urn([a, @r[:action], {b}]), @r)

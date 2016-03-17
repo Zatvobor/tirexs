@@ -48,4 +48,54 @@ defmodule Tirexs.Resources.DocumentTest do
     actual = Document._source("twitter", "tweet", "1", { [refresh: true] })
     assert actual == "twitter/tweet/1/_source?refresh=true"
   end
+
+  @resources [ "doc", "index" ]
+
+  test ~S| functions like a 'doc("twitter/tweet/1")' | do
+    Enum.each @resources, fn(resource) ->
+      # actual = Document.doc("twitter/tweet/1")
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter/tweet/1"])
+      assert actual == "twitter/tweet/1"
+    end
+  end
+
+  test ~S| functions like a 'doc("twitter/tweet", "1")' | do
+    Enum.each @resources, fn(resource) ->
+      # actual = Document.doc("twitter/tweet", "1")
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter/tweet", "1"])
+      assert actual == "twitter/tweet/1"
+    end
+  end
+
+  test ~S| functions like a 'doc("twitter/tweet", "1", { [refresh: true] })' | do
+    Enum.each @resources, fn(resource) ->
+      # actual = Document.doc("twitter/tweet", "1", { [refresh: true] })
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter/tweet", "1", { [refresh: true] }])
+      assert actual == "twitter/tweet/1?refresh=true"
+    end
+  end
+
+  test ~S| functions like a 'doc("twitter/tweet/1", { [refresh: true] })' | do
+    Enum.each @resources, fn(resource) ->
+      # actual = Document.doc("twitter/tweet/1", { [refresh: true] })
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter/tweet/1", { [refresh: true] }])
+      assert actual == "twitter/tweet/1?refresh=true"
+    end
+  end
+
+  test ~S| functions like a 'doc("twitter", "tweet", "1")' | do
+    Enum.each @resources, fn(resource) ->
+      # actual = Document.doc("twitter", "tweet", "1")
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter", "tweet", "1"])
+      assert actual == "twitter/tweet/1"
+    end
+  end
+
+  test ~S| functions like a 'doc("twitter", "tweet", "1", { [refresh: true] })' | do
+    Enum.each @resources, fn(resource) ->
+      # actual = Document.doc("twitter", "tweet", "1", { [refresh: true] })
+      actual = Kernel.apply(Document, String.to_atom(resource), ["twitter", "tweet", "1", { [refresh: true] }])
+      assert actual == "twitter/tweet/1?refresh=true"
+    end
+  end
 end
