@@ -30,6 +30,8 @@ defmodule Tirexs.Search do
       {:facets, _, [params]}        -> Facets._facets(params[:do])
       {:highlight, _, [params]}     -> highlight(params)
       {:sort, _, [params]}          -> sort(params)
+      {:size, _, [param]}           -> size(param)
+      {:from, _, [param]}           -> from(param)
       {:script_fields, _, [params]} -> script_fields(params)
       {:suggest, _, [params]}       -> Suggest._suggest(params[:do])
       {:suggest, _, options}        -> Suggest._suggest(options)
@@ -52,6 +54,16 @@ defmodule Tirexs.Search do
   @doc false
   def sort([do: block]) do
     [sort: block]
+  end
+
+  @doc false
+  def size(param) do
+    [size: param]
+  end
+
+  @doc false
+  def from(param) do
+    [from: param]
   end
 
   @doc false

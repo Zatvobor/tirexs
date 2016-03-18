@@ -21,6 +21,20 @@ defmodule Tirexs.SearchTest do
     assert search == expected
   end
 
+  test "search w/ query, size, from" do
+    search = search do
+      query do
+        term "tag", "wow"
+      end
+
+      size 25
+      from 50
+    end
+
+    expected = [search: [query: [term: [tag: "wow"]], size: 25, from: 50]]
+    assert search == expected
+  end
+
   @tag skip: "facets were deprecated and removed in 2.0 core"
   test "search w/ query, filter and facets" do
     search = search do
