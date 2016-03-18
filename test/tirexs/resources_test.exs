@@ -104,8 +104,13 @@ defmodule Tirexs.ResourcesTest do
     assert actual == "bear_test,another_bear_test/_alias/2015?local=true"
   end
 
-  test "urn/3 as list and list" do
+  test ~S| urn(["bear_test", "another_bear_test"], "/_alias", ["2015", "2016"]) | do
     actual = urn(["bear_test", "another_bear_test"], "/_alias", ["2015", "2016"])
+    assert actual == "bear_test,another_bear_test/_alias/2015,2016"
+  end
+
+  test ~S| urn(["bear_test", "another_bear_test"], "/_alias", [2015, 2016]) | do
+    actual = urn(["bear_test", "another_bear_test"], "/_alias", [2015, 2016])
     assert actual == "bear_test,another_bear_test/_alias/2015,2016"
   end
 
@@ -121,6 +126,11 @@ defmodule Tirexs.ResourcesTest do
 
   test ~S| urn("bear_test", "bear_type", "10", "/_explain") | do
     actual = urn("bear_test", "bear_type", "10", "/_explain")
+    assert actual == "bear_test/bear_type/10/_explain"
+  end
+
+  test ~S| urn("bear_test", "bear_type", 10, "/_explain") | do
+    actual = urn("bear_test", "bear_type", 10, "/_explain")
     assert actual == "bear_test/bear_type/10/_explain"
   end
 
