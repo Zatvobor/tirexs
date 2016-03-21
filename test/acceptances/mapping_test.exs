@@ -32,7 +32,6 @@ defmodule Acceptances.MappingTest do
     end
 
     {:ok, _, body} = Tirexs.Mapping.create_resource(index)
-    IO.puts inspect(body)
 
     assert body[:acknowledged] == true
   end
