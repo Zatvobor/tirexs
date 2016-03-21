@@ -58,6 +58,7 @@ defmodule Tirexs.Resources do
   end
 
   @doc false
+  def pluralize(resource) when is_integer(resource), do: to_string(resource)
   def pluralize(resource) when is_binary(resource), do: resource
   def pluralize(resource), do: Enum.join(resource, ",")
 

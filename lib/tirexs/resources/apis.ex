@@ -41,6 +41,10 @@ defmodule Tirexs.Resources.APIs do
 
   @doc false
   defdelegate [ _bulk(), _bulk(a), _bulk(a,b), _bulk(a,b,c) ], to: Document
+  defdelegate [ _mget(), _mget(a), _mget(a,b), _mget(a,b,c) ], to: Document
+  defdelegate [ _source(a), _source(a,b), _source(a,b,c), _source(a,b,c,d) ], to: Document
+  defdelegate [ index(a), index(a,b), index(a,b,c), index(a,b,c,d) ], to: Document
+  defdelegate [ doc(a), doc(a,b), doc(a,b,c), doc(a,b,c,d) ], to: Document
 
 
   alias Tirexs.Resources.Search
@@ -54,6 +58,8 @@ defmodule Tirexs.Resources.APIs do
   defdelegate [ _count(), _count(a), _count(a,b), _count(a,b,c) ], to: Search
   defdelegate [ _search_exists(), _search_exists(a), _search_exists(a,b), _search_exists(a,b,c) ], to: Search
   defdelegate [ _search(), _search(a), _search(a,b), _search(a,b,c) ], to: Search
+  defdelegate [ _search_scroll(), _search_scroll(a) ], to: Search
+  defdelegate [ _search_scroll_all() ], to: Search
 
 
   alias Tirexs.Resources.Indices

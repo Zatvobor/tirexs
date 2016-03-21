@@ -128,4 +128,10 @@ defmodule Tirexs.Resources.IndicesTest do
     actual = Indices._field_mapping("_all", "tw*", "*.id")
     assert actual == "_all/_mapping/tw*/field/*.id"
   end
+
+  @tag skip: "pending"
+  test ~S/functions like a '_mapping("bear_test", "bear_type")'/ do
+    actual = Indices._mapping("bear_test", "bear_type")
+    assert actual == "bear_test/bear_type/_mapping"
+  end
 end

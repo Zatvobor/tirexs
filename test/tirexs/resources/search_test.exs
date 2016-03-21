@@ -138,4 +138,24 @@ defmodule Tirexs.Resources.SearchTest do
     actual = Search._search("twitter", "tweet", { [q: "user:kimchy"] })
     assert actual == "twitter/tweet/_search?q=user%3Akimchy"
   end
+
+  test ~S| functions like a '_search_scroll()' | do
+    actual = Search._search_scroll()
+    assert actual == "_search/scroll"
+  end
+
+  test ~S| functions like a '_search_scroll({ [scroll_id: "c2Nhbjs2OzM0NDg1ODpzRlBLc0FXNlNyNm5JWUc1"] })' | do
+    actual = Search._search_scroll({ [scroll_id: "c2Nhbjs2OzM0NDg1ODpzRlBLc0FXNlNyNm5JWUc1"] })
+    assert actual == "_search/scroll?scroll_id=c2Nhbjs2OzM0NDg1ODpzRlBLc0FXNlNyNm5JWUc1"
+  end
+
+  test ~S| functions like a '_search_scroll("c2Nhbjs2OzM0NDg1ODpzRlBLc0FXNlNyNm5JWUc1")' | do
+    actual = Search._search_scroll("c2Nhbjs2OzM0NDg1ODpzRlBLc0FXNlNyNm5JWUc1")
+    assert actual == "_search/scroll/c2Nhbjs2OzM0NDg1ODpzRlBLc0FXNlNyNm5JWUc1"
+  end
+
+  test ~S| functions like a '_search_scroll_all()' | do
+    actual = Search._search_scroll_all()
+    assert actual == "_search/scroll/_all"
+  end
 end

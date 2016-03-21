@@ -53,22 +53,15 @@ defmodule Tirexs.Mapping do
   def create_resource(definition, uri \\ Tirexs.get_uri_env()) do
     cond do
       definition[:settings] ->
-        path = "#{definition[:index]}"
         body = to_resource_json(definition)
-
-        HTTP.post(path, uri, body)
+        HTTP.post("#{definition[:index]}", uri, body)
       definition[:type] ->
         create_resource_settings(definition, uri)
-
-        path = "#{definition[:index]}/#{definition[:type]}/_mapping"
         body = to_resource_json(definition)
-
-        HTTP.put(path, uri, body)
+        Resources.bump!(body, uri)._mapping(definition[:index], definition[:type])
       true ->
-        path = "#{definition[:index]}/_mapping"
         body = to_resource_json(definition, definition[:index])
-
-        HTTP.put(path, uri, body)
+        Resources.bump!(body, uri)._mapping(definition[:index])
     end
   end
 
