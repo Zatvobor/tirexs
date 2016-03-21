@@ -58,6 +58,8 @@ defmodule Tirexs.Resources.APIs do
   defdelegate [ _count(), _count(a), _count(a,b), _count(a,b,c) ], to: Search
   defdelegate [ _search_exists(), _search_exists(a), _search_exists(a,b), _search_exists(a,b,c) ], to: Search
   defdelegate [ _search(), _search(a), _search(a,b), _search(a,b,c) ], to: Search
+  defdelegate [ _search_scroll(), _search_scroll(a) ], to: Search
+  defdelegate [ _search_scroll_all() ], to: Search
 
 
   alias Tirexs.Resources.Indices

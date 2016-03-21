@@ -60,4 +60,13 @@ defmodule Tirexs.Resources.Search do
   def _search({a}), do: __c(urn([@r[:action], {a}]), @r)
   def _search(a), do: __c(urn([a, @r[:action]]), @r)
   def _search(), do: __c(urn([@r[:action]]), @r)
+
+  @doc false
+  @r [action: "/_search/scroll", bump: :post, bump!: :post!]
+  def _search_scroll(a), do: __c(urn([@r[:action], a]), @r)
+  def _search_scroll(), do: __c(urn([@r[:action]]), @r)
+
+  @doc false
+  @r [action: "/_search/scroll/_all", bump: :delete, bump!: :delete!]
+  def _search_scroll_all(), do: __c(urn([@r[:action]]), @r)
 end
