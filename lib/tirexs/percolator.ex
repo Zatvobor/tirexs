@@ -45,9 +45,9 @@ defmodule Tirexs.Percolator do
 
   @doc false
   def to_resource_json(definition) do
-    definition = Dict.delete(definition, :index)
-    definition = Dict.delete(definition, :type)
-    definition = Dict.delete(definition, :name)
+    definition = Keyword.delete(definition, :index)
+    definition = Keyword.delete(definition, :type)
+    definition = Keyword.delete(definition, :name)
 
     HTTP.encode(definition)
   end

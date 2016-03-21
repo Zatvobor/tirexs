@@ -8,7 +8,7 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro settings([do: block]) do
     quote do
-      var!(index) = Dict.put(var!(index), :settings, [])
+      var!(index) = Keyword.put(var!(index), :settings, [])
       var!(index) = put_setting(var!(index), :index)
       unquote(block)
     end
@@ -49,7 +49,7 @@ defmodule Tirexs.Index.Settings do
         var!(index) = put_index_setting(var!(index), :analysis, :analyzer)
       end
       [name, value] = [unquote(name), unquote(value)]
-      var!(index) = add_index_setting(var!(index), :analysis, :analyzer, Dict.put([], to_atom(name), value))
+      var!(index) = add_index_setting(var!(index), :analysis, :analyzer, Keyword.put([], to_atom(name), value))
     end
   end
 
@@ -83,7 +83,7 @@ defmodule Tirexs.Index.Settings do
         var!(index) = put_index_setting(var!(index), :analysis, :filter)
       end
       [name, value] = [unquote(name), unquote(value)]
-      var!(index) = add_index_setting(var!(index), :analysis, :filter, Dict.put([], to_atom(name), value))
+      var!(index) = add_index_setting(var!(index), :analysis, :filter, Keyword.put([], to_atom(name), value))
     end
   end
 
@@ -94,7 +94,7 @@ defmodule Tirexs.Index.Settings do
         var!(index) = put_index_setting(var!(index), :analysis, :tokenizer)
       end
       [name, value] = [unquote(name), unquote(value)]
-      var!(index) = add_index_setting(var!(index), :analysis, :tokenizer, Dict.put([], to_atom(name), value))
+      var!(index) = add_index_setting(var!(index), :analysis, :tokenizer, Keyword.put([], to_atom(name), value))
     end
   end
 

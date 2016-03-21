@@ -38,18 +38,13 @@ defmodule Tirexs.DSL.Logic do
   def to_atom(value), do: value
 
   @doc false
-  def is_dict?(dict) do
-    Record.is_record(dict, Dict) || false
-  end
-
-  @doc false
   def to_array(dict), do: to_array(dict, [])
   def to_array([], acc), do: acc
   def to_array([h|t], acc), do: to_array(t, acc ++ [[h]])
 
   @doc false
   def get_options(options) do
-    if Dict.size(options) > 2 do
+    if length(options) > 2 do
       Enum.fetch!(options, 2)
     else
       []
@@ -58,7 +53,7 @@ defmodule Tirexs.DSL.Logic do
 
   @doc false
   def extract_options(params) do
-    if Dict.size(params) > 1 do
+    if length(params) > 1 do
       [Enum.fetch!(params, 0), Enum.fetch!(params, 1), get_options(params)]
     else
       [Enum.fetch!(params, 0), [],[]]
@@ -73,7 +68,7 @@ defmodule Tirexs.DSL.Logic do
 
   @doc false
   def key(dict) do
-    List.first Dict.keys(dict)
+    List.first Keyword.keys(dict)
   end
 
   @doc false

@@ -60,7 +60,7 @@ defmodule Tirexs.Query.Filter do
   @doc false
   def numeric_range(options) do
     [field, value, _] = extract_options(options)
-    [numeric_range: Dict.put([], to_atom(field), value)]
+    [numeric_range: Keyword.put([], to_atom(field), value)]
   end
 
   @doc false
@@ -114,24 +114,24 @@ defmodule Tirexs.Query.Filter do
   @doc false
   def geo_bounding_box(options) do
     [field, value, options] = extract_options(options)
-    [geo_bounding_box: Dict.put([], to_atom(field), value) ++ options]
+    [geo_bounding_box: Keyword.put([], to_atom(field), value) ++ options]
   end
 
   @doc false
   def geo_distance(options) do
     [field, value, options] = extract_options(options)
-    [geo_distance: Dict.put([], to_atom(field), value) ++ options]
+    [geo_distance: Keyword.put([], to_atom(field), value) ++ options]
   end
 
   @doc false
   def geo_distance_range(options) do
     [field, value, options] = extract_options(options)
-    [geo_distance_range: Dict.put([], to_atom(field), value) ++ options]
+    [geo_distance_range: Keyword.put([], to_atom(field), value) ++ options]
   end
 
   @doc false
   def geo_polygon(options) do
     [field, value, options] = extract_options(options)
-    [geo_polygon: Dict.put([], to_atom(field), [points: value]) ++ options]
+    [geo_polygon: Keyword.put([], to_atom(field), [points: value]) ++ options]
   end
 end

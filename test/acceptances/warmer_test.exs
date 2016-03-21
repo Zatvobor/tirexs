@@ -29,6 +29,8 @@ defmodule Acceptances.WarmerTest do
 
     HTTP.put!("bear_test", warmers)
     {:ok, 200, body} = HTTP.get("bear_test/_warmer/warmer_1")
-    assert Dict.get(body, :bear_test) |> Dict.get(:warmers) == %{warmer_1: %{types: [], source: %{query: %{match_all: []}, facets: %{facet_1: %{terms: %{field: "field"}}}}}}
+
+    expected = %{types: [], source: %{query: %{match_all: []}, facets: %{facet_1: %{terms: %{field: "field"}}}}}
+    assert body[:bear_test][:warmers][:warmer_1] == expected
   end
 end

@@ -276,13 +276,13 @@ defmodule Tirexs.Bulk do
   def bulk(documents, options, settings) do
     IO.write :stderr, "warning: `Tirexs.Bulk.bulk/3` is deprecated and will be removed. Please use `Tirexs.bump(payload)._bulk/1,2,3` instead\n" <> Exception.format_stacktrace
     index = options[:index]
-    options = Dict.delete(options, :index)
+    options = Keyword.delete(options, :index)
 
     retry_on_conflict = options[:retry_on_conflict]
-    options = Dict.delete(options, :retry_on_conflict)
+    options = Keyword.delete(options, :retry_on_conflict)
 
     id = options[:id]
-    options = Dict.delete(options, :id)
+    options = Keyword.delete(options, :id)
 
     payload = Enum.map documents, fn(document) ->
 
@@ -297,11 +297,11 @@ defmodule Tirexs.Bulk do
 
       header = [_index: index, _type: type, _id: id ]
       if retry_on_conflict do
-        header = Dict.put(header, :_retry_on_conflict, retry_on_conflict)
+        header = Keyword.put(header, :_retry_on_conflict, retry_on_conflict)
       end
 
       [document, meta] = meta([:_version, :_routing, :_percolate, :_parent, :_timestamp, :_ttl], document, header)
-      header = Dict.put([], action, meta)
+      header = Keyword.put([], action, meta)
 
       output = []
       output =  output ++ [Tirexs.HTTP.encode(header)]
@@ -323,8 +323,8 @@ defmodule Tirexs.Bulk do
   @doc false
   def meta([h|t], document, acc) do
     unless document[h] == nil do
-      acc = Dict.put(acc, h, document[h])
-      document = Dict.delete(document, h)
+      acc = Keyword.put(acc, h, document[h])
+      document = Keyword.delete(document, h)
     end
     meta(t, document, acc)
   end
@@ -335,7 +335,7 @@ defmodule Tirexs.Bulk do
       true  -> document
       false ->
         {key, properties} = document
-        Dict.put([], key, properties)
+        Keyword.put([], key, properties)
     end
   end
 end

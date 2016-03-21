@@ -75,12 +75,12 @@ defmodule Tirexs.Search do
   def extract_index_options(options, index_opts \\ []) do
     if options[:index] do
       index_opts = index_opts ++ [index: options[:index]]
-      options = Dict.delete(options, :index)
+      options = Keyword.delete(options, :index)
     end
 
     if options[:type] do
       index_opts = index_opts ++ [type: options[:type]]
-      options = Dict.delete(options, :type)
+      options = Keyword.delete(options, :type)
     end
     [options, index_opts]
   end

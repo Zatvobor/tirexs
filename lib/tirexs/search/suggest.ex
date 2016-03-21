@@ -49,7 +49,7 @@ defmodule Tirexs.Search.Suggest do
 
   defp routers(name, options, add_options) do
     case options do
-      options -> Dict.put([], to_atom(name), extract(options) ++ add_options)
+      options -> Keyword.put([], to_atom(name), extract(options) ++ add_options)
     end
   end
 end

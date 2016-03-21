@@ -25,14 +25,14 @@ defmodule Tirexs.Query do
       [options] -> [match: extract(extract_do([options]))]
       _ ->
         [field, value, options] = extract_options(options)
-        [match: Dict.put([], to_atom(field), [query: value] ++ options)]
+        [match: Keyword.put([], to_atom(field), [query: value] ++ options)]
     end
   end
 
   @doc false
   def range(options) do
     [field, value, _] = extract_options(options)
-    [range: Dict.put([], to_atom(field), value)]
+    [range: Keyword.put([], to_atom(field), value)]
   end
 
   @doc false
@@ -101,13 +101,13 @@ defmodule Tirexs.Query do
   @doc false
   def term(options) do
     [field, values, options] = extract_options(options)
-    [term: Dict.put(options, to_atom(field), values)]
+    [term: Keyword.put(options, to_atom(field), values)]
   end
 
   @doc false
   def field(options) do
     [field, values, _] = extract_options(options)
-    [field: Dict.put([], to_atom(field), values)]
+    [field: Keyword.put([], to_atom(field), values)]
   end
 
   @doc false
@@ -119,13 +119,13 @@ defmodule Tirexs.Query do
   @doc false
   def flt_field(options) do
     [field, options, _] = extract_options(options)
-    [fuzzy_like_this_field: Dict.put([], to_atom(field), options)]
+    [fuzzy_like_this_field: Keyword.put([], to_atom(field), options)]
   end
 
   @doc false
   def fuzzy(options) do
     [field, values, _] = extract_options(options)
-    [fuzzy: Dict.put([], to_atom(field), values)]
+    [fuzzy: Keyword.put([], to_atom(field), values)]
   end
 
   @doc false
@@ -148,7 +148,7 @@ defmodule Tirexs.Query do
 
   @doc false
   def match_all(options) do
-    Dict.put([], :match_all,  options)
+    Keyword.put([], :match_all,  options)
   end
 
   @doc false
@@ -160,13 +160,13 @@ defmodule Tirexs.Query do
   @doc false
   def mlt_field(options) do
     [field, options, _] = extract_options(options)
-    [more_like_this_field: Dict.put([], to_atom(field), options)]
+    [more_like_this_field: Keyword.put([], to_atom(field), options)]
   end
 
   @doc false
   def prefix(options) do
     [field, values, _] = extract_options(options)
-    [prefix: Dict.put([], to_atom(field), values)]
+    [prefix: Keyword.put([], to_atom(field), values)]
   end
 
   @doc false
@@ -181,7 +181,7 @@ defmodule Tirexs.Query do
   @doc false
   def span_term(options) do
     [field, options, _] = extract_options(options)
-    [span_term: Dict.put([], to_atom(field), options)]
+    [span_term: Keyword.put([], to_atom(field), options)]
   end
 
   @doc false
@@ -214,7 +214,7 @@ defmodule Tirexs.Query do
   @doc false
   def terms(options) do
     [field, value, options] = extract_options(options)
-    [terms: Dict.put([], to_atom(field), value) ++ options]
+    [terms: Keyword.put([], to_atom(field), value) ++ options]
   end
 
   @doc false
@@ -229,7 +229,7 @@ defmodule Tirexs.Query do
   @doc false
   def wildcard(options) do
     [field, options, _] = extract_options(options)
-    [wildcard: Dict.put([], to_atom(field), options)]
+    [wildcard: Keyword.put([], to_atom(field), options)]
   end
 
   @doc false
@@ -244,7 +244,7 @@ defmodule Tirexs.Query do
   @doc false
   def text(options) do
     [field, values, _] = extract_options(options)
-    [text: Dict.put([], to_atom(field), values)]
+    [text: Keyword.put([], to_atom(field), values)]
   end
 
   @doc false
@@ -292,7 +292,7 @@ defmodule Tirexs.Query do
     custom_filters_score = extract(options) ++ custom_filters_score_opts
     query = [query: custom_filters_score[:query]]
     filters = custom_filters_score[:filters]
-    query = Dict.put(query, :filters, without_array(filters, []))
+    query = Keyword.put(query, :filters, without_array(filters, []))
     [custom_filters_score: query ++ custom_filters_score_opts]
   end
 
@@ -393,13 +393,13 @@ defmodule Tirexs.Query do
   @doc false
   def text_phrase(options) do
     [field, values, _] = extract_options(options)
-    [text_phrase: Dict.put([], to_atom(field), values)]
+    [text_phrase: Keyword.put([], to_atom(field), values)]
   end
 
   @doc false
   def text_phrase_prefix(options) do
     [field, values, _] = extract_options(options)
-    [text_phrase_prefix: Dict.put([], to_atom(field), values)]
+    [text_phrase_prefix: Keyword.put([], to_atom(field), values)]
   end
 
   @doc false

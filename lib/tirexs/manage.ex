@@ -50,7 +50,7 @@ defmodule Tirexs.Manage do
     options = options ++ [warmer: true]
     warmers = options[:warmers]
     Tirexs.ElasticSearch.put("bear_test/_warmer/warmer_1", settings)
-    Enum.each Dict.keys(warmers), fn(key) ->
+    Enum.each Keyword.keys(warmers), fn(key) ->
       url = make_url(to_string(key), options)
       body = JSX.encode!(warmers[key][:source])
       Tirexs.ElasticSearch.put(url, body, settings)
@@ -93,7 +93,7 @@ defmodule Tirexs.Manage do
   end
 
   defp delete_options([h|t], options) do
-    options = Dict.delete(options, h)
+    options = Keyword.delete(options, h)
     delete_options(t, options)
   end
 
