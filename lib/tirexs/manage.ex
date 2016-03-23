@@ -6,12 +6,13 @@ defmodule Tirexs.Manage do
 
   @doc false
   def count(options, settings) do
-    IO.write :stderr, "warning: `Tirexs.ElasticSearch.count/2` is deprecated, please use `Tirexs.Resources.APIs._count/2` instead\n" <> Exception.format_stacktrace
+    IO.write :stderr, "warning: `Tirexs.Manage.count/2` is deprecated, please use `Tirexs.Resources.APIs._count/2` instead\n" <> Exception.format_stacktrace
     execute_get_if_body_empty_and_post_otherwise("_count", options, settings)
   end
 
   @doc false
   def delete_by_query(options, settings) do
+    IO.write :stderr, "warning: `Tirexs.Manage.delete_by_query/2` is deprecated, and will be removed\n" <> Exception.format_stacktrace
     _body = JSX.encode!(options[:filter] || options[:query] || [])
     #To do add DELETE with body
     Tirexs.ElasticSearch.delete(make_url("_query", options), settings)
@@ -24,19 +25,19 @@ defmodule Tirexs.Manage do
 
   @doc false
   def validate(options, settings) do
-    IO.write :stderr, "warning: `Tirexs.ElasticSearch.validate/2` is deprecated, please use `Tirexs.Resources.APIs._validate_query/2` instead\n" <> Exception.format_stacktrace
+    IO.write :stderr, "warning: `Tirexs.Manage.validate/2` is deprecated, please use `Tirexs.Resources.APIs._validate_query/2` instead\n" <> Exception.format_stacktrace
     execute_get_if_body_empty_and_post_otherwise("_validate/query", options, settings)
   end
 
   @doc false
   def explain(options, settings) do
-    IO.write :stderr, "warning: `Tirexs.ElasticSearch.explain/2` is deprecated, please use `Tirexs.Resources.APIs._explain/2` instead\n" <> Exception.format_stacktrace
+    IO.write :stderr, "warning: `Tirexs.Manage.explain/2` is deprecated, please use `Tirexs.Resources.APIs._explain/2` instead\n" <> Exception.format_stacktrace
     Tirexs.ElasticSearch.get(make_url("_explain", options), settings)
   end
 
   @doc false
   def aliases(aliases_params, settings) do
-    IO.write :stderr, "warning: `Tirexs.ElasticSearch.aliases/2` is deprecated, please use `Tirexs.Resources.APIs._aliases/2` instead\n" <> Exception.format_stacktrace
+    IO.write :stderr, "warning: `Tirexs.Manage.aliases/2` is deprecated, please use `Tirexs.Resources.APIs._aliases/2` instead\n" <> Exception.format_stacktrace
     Tirexs.ElasticSearch.post("_aliases", JSX.encode!(aliases_params), settings)
   end
 
@@ -59,13 +60,12 @@ defmodule Tirexs.Manage do
 
   @doc false
   def refresh(index, settings) when is_binary(index) do
-    IO.write :stderr, "warning: `Tirexs.ElasticSearch.refresh/2` is deprecated, please use `Tirexs.Resources.APIs._refresh/2` instead\n" <> Exception.format_stacktrace
+    IO.write :stderr, "warning: `Tirexs.Manage.refresh/2` is deprecated, please use `Tirexs.Resources.APIs._refresh/2` instead\n" <> Exception.format_stacktrace
     Tirexs.ElasticSearch.post(to_string(index) <> "/_refresh", settings)
   end
 
   @doc false
   def refresh(indexes, settings) when is_list(indexes) do
-    IO.write :stderr, "warning: `Tirexs.ElasticSearch.refresh/2` is deprecated, please use `Tirexs.Resources.APIs._refresh/2` instead\n" <> Exception.format_stacktrace
     indexes = Enum.join(indexes, ",")
     refresh(indexes, settings)
   end

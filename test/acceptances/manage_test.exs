@@ -6,9 +6,6 @@ defmodule Acceptances.ManageTest do
 
   import Tirexs.Bulk
 
-  import Tirexs.Query
-  import Tirexs.Mapping, only: :macros
-  import Tirexs.Manage.Aliases, only: [aliases: 1, add: 1, remove: 1]
   require Tirexs.ElasticSearch
 
   @settings Tirexs.ElasticSearch.config()
@@ -24,33 +21,6 @@ defmodule Acceptances.ManageTest do
     :ok
   end
 
-
-  @tag skip: "deprecated and removed in 2.0 core"
-  test :delete_by_query do
-    index = [index: "bear_test", type: "bear_type"]
-    mappings do
-      index "id", type: "integer"
-      index "name", type: "string"
-    end
-
-    {:ok, _, _} = Tirexs.Mapping.create_resource(index, @settings)
-
-    Tirexs.Bulk.store [index: "bear_test", refresh: true], @settings do
-      create id: 1, name: "bar1", description: "foo bar test"
-      create id: 2, name: "bar2", description: "foo bar test"
-    end
-
-    {:ok, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
-
-    assert Dict.get(body, :count) == 2
-
-    query = query do: term "id", 1
-
-    {:ok, _, _} = Tirexs.Manage.delete_by_query([index: "bear_test", q: "id:1"] ++ query, @settings)
-    {:ok, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", @settings)
-
-    assert Dict.get(body, :count) == 1
-  end
 
   @tag skip: "deprecated in 1.6.0 and removed in 2.0"
   test :more_like_this do
