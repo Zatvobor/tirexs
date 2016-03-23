@@ -20,6 +20,7 @@ defmodule Tirexs.Manage do
 
   @doc false
   def more_like_this(options, settings) do
+    IO.write :stderr, "warning: `Tirexs.Manage.more_like_this/2` is deprecated, and will be removed\n" <> Exception.format_stacktrace
     Tirexs.ElasticSearch.get(make_url("_mlt", options), settings)
   end
 
