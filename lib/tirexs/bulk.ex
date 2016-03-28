@@ -157,24 +157,6 @@ defmodule Tirexs.Bulk do
     end
   end
 
-  @doc false
-  defmacro store(options, uri, [do: block]) do
-    IO.write :stderr, "warning: `Tirexs.Bulk.store/2` is deprecated and will be removed, please use `Tirexs.bump(payload)._bulk/1,2,3` instead\n" <> Exception.format_stacktrace
-    documents = extract_block(block)
-    quote do
-      [documents, options, uri] = [unquote(documents), unquote(options), unquote(uri)]
-      bulk(documents, options, uri)
-    end
-  end
-
-  @doc false
-  defmacro store(options, [do: block]) do
-    IO.write :stderr, "warning: `Tirexs.Bulk.store/1` is deprecated and will be removed, please use `Tirexs.bump(payload)._bulk/1,2,3` instead\n" <> Exception.format_stacktrace
-    quote do
-      store(unquote(options), Tirexs.get_uri_env(), [do: unquote(block)])
-    end
-  end
-
 
   @doc "Prepares `request_body` and `index` action all together"
   def index(request_body) do
@@ -269,73 +251,6 @@ defmodule Tirexs.Bulk do
       else
         header
       end
-    end
-  end
-
-  @doc false
-  def bulk(documents, options, settings) do
-    IO.write :stderr, "warning: `Tirexs.Bulk.bulk/3` is deprecated and will be removed. Please use `Tirexs.bump(payload)._bulk/1,2,3` instead\n" <> Exception.format_stacktrace
-    index = options[:index]
-    options = Keyword.delete(options, :index)
-
-    retry_on_conflict = options[:retry_on_conflict]
-    options = Keyword.delete(options, :retry_on_conflict)
-
-    id = options[:id]
-    options = Keyword.delete(options, :id)
-
-    payload = Enum.map documents, fn(document) ->
-
-      document = match(document)
-      action = key(document)
-      document = document[action]
-      type = get_type_from_document(document)
-
-      unless id do
-        id = get_id_from_document(document)
-      end
-
-      header = [_index: index, _type: type, _id: id ]
-      if retry_on_conflict do
-        header = Keyword.put(header, :_retry_on_conflict, retry_on_conflict)
-      end
-
-      [document, meta] = meta([:_version, :_routing, :_percolate, :_parent, :_timestamp, :_ttl], document, header)
-      header = Keyword.put([], action, meta)
-
-      output = []
-      output =  output ++ [Tirexs.HTTP.encode(header)]
-      unless action == :delete do
-        output =  output ++ [Tirexs.HTTP.encode(document)]
-      end
-      Enum.join(output, "\n")
-    end
-    payload = payload ++ [""]
-    payload = Enum.join(payload, "\n")
-    Tirexs.ElasticSearch.post("_bulk" <> to_param(options, ""), payload, settings)
-  end
-
-  @doc false
-  def meta([], document, acc) do
-    [document, acc]
-  end
-
-  @doc false
-  def meta([h|t], document, acc) do
-    unless document[h] == nil do
-      acc = Keyword.put(acc, h, document[h])
-      document = Keyword.delete(document, h)
-    end
-    meta(t, document, acc)
-  end
-
-  @doc false
-  def match(document) do
-    case is_list(document) do
-      true  -> document
-      false ->
-        {key, properties} = document
-        Keyword.put([], key, properties)
     end
   end
 end
