@@ -47,4 +47,11 @@ defmodule Tirexs.Resources.Document do
   def _source(a, b, c), do: __c(urn([a, b, c, @r[:action]]), @r)
   def _source(a, {b}), do: __c(urn([a, @r[:action], {b}]), @r)
   def _source(a), do: __c(urn([a, @r[:action]]), @r)
+
+  @doc false
+  @r [action: "/_update", bump: :post, bump!: :post!]
+  def _update(a, b, c, d), do: __c(urn([a, b, c, @r[:action], d]), @r)
+  def _update(a, b, c), do: __c(urn([a, b, c, @r[:action]]), @r)
+  def _update(a, {b}), do: __c(urn([a, @r[:action], {b}]), @r)
+  def _update(a), do: __c(urn([a, @r[:action]]), @r)
 end

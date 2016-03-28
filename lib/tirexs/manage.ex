@@ -44,6 +44,7 @@ defmodule Tirexs.Manage do
 
   @doc false
   def update(options, update_params, settings) do
+    IO.write :stderr, "warning: `Tirexs.Manage.update/3` is deprecated, please use `Tirexs.Resources.APIs._update` instead\n" <> Exception.format_stacktrace
     Tirexs.ElasticSearch.post(make_url("_update", options), JSX.encode!(update_params), settings)
   end
 
