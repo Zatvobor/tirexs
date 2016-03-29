@@ -61,6 +61,9 @@ defmodule Tirexs.Resources.APIs do
   defdelegate [ _search(), _search(a), _search(a,b), _search(a,b,c) ], to: Search
   defdelegate [ _search_scroll(), _search_scroll(a) ], to: Search
   defdelegate [ _search_scroll_all() ], to: Search
+  defdelegate [ percolator(a,b) ], to: Search
+  defdelegate [ _percolate(a), _percolate(a,b), _percolate(a,b,c), _percolate(a,b,c,d) ], to: Search
+  defdelegate [ _percolate_count(a), _percolate_count(a,b), _percolate_count(a,b,c), _percolate_count(a,b,c,d) ], to: Search
 
 
   alias Tirexs.Resources.Indices
