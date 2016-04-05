@@ -7,7 +7,7 @@ defmodule Tirexs.Search.Aggs do
   """
 
   use Tirexs.DSL.Logic
-  alias Tirexs.{Query, Query.Filter}
+  alias Tirexs.{Query.Filter}
 
 
   @doc false
@@ -21,8 +21,13 @@ defmodule Tirexs.Search.Aggs do
     case block do
       {:term_stats, _, [a,b]}         -> term_stats(a, b)
       {:terms, _, [params]}           -> terms(params)
+      {:term, _, [field, value]}      -> term(field, value)
       {:stats, _, [params]}           -> stats(params)
+      {:histogram, _, [params]}       -> histogram(params)
       {:date_histogram, _, [params]}  -> date_histogram(params)
+      {:geo_distance, _, [params]}    -> geo_distance(params)
+      {:range, _, [params]}           -> range(params)
+      {:nested, _, [params]}          -> nested(params)
       {name, _, [params]}             -> _aggs(name, params[:do])
       {name, _, params}               -> _aggs(name, params)
     end
@@ -39,8 +44,18 @@ defmodule Tirexs.Search.Aggs do
   end
 
   @doc false
+  def term(field, value) do
+    [term: [{to_atom(field), value}]]
+  end
+
+  @doc false
   def stats(stats) do
     [aggs: [{to_atom("#{stats[:field]}_stats"), [stats: stats]}]]
+  end
+
+  @doc false
+  def histogram(options) do
+    [histogram: options]
   end
 
   @doc false
@@ -48,19 +63,31 @@ defmodule Tirexs.Search.Aggs do
     [date_histogram: options]
   end
 
-
-  defp _aggs(name, params, add_options \\ []) do
-    if is_list(params) do
-      add_options = Enum.fetch!(params, 0)
-      params = extract_do(params, 1)
-    end
-    routers(name, params, add_options)
+  @doc false
+  def geo_distance(options) do
+    [geo_distance: options]
   end
 
-  defp routers(name, options, add_options) do
-    case options do
-      {:filter, _, [params]} -> [{to_atom(name), Filter._filter(params[:do])}]
-      options                -> [{to_atom(name), extract(options) ++ add_options }]
+  @doc false
+  def range(options) do
+    [range: options]
+  end
+
+  @doc false
+  def nested(params) do
+    [nested: params]
+  end
+
+
+  defp _aggs(name, params) when is_tuple(params) do
+    routers(name, params)
+  end
+
+  defp routers(name, body) when is_tuple(body) do
+    case body do
+      {:__block__, _, params}   -> [ {to_atom(name), extract(params)} ]
+      {:filter, _, [params]}    -> [ {to_atom(name), Filter._filter(params[:do])} ]
+      _                         -> [ {to_atom(name), extract(body)} ]
     end
   end
 end

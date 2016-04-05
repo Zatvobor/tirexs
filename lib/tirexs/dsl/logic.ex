@@ -24,11 +24,11 @@ defmodule Tirexs.DSL.Logic do
   ## Common utilities
 
   @doc false
-  def extract_block([]), do: []
   def extract_block(block) do
     case block do
       {:__block__, _, block_list} -> block_list
-      _ -> block
+      [] -> []
+      _  -> block
     end
   end
 

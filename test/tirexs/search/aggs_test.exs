@@ -38,10 +38,15 @@ defmodule Tirexs.Search.AggsTest do
         filter do
           term "user", "mvg"
         end
+        aggs do
+          agg_name do
+            terms [field: "gender"]
+          end
+        end
       end
     end
 
-    expected = [aggs: [shit: [filter: [term: [user: "mvg"]]]]]
+    expected = [aggs: [shit: [filter: [term: [user: "mvg"]], aggs: [agg_name: [terms: [field: "gender"]]]]]]
     assert actual == expected
   end
 
@@ -63,6 +68,45 @@ defmodule Tirexs.Search.AggsTest do
     end
 
     expected = [aggs: [histo1: [date_histogram: [field: "timestamp", interval: "day"], aggs: [price_stats: [stats: [field: "price"]]]]]]
+    assert actual == expected
+  end
+
+  test "nested" do
+    actual = aggs do
+      aggs1 do
+        nested [path: "obj1"]
+        aggs do
+          aggs1 do
+            terms [field: "obj1.name"]
+          end
+        end
+      end
+    end
+
+    expected = [aggs: [aggs1: [nested: [path: "obj1"], aggs: [aggs1: [terms: [field: "obj1.name"]]]]]]
+    assert actual == expected
+  end
+
+  test "complex nested" do
+    actual = aggs do
+      nested_obj1 do
+        nested [path: "obj1"]
+        aggs do
+          color_filter do
+            filter do
+              term "obj1.color", "blue"
+            end
+            aggs do
+              name_terms do
+                terms [field: "obj1.name"]
+              end
+            end
+          end
+        end
+      end
+    end
+
+    expected = [aggs: [nested_obj1: [nested: [path: "obj1"], aggs: [color_filter: [filter: [term: ['obj1.color': "blue"]], aggs: [name_terms: [terms: [field: "obj1.name"]]]]]]]]
     assert actual == expected
   end
 end
