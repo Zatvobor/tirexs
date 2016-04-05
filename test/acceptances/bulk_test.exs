@@ -44,11 +44,46 @@ defmodule Acceptances.BulkTest do
     {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", settings)
     assert body[:count] == 2
 
-    Tirexs.Bulk.store [index: "bear_test", type: "document", id: 1, retry_on_conflict: 3], settings do
-      update doc: [title: "updated_title"]
+    # Test update
+    updated_title = "updated_title"
+    Tirexs.Bulk.store [index: "bear_test", type: "document", retry_on_conflict: 3], settings do
+      update [id: 1, title: updated_title]
     end
 
     Tirexs.Manage.refresh("bear_test", settings)
+    {_, _, %{_source: %{title: title}}} = Tirexs.ElasticSearch.get("bear_test/document/1", settings)
+    assert title == updated_title
+
+    # Test multiple update
+    updated_title = "updated_title"
+    Tirexs.Bulk.store [index: "bear_test", type: "document", retry_on_conflict: 3], settings do
+      update [id: 1, title: updated_title]
+      update [id: 2, title: updated_title]
+    end
+
+    Tirexs.Manage.refresh("bear_test", settings)
+    {_, _, %{_source: %{title: title}}} = Tirexs.ElasticSearch.get("bear_test/document/1", settings)
+    assert title == updated_title
+    {_, _, %{_source: %{title: title}}} = Tirexs.ElasticSearch.get("bear_test/document/2", settings)
+    assert title == updated_title
+
+    # Test upsert
+    Tirexs.Bulk.store [index: "bear_test", type: "document", retry_on_conflict: 3], settings do
+      update [id: 3, title: "updated_title"], upsert: true
+    end
+
+    Tirexs.Manage.refresh("bear_test", settings)
+    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", settings)
+    assert body[:count] == 3
+
+    # Test no upsert
+    Tirexs.Bulk.store [index: "bear_test", type: "document", retry_on_conflict: 3], settings do
+      update [id: 4, title: "updated_title"]
+    end
+
+    Tirexs.Manage.refresh("bear_test", settings)
+    {_, _, body} = Tirexs.ElasticSearch.get("bear_test/_count", settings)
+    assert body[:count] == 3
 
     {_, _, _body} = Tirexs.ElasticSearch.get("bear_test/document/1", settings)
   end

@@ -8,6 +8,36 @@ An Elixir flavored DSL for building JSON based settings, mappings, queries, perc
 _Hint: Check out [/examples](/examples) directory as a quick intro._
 
 
+Configuration
+-------------------
+
+In your mix app, add this to your mix.exs:
+```elixir
+def deps do
+  [{:tirexs, "~> 0.7.6"}]
+end
+```
+To setup the elasticsearch url config, add this to dev.exs (or test/prod.exs/etc):
+```elixir
+# As a keyword list
+config :tirexs, :uri,
+  authority: "localhost:9200",
+  fragment: nil,
+  host: "localhost",
+  path: "/",
+  port: 9200,
+  query: nil,
+  scheme: "http",
+  userinfo: nil
+# Or as a URI struct
+config :tirexs, :uri, %URI{authority: "localhost:9200", fragment: nil,
+                           host: "localhost", path: "/", port: 9200,
+                           query: nil, scheme: "http", userinfo: nil}
+# Or as a full url string
+config :tirexs, :uri URI.parse("http://localhost:9200")
+```
+NOTE: it defaults to 127.0.0.1:9200 but it is recommended to set your config settings now. Good practice.
+
 Walk-through a code
 -------------------
 

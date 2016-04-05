@@ -3,28 +3,64 @@ defmodule Tirexs.Bulk do
 
   import Tirexs.DSL.Logic
 
-
   @doc false
   defmacro store(options, settings, [do: block]) do
     documents = extract_block(block)
     quote do
       [documents, options, settings] = [unquote(documents), unquote(options), unquote(settings)]
+      # Wrap documents if not in a list (note that each item is a keyword list)
+      unless hd(documents) |> is_list, do: documents = [documents]
       bulk(documents, options, settings)
     end
   end
 
+  @doc false
+  def create(doc) do
+    doc = match(doc)
+    {doc, action_header} = create_action_and_header(:create, doc)
+    [action_header, doc]
+  end
 
   @doc false
-  def create(opts), do: [create: opts]
+  def delete(doc) do
+    doc = match(doc)
+    {doc, action_header} = create_action_and_header(:delete, doc)
+    [action_header]
+  end
 
   @doc false
-  def delete(opts), do: [delete: opts]
+  def index(doc) do
+    doc = match(doc)
+    {doc, action_header} = create_action_and_header(:index, doc)
+    [action_header, doc]
+  end
 
-  @doc false
-  def index(opts),  do: [index: opts]
+  @doc """
+    Updates document with options
+    Available options are:
+    - upsert: true/false (update or fallback to create if doc with id does not exist)
+    - retry_on_conflict: integer (number of times to retry if conflict exists)
+  """
+  def update(doc, opts \\ []) do
+    doc = match(doc)
+    {doc, action_header} = create_action_and_header(:update, doc)
+    if Keyword.has_key?(opts, :retry_on_conflict) do
+      action_header = Keyword.put(action_header, :_retry_on_conflict, Keyword.get(opts, :retry_on_conflict))
+    end
+    doc_info = [doc: doc]
+    if Keyword.get(opts, :upsert), do: doc_info = Keyword.put(doc_info, :doc_as_upsert, true)
+    [action_header, doc_info]
+  end
 
-  @doc false
-  def update(opts), do: [update: opts]
+  # Returns a tuple of doc and action/header tuple
+  # The doc has keys stripped out that are in header
+  defp create_action_and_header(action, doc) do
+    {doc, header} = extract_keys([:_version, :_routing, :_percolate, :_parent, :_timestamp, :_ttl], doc, [])
+    header =
+      Keyword.put(header, :_id, get_id_from_document(doc))
+      |> Keyword.put(:_type, get_type_from_document(doc))
+    {doc, {action, header}}
+  end
 
   @doc false
   def bulk(documents, options, settings) do
@@ -37,29 +73,22 @@ defmodule Tirexs.Bulk do
     id = options[:id]
     options = Dict.delete(options, :id)
 
-    payload = Enum.map documents, fn(document) ->
+    payload = Enum.map documents, fn(infos) ->
+      {action, header} = hd(infos)
 
-      document = match(document)
-      action = key(document)
-      document = document[action]
-      type = get_type_from_document(document)
-
-      unless id do
-        id = get_id_from_document(document)
+      header = Keyword.put(header, :_index, index)
+      if retry_on_conflict != nil and !Keyword.has_key?(header, :_retry_on_conflict) do
+        header = Keyword.put(header, :_retry_on_conflict, retry_on_conflict)
       end
 
-      header = [_index: index, _type: type, _id: id ]
-      if retry_on_conflict do
-        header = Dict.put(header, :retry_on_conflict, retry_on_conflict)
-      end
-
-      [document, meta] = meta([:_version, :_routing, :_percolate, :_parent, :_timestamp, :_ttl], document, header)
-      header = Dict.put([], action, meta)
+      header = Map.put(%{}, action, header)
 
       output = []
       output =  output ++ [JSX.encode!(header)]
-      unless action == :delete do
-        output =  output ++ [convert_document_to_json(document)]
+
+      doc_info = infos |> Enum.at(1)
+      if doc_info do
+        output =  output ++ [convert_document_to_json(doc_info)]
       end
       Enum.join(output, "\n")
     end
@@ -69,17 +98,13 @@ defmodule Tirexs.Bulk do
   end
 
   @doc false
-  def meta([], document, acc) do
-    [document, acc]
-  end
-
-  @doc false
-  def meta([h|t], document, acc) do
+  def extract_keys([], document, acc), do: {document, acc}
+  def extract_keys([h|t], document, acc) do
     unless document[h] == nil do
-      acc = Dict.put(acc, h, document[h])
-      document = Dict.delete(document, h)
+      acc = Keyword.put(acc, h, document[h])
+      document = Keyword.delete(document, h)
     end
-    meta(t, document, acc)
+    extract_keys(t, document, acc)
   end
 
   @doc false

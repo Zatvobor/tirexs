@@ -88,6 +88,17 @@ defmodule Tirexs.Index.Settings do
   end
 
   @doc false
+  defmacro char_filter(name, value) do
+    quote do
+      if var!(index)[:settings][:analysis][:char_filter] == nil do
+        var!(index) = put_index_setting(var!(index), :analysis, :char_filter)
+      end
+      [name, value] = [unquote(name), unquote(value)]
+      var!(index) = add_index_setting(var!(index), :analysis, :char_filter, Dict.put([], to_atom(name), value))
+    end
+  end
+
+  @doc false
   defmacro tokenizer(name, value) do
     quote do
       if var!(index)[:settings][:analysis][:tokenizer] == nil do
