@@ -1,5 +1,5 @@
 defmodule Tirexs.Search.Facets do
-  @moduledoc "this module is deprecated in favor of `Tirexs.Aggs`"
+  @moduledoc "this module is deprecated in favor of `Tirexs.Search.Aggs`"
 
   use Tirexs.DSL.Logic
 
