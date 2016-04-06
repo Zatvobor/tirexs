@@ -26,7 +26,7 @@ defmodule Tirexs.Search.Warmer do
       warmers_opts = Enum.fetch!(options, 0)
       options = extract_do(options, 1)
     end
-    Dict.put([], to_atom(name), routers(name, options, []) ++ warmers_opts)
+    Keyword.put([], to_atom(name), routers(name, options, []) ++ warmers_opts)
   end
 
   def source(options, source_opts \\ []) do
@@ -41,7 +41,7 @@ defmodule Tirexs.Search.Warmer do
   defp routers(name, options, add_options) do
     case options do
       {:source, _, [params]} -> source(params[:do])
-      options                -> Dict.put([], to_atom(name), extract(options) ++ add_options)
+      options                -> Keyword.put([], to_atom(name), extract(options) ++ add_options)
     end
   end
 end

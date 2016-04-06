@@ -5,14 +5,14 @@ defmodule Tirexs.Index.Logic do
   @doc false
   def put_setting(index, type) do
     settings = index[:settings]
-    settings = Dict.put(settings, type, [])
-    Dict.put(index, :settings, settings)
+    settings = Keyword.put(settings, type, [])
+    Keyword.put(index, :settings, settings)
   end
 
   @doc false
   def put_index_setting(index, main_type, type) do
     index_settings = index[:settings][main_type]
-    index_settings = Dict.put(index_settings, type, [])
+    index_settings = Keyword.put(index_settings, type, [])
 
     pass_settings(index, main_type, index_settings)
   end
@@ -28,7 +28,7 @@ defmodule Tirexs.Index.Logic do
   def add_index_setting(index, main_type, type, value) do
     main_index_settings = index[:settings][main_type]
     type_settings       = index[:settings][main_type][type]
-    main_index_settings = Dict.put(main_index_settings, type, type_settings ++ value)
+    main_index_settings = Keyword.put(main_index_settings, type, type_settings ++ value)
 
     pass_settings(index, main_type, main_index_settings)
   end
@@ -38,14 +38,14 @@ defmodule Tirexs.Index.Logic do
     main_index_settings = index[:settings][main_type]
     type_settings       = index[:settings][main_type][type]
     type_with_nested_type_settings = type_settings[nested_type]
-    type_settings       = Dict.put(type_settings, nested_type, type_with_nested_type_settings ++ value)
-    main_index_settings = Dict.put(main_index_settings, type, type_settings)
+    type_settings       = Keyword.put(type_settings, nested_type, type_with_nested_type_settings ++ value)
+    main_index_settings = Keyword.put(main_index_settings, type, type_settings)
 
     pass_settings(index, main_type, main_index_settings)
   end
 
 
   defp pass_settings(index, type, settings) do
-    Dict.put(index, :settings, Dict.put(index[:settings], type, settings))
+    Keyword.put(index, :settings, Keyword.put(index[:settings], type, settings))
   end
 end

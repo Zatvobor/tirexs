@@ -16,6 +16,11 @@ defmodule Acceptances.ExamplesTest do
     Tirexs.Resources.exists!("bear_test")
   end
 
+  test ~S(loads "examples/bulk.exs") do
+    Path.expand("examples/bulk.exs") |> Tirexs.load_file
+    Tirexs.Resources.exists!("bear_test")
+  end
+
   test ~S(loads "examples/settings.exs") do
     Path.expand("examples/settings.exs") |> Tirexs.load_file
     Tirexs.Resources.exists!("bear_test")

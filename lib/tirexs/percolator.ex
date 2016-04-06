@@ -37,26 +37,20 @@ defmodule Tirexs.Percolator do
 
   @doc false
   def create_resource(definition, uri \\ Tirexs.get_uri_env()) do
-    path = "#{definition[:index]}/.percolator/#{definition[:name]}"
-    body = to_resource_json(definition)
-
-    HTTP.put(path, uri, body)
+    Tirexs.bump(definition, uri).percolator(definition[:index], definition[:name])
   end
 
   @doc false
   def to_resource_json(definition) do
-    definition = Dict.delete(definition, :index)
-    definition = Dict.delete(definition, :type)
-    definition = Dict.delete(definition, :name)
+    definition = Keyword.delete(definition, :index)
+    definition = Keyword.delete(definition, :type)
+    definition = Keyword.delete(definition, :name)
 
     HTTP.encode(definition)
   end
 
   @doc false
   def match(definition, uri \\ Tirexs.get_uri_env()) do
-    path = "#{definition[:index]}/#{definition[:type]}/_percolate"
-    body = to_resource_json(definition)
-
-    HTTP.post(path, uri, body)
+    Tirexs.bump(definition, uri)._percolate(definition[:index], definition[:type])
   end
 end

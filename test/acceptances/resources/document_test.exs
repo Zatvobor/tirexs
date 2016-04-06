@@ -35,6 +35,13 @@ defmodule Acceptances.Resources.DocumentTest do
     assert found
   end
 
+  test "_update" do
+    HTTP.put!("/bear_test/my_type/1?refresh=true", [user: "kimchy"])
+    Resources.bump!([doc: [user: "zatvobor"]])._update("/bear_test/my_type/1")
+    { :ok, 200, %{_source: %{user: user}} } = Resources.bump.doc("/bear_test/my_type/1")
+    assert user == "zatvobor"
+  end
+
   test "_bulk/0 and payload as a string" do
     payload = ~S'''
     { "index": { "_index": "website", "_type": "blog", "_id": "1" }}

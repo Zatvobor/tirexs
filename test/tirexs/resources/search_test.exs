@@ -158,4 +158,69 @@ defmodule Tirexs.Resources.SearchTest do
     actual = Search._search_scroll_all()
     assert actual == "_search/scroll/_all"
   end
+
+  test ~S| functions like a 'percolator("twitter", "1")' | do
+    actual = Search.percolator("twitter", "1")
+    assert actual == "twitter/.percolator/1"
+  end
+
+  test ~S| functions like a '_percolate("twitter/tweet/1")' | do
+    actual = Search._percolate("twitter/tweet/1")
+    assert actual == "twitter/tweet/1/_percolate"
+  end
+
+  test ~S| functions like a '_percolate("twitter/tweet/1", { [ignore_unavailable: true] })' | do
+    actual = Search._percolate("twitter/tweet/1", { [ignore_unavailable: true] })
+    assert actual == "twitter/tweet/1/_percolate?ignore_unavailable=true"
+  end
+
+  test ~S| functions like a '_percolate("twitter", "tweet")' | do
+    actual = Search._percolate("twitter", "tweet")
+    assert actual == "twitter/tweet/_percolate"
+  end
+
+  test ~S| functions like a '_percolate("twitter", "tweet", { [ignore_unavailable: true] })' | do
+    actual = Search._percolate("twitter", "tweet", { [ignore_unavailable: true] })
+    assert actual == "twitter/tweet/_percolate?ignore_unavailable=true"
+  end
+
+  test ~S| functions like a '_percolate("twitter", "tweet", 1)' | do
+    actual = Search._percolate("twitter", "tweet", 1)
+    assert actual == "twitter/tweet/1/_percolate"
+  end
+
+  test ~S| functions like a '_percolate("twitter", "tweet", 1, { [ignore_unavailable: true] })' | do
+    actual = Search._percolate("twitter", "tweet", 1, { [ignore_unavailable: true] })
+    assert actual == "twitter/tweet/1/_percolate?ignore_unavailable=true"
+  end
+
+  test ~S| functions like a '_percolate_count("twitter/tweet/1")' | do
+    actual = Search._percolate_count("twitter/tweet/1")
+    assert actual == "twitter/tweet/1/_percolate/count"
+  end
+
+  test ~S| functions like a '_percolate_count("twitter/tweet/1", { [ignore_unavailable: true] })' | do
+    actual = Search._percolate_count("twitter/tweet/1", { [ignore_unavailable: true] })
+    assert actual == "twitter/tweet/1/_percolate/count?ignore_unavailable=true"
+  end
+
+  test ~S| functions like a '_percolate_count("twitter", "tweet")' | do
+    actual = Search._percolate_count("twitter", "tweet")
+    assert actual == "twitter/tweet/_percolate/count"
+  end
+
+  test ~S| functions like a '_percolate_count("twitter", "tweet", { [ignore_unavailable: true] })' | do
+    actual = Search._percolate_count("twitter", "tweet", { [ignore_unavailable: true] })
+    assert actual == "twitter/tweet/_percolate/count?ignore_unavailable=true"
+  end
+
+  test ~S| functions like a '_percolate_count("twitter", "tweet", 1)' | do
+    actual = Search._percolate_count("twitter", "tweet", 1)
+    assert actual == "twitter/tweet/1/_percolate/count"
+  end
+
+  test ~S| functions like a '_percolate_count("twitter", "tweet", 1, { [ignore_unavailable: true] })' | do
+    actual = Search._percolate_count("twitter", "tweet", 1, { [ignore_unavailable: true] })
+    assert actual == "twitter/tweet/1/_percolate/count?ignore_unavailable=true"
+  end
 end

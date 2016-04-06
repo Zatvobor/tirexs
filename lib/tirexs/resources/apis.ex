@@ -43,6 +43,7 @@ defmodule Tirexs.Resources.APIs do
   defdelegate [ _bulk(), _bulk(a), _bulk(a,b), _bulk(a,b,c) ], to: Document
   defdelegate [ _mget(), _mget(a), _mget(a,b), _mget(a,b,c) ], to: Document
   defdelegate [ _source(a), _source(a,b), _source(a,b,c), _source(a,b,c,d) ], to: Document
+  defdelegate [ _update(a), _update(a,b), _update(a,b,c), _update(a,b,c,d) ], to: Document
   defdelegate [ index(a), index(a,b), index(a,b,c), index(a,b,c,d) ], to: Document
   defdelegate [ doc(a), doc(a,b), doc(a,b,c), doc(a,b,c,d) ], to: Document
 
@@ -60,6 +61,9 @@ defmodule Tirexs.Resources.APIs do
   defdelegate [ _search(), _search(a), _search(a,b), _search(a,b,c) ], to: Search
   defdelegate [ _search_scroll(), _search_scroll(a) ], to: Search
   defdelegate [ _search_scroll_all() ], to: Search
+  defdelegate [ percolator(a,b) ], to: Search
+  defdelegate [ _percolate(a), _percolate(a,b), _percolate(a,b,c), _percolate(a,b,c,d) ], to: Search
+  defdelegate [ _percolate_count(a), _percolate_count(a,b), _percolate_count(a,b,c), _percolate_count(a,b,c,d) ], to: Search
 
 
   alias Tirexs.Resources.Indices
