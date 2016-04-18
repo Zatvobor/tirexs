@@ -2,7 +2,18 @@ defmodule Tirexs.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :tirexs, version: "0.8.0", elixir: "~> 1.2.0", description: description, package: package, deps: deps ]
+    [
+      app: :tirexs,
+      name: "Tirexs",
+      version: "0.8.0",
+      source_url: github,
+      homepage_url: github,
+      elixir: "~> 1.2.0",
+      description: description,
+      package: package,
+      deps: deps,
+      docs: [extras: ["README.md", "CONTRIBUTING.md"]]
+    ]
   end
 
   def application do
@@ -14,7 +25,7 @@ defmodule Tirexs.Mixfile do
   end
 
   defp deps do
-    [ {:exjsx, "~> 3.2.0"} ]
+    [ {:exjsx, "~> 3.2.0"}, {:ex_doc, "~> 0.11", only: :dev}, {:earmark, "~> 0.1", only: :dev} ]
   end
 
   defp description do
@@ -27,7 +38,11 @@ defmodule Tirexs.Mixfile do
     [
       maintainers: ["Aleksey Zatvobor"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/Zatvobor/tirexs", "Contributors" => "https://github.com/Zatvobor/tirexs/graphs/contributors", "Issues" => "https://github.com/Zatvobor/tirexs/issues"}
+      links: %{"GitHub" => github, "Contributors" => contributors, "Issues" => issues}
     ]
   end
+
+  defp github, do: "https://github.com/Zatvobor/tirexs"
+  defp contributors, do: "https://github.com/Zatvobor/tirexs/graphs/contributors"
+  defp issues, do: "https://github.com/Zatvobor/tirexs/issues"
 end
