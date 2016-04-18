@@ -446,4 +446,24 @@ defmodule Tirexs.QueryTest do
     expected = [query: [custom_filters_score: [filters: [[filter: [range: [age: [from: 0, to: 10]]], boost: 1],[filter: [range: [age: [from: 0, to: 10]]], boost: 2]], query: [match_all: []], score_mode: "first"]]]
     assert query == expected
   end
+
+  test "query w/ function_score" do
+    query = query do
+      function_score do
+        query do
+          match_all
+        end
+        field_value_factor do
+          field "votes"
+          modifier "log1p"
+          factor 2.0
+        end
+        boost_mode "sum"
+        max_boost 1.5
+      end
+    end
+
+    expected = [query: [function_score: [query: [match_all: []], field_value_factor: [field: "votes", modifier: "log1p", factor: 2.0], boost_mode: "sum", max_boost: 1.5]]]
+    assert query == expected
+  end
 end
