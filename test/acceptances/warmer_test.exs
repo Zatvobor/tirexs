@@ -11,16 +11,16 @@ defmodule Acceptances.WarmerTest do
 
   import Tirexs.Search.Warmer
 
-  test :create_warmer do
+  test "index warmers" do
     warmers = warmers do
       warmer_1 [types: []] do
         source do
           query do
             match_all
           end
-          facets do
-            facet_1 do
-              terms field: "field"
+          aggs do
+            agg_name do
+              terms [field: "gender"]
             end
           end
         end
@@ -28,9 +28,9 @@ defmodule Acceptances.WarmerTest do
     end
 
     HTTP.put!("bear_test", warmers)
-    {:ok, 200, body} = HTTP.get("bear_test/_warmer/warmer_1")
+    {:ok, 200, %{bear_test: %{warmers: %{warmer_1: actual }}}} = HTTP.get("bear_test/_warmer/warmer_1")
 
-    expected = %{types: [], source: %{query: %{match_all: []}, facets: %{facet_1: %{terms: %{field: "field"}}}}}
-    assert body[:bear_test][:warmers][:warmer_1] == expected
+    expected = %{source: %{aggs: %{agg_name: %{terms: %{field: "gender"}}}, query: %{match_all: []}}, types: []}
+    assert actual == expected
   end
 end

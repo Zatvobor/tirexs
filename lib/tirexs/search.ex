@@ -17,7 +17,7 @@ defmodule Tirexs.Search do
 
 
   alias Tirexs.{Query, Query.Filter}
-  alias Tirexs.{Search.Facets, Search.Suggest, Search.Rescore}
+  alias Tirexs.{Search.Aggs, Search.Suggest, Search.Rescore}
 
 
   @doc false
@@ -27,7 +27,7 @@ defmodule Tirexs.Search do
       {:query, _, options}          -> Query._query(options)
       {:filter, _, [params]}        -> Filter._filter(params[:do])
       {:filter, _, options}         -> Filter._filter(options)
-      {:facets, _, [params]}        -> Facets._facets(params[:do])
+      {:aggs, _, [params]}          -> Aggs._aggs(params[:do])
       {:highlight, _, [params]}     -> highlight(params)
       {:sort, _, [params]}          -> sort(params)
       {:size, _, [param]}           -> size(param)

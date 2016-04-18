@@ -78,6 +78,11 @@ defmodule Tirexs.Search.Aggs do
     [nested: params]
   end
 
+  @doc false
+  def _aggs(params) when is_tuple(params) do
+    routers(:aggs, params)
+  end
+
 
   defp _aggs(name, params) when is_tuple(params) do
     routers(name, params)
