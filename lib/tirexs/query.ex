@@ -1,6 +1,6 @@
 defmodule Tirexs.Query do
   @moduledoc false
-
+  
   import Tirexs.DSL.Logic
   import Tirexs.Query.Logic
 
@@ -39,6 +39,38 @@ defmodule Tirexs.Query do
   def multi_match(options) do
     [query, fields, _] = extract_options(options)
     [multi_match: [query: query, fields: fields]]
+  end
+
+  @doc false
+  def function_score(options) do
+    opts = extract_block(options[:do])
+    [function_score: extract(opts)]
+  end
+
+  @doc false
+  def field_value_factor(options) do
+    opts = Enum.fetch!(options, 0)[:do]
+    [field_value_factor: extract(opts)]
+  end
+
+  @doc false
+  def modifier(param) do
+    [modifier: Enum.fetch!(param, 0)]
+  end
+
+  @doc false
+  def boost_mode(param) do
+    [boost_mode: Enum.fetch!(param, 0)]
+  end
+
+  @doc false
+  def max_boost(param) do
+    [max_boost: Enum.fetch!(param, 0)]
+  end
+
+  @doc false
+  def factor(param) do
+    [factor: Enum.fetch!(param, 0)]
   end
 
   @doc false
@@ -106,8 +138,14 @@ defmodule Tirexs.Query do
 
   @doc false
   def field(options) do
-    [field, values, _] = extract_options(options)
-    [field: Keyword.put([], to_atom(field), values)]
+    opts = case Enum.count(options) do
+      1 -> Enum.fetch!(options, 0)
+      _ ->
+        [field, values, _] = extract_options(options)
+        Keyword.put([], to_atom(field), values)
+    end
+
+    [field: opts]
   end
 
   @doc false
