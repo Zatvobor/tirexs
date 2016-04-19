@@ -16,6 +16,12 @@ defmodule Tirexs do
     * `Tirexs.Resources.APIs` - helps you to build an URN parts from set of
       available REST API helpers into request URL.
 
+  ## Multiple operations in single call:
+
+    * `Tirexs.Bulk` - the elasticsearch Bulk API.
+
+    * `Tirexs.MultiGet` - the elasticsearch Multi GET API.
+
   Please check https://github.com/Zatvobor/tirexs/tree/master/examples for getting
   more details what exactly Tirexs does for you.
 

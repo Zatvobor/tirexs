@@ -1,13 +1,31 @@
 defmodule Tirexs.MultiGet do
-  @moduledoc false
-  @note """
+  @moduledoc """
   Multi GET API allows to get multiple documents based on an index,
   type (optional) and id (and possibly routing).
+
+  A `mget` macro helps create a request `body`.
+
+  Getting multiple documents by their id:
+
+      request = mget do
+        ids([ 1, 2 ])
+      end
+      Tirexs.bump(request)._mget("bear_test", "my_type")
+
+  Getting multiple documents:
+
+      request = mget do
+        docs([
+          [ index: "bear_test", type: "bear_type", id: 1, fields: [] ],
+          [ index: "bear_test", type: "bear_type", id: 2, source: false ]
+        ])
+      end
+      Tirexs.bump(request)._mget()
 
   """
 
 
-  @doc false
+  @doc "A `mget` macro helps create a request `body`."
   defmacro mget([do: block]) do
     quote do
       Tirexs.HTTP.encode(unquote(block)) <> "\n"
@@ -15,12 +33,12 @@ defmodule Tirexs.MultiGet do
   end
 
 
-  @doc false
+  @doc "gets multiple documents by their id."
   def ids(list) do
     [ ids: Enum.map(list, fn(id) -> id end) ]
   end
 
-  @doc false
+  @doc "gets multiple documents."
   def docs(list) do
     [ docs: Enum.map(list, fn(item) -> undescored_keys(item) end) ]
   end
