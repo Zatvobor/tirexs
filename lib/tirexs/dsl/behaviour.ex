@@ -1,5 +1,6 @@
 defmodule Tirexs.DSL.Behaviour do
-  @moduledoc """
+  @moduledoc false
+  @note """
   Defines a main contract for domain specific handlers.
   """
 

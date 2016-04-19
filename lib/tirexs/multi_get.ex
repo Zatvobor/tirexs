@@ -1,5 +1,6 @@
 defmodule Tirexs.MultiGet do
-  @moduledoc """
+  @moduledoc false
+  @note """
   Multi GET API allows to get multiple documents based on an index,
   type (optional) and id (and possibly routing).
 

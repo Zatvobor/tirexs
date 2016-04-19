@@ -1,5 +1,6 @@
 defmodule Tirexs.Bulk do
-  @moduledoc """
+  @moduledoc false
+  @note """
   The Bulk API makes it possible to perform many index/delete operations in
   single call.
 

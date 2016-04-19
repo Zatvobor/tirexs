@@ -1,12 +1,5 @@
 defmodule Tirexs.Resources.Indices do
-  @moduledoc """
-  Provides URN builders for indices APIs.
-
-  `Tirexs.Resources.APIs` describes the main interface and available options.
-
-  The indices APIs are used to manage individual indices, index settings, aliases, mappings, index templates and warmers.
-
-  """
+  @moduledoc false
 
   import Tirexs.Resources, only: [urn: 1, urn: 2, urn: 3, urn: 4, __c: 2]
 

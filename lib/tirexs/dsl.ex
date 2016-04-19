@@ -1,5 +1,6 @@
 defmodule Tirexs.DSL do
-  @moduledoc """
+  @moduledoc false
+  @note """
   This module represents a main entry point for defining DSL scenarios.
 
   Check an `examples` directory which consists a DSL templates for `mapping`,
