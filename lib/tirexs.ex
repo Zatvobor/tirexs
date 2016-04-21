@@ -22,6 +22,14 @@ defmodule Tirexs do
 
     * `Tirexs.MultiGet` - the elasticsearch Multi GET API.
 
+  ## DSL flavored helpers:
+
+    * `Tirexs.DSL` - helps to create resources from certain DSL definition.
+
+    * `Tirexs.Mapping` - creates mappings and settings.
+
+    * `Tirexs.Search` - helps to build a search query.
+
   Please check https://github.com/Zatvobor/tirexs/tree/master/examples for getting
   more details what exactly Tirexs does for you.
 

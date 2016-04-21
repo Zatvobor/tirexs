@@ -1,8 +1,31 @@
 defmodule Tirexs.Search do
-  @moduledoc false
+  @moduledoc """
+  Provides DSL-like macros for search query definition.
+
+  Search query definition:
+
+      query = search [index: "bear_test"] do
+        query do
+          nested [path: "comments"] do
+            query do
+              bool do
+                must do
+                  match "comments.author",  "John"
+                  match "comments.message", "cool"
+                end
+              end
+            end
+          end
+        end
+      end
+
+      Tirexs.Query.create_resource(query)
+
+
+  """
+
 
   use Tirexs.DSL.Logic
-
 
   @doc false
   defmacro search([do: block]) do

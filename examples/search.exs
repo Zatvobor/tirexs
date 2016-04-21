@@ -8,10 +8,10 @@
 #
 #   iex> Path.expand("examples/search.exs") |> Tirexs.load_file
 #
-Tirexs.DSL.define fn(elastic_settings) ->
+Tirexs.DSL.define(fn() ->
   import Tirexs.Search
   # We'll use the `nested` query to search for posts where _John_ left a _"Cool"_ message:
-  search = search [index: "bear_test"] do
+  search [index: "bear_test"] do
     query do
       nested [path: "comments"] do
         query do
@@ -31,6 +31,4 @@ Tirexs.DSL.define fn(elastic_settings) ->
   # url  = Tirexs.HTTP.url(search[:index] <> "/_search")
   # json = JSX.prettify!(Tirexs.Query.to_resource_json(search))
   # IO.puts "\n # => curl -X POST -d '#{json}' #{url}"
-
-  { search, elastic_settings }
-end
+end)

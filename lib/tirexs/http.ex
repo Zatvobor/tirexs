@@ -34,12 +34,14 @@ defmodule Tirexs.HTTP do
       iex> url("/articles/document/1", %URI{ port: 92, query: "_source=false" })
       "http://127.0.0.1:92/articles/document/1?_source=false"
 
-  A query params could be as a part of `path` or used as a standalone `params`. A `body` param is allowed
+  A query `params` could be as a part of `path` or used as a standalone `params`. The `params` param is allowed
   to be a `%{}` or `[]`.
 
       iex> put("/bear_test/my_type/1?version=2", [user: "kimchy"])
       iex> put("/bear_test/my_type/1", [version: 2], [user: "kimchy"])
       iex> put("/bear_test/my_type/1", %{version: 2}, %{user: "kimchy"})
+
+  A request `body` is allowed to be a `Keyword` or `Map` instances or event just as `String`.
 
   """
 

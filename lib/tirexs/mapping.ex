@@ -1,5 +1,38 @@
 defmodule Tirexs.Mapping do
-  @moduledoc false
+  @moduledoc """
+  Provides DSL-like macros for indices definition.
+
+  The mapping could be defined alongside with `settings` or just only `mappings`.
+
+  Mappings and Settings definition:
+
+      index = [index: "articles", type: "article"]
+
+      settings do
+        analysis do
+          analyzer "autocomplete_analyzer",
+          [
+            filter: ["lowercase", "asciifolding", "edge_ngram"],
+            tokenizer: "whitespace"
+          ]
+          filter "edge_ngram", [type: "edgeNGram", min_gram: 1, max_gram: 15]
+        end
+      end
+
+      mappings do
+        indexes "country", type: "string"
+        indexes "city", type: "string"
+        indexes "suburb", type: "string"
+        indexes "road", type: "string"
+        indexes "postcode", type: "string", index: "not_analyzed"
+        indexes "housenumber", type: "string", index: "not_analyzed"
+        indexes "coordinates", type: "geo_point"
+        indexes "full_address", type: "string", analyzer: "autocomplete_analyzer"
+      end
+
+      Tirexs.Mapping.create_resource(index)
+
+  """
 
 
   use Tirexs.DSL.Logic
