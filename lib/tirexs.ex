@@ -1,9 +1,34 @@
 defmodule Tirexs do
   @moduledoc ~S"""
-  Tirexs is split into several components:
+  Tirexs is split into several layers.
+
+  ## Raw HTTP layer:
+
+    * `Tirexs.ENV` - the environment-specific `%URI{}` struct. The struct has been
+      used for building the HTTP location.
 
     * `Tirexs.HTTP` - the elasticsearch REST APIs are exposed using JSON over HTTP.
-      The bare-bone for sending and getting back HTTP responses.
+      The bare-bone for sending HTTP requests and getting them back.
+
+    * `Tirexs.Resources` -  helps you to build an URN parts and
+      compose them with `%URI{}`.
+
+    * `Tirexs.Resources.APIs` - helps you to build an URN parts from set of
+      available REST API helpers into request URL.
+
+  ## Multiple operations in single call:
+
+    * `Tirexs.Bulk` - the elasticsearch Bulk API.
+
+    * `Tirexs.MultiGet` - the elasticsearch Multi GET API.
+
+  ## DSL flavored helpers:
+
+    * `Tirexs.DSL` - helps to create resources from certain DSL definition.
+
+    * `Tirexs.Mapping` - creates mappings and settings.
+
+    * `Tirexs.Search` - helps to build a search query.
 
   Please check https://github.com/Zatvobor/tirexs/tree/master/examples for getting
   more details what exactly Tirexs does for you.
@@ -11,31 +36,6 @@ defmodule Tirexs do
   """
 
 
-  @doc """
-  The state of `Tirexs.ENV` is to made up a main `%URI{}` struct from
-  `System.get_env("ES_URI")` or `Application.get_env(:tirexs, :uri)` sources.
-
-  By default a `Tirexs.get_uri_env/0` returns `%URI{ authority: "127.0.0.1:9200", scheme: "http", host: "127.0.0.1", port: 9200 }` struct.
-
-  To setup your own uri to elasticsearch node you're able to useone of these available options:
-
-  Environment variable:
-
-      ES_URI=http://127.0.0.1:9200
-
-  Over `Mix.Config.config/2`:
-
-      config :tirexs, :uri, %URI{ authority: "127.0.0.1:9200", scheme: "http", host: "127.0.0.1", port: 9200 }
-      config :tirexs, :uri, [ authority: "127.0.0.1:9200", scheme: "http", host: "127.0.0.1", port: 9200 ]
-      config :tirexs, :uri, "http://127.0.0.1:9200"
-
-  Over `Application.put_env/3`:
-
-      put_env :tirexs, :uri, %URI{ authority: "127.0.0.1:9200", scheme: "http", host: "127.0.0.1", port: 9200 }
-      put_env :tirexs, :uri, [ authority: "127.0.0.1:9200", scheme: "http", host: "127.0.0.1", port: 9200 ]
-      put_env :tirexs, :uri, "http://127.0.0.1:9200"
-
-  """
   defdelegate [get_all_env(), get_env(key), get_uri_env], to: Tirexs.ENV
 
   @doc """

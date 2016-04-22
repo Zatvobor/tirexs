@@ -8,7 +8,7 @@
 #
 #   iex> Path.expand("examples/percolator.exs") |> Tirexs.load_file
 #
-Tirexs.DSL.define fn(settings) ->
+Tirexs.DSL.define(fn() ->
   import Tirexs.Percolator
 
   query = percolator [index: "bear_test", name: "1"] do
@@ -23,5 +23,4 @@ Tirexs.DSL.define fn(settings) ->
   # json = JSX.prettify!(Tirexs.Percolator.to_resource_json(query))
   # IO.puts "\n# => curl -X PUT -d '#{json}' #{url}"
 
-  { [percolator: query], settings }
-end
+[percolator: query] end)

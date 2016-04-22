@@ -8,8 +8,10 @@
 #
 #   iex> Path.expand("examples/mapping.exs") |> Tirexs.load_file
 #
-Tirexs.DSL.define [type: "dsl", index: "bear_test"], fn(index, settings) ->
+Tirexs.DSL.define(fn() ->
   import Tirexs.Mapping
+
+  index = [type: "dsl", index: "bear_test"]
 
   mappings do
    indexes "mn_opts_", [type: "nested"] do
@@ -30,6 +32,4 @@ Tirexs.DSL.define [type: "dsl", index: "bear_test"], fn(index, settings) ->
   # url  = Tirexs.HTTP.url(index[:index])
   # json = JSX.prettify!(Tirexs.Mapping.to_resource_json(index))
   # IO.puts "\n# => curl -X PUT -d '#{json}' #{url}"
-
-  { index, settings }
-end
+index end)

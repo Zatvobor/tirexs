@@ -9,15 +9,15 @@ defmodule Tirexs.Search.Warmer do
   end
 
 
-  alias Tirexs.{Query, Query.Filter, Search.Facets}
+  alias Tirexs.{Query, Query.Filter, Search.Aggs}
 
   def transpose(block) do
     case block do
-      {:filter, _, [params]}          -> Filter._filter(params[:do])
-      {:query, _, [params]}           -> Query._query(params[:do])
-      {:facets, _, [params]}          -> Facets._facets(params[:do])
-      {name, _, [params]}             -> make_warmer(name, params[:do])
-      {name, _, params}               -> make_warmer(name, params)
+      {:filter, _, [params]}  -> Filter._filter(params[:do])
+      {:query, _, [params]}   -> Query._query(params[:do])
+      {:aggs, _, [params]}    -> Aggs._aggs(params[:do])
+      {name, _, [params]}     -> make_warmer(name, params[:do])
+      {name, _, params}       -> make_warmer(name, params)
     end
   end
 

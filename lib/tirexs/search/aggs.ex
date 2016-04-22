@@ -1,5 +1,6 @@
 defmodule Tirexs.Search.Aggs do
-  @moduledoc """
+  @moduledoc false
+  @note """
   It helps provide aggregated data based on a search query. It is based on
   simple building blocks called aggregations, that can be composed
   in order to build complex summaries of the data.
@@ -76,6 +77,11 @@ defmodule Tirexs.Search.Aggs do
   @doc false
   def nested(params) do
     [nested: params]
+  end
+
+  @doc false
+  def _aggs(params) when is_tuple(params) do
+    routers(:aggs, params)
   end
 
 

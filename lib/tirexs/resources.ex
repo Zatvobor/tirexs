@@ -10,11 +10,11 @@ defmodule Tirexs.Resources do
   import Tirexs.HTTP
 
 
-  @doc "the same as `ok?(head(path, uri))`"
+  @doc "the same as `Tirexs.HTTP.ok?(Tirexs.HTTP.head(path, uri))` expression. See `Tirexs.HTTP.ok?/1` and `Tirexs.HTTP.head/2`"
   def exists?(path, uri), do: ok?(head(path, uri))
   def exists?(url_or_path_or_uri), do: ok?(head(url_or_path_or_uri))
 
-  @doc "the same as `head!(path, uri)`"
+  @doc "the same as `Tirexs.HTTP.head!(path, uri)` expression. See `Tirexs.HTTP.head!/2`"
   def exists!(path, uri), do: head!(path, uri)
   def exists!(url_or_path_or_uri), do: head!(url_or_path_or_uri)
 
@@ -31,6 +31,8 @@ defmodule Tirexs.Resources do
 
       iex> urn("bear_test", "bear_type", "10", "_explain?analyzer=some")
       "bear_test/bear_type/10/_explain?analyzer=some"
+
+  Also see `Tirexs.HTTP.url/1`.
 
   """
   def urn(part) when is_binary(part) do

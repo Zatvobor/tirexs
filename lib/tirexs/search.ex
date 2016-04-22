@@ -1,8 +1,31 @@
 defmodule Tirexs.Search do
-  @moduledoc false
+  @moduledoc """
+  Provides DSL-like macros for search query definition.
+
+  Search query definition:
+
+      query = search [index: "bear_test"] do
+        query do
+          nested [path: "comments"] do
+            query do
+              bool do
+                must do
+                  match "comments.author",  "John"
+                  match "comments.message", "cool"
+                end
+              end
+            end
+          end
+        end
+      end
+
+      Tirexs.Query.create_resource(query)
+
+
+  """
+
 
   use Tirexs.DSL.Logic
-
 
   @doc false
   defmacro search([do: block]) do
@@ -17,7 +40,7 @@ defmodule Tirexs.Search do
 
 
   alias Tirexs.{Query, Query.Filter}
-  alias Tirexs.{Search.Facets, Search.Suggest, Search.Rescore}
+  alias Tirexs.{Search.Aggs, Search.Suggest, Search.Rescore}
 
 
   @doc false
@@ -27,7 +50,7 @@ defmodule Tirexs.Search do
       {:query, _, options}          -> Query._query(options)
       {:filter, _, [params]}        -> Filter._filter(params[:do])
       {:filter, _, options}         -> Filter._filter(options)
-      {:facets, _, [params]}        -> Facets._facets(params[:do])
+      {:aggs, _, [params]}          -> Aggs._aggs(params[:do])
       {:highlight, _, [params]}     -> highlight(params)
       {:sort, _, [params]}          -> sort(params)
       {:size, _, [param]}           -> size(param)

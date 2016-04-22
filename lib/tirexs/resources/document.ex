@@ -1,10 +1,5 @@
 defmodule Tirexs.Resources.Document do
-  @moduledoc """
-  Provides URN builders for document APIs.
-
-  `Tirexs.Resources.APIs` describes the main interface and available options.
-
-  """
+  @moduledoc false
 
   import Tirexs.Resources, only: [urn: 1, __c: 2]
 

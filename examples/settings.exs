@@ -8,7 +8,7 @@
 #
 #   iex> Path.expand("examples/settings.exs") |> Tirexs.load_file
 #
-Tirexs.DSL.define [index: "bear_test"], fn(index, elastic_settings) ->
+Tirexs.DSL.define([index: "bear_test"], fn(index) ->
   import Tirexs.Index.Settings
 
   settings do
@@ -31,5 +31,4 @@ Tirexs.DSL.define [index: "bear_test"], fn(index, elastic_settings) ->
   # json = JSX.prettify!(Tirexs.ElasticSearch.Settings.to_resource_json(index))
   # IO.puts "\n# => curl -X PUT -d '#{json}' #{url}"
 
-  { index, elastic_settings }
-end
+index end)

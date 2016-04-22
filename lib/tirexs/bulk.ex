@@ -4,9 +4,9 @@ defmodule Tirexs.Bulk do
   single call.
 
   This module provides DSL for building Bulk API `payload` which is ready to use
-  over `Resources.bump/1` or `HTTP.post/2` conveniences.
+  over `Tirexs.Resources.bump/1` or `Tirexs.HTTP.post/2` conveniences.
 
-  The `Resources.bump/1` expects `payload` as a set of JSON documents joined
+  The `Tirexs.Resources.bump/1` expects `payload` as a set of JSON documents joined
   together by newline (\n) characters.
 
       payload = ~S'''
@@ -39,7 +39,7 @@ defmodule Tirexs.Bulk do
         ]
       end
 
-  Find out more details and examples in the `bulk` macro doc.
+  Find out more details and examples in the `bulk/2` macro doc.
 
   """
 
@@ -52,7 +52,7 @@ defmodule Tirexs.Bulk do
   The Bulk request body has the following `action`, `metadata` and `request body`
   parts.
 
-  ## The bulk to particular `_index/_type`:
+  The bulk to particular `_index/_type`:
 
       payload = bulk do
         index [
@@ -60,9 +60,9 @@ defmodule Tirexs.Bulk do
           # ...
         ]
       end
-      Resources.bump(payload)._bulk("website/blog", { [refresh: true] })
+      Tirexs.bump(payload)._bulk("website/blog", { [refresh: true] })
 
-  ## The same `metadata` for every document:
+  The same `metadata` for every document:
 
       payload = bulk([ index: "website", type: "blog" ]) do
         index [
@@ -70,9 +70,9 @@ defmodule Tirexs.Bulk do
           # ...
         ]
       end
-      Resources.bump(payload)._bulk()
+      Tirexs.bump(payload)._bulk()
 
-  ## index specific insertion:
+  Index specific insertion:
 
       payload = bulk do
         index [ index: "website.a", type: "blog" ], [
@@ -84,11 +84,11 @@ defmodule Tirexs.Bulk do
           # ...
         ]
       end
-      Resources.bump(payload)._bulk()
+      Tirexs.bump(payload)._bulk()
 
   The `action` could be `index`, `create`, `update` and `delete`.
 
-  ## Update example:
+  Update example:
 
       bulk do
         update [ index: "website", type: "blog"], [
@@ -103,7 +103,7 @@ defmodule Tirexs.Bulk do
         ]
       end
 
-  ## Delete example:
+  Delete example:
 
       bulk do
         delete [ index: "website.b", type: "blog" ], [
@@ -158,7 +158,7 @@ defmodule Tirexs.Bulk do
   end
 
 
-  @doc "Prepares `request_body` and `index` action all together"
+  @doc "Prepares `request_body` and `index` action all together."
   def index(request_body) do
     Enum.reduce(request_body, [], __reduce(:index))
   end
@@ -166,7 +166,7 @@ defmodule Tirexs.Bulk do
     Enum.map(index(request_body), __map(:index, metadata))
   end
 
-  @doc "Prepares `request_body` and `create` action all together"
+  @doc "Prepares `request_body` and `create` action all together."
   def create(request_body) do
     Enum.reduce(request_body, [], __reduce(:create))
   end
@@ -174,7 +174,7 @@ defmodule Tirexs.Bulk do
     Enum.map(create(request_body), __map(:create, metadata))
   end
 
-  @doc "Prepares `request_body` and `update` action all together"
+  @doc "Prepares `request_body` and `update` action all together."
   def update(request_body) do
     Enum.reduce(request_body, [], __reduce(:update))
   end
@@ -182,7 +182,7 @@ defmodule Tirexs.Bulk do
     Enum.map(update(request_body), __map(:update, metadata))
   end
 
-  @doc "Prepares `request_body` and `delete` action all together"
+  @doc "Prepares `request_body` and `delete` action all together."
   def delete(request_body) do
     Enum.map(request_body, fn(doc) -> [delete: take_id(doc)] end)
   end
@@ -204,6 +204,7 @@ defmodule Tirexs.Bulk do
   def get_type_from_document(document) do
     document[:_type] || document[:type] || "document"
   end
+
 
   defp take_id(doc) do
     if id = get_id_from_document(doc), do: [ _id: id ], else: []
