@@ -29,6 +29,7 @@ An Elixir flavored HTTP client and DSL library for building JSON based settings,
   #  %{_id: "1", _index: "my_index", _type: "users", _version: 1, created: true}}
   ```
 5. Fetch the document:
+
   ```elixir
   get("/my_index/users/1")
   #  {:ok, 200,
@@ -37,6 +38,7 @@ An Elixir flavored HTTP client and DSL library for building JSON based settings,
   #     _version: 1, found: true}}
   ```
 6. Simplified search:
+
   ```elixir
   get("/my_index/users/_search?q=name:jane")
   #  {:ok, 200,
@@ -46,6 +48,7 @@ An Elixir flavored HTTP client and DSL library for building JSON based settings,
   #       max_score: 0.30685282, total: 1}, timed_out: false, took: 10}}
   ```
 7. Query DSL
+
   ```elixir
   import Tirexs.Search
 
