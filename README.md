@@ -7,7 +7,7 @@ An Elixir flavored HTTP client and DSL library for building JSON based settings,
 1. Add this to the `defp deps do` list in your mix.exs file:
 
   ```elixir
-  {:tirexs, "~> 0.8.0"}
+  {:tirexs, "~> 0.8"}
   ```
 
 2. Also in mix.exs, add `:tirexs` to the `:applications` list in `def application`.
