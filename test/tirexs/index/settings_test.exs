@@ -1,5 +1,3 @@
-Code.require_file "../../../test_helper.exs", __ENV__.file
-
 defmodule Tirexs.Index.SettingsTest do
   use ExUnit.Case
 
