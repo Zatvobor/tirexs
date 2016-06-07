@@ -29,6 +29,12 @@ defmodule Tirexs.ENVTest do
     assert actual == @expected
   end
 
+  test "get_uri_env/0 (that has been set as nil)" do
+    :ok = Application.put_env(:tirexs, :uri, nil)
+    actual = ENV.get_uri_env()
+    assert actual == @expected
+  end
+
   test "get_uri_env/0 (that has been set as string)" do
     :ok = Application.put_env(:tirexs, :uri, "http://127.0.0.1:92")
     actual = ENV.get_uri_env()

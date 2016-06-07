@@ -65,5 +65,6 @@ defmodule Tirexs.ENV do
 
   defp __unwrap__(uri) when is_binary(uri), do: URI.parse(uri)
   defp __unwrap__(uri) when is_list(uri),   do: Map.merge(%URI{}, Enum.into(uri, %{}))
+  defp __unwrap__(uri) when is_nil(uri),    do: __unwrap__(@default_uri_env)
   defp __unwrap__(%URI{} = uri),            do: uri
 end
