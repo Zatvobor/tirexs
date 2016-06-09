@@ -357,7 +357,7 @@ defmodule Tirexs.HTTP do
 
   @doc false
   def decode(json, opts \\ [{:labels, :atom}]) do
-    JSX.decode!(to_string(json), opts)
+    JSX.decode!(IO.iodata_to_binary(json), opts)
   end
 
   @doc false
