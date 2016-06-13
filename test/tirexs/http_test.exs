@@ -153,6 +153,11 @@ defmodule Tirexs.HTTPTest do
     assert actual == "hello"
   end
 
+  test ~S'decode/1 iodata string' do
+    actual = decode(<<195, 162, 194, 128, 194, 148, 32>>)
+    assert actual == "—"
+  end
+
   test ~S'encode/1 %{hello: "world"} as map' do
     actual = encode(%{hello: "world"})
     assert actual == ~S'{"hello":"world"}'
