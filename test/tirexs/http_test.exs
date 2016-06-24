@@ -138,12 +138,25 @@ defmodule Tirexs.HTTPTest do
     assert actual == "http://127.0.0.1:92/articles/document/1?_source=false"
   end
 
-  test ~S'decode/1 {"hello":"world"}' do
-    actual = decode(~S'{"hello":"world"}')
+  @body ~S'{"hello":"world"}'
+  test "decode/1 #{byte_size(@body)} bytes string" do
+    actual = decode(to_char_list(@body))
     assert actual == %{hello: "world"}
   end
 
-  test ~S'decode/1 {"hello":"world"} as list' do
+  @body ~S'{"world":"hełło"}'
+  test "decode/1 #{byte_size(@body)} bytes string" do
+    actual = decode(to_char_list(@body))
+    assert actual == %{world: "hełło"}
+  end
+
+  @body ~S'{"world":"Planner— A"}'
+  test "decode/1 #{byte_size(@body)} bytes string" do
+    actual = decode(to_char_list(@body))
+    assert actual == %{world: "Planner— A"}
+  end
+
+  test ~S'decode/1 {"hello":"world"} and assert as list' do
     actual = decode(~S'{"hello":"world"}')
     assert Map.to_list(actual) == [hello: "world"]
   end
