@@ -146,13 +146,13 @@ defmodule Tirexs.HTTPTest do
 
   @body ~S'{"world":"hełło"}'
   test "decode/1 #{byte_size(@body)} bytes string" do
-    actual = decode(to_char_list(@body))
+    actual = decode(@body)
     assert actual == %{world: "hełło"}
   end
 
   @body ~S'{"world":"Planner— A"}'
   test "decode/1 #{byte_size(@body)} bytes string" do
-    actual = decode(to_char_list(@body))
+    actual = decode(@body)
     assert actual == %{world: "Planner— A"}
   end
 
