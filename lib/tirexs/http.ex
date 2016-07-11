@@ -309,6 +309,7 @@ defmodule Tirexs.HTTP do
   Returns `false` if `{ :error, _, _ } = response`, otherwise returns `true`.
 
   """
+  def ok?(:error), do: false
   def ok?({ :error, _, _ }), do: false
   def ok?({ :ok, _, _ }), do: true
 
