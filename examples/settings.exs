@@ -28,7 +28,7 @@ Tirexs.DSL.define([index: "bear_test"], fn(index) ->
   # Below a couple of code lines which could be useful for debugging and getting actual JSON string
 
   # url  = Tirexs.HTTP.url(index[:index])
-  # json = JSX.prettify!(Tirexs.ElasticSearch.Settings.to_resource_json(index))
+  # json = JSX.prettify!(JSX.encode!(Tirexs.ElasticSearch.Settings.to_resource_json(index)))
   # IO.puts "\n# => curl -X PUT -d '#{json}' #{url}"
 
 index end)

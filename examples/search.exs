@@ -29,6 +29,6 @@ Tirexs.DSL.define(fn() ->
   # Below a couple of code lines which could be useful for debugging and getting actual JSON string
 
   # url  = Tirexs.HTTP.url(search[:index] <> "/_search")
-  # json = JSX.prettify!(Tirexs.Query.to_resource_json(search))
+  # json = JSX.prettify!(JSX.encode!(Tirexs.Query.to_resource_json(search)))
   # IO.puts "\n # => curl -X POST -d '#{json}' #{url}"
 end)
