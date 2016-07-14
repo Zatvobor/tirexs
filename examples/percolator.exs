@@ -20,7 +20,7 @@ Tirexs.DSL.define(fn() ->
   # Below a couple of code lines which could be useful for debugging and getting actual JSON string
 
   # url  = Tirexs.HTTP.url("test/.percolator/1")
-  # json = JSX.prettify!(Tirexs.Percolator.to_resource_json(query))
+  # json = JSX.prettify!(JSX.encode!(Tirexs.Percolator.to_resource_json(query)))
   # IO.puts "\n# => curl -X PUT -d '#{json}' #{url}"
 
 [percolator: query] end)
