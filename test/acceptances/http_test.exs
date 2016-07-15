@@ -10,6 +10,9 @@ defmodule Acceptances.HTTPTest do
     delete("bear_test") && :ok
   end
 
+  test "tries to reach an invalid uri" do
+    assert :error == head("bear_test", %URI{host: "0.0.0.0", port: 9999})
+  end
 
   test "tries to get some head for resource" do
     { :error, 404, _ } = head("unknown", @uri_environment)
