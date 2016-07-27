@@ -42,6 +42,12 @@ defmodule Tirexs.Query do
   end
 
   @doc false
+  def match_phrase(options) do
+    [field,value, _] = extract_options(options)
+    [match_phrase: Keyword.put([], to_atom(field), value)]
+  end
+
+  @doc false
   def function_score(options) do
     opts = extract_block(options[:do])
     [function_score: extract(opts)]

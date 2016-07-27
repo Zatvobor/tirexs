@@ -28,6 +28,14 @@ defmodule Tirexs.QueryTest do
     assert query == expected
   end
 
+  test "query w/ match_phrase" do
+    query = query do
+      match_phrase "message", "this phrase"
+    end
+    expected = [query: [match_phrase: [message: "this phrase"]]]
+    assert query == expected
+  end
+
   test "query w/ multi_match" do
     query = query do
       multi_match "this is a test", ["subject", "message"]
