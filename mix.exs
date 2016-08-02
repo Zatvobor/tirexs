@@ -8,7 +8,7 @@ defmodule Tirexs.Mixfile do
       version: "0.8.4",
       source_url: github,
       homepage_url: github,
-      elixir: "~> 1.2.0",
+      elixir: "~> 1.2",
       description: description,
       package: package,
       deps: deps,
