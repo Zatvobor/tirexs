@@ -35,8 +35,9 @@ defmodule Tirexs do
 
   """
 
-
-  defdelegate [get_all_env(), get_env(key), get_uri_env], to: Tirexs.ENV
+  defdelegate get_all_env(), to: Tirexs.ENV
+  defdelegate get_env(key), to: Tirexs.ENV
+  defdelegate get_uri_env, to: Tirexs.ENV
 
   @doc """
   Utilities for managing code compilation, code evaluation and code loading, useful if
@@ -49,8 +50,14 @@ defmodule Tirexs do
   These functions just delegate to `Code` module.
 
   """
-  defdelegate [load_file(file), load_file(file, relative_to)], to: Code
+  defdelegate load_file(file), to: Code
+  defdelegate load_file(file, relative_to), to: Code
 
   @doc false
-  defdelegate [bump(), bump(uri), bump(body,uri), bump!(), bump!(uri), bump!(body,uri)], to: Tirexs.Resources
+  defdelegate bump(), to: Tirexs.Resources
+  defdelegate bump(uri), to: Tirexs.Resources
+  defdelegate bump(body,uri), to: Tirexs.Resources
+  defdelegate bump!(), to: Tirexs.Resources
+  defdelegate bump!(uri), to: Tirexs.Resources
+  defdelegate bump!(body,uri), to: Tirexs.Resources
 end
