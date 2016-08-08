@@ -39,75 +39,196 @@ defmodule Tirexs.Resources.APIs do
 
   alias Tirexs.Resources.Document
 
-  @doc false
-  defdelegate [ _bulk(), _bulk(a), _bulk(a,b), _bulk(a,b,c) ], to: Document
-  defdelegate [ _mget(), _mget(a), _mget(a,b), _mget(a,b,c) ], to: Document
-  defdelegate [ _source(a), _source(a,b), _source(a,b,c), _source(a,b,c,d) ], to: Document
-  defdelegate [ _update(a), _update(a,b), _update(a,b,c), _update(a,b,c,d) ], to: Document
-  defdelegate [ index(a), index(a,b), index(a,b,c), index(a,b,c,d) ], to: Document
-  defdelegate [ doc(a), doc(a,b), doc(a,b,c), doc(a,b,c,d) ], to: Document
+  defdelegate _bulk(), to: Document
+  defdelegate _bulk(a), to: Document
+  defdelegate _bulk(a,b), to: Document
+  defdelegate _bulk(a,b,c), to: Document
+
+  defdelegate _mget(), to: Document
+  defdelegate _mget(a), to: Document
+  defdelegate _mget(a,b), to: Document
+  defdelegate _mget(a,b,c), to: Document
+
+  defdelegate _source(a), to: Document
+  defdelegate _source(a,b), to: Document
+  defdelegate _source(a,b,c), to: Document
+  defdelegate _source(a,b,c,d), to: Document
+
+  defdelegate _update(a), to: Document
+  defdelegate _update(a,b), to: Document
+  defdelegate _update(a,b,c), to: Document
+  defdelegate _update(a,b,c,d), to: Document
+
+  defdelegate index(a), to: Document
+  defdelegate index(a,b), to: Document
+  defdelegate index(a,b,c), to: Document
+  defdelegate index(a,b,c,d), to: Document
+
+  defdelegate doc(a), to: Document
+  defdelegate doc(a,b), to: Document
+  defdelegate doc(a,b,c), to: Document
+  defdelegate doc(a,b,c,d), to: Document
 
 
   alias Tirexs.Resources.Search
 
+  defdelegate _explain(a), to: Search
+  defdelegate _explain(a,b), to: Search
+  defdelegate _explain(a,b,c), to: Search
+  defdelegate _explain(a,b,c,d), to: Search
 
-  @doc false
-  defdelegate [ _explain(a), _explain(a,b), _explain(a,b,c), _explain(a,b,c,d) ], to: Search
-  defdelegate [ _search_shards(a), _search_shards(a,b), _search_shards(a,b,c) ], to: Search
-  defdelegate [ _field_stats(), _field_stats(a), _field_stats(a,b) ], to: Search
-  defdelegate [ _validate_query(), _validate_query(a), _validate_query(a,b), _validate_query(a,b,c) ], to: Search
-  defdelegate [ _count(), _count(a), _count(a,b), _count(a,b,c) ], to: Search
-  defdelegate [ _search_exists(), _search_exists(a), _search_exists(a,b), _search_exists(a,b,c) ], to: Search
-  defdelegate [ _search(), _search(a), _search(a,b), _search(a,b,c) ], to: Search
-  defdelegate [ _search_scroll(), _search_scroll(a) ], to: Search
-  defdelegate [ _search_scroll_all() ], to: Search
-  defdelegate [ percolator(a,b) ], to: Search
-  defdelegate [ _percolate(a), _percolate(a,b), _percolate(a,b,c), _percolate(a,b,c,d) ], to: Search
-  defdelegate [ _percolate_count(a), _percolate_count(a,b), _percolate_count(a,b,c), _percolate_count(a,b,c,d) ], to: Search
+  defdelegate _search_shards(a), to: Search
+  defdelegate _search_shards(a,b), to: Search
+  defdelegate _search_shards(a,b,c), to: Search
+
+  defdelegate _field_stats(), to: Search
+  defdelegate _field_stats(a), to: Search
+  defdelegate _field_stats(a,b), to: Search
+
+  defdelegate _validate_query(), to: Search
+  defdelegate _validate_query(a), to: Search
+  defdelegate _validate_query(a,b), to: Search
+  defdelegate _validate_query(a,b,c), to: Search
+
+  defdelegate _count(), to: Search
+  defdelegate _count(a), to: Search
+  defdelegate _count(a,b), to: Search
+  defdelegate _count(a,b,c), to: Search
+
+  defdelegate _search_exists(), to: Search
+  defdelegate _search_exists(a), to: Search
+  defdelegate _search_exists(a,b), to: Search
+  defdelegate _search_exists(a,b,c), to: Search
+
+  defdelegate _search(), to: Search
+  defdelegate _search(a), to: Search
+  defdelegate _search(a,b), to: Search
+  defdelegate _search(a,b,c), to: Search
+
+  defdelegate _search_scroll(), to: Search
+  defdelegate _search_scroll(a), to: Search
+
+  defdelegate _search_scroll_all(), to: Search
+
+  defdelegate percolator(a,b), to: Search
+
+  defdelegate _percolate(a), to: Search
+  defdelegate _percolate(a,b), to: Search
+  defdelegate _percolate(a,b,c), to: Search
+  defdelegate _percolate(a,b,c,d), to: Search
+
+  defdelegate _percolate_count(a), to: Search
+  defdelegate _percolate_count(a,b), to: Search
+  defdelegate _percolate_count(a,b,c), to: Search
+  defdelegate _percolate_count(a,b,c,d), to: Search
 
 
   alias Tirexs.Resources.Indices
 
   ## Mapping Management
 
-  @doc false
-  defdelegate [ _all_mapping() ], to: Indices
-  defdelegate [ _mapping(), _mapping(a), _mapping(a, b), _mapping(a, b, c) ], to: Indices
-  defdelegate [ _field_mapping(a), _field_mapping(a, b), _field_mapping(a, b, c),  _field_mapping(a, b, c)], to: Indices
+  defdelegate _all_mapping(), to: Indices
+
+  defdelegate _mapping(), to: Indices
+  defdelegate _mapping(a), to: Indices
+  defdelegate _mapping(a,b), to: Indices
+  defdelegate _mapping(a,b,c), to: Indices
+
+  defdelegate _field_mapping(a), to: Indices
+  defdelegate _field_mapping(a,b), to: Indices
+  defdelegate _field_mapping(a,b,c,d), to: Indices
 
   ## Index Settings
 
-  @doc false
-  defdelegate [ _analyze(), _analyze(a), _analyze(a, b), _analyze(a, b, c) ], to: Indices
-  defdelegate [ _warmer(), _warmer(a), _warmer(a, b), _warmer(a, b, c) ], to: Indices
-  defdelegate [ _template(), _template(a), _template(a, b), _template(a, b, c) ], to: Indices
-  defdelegate [ _settings(), _settings(a), _settings(a, b), _settings(a, b, c) ], to: Indices
+  defdelegate _analyze(), to: Indices
+  defdelegate _analyze(a), to: Indices
+  defdelegate _analyze(a,b), to: Indices
+  defdelegate _analyze(a,b,c), to: Indices
+
+  defdelegate _warmer(), to: Indices
+  defdelegate _warmer(a), to: Indices
+  defdelegate _warmer(a,b), to: Indices
+  defdelegate _warmer(a,b,c), to: Indices
+
+  defdelegate _template(), to: Indices
+  defdelegate _template(a), to: Indices
+  defdelegate _template(a,b), to: Indices
+  defdelegate _template(a,b,c), to: Indices
+
+  defdelegate _settings(), to: Indices
+  defdelegate _settings(a), to: Indices
+  defdelegate _settings(a,b), to: Indices
+  defdelegate _settings(a,b,c), to: Indices
 
   ## Index Management
 
-  @doc false
-  defdelegate [ _open(), _open(a), _open(a, b), _open(a, b, c) ], to: Indices
-  defdelegate [ _close(), _close(a), _close(a, b), _close(a, b, c) ], to: Indices
+  defdelegate _open(), to: Indices
+  defdelegate _open(a), to: Indices
+  defdelegate _open(a,b), to: Indices
+  defdelegate _open(a,b,c), to: Indices
+
+  defdelegate _close(), to: Indices
+  defdelegate _close(a), to: Indices
+  defdelegate _close(a,b), to: Indices
+  defdelegate _close(a,b,c), to: Indices
+
   ## Alias Management
 
-  @doc false
-  defdelegate [ _aliases(), _aliases(a), _aliases(a, b), _aliases(a, b, c) ], to: Indices
-  defdelegate [ _alias(), _alias(a), _alias(a, b), _alias(a, b, c) ], to: Indices
+  defdelegate _aliases(), to: Indices
+  defdelegate _aliases(a), to: Indices
+  defdelegate _aliases(a,b), to: Indices
+  defdelegate _aliases(a,b,c), to: Indices
+
+  defdelegate _alias(), to: Indices
+  defdelegate _alias(a), to: Indices
+  defdelegate _alias(a,b), to: Indices
+  defdelegate _alias(a,b,c), to: Indices
 
   ## Status Management
 
-  @doc false
-  defdelegate [ _refresh(), _refresh(a), _refresh(a, b), _refresh(a, b, c) ], to: Indices
-  defdelegate [ _flush(), _flush(a), _flush(a, b), _flush(a, b, c) ], to: Indices
-  defdelegate [ _forcemerge(), _forcemerge(a), _forcemerge(a, b), _forcemerge(a, b, c) ], to: Indices
-  defdelegate [ _upgrade(), _upgrade(a), _upgrade(a, b), _upgrade(a, b, c) ], to: Indices
-  defdelegate [ _cache_clear(), _cache_clear(a), _cache_clear(a, b), _cache_clear(a, b, c) ], to: Indices
+  defdelegate _refresh(), to: Indices
+  defdelegate _refresh(a), to: Indices
+  defdelegate _refresh(a,b), to: Indices
+  defdelegate _refresh(a,b,c), to: Indices
+
+  defdelegate _flush(), to: Indices
+  defdelegate _flush(a), to: Indices
+  defdelegate _flush(a,b), to: Indices
+  defdelegate _flush(a,b,c), to: Indices
+
+  defdelegate _forcemerge(), to: Indices
+  defdelegate _forcemerge(a), to: Indices
+  defdelegate _forcemerge(a,b), to: Indices
+  defdelegate _forcemerge(a,b,c), to: Indices
+
+  defdelegate _upgrade(), to: Indices
+  defdelegate _upgrade(a), to: Indices
+  defdelegate _upgrade(a,b), to: Indices
+  defdelegate _upgrade(a,b,c), to: Indices
+
+  defdelegate _cache_clear(), to: Indices
+  defdelegate _cache_clear(a), to: Indices
+  defdelegate _cache_clear(a,b,c), to: Indices
 
   ## Monitoring Management
 
-  @doc false
-  defdelegate [ _stats(), _stats(a), _stats(a, b), _stats(a, b, c) ], to: Indices
-  defdelegate [ _segments(), _segments(a), _segments(a, b), _segments(a, b, c) ], to: Indices
-  defdelegate [ _recovery(), _recovery(a), _recovery(a, b), _recovery(a, b, c) ], to: Indices
-  defdelegate [ _shard_stores(), _shard_stores(a), _shard_stores(a, b), _shard_stores(a, b, c) ], to: Indices
+  defdelegate _stats(), to: Indices
+  defdelegate _stats(a), to: Indices
+  defdelegate _stats(a,b), to: Indices
+  defdelegate _stats(a,b,c), to: Indices
+
+  defdelegate _segments(), to: Indices
+  defdelegate _segments(a), to: Indices
+  defdelegate _segments(a,b), to: Indices
+  defdelegate _segments(a,b,c), to: Indices
+
+  defdelegate _recovery(), to: Indices
+  defdelegate _recovery(a), to: Indices
+  defdelegate _recovery(a,b), to: Indices
+  defdelegate _recovery(a,b,c), to: Indices
+
+  defdelegate _shard_stores(), to: Indices
+  defdelegate _shard_stores(a), to: Indices
+  defdelegate _shard_stores(a,b), to: Indices
+  defdelegate _shard_stores(a,b,c), to: Indices
 end

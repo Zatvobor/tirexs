@@ -5,10 +5,10 @@ defmodule Tirexs.Mixfile do
     [
       app: :tirexs,
       name: "Tirexs",
-      version: "0.8.4",
+      version: "0.8.5",
       source_url: github,
       homepage_url: github,
-      elixir: "~> 1.2.0",
+      elixir: "~> 1.3.0",
       description: description,
       package: package,
       deps: deps,
