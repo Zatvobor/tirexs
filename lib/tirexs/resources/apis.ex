@@ -208,7 +208,6 @@ defmodule Tirexs.Resources.APIs do
 
   defdelegate _cache_clear(), to: Indices
   defdelegate _cache_clear(a), to: Indices
-  defdelegate _cache_clear(a,b), to: Indices
   defdelegate _cache_clear(a,b,c), to: Indices
 
   ## Monitoring Management
