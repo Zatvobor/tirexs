@@ -17,9 +17,7 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro filters([do: block]) do
     quote do
-      if var!(index)[:settings][:analysis] == nil do
-        var!(index) = put_setting(var!(index), :analysis)
-      end
+      var!(index) = put_setting(var!(index), :analysis)
       unquote(block)
     end
   end
@@ -27,9 +25,7 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro analysis([do: block]) do
     quote do
-      if var!(index)[:settings][:analysis] == nil do
-        var!(index) = put_setting(var!(index), :analysis)
-      end
+      var!(index) = put_setting(var!(index), :analysis)
       unquote(block)
     end
   end
@@ -45,9 +41,7 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro analyzer(name, value) do
     quote do
-      if var!(index)[:settings][:analysis][:analyzer] == nil do
-        var!(index) = put_index_setting(var!(index), :analysis, :analyzer)
-      end
+      var!(index) = put_index_setting(var!(index), :analysis, :analyzer)
       [name, value] = [unquote(name), unquote(value)]
       var!(index) = add_index_setting(var!(index), :analysis, :analyzer, Keyword.put([], to_atom(name), value))
     end
@@ -56,9 +50,7 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro blocks(value) do
     quote do
-      if var!(index)[:settings][:index][:blocks] == nil do
-        var!(index) = put_index_setting(var!(index), :index, :blocks)
-      end
+      var!(index) = put_index_setting(var!(index), :index, :blocks)
       value = unquote(value)
       var!(index) = add_index_setting(var!(index), :index, :blocks, value)
     end
@@ -67,10 +59,8 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro cache(value) do
     quote do
-      if var!(index)[:settings][:index][:cache] == nil do
-        var!(index) = put_index_setting(var!(index), :index, :cache)
-        var!(index) = add_index_setting(var!(index), :index, :cache, [filter: []])
-      end
+      var!(index) = put_index_setting(var!(index), :index, :cache)
+      var!(index) = put_index_setting_nested_type(var!(index), :index, :cache, :filter)
       value = unquote(value)
       var!(index) = add_index_setting_nested_type(var!(index), :index, :cache, :filter, value)
     end
@@ -79,9 +69,7 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro filter(name, value) do
     quote do
-      if var!(index)[:settings][:analysis][:filter] == nil do
-        var!(index) = put_index_setting(var!(index), :analysis, :filter)
-      end
+      var!(index) = put_index_setting(var!(index), :analysis, :filter)
       [name, value] = [unquote(name), unquote(value)]
       var!(index) = add_index_setting(var!(index), :analysis, :filter, Keyword.put([], to_atom(name), value))
     end
@@ -90,9 +78,7 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro tokenizer(name, value) do
     quote do
-      if var!(index)[:settings][:analysis][:tokenizer] == nil do
-        var!(index) = put_index_setting(var!(index), :analysis, :tokenizer)
-      end
+      var!(index) = put_index_setting(var!(index), :analysis, :tokenizer)
       [name, value] = [unquote(name), unquote(value)]
       var!(index) = add_index_setting(var!(index), :analysis, :tokenizer, Keyword.put([], to_atom(name), value))
     end
@@ -101,9 +87,7 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro translog(value) do
     quote do
-      if var!(index)[:settings][:index][:translog] == nil do
-        var!(index) = put_index_setting(var!(index), :index, :translog)
-      end
+      var!(index) = put_index_setting(var!(index), :index, :translog)
       value = unquote(value)
       var!(index) = add_index_setting(var!(index), :index, :translog, value)
     end

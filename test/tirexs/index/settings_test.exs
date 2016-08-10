@@ -16,7 +16,7 @@ defmodule Tirexs.Index.SettingsTest do
       cache     []
     end
 
-    expected = [index: [cache: [filter: []], translog: [], blocks: []], analysis: []]
+    expected = [analysis: [], index: [cache: [filter: []], translog: [], blocks: []]]
     assert index[:settings] == expected
   end
 
@@ -37,7 +37,7 @@ defmodule Tirexs.Index.SettingsTest do
       blocks write: true
     end
 
-    expected = [index: [blocks: [write: true], translog: [disable_flush: false], cache: [filter: [max_size: -1]], number_of_replicas: 3], analysis: [tokenizer: ["dot-tokenizer": [type: "path_hierarchy", delimiter: "."]], filter: [substring: [type: "nGram", min_gram: 2, max_gram: 32]], analyzer: [msg_search_analyzer: [tokenizer: "keyword", filter: ["lowercase"]], msg_index_analyzer: [tokenizer: "keyword", filter: ["lowercase","substring"]]]]]
+    expected = [analysis: [tokenizer: ["dot-tokenizer": [type: "path_hierarchy", delimiter: "."]], filter: [substring: [type: "nGram", min_gram: 2, max_gram: 32]], analyzer: [msg_search_analyzer: [tokenizer: "keyword", filter: ["lowercase"]], msg_index_analyzer: [tokenizer: "keyword", filter: ["lowercase","substring"]]]], index: [blocks: [write: true], translog: [disable_flush: false], cache: [filter: [max_size: -1]], number_of_replicas: 3]]
     assert index[:settings] == expected
   end
 end
