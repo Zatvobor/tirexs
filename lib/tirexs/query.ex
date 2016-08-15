@@ -11,11 +11,15 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def _query(options, query_opts\\[]) do
-    if is_list(options) do
-      query_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def _query(options, query_opts \\ [])
+
+  @doc false
+  def _query(options, _query_opts) when is_list(options) do
+    [query: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def _query(options, query_opts) do
     [query: extract(options) ++ query_opts]
   end
 
@@ -80,11 +84,15 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def boosting(options, boosting_opts\\[]) do
-    if is_list(options) do
-      boosting_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def boosting(options, boosting_opts \\ [])
+
+  @doc false
+  def boosting(options, _boosting_opts) when is_list(options) do
+    [boosting: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def boosting(options, boosting_opts) do
     [boosting: extract(options) ++ boosting_opts]
   end
 
@@ -101,38 +109,54 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def custom_score(options, custom_score_opts\\[]) do
-    if is_list(options) do
-      custom_score_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def custom_score(options, custom_score_opts \\ [])
+
+  @doc false
+  def custom_score(options, _custom_score_opts) when is_list(options) do
+    [custom_score: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def custom_score(options, custom_score_opts) do
     [custom_score: extract(options) ++ custom_score_opts]
   end
 
   @doc false
-  def custom_boost_factor(options, custom_boost_factor_opts\\[]) do
-    if is_list(options) do
-      custom_boost_factor_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def custom_boost_factor(options, custom_boost_factor_opts \\ [])
+
+  @doc false
+  def custom_boost_factor(options, _custom_boost_factor_opts) when is_list(options) do
+    [custom_boost_factor: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def custom_boost_factor(options, custom_boost_factor_opts) do
     [custom_boost_factor: extract(options) ++ custom_boost_factor_opts]
   end
 
   @doc false
-  def constant_score(options, constant_score_opts\\[]) do
-    if is_list(options) do
-      constant_score_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def constant_score(options, constant_score_opts \\ [])
+
+  @doc false
+  def constant_score(options, _constant_score_opts) when is_list(options) do
+    [constant_score: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def constant_score(options, constant_score_opts) do
     [constant_score: extract(options) ++ constant_score_opts]
   end
 
   @doc false
-  def dis_max(options, dis_max_opts\\[]) do
-    if is_list(options) do
-      dis_max_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def dis_max(options, dis_max_opts \\ [])
+
+  @doc false
+  def dis_max(options, _dis_max_opts) when is_list(options) do
+    [dis_max: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def dis_max(options, dis_max_opts) do
     [dis_max: extract(options) ++ dis_max_opts]
   end
 
@@ -173,20 +197,28 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def has_child(options, has_child_opts\\[]) do
-    if is_list(options) do
-      has_child_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def has_child(options, has_child_opts \\ [])
+
+  @doc false
+  def has_child(options, _has_child_opts) when is_list(options) do
+    [has_child: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def has_child(options, has_child_opts) do
     [has_child: extract(options) ++ has_child_opts]
   end
 
   @doc false
-  def has_parent(options, has_parent_opts\\[]) do
-    if is_list(options) do
-      has_parent_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def has_parent(options, has_parent_opts \\ [])
+
+  @doc false
+  def has_parent(options, _has_parent_opts) when is_list(options) do
+    [has_parent: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def has_parent(options, has_parent_opts) do
     [has_parent: extract(options) ++ has_parent_opts]
   end
 
@@ -214,11 +246,15 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def span_first(options, span_first_opts\\[]) do
-    if is_list(options) do
-      span_first_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def span_first(options, span_first_opts \\ [])
+
+  @doc false
+  def span_first(options, _span_first_opts) when is_list(options) do
+    [span_first: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def span_first(options, span_first_opts) do
     [span_first: extract(options) ++ span_first_opts]
   end
 
@@ -229,29 +265,41 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def span_near(options, span_near_opts\\[]) do
-    if is_list(options) do
-      span_near_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def span_near(options, span_near_opts \\ [])
+
+  @doc false
+  def span_near(options, _span_near_opts) when is_list(options) do
+    [span_near: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def span_near(options, span_near_opts) do
     [span_near: extract(options) ++ span_near_opts]
   end
 
   @doc false
-  def span_not(options, span_not_opts\\[]) do
-    if is_list(options) do
-      span_not_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def span_not(options, span_not_opts \\ [])
+
+  @doc false
+  def span_not(options, _span_not_opts) when is_list(options) do
+    [span_not: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def span_not(options, span_not_opts) do
     [span_not: extract(options) ++ span_not_opts]
   end
 
   @doc false
-  def span_or(options, span_or_opts\\[]) do
-    if is_list(options) do
-      span_or_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def span_or(options, span_or_opts \\ [])
+
+  @doc false
+  def span_or(options, _span_or_opts) when is_list(options) do
+    [span_or: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def span_or(options, span_or_opts) do
     [span_or: extract(options) ++ span_or_opts]
   end
 
@@ -262,11 +310,15 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def top_children(options, top_children_opts\\[]) do
-    if is_list(options) do
-      top_children_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def top_children(options, top_children_opts \\ [])
+
+  @doc false
+  def top_children(options, _top_children_opts) when is_list(options) do
+    [top_children: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def top_children(options, top_children_opts) do
     [top_children: extract(options) ++ top_children_opts]
   end
 
@@ -277,11 +329,15 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def indices(options, indices_opts\\[]) do
-    if is_list(options) do
-      indices_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def indices(options, indices_opts \\ [])
+
+  @doc false
+  def indices(options, _indices_opts) when is_list(options) do
+    [indices: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def indices(options, indices_opts) do
     [indices: extract(options) ++ indices_opts]
   end
 
@@ -292,51 +348,80 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def geo_shape(options, geo_shape_opts\\[]) do
-    if is_list(options) do
-      geo_shape_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def geo_shape(options, geo_shape_opts \\ [])
+
+  @doc false
+  def geo_shape(options, _geo_shape_opts) when is_list(options) do
+    [geo_shape: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def geo_shape(options, geo_shape_opts) do
     [geo_shape: extract(options) ++ geo_shape_opts]
   end
 
   @doc false
-  def nested(options, nested_opts\\[]) do
-    if is_list(options) do
-      nested_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def nested(options, nested_opts \\ [])
+
+  @doc false
+  def nested(options, _nested_opts) when is_list(options) do
+    [nested: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def nested(options, nested_opts) do
     [nested: extract(options) ++ nested_opts]
   end
 
   @doc false
-  def rescore_query(options, rescore_opts\\[]) do
-    if is_list(options) do
-      rescore_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def rescore_query(options, rescore_opts \\ [])
+
+  @doc false
+  def rescore_query(options, _rescore_opts) when is_list(options) do
+    [rescore_query: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def rescore_query(options, rescore_opts) do
     [rescore_query: extract(options) ++ rescore_opts]
   end
 
   @doc false
-  def facet_filter(options, facet_opts\\[]) do
-    if is_list(options) do
-      facet_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def facet_filter(options, facet_opts \\ [])
+
+  @doc false
+  def facet_filter(options, _facet_opts) when is_list(options) do
+    [facet_filter: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def facet_filter(options, facet_opts) do
     [facet_filter: extract(options) ++ facet_opts]
   end
 
   @doc false
-  def custom_filters_score(options, custom_filters_score_opts\\[]) do
-    if is_list(options) do
-      custom_filters_score_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def custom_filters_score(options, custom_filters_score_opts \\ [])
+
+  @doc false
+  def custom_filters_score(options, _custom_filters_score_opts) when is_list(options) do
+    custom_filters_score_opts = Enum.fetch!(options, 0)
+    options = extract_do(options, 1)
+
     custom_filters_score = extract(options) ++ custom_filters_score_opts
     query = [query: custom_filters_score[:query]]
     filters = custom_filters_score[:filters]
     query = Keyword.put(query, :filters, without_array(filters, []))
+
+    [custom_filters_score: query ++ custom_filters_score_opts]
+  end
+
+  @doc false
+  def custom_filters_score(options, custom_filters_score_opts) do
+    custom_filters_score = extract(options) ++ custom_filters_score_opts
+    query = [query: custom_filters_score[:query]]
+    filters = custom_filters_score[:filters]
+    query = Keyword.put(query, :filters, without_array(filters, []))
+
     [custom_filters_score: query ++ custom_filters_score_opts]
   end
 
@@ -347,11 +432,15 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def group(options, _object_opts\\[]) do
-    if is_list(options) do
-      _object_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def group(options, _object_opts \\ [])
+
+  @doc false
+  def group(options, _object_opts) when is_list(options) do
+    [extract(extract_do(options, 1))]
+  end
+
+  @doc false
+  def group(options, _object_opts) do
     [extract(options)]
   end
 
@@ -391,11 +480,15 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def location(options, location_opts\\[]) do
-    if is_list(options) do
-      location_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def location(options, location_opts \\ [])
+
+  @doc false
+  def location(options, _location_opts) when is_list(options) do
+    [location: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+  end
+
+  @doc false
+  def location(options, location_opts) do
     [location: extract(options) ++ location_opts]
   end
 
