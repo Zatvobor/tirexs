@@ -29,23 +29,34 @@ defmodule Tirexs.Search.Suggest do
   end
 
   @doc false
-  def _suggest(options, suggest_opts \\ []) do
-    if is_list(options) do
-      suggest_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def _suggest(options, suggest_opts \\ [])
+
+  @doc false
+  def _suggest(options, _suggest_opts) when is_list(options) do
+    suggest_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [suggest: extract(suggest_opts) ++ options]
+  end
+
+  @doc false
+  def _suggest(options, suggest_opts) do
     [suggest: extract(options) ++ suggest_opts]
   end
 
   @doc false
-  def make_suggest(name, options, suggest_opts \\ []) do
-    if is_list(options) do
-      suggest_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
-      routers(name, options, suggest_opts)
+  def make_suggest(name, options, suggest_opts \\ [])
+
+  @doc false
+  def make_suggest(name, options, _suggest_opts) when is_list(options) do
+    suggest_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    routers(name, suggest_opts, options)
   end
 
+  @doc false
+  def make_suggest(name, options, suggest_opts) do
+    routers(name, options, suggest_opts)
+  end
 
   defp routers(name, options, add_options) do
     case options do

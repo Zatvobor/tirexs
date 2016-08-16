@@ -45,7 +45,7 @@ defmodule Acceptances.Resources.IndicesTest do
   end
 
   test "aliases/0 with request body as macro (chain)" do
-    import Tirexs.Manage.Aliases, only: [aliases: 1, add: 1, remove: 1]
+    import Tirexs.Manage.Aliases, only: [aliases: 1, add: 1]
     query = aliases do
       add    index: "bear_test", alias: "bear_test_alias2"
       add    index: "bear_test", alias: "bear_test_alias3"

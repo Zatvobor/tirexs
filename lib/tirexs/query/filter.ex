@@ -11,11 +11,17 @@ defmodule Tirexs.Query.Filter do
   end
 
   @doc false
-  def _filter(options, filter_opts \\ []) do
-    if is_list(options) do
-      filter_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def _filter(options, filter_opts \\ [])
+
+  @doc false
+  def _filter(options, _filter_opts) when is_list(options) do
+    filter_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [filter: extract(filter_opts) ++ options]
+  end
+
+  @doc false
+  def _filter(options, filter_opts) do
     [filter: extract(options) ++ filter_opts]
   end
 
@@ -49,11 +55,17 @@ defmodule Tirexs.Query.Filter do
   end
 
   @doc false
-  def _not(options, not_opts \\ []) do
-    if is_list(options) do
-      not_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def _not(options, not_opts \\ [])
+
+  @doc false
+  def _not(options, _not_opts) when is_list(options) do
+    not_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [not: extract(not_opts) ++ options]
+  end
+
+  @doc false
+  def _not(options, not_opts) do
     [not: extract(options) ++ not_opts]
   end
 
@@ -64,11 +76,17 @@ defmodule Tirexs.Query.Filter do
   end
 
   @doc false
-  def fquery(options, fquery_opts \\ []) do
-    if is_list(options) do
-      fquery_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def fquery(options, fquery_opts \\ [])
+
+  @doc false
+  def fquery(options, _fquery_opts) when is_list(options) do
+    fquery_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [fquery: extract(fquery_opts) ++ options]
+  end
+
+  @doc false
+  def fquery(options, fquery_opts) do
     [fquery: extract(options) ++ fquery_opts]
   end
 
@@ -84,20 +102,32 @@ defmodule Tirexs.Query.Filter do
   end
 
   @doc false
-  def _and(options, and_opts \\ []) do
-    if is_list(options) do
-      and_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def _and(options, and_opts \\ [])
+
+  @doc false
+  def _and(options, _and_opts) when is_list(options) do
+    and_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [and: extract(and_opts) ++ options]
+  end
+
+  @doc false
+  def _and(options, and_opts) do
     [and: extract(options) ++ and_opts]
   end
 
   @doc false
-  def _or(options, or_opts \\ []) do
-    if is_list(options) do
-      or_opts = Enum.fetch!(options, 0)
-      options = extract_do(options, 1)
-    end
+  def _or(options, or_opts \\ [])
+
+  @doc false
+  def _or(options, _or_opts) when is_list(options) do
+    or_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [or: extract(or_opts) ++ options]
+  end
+
+  @doc false
+  def _or(options, or_opts) do
     [or: extract(options) ++ or_opts]
   end
 
