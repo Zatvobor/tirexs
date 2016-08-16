@@ -8,6 +8,9 @@ defmodule Acceptances.ResourcesTest do
     HTTP.delete("bear_test") && :ok
   end
 
+  test "tries to reach an invalid url" do
+    assert false == Resources.exists?("bear_test", %URI{host: "0.0.0.0", port: 9999})
+  end
 
   test "exists?/1" do
     { :ok, 200, _ } = HTTP.put("bear_test")
