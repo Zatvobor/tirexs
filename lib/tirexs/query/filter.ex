@@ -15,7 +15,9 @@ defmodule Tirexs.Query.Filter do
 
   @doc false
   def _filter(options, _filter_opts) when is_list(options) do
-    [filter: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+    filter_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [filter: extract(filter_opts) ++ options]
   end
 
   @doc false
@@ -57,7 +59,9 @@ defmodule Tirexs.Query.Filter do
 
   @doc false
   def _not(options, _not_opts) when is_list(options) do
-    [not: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+    not_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [not: extract(not_opts) ++ options]
   end
 
   @doc false
@@ -76,7 +80,9 @@ defmodule Tirexs.Query.Filter do
 
   @doc false
   def fquery(options, _fquery_opts) when is_list(options) do
-    [fquery: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+    fquery_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [fquery: extract(fquery_opts) ++ options]
   end
 
   @doc false
@@ -100,7 +106,9 @@ defmodule Tirexs.Query.Filter do
 
   @doc false
   def _and(options, _and_opts) when is_list(options) do
-    [and: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+    and_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [and: extract(and_opts) ++ options]
   end
 
   @doc false
@@ -113,7 +121,9 @@ defmodule Tirexs.Query.Filter do
 
   @doc false
   def _or(options, _or_opts) when is_list(options) do
-    [or: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+    or_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [or: extract(or_opts) ++ options]
   end
 
   @doc false

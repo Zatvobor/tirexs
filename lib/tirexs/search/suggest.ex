@@ -33,7 +33,9 @@ defmodule Tirexs.Search.Suggest do
 
   @doc false
   def _suggest(options, _suggest_opts) when is_list(options) do
-    [suggest: extract(extract_do(options, 1)) ++ Enum.fetch!(options, 0)]
+    suggest_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [suggest: extract(suggest_opts) ++ options]
   end
 
   @doc false
@@ -46,7 +48,9 @@ defmodule Tirexs.Search.Suggest do
 
   @doc false
   def make_suggest(name, options, _suggest_opts) when is_list(options) do
-    routers(name, extract_do(options, 1), Enum.fetch!(options, 0))
+    suggest_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    routers(name, suggest_opts, options)
   end
 
   @doc false
