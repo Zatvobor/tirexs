@@ -92,6 +92,11 @@ defmodule Tirexs.Query do
   end
 
   @doc false
+  def min_score(param) do
+    [min_score: Enum.fetch!(param, 0)]
+  end
+
+  @doc false
   def boosting(options, boosting_opts \\ [])
 
   @doc false
