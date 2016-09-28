@@ -43,6 +43,7 @@ defmodule Tirexs.Query.Logic do
         {:boost_mode, _, param}               -> Query.boost_mode(param)
         {:max_boost, _, param}                -> Query.max_boost(param)
         {:factor, _, param}                   -> Query.factor(param)
+        {:min_score, _, param}                -> Query.min_score(param)
         {:flt, _, params}                     -> Query.flt(params)
         {:flt_field, _, params}               -> Query.flt_field(params)
         {:fuzzy, _, params}                   -> Query.fuzzy(params)

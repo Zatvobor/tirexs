@@ -476,10 +476,11 @@ defmodule Tirexs.QueryTest do
         end
         boost_mode "sum"
         max_boost 1.5
+        min_score 0.8
       end
     end
 
-    expected = [query: [function_score: [query: [match_all: []], field_value_factor: [field: "votes", modifier: "log1p", factor: 2.0], boost_mode: "sum", max_boost: 1.5]]]
+    expected = [query: [function_score: [query: [match_all: []], field_value_factor: [field: "votes", modifier: "log1p", factor: 2.0], boost_mode: "sum", max_boost: 1.5, min_score: 0.8]]]
     assert query == expected
   end
 end
