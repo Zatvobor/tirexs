@@ -19,7 +19,7 @@ defmodule Tirexs.Mapping do
         end
       end
 
-      mappings do
+      mappings dynamic: false do
         indexes "country", type: "string"
         indexes "city", type: "string"
         indexes "suburb", type: "string"
@@ -46,13 +46,22 @@ defmodule Tirexs.Mapping do
   end
 
   @doc false
+  defmacro mappings(params, [do: block]) do
+    mappings = Keyword.merge(params, [properties: extract(block)])
+    quote_mappings(mappings)
+  end
+
+  @doc false
   defmacro mappings([do: block]) do
     mappings =  [properties: extract(block)]
+    quote_mappings(mappings)
+  end
+
+  defp quote_mappings(mappings) do
     quote do
       var!(index) = var!(index) ++ [mapping: unquote(mappings)]
     end
   end
-
 
   alias Tirexs.{Resources, HTTP}
 

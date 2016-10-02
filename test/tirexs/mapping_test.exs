@@ -23,6 +23,23 @@ defmodule Tirexs.MappingsTest do
     assert index[:mapping] == expected
   end
 
+  test "mappings with extra configurations" do
+    index = [index: "bear_test"]
+    mappings dynamic: "false", _parent: [type: "parent"] do
+      indexes "id", [
+        type: "multi_field",
+        fields: [
+          name_en: [ type: "string", analyzer: "analyzer_en", boost: 100],
+          exact: [type: "string", index: "not_analyzed"]
+        ]
+      ]
+      indexes "title", type: "string"
+    end
+
+    expected = [dynamic: "false", _parent: [type: "parent"], properties: [id: [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100], exact: [type: "string", index: "not_analyzed"]]], title: [type: "string"]]]
+    assert index[:mapping] == expected
+  end
+
   test "mappings w/ nested indexes" do
     index = [index: "bear_test"]
     mappings do

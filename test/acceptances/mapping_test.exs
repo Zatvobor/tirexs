@@ -50,7 +50,7 @@ defmodule Acceptances.MappingTest do
         filter "edge_ngram", [type: "edgeNGram", min_gram: 1, max_gram: 15]
       end
     end
-    mappings do
+    mappings dynamic: "false", _parent: [type: "parent"] do
       indexes "country", type: "string"
       indexes "city", type: "string"
       indexes "suburb", type: "string"
@@ -76,6 +76,6 @@ defmodule Acceptances.MappingTest do
 
     %{article: properties} = mappings
 
-    assert %{properties: %{city: %{type: "string"}, coordinates: %{type: "geo_point"}, country: %{type: "string"}, full_address: %{analyzer: "autocomplete_analyzer", type: "string"}, housenumber: %{index: "not_analyzed", type: "string"}, postcode: %{index: "not_analyzed", type: "string"}, road: %{type: "string"}, suburb: %{type: "string"}}} == properties
+    assert %{dynamic: "false", _parent: %{type: "parent"}, _routing: %{required: true}, properties: %{city: %{type: "string"}, coordinates: %{type: "geo_point"}, country: %{type: "string"}, full_address: %{analyzer: "autocomplete_analyzer", type: "string"}, housenumber: %{index: "not_analyzed", type: "string"}, postcode: %{index: "not_analyzed", type: "string"}, road: %{type: "string"}, suburb: %{type: "string"}}} == properties
   end
 end
