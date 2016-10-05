@@ -25,7 +25,12 @@ defmodule Tirexs.Mixfile do
   end
 
   defp deps do
-    [ {:exjsx, "~> 3.2.0"}, {:ex_doc, "~> 0.12", only: :dev}, {:earmark, "~> 1.0", only: :dev} ]
+    [
+      {:exjsx, "~> 3.2.0"},
+      {:aws_auth, "~> 0.5.1"},
+      {:ex_doc, "~> 0.12", only: :dev},
+      {:earmark, "~> 1.0", only: :dev}
+    ]
   end
 
   defp description do

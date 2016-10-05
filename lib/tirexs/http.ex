@@ -323,13 +323,17 @@ defmodule Tirexs.HTTP do
   @doc false
   def do_request(method, url, body \\ []) do
     { url, content_type, options } = { String.to_char_list(url), 'application/json', [{:body_format, :binary}] }
-    case method do
-      :get    -> ( request(method, {url, []}, [], []) |> response() )
-      :head   -> ( request(method, {url, []}, [], []) |> response() )
-      :delete -> ( request(method, {url, headers},[],[]) |> response() )
-      :put    -> ( request(method, {url, headers, content_type, body}, [], options) |> response() )
-      :post   -> ( request(method, {url, headers, content_type, body}, [], options) |> response() )
+    url = if Tirexs.ENV.get_env(:aws_elasticsearch),
+      do: sign_aws_url(method, url, headers, body),
+      else: url
+    resp = case method do
+      :get    -> request(method, {url, headers}, [], [])
+      :head   -> request(method, {url, headers}, [], [])
+      :delete -> request(method, {url, headers}, [], [])
+      :put    -> request(method, {url, headers, content_type, body}, [], options)
+      :post   -> request(method, {url, headers, content_type, body}, [], options)
     end
+    resp |> response()
   end
 
   @doc false
@@ -383,4 +387,22 @@ defmodule Tirexs.HTTP do
 
   defp __response__(state, status, []), do: { state, status, [] }
   defp __response__(state, status, body), do: { state, status, decode(body) }
+
+  defp sign_aws_url(method, url, headers, payload) do
+    AWSAuth.sign_url(
+      Tirexs.ENV.get_env(:aws_access_key_id),
+      Tirexs.ENV.get_env(:aws_secret_access_key),
+      to_string(method),
+      to_string(url),
+      Tirexs.ENV.get_env(:aws_region),
+      "es",
+      headers_for_aws(headers),
+      Timex.DateTime.now,
+      payload
+    ) |> to_charlist
+  end
+
+  defp headers_for_aws(headers) do
+    headers |> Enum.map(fn {k,v} -> {to_string(k), to_string(v)} end) |> Enum.into(%{})
+  end
 end
