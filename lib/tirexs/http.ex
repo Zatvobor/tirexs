@@ -326,6 +326,7 @@ defmodule Tirexs.HTTP do
     url = if Tirexs.ENV.get_env(:aws_elasticsearch),
       do: sign_aws_url(method, url, headers, body),
       else: url
+
     resp = case method do
       :get    -> request(method, {url, headers}, [], [])
       :head   -> request(method, {url, headers}, [], [])
@@ -396,13 +397,16 @@ defmodule Tirexs.HTTP do
       to_string(url),
       Tirexs.ENV.get_env(:aws_region),
       "es",
-      headers_for_aws(headers),
+      headers_for_aws(method, headers),
       Timex.DateTime.now,
       payload
     ) |> to_charlist
   end
 
-  defp headers_for_aws(headers) do
+  # DELETE requests do not support headers
+  defp headers_for_aws(:delete, _), do: %{}
+
+  defp headers_for_aws(_method, headers) do
     headers |> Enum.map(fn {k,v} -> {to_string(k), to_string(v)} end) |> Enum.into(%{})
   end
 end
