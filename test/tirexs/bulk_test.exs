@@ -44,9 +44,9 @@ defmodule Tirexs.BulkTest do
   end
 
   @expected_string ~S'''
-  {"index":{"_index":"website","_type":"blog","_id":1}}
+  {"index":{"_index":"website","_type":"blog","_id":1,"_parent":123}}
   {"title":"My first blog post"}
-  {"index":{"_index":"website","_type":"blog","_id":2}}
+  {"index":{"_index":"website","_type":"blog","_id":2,"_parent":321}}
   {"title":"My second blog post"}
   {"update":{"_index":"website","_type":"blog","_id":1,"_retry_on_conflict":3}}
   {"doc":{"title":"[updated] My first blog post"},"fields":["_source"]}
@@ -57,8 +57,8 @@ defmodule Tirexs.BulkTest do
   test "payload_as_string/0 example w/ raw payload" do
     actual = payload_as_string do
       index   [ index: "website", type: "blog" ], [
-        [id: 1, title: "My first blog post"],
-        [id: 2, title: "My second blog post"]
+        [id: 1, title: "My first blog post", _parent: 123],
+        [id: 2, title: "My second blog post", _parent: 321]
       ]
       update  [ index: "website", type: "blog"], [
         [
@@ -77,8 +77,8 @@ defmodule Tirexs.BulkTest do
   test "payload_as_string/1 example w/ raw payload" do
     actual = payload_as_string([ index: "website", type: "blog" ]) do
       index [
-        [id: 1, title: "My first blog post"],
-        [id: 2, title: "My second blog post"]
+        [id: 1, title: "My first blog post", _parent: 123],
+        [id: 2, title: "My second blog post", _parent: 321]
       ]
       update [
         [

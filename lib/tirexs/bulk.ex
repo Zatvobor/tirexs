@@ -231,7 +231,7 @@ defmodule Tirexs.Bulk do
   defp __reduce(action) when action == :index or action == :create do
     fn(doc, acc) ->
       header = [{action, (take_id(doc) ++ take_header(doc))}]
-      meta   = drop_id(doc)
+      meta   = drop_id(doc) |> drop_undescored()
       acc ++ [header] ++ [meta]
     end
   end
