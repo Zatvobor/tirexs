@@ -2,7 +2,7 @@
 # Run this example from console manually:
 #
 #   $ mix run -r examples/mapping.exs
-#   # => curl -X PUT -d '{ "settings": { "analysis": { "filter": { "edge_ngram": { "type": "edgeNGram", "min_gram": 1, "max_gram": 15 } }, "analyzer": { "autocomplete_analyzer": { "filter": [ "lowercase", "asciifolding", "edge_ngram" ], "tokenizer": "whitespace" } } }, "index": [] }, "mappings": { "dsl": { "properties": { "country": { "type": "string" }, "city": { "type": "string" }, "suburb": { "type": "string" }, "road": { "type": "string" }, "postcode": { "type": "string", "index": "not_analyzed" }, "housenumber": { "type": "string", "index": "not_analyzed" }, "coordinates": { "type": "geo_point" }, "full_address": { "type": "string", "analyzer": "autocomplete_analyzer" } } } } }' http://127.0.0.1:9200/bear_test
+#   # => curl -X PUT -d '{ "settings": { "analysis": { "filter": { "edge_ngram": { "type": "edgeNGram", "min_gram": 1, "max_gram": 15 } }, "analyzer": { "autocomplete_analyzer": { "filter": [ "lowercase", "asciifolding", "edge_ngram" ], "tokenizer": "whitespace" } } }, "index": [] }, "mappings": { "dsl": { "dynamic": "false", "properties": { "country": { "type": "string" }, "city": { "type": "string" }, "suburb": { "type": "string" }, "road": { "type": "string" }, "postcode": { "type": "string", "index": "not_analyzed" }, "housenumber": { "type": "string", "index": "not_analyzed" }, "coordinates": { "type": "geo_point" }, "full_address": { "type": "string", "analyzer": "autocomplete_analyzer" } } } } }' http://127.0.0.1:9200/bear_test
 #
 # Run this example from Elixir environment (`iex -S mix`):
 #
@@ -24,7 +24,7 @@ Tirexs.DSL.define(fn() ->
     end
   end
 
-  mappings do
+  mappings dynamic: "false" do
     indexes "country", type: "string"
     indexes "city", type: "string"
     indexes "suburb", type: "string"
