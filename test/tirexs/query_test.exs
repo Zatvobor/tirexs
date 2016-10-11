@@ -292,6 +292,17 @@ defmodule Tirexs.QueryTest do
     assert query == expected
   end
 
+  test "query w/ span_multi" do
+    query = query do
+      span_multi do
+        fuzzy "user", [value: "ki", boost: 1.0, min_similarity: 0.5, prefix_length: 0]
+      end
+    end
+
+    expected = [query: [span_multi: [fuzzy: [user: [value: "ki", boost: 1.0, min_similarity: 0.5, prefix_length: 0]]]]]
+    assert query == expected
+  end
+
   test "query w/ span_term" do
     query = query do
       span_term "field", [value: "value1", boost: 2.0]

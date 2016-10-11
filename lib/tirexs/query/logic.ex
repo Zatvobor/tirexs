@@ -68,6 +68,7 @@ defmodule Tirexs.Query.Logic do
         {:clauses, _, [params]}               -> Query.clauses(params[:do])
         {:span_not, _, [params]}              -> Query.span_not(params[:do])
         {:span_not, _, options}               -> Query.span_not(options)
+        {:span_multi, _, [params]}            -> Query.span_multi(params[:do])
         {:include, _, [params]}               -> Query.include(params)
         {:exclude, _, [params]}               -> Query.exclude(params)
         {:span_or, _, [params]}               -> Query.span_or(params[:do])

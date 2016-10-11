@@ -335,6 +335,11 @@ defmodule Tirexs.Query do
   end
 
   @doc false
+  def span_multi(options) do
+    [span_multi: extract(options)]
+  end
+
+  @doc false
   def terms(options) do
     [field, value, options] = extract_options(options)
     [terms: Keyword.put([], to_atom(field), value) ++ options]
