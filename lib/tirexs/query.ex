@@ -493,8 +493,18 @@ defmodule Tirexs.Query do
   end
 
   @doc false
-  def bool(block) do
-    [bool: extract(block)]
+  def bool(options, bool_opts \\ [])
+
+  @doc false
+  def bool(options, _bool_opts) when is_list(options) do
+    bool_opts = extract_do(options, 1)
+    options = Enum.fetch!(options, 0)
+    [bool: extract(bool_opts) ++ options]
+  end
+
+  @doc false
+  def bool(options, bool_opts) do
+    [bool: extract(options) ++ bool_opts]
   end
 
   @doc false

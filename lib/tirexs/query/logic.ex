@@ -10,6 +10,7 @@ defmodule Tirexs.Query.Logic do
   def transpose(block) do
       case block do
         {:bool, _, [params]}                  -> Query.bool(params[:do])
+        {:bool, _, options}                   -> Query.bool(options)
         {:must, _, [params]}                  -> Query.must(params[:do])
         {:filters, _, [params]}               -> Filter.filters(params[:do])
         {:should, _, [params]}                -> Query.should(params[:do])
