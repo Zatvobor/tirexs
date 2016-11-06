@@ -9,7 +9,7 @@ defmodule Tirexs.ElasticSearch.Settings do
     if Resources.exists?(definition[:index], uri) do
       HTTP.delete(definition[:index], uri)
     end
-    HTTP.post(definition[:index], uri, to_resource_json(definition))
+    HTTP.put(definition[:index], uri, to_resource_json(definition))
   end
 
   @doc false
