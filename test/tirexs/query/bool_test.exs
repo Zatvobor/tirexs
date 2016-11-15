@@ -19,6 +19,33 @@ defmodule Tirexs.Query.BoolTest do
     assert query == expected
   end
 
+  test "bool clause w/ parameters" do
+    query = query do
+      bool [minimum_should_match: 1] do
+        must do
+          match "artist", "Madonna", operator: "and"
+          match "title", "My", operator: "and"
+          match "color_tune", "red,orange"
+          match "genre", "Alternative/Indie,Christian/Gospel"
+          range "release_year", from: 1950, to: 2013
+          range "energy_mood", from: 0, to: 30
+        end
+
+        should do
+          match "genre", "Alternative/Indie,Christian/Gospel"
+          range "release_year", from: 1950, to: 2013
+        end
+
+        must_not do
+          match "genre", "Alternative/Indie,Christian/Gospel"
+        end
+      end
+    end
+
+    expected = [query: [bool: [must: [[match: [artist: [query: "Madonna", operator: "and"]]],[match: [title: [query: "My", operator: "and"]]],[match: [color_tune: [query: "red,orange"]]],[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]],[range: [release_year: [from: 1950, to: 2013]]],[range: [energy_mood: [from: 0, to: 30]]]], should: [[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]],[range: [release_year: [from: 1950, to: 2013]]]], must_not: [[match: [genre: [query: "Alternative/Indie,Christian/Gospel"]]]], minimum_should_match: 1]]]
+    assert query == expected
+  end
+
   test "bool clause w/ multiple occurrence types" do
     query = query do
       bool do
