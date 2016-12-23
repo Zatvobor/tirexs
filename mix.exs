@@ -17,7 +17,7 @@ defmodule Tirexs.Mixfile do
   end
 
   def application do
-    [ applications: [:exjsx, :inets], env: env ]
+    [ applications: [:exjsx, :inets, :logger], env: env ]
   end
 
   defp env do
