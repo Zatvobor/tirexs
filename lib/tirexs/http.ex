@@ -335,6 +335,7 @@ defmodule Tirexs.HTTP do
   @doc false
   def request(method, request, http_options, options) do
     { :ok, _ } = :application.ensure_all_started(:tirexs)
+    Tirexs.Logger.log_command(method, request)
     :httpc.request(method, request, http_options, options)
   end
 
