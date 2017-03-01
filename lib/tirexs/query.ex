@@ -43,8 +43,8 @@ defmodule Tirexs.Query do
 
   @doc false
   def multi_match(options) do
-    [query, fields, _] = extract_options(options)
-    [multi_match: [query: query, fields: fields]]
+    [query, fields, options] = extract_options(options)
+    [multi_match: [query: query, fields: fields] ++ options]
   end
 
   @doc false

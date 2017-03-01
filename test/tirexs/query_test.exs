@@ -53,6 +53,15 @@ defmodule Tirexs.QueryTest do
     assert query == expected
   end
 
+  test "query w/ multi_match with options" do
+    query = query do
+      multi_match "this is a test", ["subject", "message"], type: "cross_fields", operator: "and"
+    end
+
+    expected = [query: [multi_match: [query: "this is a test", fields: ["subject","message"], type: "cross_fields", operator: "and"]]]
+    assert query == expected
+  end
+
   test "query w/ ids" do
     query = query do
       ids "my_type", ["1", "4", "100"]
