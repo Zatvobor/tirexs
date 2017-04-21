@@ -96,7 +96,7 @@ defmodule Tirexs.Mapping do
     cond do
       definition[:settings] ->
         body = to_resource_json(definition)
-        HTTP.post("#{definition[:index]}", uri, body)
+        HTTP.put("#{definition[:index]}", uri, body)
       definition[:type] ->
         create_resource_settings(definition, uri)
         body = to_resource_json(definition)
