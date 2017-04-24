@@ -82,7 +82,12 @@ defmodule Acceptances.HTTPTest do
     { :ok, 200, _ } = delete("/bear_test")
   end
 
-  test "tries! delete resource" do
+  test "deletes! resource" do
+    { :ok, 200, _ } = put("/bear_test")
+    { :ok, 200, _ } = delete!("/bear_test")
+  end
+
+  test "tries delete! resource" do
     assert_raise(RuntimeError, fn -> delete!("/unknown") end)
   end
 
