@@ -58,6 +58,9 @@ defmodule Tirexs.ENV do
   def get_env(key) do
     Application.get_env(:tirexs, key)
   end
+  def get_env(key, default_value) do
+    Application.get_env(:tirexs, key, default_value)
+  end
 
   @doc "Returns all key-value pairs for `:tirexs` application."
   def get_all_env(), do: Application.get_all_env(:tirexs)

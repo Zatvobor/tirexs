@@ -7,7 +7,7 @@ defmodule Tirexs.LoggerTest do
   import ExUnit.CaptureIO
 
   @url "http://127.0.0.1/foo"
-  @headers Tirexs.HTTP.headers
+  @headers Tirexs.HTTP.Shared.headers
 
   setup do
     Application.put_env(:tirexs, :log, true)
