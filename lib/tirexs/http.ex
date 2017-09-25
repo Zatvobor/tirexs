@@ -335,7 +335,13 @@ defmodule Tirexs.HTTP do
 
   @doc false
   def decode(json, opts \\ [{:labels, :atom}]) do
-    JSX.decode!(IO.iodata_to_binary(json), opts)
+    with binary <- IO.iodata_to_binary(json),
+         {:ok, decoded_json} <- JSX.decode(binary, opts) do
+      decoded_json
+    else
+      {:error, msg} ->
+        raise "Response is invalid JSON. Response: \"#{json}\". JSX Error: \"#{msg}\""
+    end
   end
 
   defp __merge__(map1, map2) do
