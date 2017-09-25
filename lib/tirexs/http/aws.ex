@@ -5,18 +5,20 @@ defmodule Tirexs.HTTP.AWS do
 
   @doc false
   def do_request(method, url, body \\ []) do
+    :ok = :ssl.start
+
     case method do
       :get ->
-        signed_url = sign_url("GET", url) |> String.to_char_list
-        request(method, {signed_url, []}, [], []) |> response()
+        signed_url = "GET" |> sign_url(url) |> String.to_char_list()
+        method |> request({signed_url, []}, [], []) |> response()
       :head ->
-        signed_url = sign_url("HEAD", url) |> String.to_char_list
-        request(method, {signed_url, []}, [], []) |> response()
+        signed_url = "HEAD" |> sign_url(url) |> String.to_char_list()
+        method |> request({signed_url, []}, [], []) |> response()
       m when m == :delete or m == :put or m == :post ->
         aws_auth_headers = stringify_keys_and_values(headers)
         signed_headers = method |> to_string |> sign_headers(url, aws_auth_headers, body) |> char_list_keys_and_values
-        { url, content_type, options } = { String.to_char_list(url), 'application/json', [{:body_format, :binary}] }
-        request(method, {url, signed_headers, content_type, body}, [], options) |> response()
+        { url, content_type, options } = { String.to_char_list(url), 'application/json', [body_format: :binary] }
+        method |> request({url, signed_headers, content_type, body}, [], options) |> response()
     end
   end
 
