@@ -67,6 +67,20 @@ An Elixir flavored HTTP client and DSL library for building JSON based settings,
   #       max_score: 0.30685282, total: 1}, timed_out: false, took: 5}}
   ```
 
+8. AWS Support
+In config/dev.exs, add the following to `:tirexs`:
+
+   ```elixir
+   config :tirexs,
+     uri: "https://example-amazon-url",
+     http_adapter: Tirexs.HTTP.AWS,
+     aws: [
+       access_key_id: "AFAIKTIVSMSSEXAMPLE",
+       secret_access_key: "secret-access-key",
+       region: "us-east-2",
+     ]
+   ```
+
 Check out [/examples](/examples) directory as a quick intro.
 
 [![Gitter](https://badges.gitter.im/Zatvobor/tirexs.svg)](https://gitter.im/Zatvobor/tirexs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)

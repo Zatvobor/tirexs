@@ -1,4 +1,6 @@
 defmodule Tirexs.HTTP do
+  @standard_http_adapter Tirexs.HTTP.Standard
+
   @moduledoc """
   A set of functions for working over HTTP.
 
@@ -320,46 +322,10 @@ defmodule Tirexs.HTTP do
   def ok!({ :error, _, error }), do: raise inspect(error)
   def ok!({ :ok, _, _ } = response), do: response
 
-  @doc false
   def do_request(method, url, body \\ []) do
-    { url, content_type, options } = { String.to_char_list(url), 'application/json', [{:body_format, :binary}] }
-    case method do
-      :get    -> ( request(method, {url, []}, [], []) |> response() )
-      :head   -> ( request(method, {url, []}, [], []) |> response() )
-      :delete -> ( request(method, {url, headers, content_type, []}, [], []) |> response() )
-      :put    -> ( request(method, {url, headers, content_type, body}, [], options) |> response() )
-      :post   -> ( request(method, {url, headers, content_type, body}, [], options) |> response() )
-    end
-  end
-
-  @doc false
-  def request(method, request, http_options, options) do
-    { :ok, _ } = :application.ensure_all_started(:tirexs)
-    Tirexs.Logger.log_command(method, request)
-    :httpc.request(method, request, http_options, options)
-  end
-
-  @doc false
-  def response(req) do
-    case req do
-      {:ok, { {_, status, _}, _, body}} ->
-        if round(status / 100) == 4 || round(status / 100) == 5 do
-          __response__(:error, status, body)
-        else
-          __response__(:ok, status, body)
-        end
-      _ -> :error
-    end
-  end
-
-  @doc false
-  def headers do
-    [{'Content-Type', 'application/json'}]
-  end
-
-  @doc false
-  def decode(json, opts \\ [{:labels, :atom}]) do
-    JSX.decode!(IO.iodata_to_binary(json), opts)
+    http_adapter = Tirexs.ENV.get_env(:http_adapter, @standard_http_adapter)
+    http_adapter.do_request(method, url, body)
+    |> __response__()
   end
 
   @doc false
@@ -367,6 +333,16 @@ defmodule Tirexs.HTTP do
     JSX.encode!(term, opts)
   end
 
+  @doc false
+  def decode(json, opts \\ [{:labels, :atom}]) do
+    with binary <- IO.iodata_to_binary(json),
+         {:ok, decoded_json} <- JSX.decode(binary, opts) do
+      decoded_json
+    else
+      {:error, msg} ->
+        raise "Response is invalid JSON. Response: \"#{json}\". JSX Error: \"#{msg}\""
+    end
+  end
 
   defp __merge__(map1, map2) do
     Map.merge(map1, map2, fn(_k, v1, v2) ->
@@ -382,6 +358,7 @@ defmodule Tirexs.HTTP do
   end
   defp __normalize_path__(path), do: path
 
-  defp __response__(state, status, []), do: { state, status, [] }
-  defp __response__(state, status, body), do: { state, status, decode(body) }
+  defp __response__({state, status, []}), do: { state, status, [] }
+  defp __response__({state, status, body}), do: { state, status, decode(body) }
+  defp __response__(:error), do: :error
 end
