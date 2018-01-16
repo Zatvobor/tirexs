@@ -111,4 +111,25 @@ defmodule Acceptances.SettingsTest do
     translations = index_settings[:analysis][:char_filter][:translations]
     assert translations == %{ type: "mapping", mappings: ["ph => f", "qu => k"] }
   end
+
+  test "create normalizers" do
+    index_name = "bear_test"
+    index = [index: index_name]
+    settings do
+      analysis do
+        normalizer "my_normalizer", [type: "custom", filter: ["asciifolding", "lowercase"]]
+      end
+    end
+
+    {:ok, _, body} = Tirexs.ElasticSearch.Settings.create_resource(index)
+    assert body[:acknowledged] == true
+
+    {:ok, _, body} = Tirexs.bump()._settings(index_name)
+    index_settings = body[String.to_atom(index_name)][:settings][:index]
+    assert Map.has_key?(index_settings, :analysis)
+    assert Map.has_key?(index_settings[:analysis], :normalizer)
+    assert Map.has_key?(index_settings[:analysis][:normalizer], :my_normalizer)
+    my_normalizer = index_settings[:analysis][:normalizer][:my_normalizer]
+    assert my_normalizer == %{ type: "custom", filter: ["asciifolding", "lowercase"] }
+  end
 end

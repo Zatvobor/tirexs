@@ -101,4 +101,13 @@ defmodule Tirexs.Index.Settings do
       var!(index) = add_index_setting(var!(index), :index, :translog, value)
     end
   end
+
+  @doc false
+  defmacro normalizer(name, value) do
+    quote do
+      var!(index) = put_index_setting(var!(index), :analysis, :normalizer)
+      [name, value] = [unquote(name), unquote(value)]
+      var!(index) = add_index_setting(var!(index), :analysis, :normalizer, Keyword.put([], to_atom(name), value))
+    end
+  end
 end
