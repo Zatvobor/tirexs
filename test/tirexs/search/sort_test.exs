@@ -34,7 +34,7 @@ defmodule Tirexs.Search.SortTest do
   test "sort w/ _geo_distance_sort" do
     sort = sort do
       [
-        "_geo_distance": ["pin.location": [-70, 40], order: "asc", unit: "km"]
+        _geo_distance: ["pin.location": [-70, 40], order: "asc", unit: "km"]
       ]
     end
 

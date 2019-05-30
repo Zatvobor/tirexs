@@ -15,7 +15,7 @@ defmodule Tirexs.Index.Settings.TokenizerTest do
       end
     end
 
-    expected = [analysis: [tokenizer: ["dot-tokenizer": [type: "path_hierarchy", delimiter: "."]]], index: []]
+    expected = [analysis: [tokenizer: ["dot-tokenizer": [type: "path_hierarchy", delimiter: "."]]]]
     assert index[:settings] == expected
   end
 end

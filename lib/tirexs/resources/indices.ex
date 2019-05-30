@@ -38,14 +38,6 @@ defmodule Tirexs.Resources.Indices do
   def _analyze(), do: __c(urn(@r[:action]), @r)
 
   @doc false
-  @r [action: "/_warmer", bump: :put, bump!: :put!]
-  def _warmer(a, b, c), do: __c(urn(a, @r[:action], b, c), @r)
-  def _warmer(a, b), do: __c(urn(a, @r[:action], b), @r)
-  def _warmer({a}), do: __c(urn(@r[:action], {a}), @r)
-  def _warmer(a), do: __c(urn(a, @r[:action]), @r)
-  def _warmer(), do: __c(urn(@r[:action]), @r)
-
-  @doc false
   @r [action: "/_template", bump: :put, bump!: :put!]
   def _template(a, b, c), do: __c(urn(a, @r[:action], b, c), @r)
   def _template(a, b), do: __c(urn(a, @r[:action], b), @r)

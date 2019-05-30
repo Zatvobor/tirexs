@@ -13,7 +13,7 @@ defmodule Tirexs.Index.Settings.BlocksTest do
       blocks read_only: true, read: true, write: false, metadata: true
     end
 
-    expected = [index: [blocks: [read_only: true, read: true, write: false, metadata: true]]]
+    expected = [blocks: [read_only: true, read: true, write: false, metadata: true]]
     assert index[:settings] == expected
   end
 end

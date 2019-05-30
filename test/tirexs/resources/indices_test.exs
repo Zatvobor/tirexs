@@ -7,7 +7,7 @@ defmodule Tirexs.Resources.IndicesTest do
   @resources [
     "_refresh", "_flush", "_forcemerge", "_upgrade", "_alias", "_aliases",
     "_stats", "_segments", "_recovery", "_shard_stores", "_close", "_open",
-    "_analyze", "_warmer", "_template", "_settings",
+    "_analyze", "_template", "_settings",
     "_mapping"
   ]
 

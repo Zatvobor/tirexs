@@ -18,11 +18,6 @@ Tirexs.DSL.define([index: "bear_test"], fn(index) ->
       filter "substring", [type: "nGram", min_gram: 2, max_gram: 32]
       tokenizer "dot-tokenizer", [type: "path_hierarchy", delimiter: "."]
     end
-
-    cache    max_size: -1
-    translog disable_flush: false
-    set      number_of_replicas: 3
-    blocks   write: true
   end
 
   # Below a couple of code lines which could be useful for debugging and getting actual JSON string

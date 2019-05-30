@@ -39,7 +39,7 @@ defmodule Acceptances.MappingTest do
   test "create mapping and settings" do
     HTTP.delete("articles")
 
-    index = [index: "articles", type: "article"]
+    index = [index: "articles", type: "_doc"]
     settings do
       analysis do
         analyzer "autocomplete_analyzer",
@@ -50,15 +50,15 @@ defmodule Acceptances.MappingTest do
         filter "edge_ngram", [type: "edgeNGram", min_gram: 1, max_gram: 15]
       end
     end
-    mappings dynamic: "false", _parent: [type: "parent"] do
-      indexes "country", type: "string"
-      indexes "city", type: "string"
-      indexes "suburb", type: "string"
-      indexes "road", type: "string"
-      indexes "postcode", type: "string", index: "not_analyzed"
-      indexes "housenumber", type: "string", index: "not_analyzed"
+    mappings dynamic: "false" do
+      indexes "country", type: "text"
+      indexes "city", type: "text"
+      indexes "suburb", type: "text"
+      indexes "road", type: "text"
+      indexes "postcode", type: "text"
+      indexes "housenumber", type: "text"
       indexes "coordinates", type: "geo_point"
-      indexes "full_address", type: "string", analyzer: "autocomplete_analyzer"
+      indexes "full_address", type: "text", analyzer: "autocomplete_analyzer"
     end
 
     Tirexs.Mapping.create_resource(index)
@@ -74,8 +74,8 @@ defmodule Acceptances.MappingTest do
 
     assert %{analyzer: %{autocomplete_analyzer: %{filter: ["lowercase", "asciifolding", "edge_ngram"], tokenizer: "whitespace"}}, filter: %{edge_ngram: %{max_gram: "15", min_gram: "1", type: "edgeNGram"}}} == analyzer
 
-    %{article: properties} = mappings
+    %{_doc: properties} = mappings
 
-    assert %{dynamic: "false", _parent: %{type: "parent"}, _routing: %{required: true}, properties: %{city: %{type: "string"}, coordinates: %{type: "geo_point"}, country: %{type: "string"}, full_address: %{analyzer: "autocomplete_analyzer", type: "string"}, housenumber: %{index: "not_analyzed", type: "string"}, postcode: %{index: "not_analyzed", type: "string"}, road: %{type: "string"}, suburb: %{type: "string"}}} == properties
+    assert %{dynamic: "false", properties: %{city: %{type: "text"}, coordinates: %{type: "geo_point"}, country: %{type: "text"}, full_address: %{analyzer: "autocomplete_analyzer", type: "text"}, housenumber: %{type: "text"}, postcode: %{type: "text"}, road: %{type: "text"}, suburb: %{type: "text"}}} == properties
   end
 end

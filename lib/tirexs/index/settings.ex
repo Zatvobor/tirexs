@@ -9,7 +9,6 @@ defmodule Tirexs.Index.Settings do
   defmacro settings([do: block]) do
     quote do
       var!(index) = Keyword.put(var!(index), :settings, [])
-      var!(index) = put_setting(var!(index), :index)
       unquote(block)
     end
   end
@@ -50,19 +49,19 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro blocks(value) do
     quote do
-      var!(index) = put_index_setting(var!(index), :index, :blocks)
+      var!(index) = put_index_setting(var!(index), :blocks)
       value = unquote(value)
-      var!(index) = add_index_setting(var!(index), :index, :blocks, value)
+      var!(index) = add_index_setting(var!(index), :blocks, value)
     end
   end
 
   @doc false
   defmacro cache(value) do
     quote do
-      var!(index) = put_index_setting(var!(index), :index, :cache)
-      var!(index) = put_index_setting_nested_type(var!(index), :index, :cache, :filter)
+      var!(index) = put_index_setting(var!(index), :cache)
+      var!(index) = put_index_setting_nested_type(var!(index), :cache, :filter)
       value = unquote(value)
-      var!(index) = add_index_setting_nested_type(var!(index), :index, :cache, :filter, value)
+      var!(index) = add_index_setting_nested_type(var!(index), :cache, :filter, value)
     end
   end
 
@@ -96,9 +95,9 @@ defmodule Tirexs.Index.Settings do
   @doc false
   defmacro translog(value) do
     quote do
-      var!(index) = put_index_setting(var!(index), :index, :translog)
+      var!(index) = put_index_setting(var!(index), :translog)
       value = unquote(value)
-      var!(index) = add_index_setting(var!(index), :index, :translog, value)
+      var!(index) = add_index_setting(var!(index), :translog, value)
     end
   end
 end

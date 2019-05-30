@@ -40,16 +40,6 @@ defmodule Acceptances.Resources.SearchTest do
     { :ok, 200, _ } = Resources.bump._search_shards("bear_test", { [local: true] })
   end
 
-  test "_field_stats/0" do
-    { :ok, 200, _ } = HTTP.put("/bear_test")
-    { :ok, 200, _ } = Resources.bump([fields: ["rating"]])._field_stats()
-  end
-
-  test "_field_stats/2" do
-    { :ok, 200, _ } = HTTP.put("/bear_test")
-    { :ok, 200, _ } = Resources.bump._field_stats("bear_test", { [fields: "some"] })
-  end
-
   test "_validate_query/2" do
     { :ok, 201, _ } = HTTP.put("/bear_test/my_type/1?refresh=true", [user: "kimchy"])
     { :ok, 200, r } = Resources.bump._validate_query("bear_test", { [q: "user1:z*"] })
@@ -68,16 +58,12 @@ defmodule Acceptances.Resources.SearchTest do
 
     import Tirexs.Query, only: :macros
     query = query do
-      filtered do
-        query do
-          query_string "*:*"
-        end
-        filter do
+      bool do
+        must do
           term "user", "kimchy"
         end
       end
     end
-
     { :ok, 200, r } = Resources.bump(query)._validate_query("bear_test")
     assert r[:valid]
   end
@@ -87,13 +73,6 @@ defmodule Acceptances.Resources.SearchTest do
     search          = [query: [ term: [ user: "zatvobor" ] ]]
     { :ok, 200, r } = Resources.bump(search)._count("bear_test", "my_type")
     assert r[:count] == 1
-  end
-
-  test "_search_exists/2" do
-    { :ok, 201, _ } = HTTP.put("/bear_test/my_type/2?refresh=true", [user: "zatvobor"])
-    search          = [query: [ term: [ user: "zatvobor" ] ]]
-    { :ok, 200, r } = Resources.bump(search)._search_exists("bear_test", "my_type")
-    assert r[:exists]
   end
 
   test "_search/2" do

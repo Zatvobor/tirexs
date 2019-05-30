@@ -16,7 +16,7 @@ defmodule Tirexs.Index.Settings.FilterTest do
       end
     end
 
-    expected = [analysis: [filter: [substring: [type: "nGram", min_gram: 2, max_gram: 32], snow_en: [type: "snowball", language: "English"]]], index: []]
+    expected = [analysis: [filter: [substring: [type: "nGram", min_gram: 2, max_gram: 32], snow_en: [type: "snowball", language: "English"]]]]
     assert index[:settings] == expected
   end
 end
