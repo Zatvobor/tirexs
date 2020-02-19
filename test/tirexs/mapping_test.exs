@@ -197,7 +197,7 @@ defmodule Tirexs.MappingsTest do
     expected = [properties: [id: [type: "multi_field", fields: [name_en: [type: "string", analyzer: "analyzer_en", boost: 100], exact: [type: "string", index: "not_analyzed"]]], title: [type: "string"]]]
     assert index[:mapping] == expected
 
-    expected = [analysis: [analyzer: [autocomplete_analyzer: [filter: ["icu_normalizer", "icu_folding", "edge_ngram"], tokenizer: "icu_tokenizer"]], filter: [edge_ngram: [type: "edgeNGram", min_gram: 1, max_gram: 15]]], index: []]
+    expected = [analysis: [analyzer: [autocomplete_analyzer: [filter: ["icu_normalizer", "icu_folding", "edge_ngram"], tokenizer: "icu_tokenizer"]], filter: [edge_ngram: [type: "edgeNGram", min_gram: 1, max_gram: 15]]]]
     assert index[:settings] == expected
   end
 end

@@ -81,10 +81,6 @@ defmodule Tirexs.Resources.APIs do
   defdelegate _search_shards(a,b), to: Search
   defdelegate _search_shards(a,b,c), to: Search
 
-  defdelegate _field_stats(), to: Search
-  defdelegate _field_stats(a), to: Search
-  defdelegate _field_stats(a,b), to: Search
-
   defdelegate _validate_query(), to: Search
   defdelegate _validate_query(a), to: Search
   defdelegate _validate_query(a,b), to: Search
@@ -110,19 +106,6 @@ defmodule Tirexs.Resources.APIs do
 
   defdelegate _search_scroll_all(), to: Search
 
-  defdelegate percolator(a,b), to: Search
-
-  defdelegate _percolate(a), to: Search
-  defdelegate _percolate(a,b), to: Search
-  defdelegate _percolate(a,b,c), to: Search
-  defdelegate _percolate(a,b,c,d), to: Search
-
-  defdelegate _percolate_count(a), to: Search
-  defdelegate _percolate_count(a,b), to: Search
-  defdelegate _percolate_count(a,b,c), to: Search
-  defdelegate _percolate_count(a,b,c,d), to: Search
-
-
   alias Tirexs.Resources.Indices
 
   ## Mapping Management
@@ -144,11 +127,6 @@ defmodule Tirexs.Resources.APIs do
   defdelegate _analyze(a), to: Indices
   defdelegate _analyze(a,b), to: Indices
   defdelegate _analyze(a,b,c), to: Indices
-
-  defdelegate _warmer(), to: Indices
-  defdelegate _warmer(a), to: Indices
-  defdelegate _warmer(a,b), to: Indices
-  defdelegate _warmer(a,b,c), to: Indices
 
   defdelegate _template(), to: Indices
   defdelegate _template(a), to: Indices

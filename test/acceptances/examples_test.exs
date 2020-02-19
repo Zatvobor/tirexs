@@ -29,8 +29,4 @@ defmodule Acceptances.ExamplesTest do
   test ~S(loads "examples/search.exs") do
     Path.expand("examples/search.exs") |> Tirexs.load_file
   end
-
-  test ~S(loads "examples/percolator.exs") do
-    Path.expand("examples/percolator.exs") |> Tirexs.load_file
-  end
 end

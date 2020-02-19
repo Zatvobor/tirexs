@@ -19,13 +19,6 @@ defmodule Tirexs.Resources.Search do
   def _search_shards(a), do: __c(urn([a, @r[:action]]), @r)
 
   @doc false
-  @r [action: "/_field_stats", bump: :post, bump!: :post!]
-  def _field_stats(a, b), do: __c(urn([a, @r[:action], b]), @r)
-  def _field_stats({a}), do: __c(urn([@r[:action], {a}]), @r)
-  def _field_stats(a), do: __c(urn([a, @r[:action]]), @r)
-  def _field_stats(), do: __c(urn([@r[:action]]), @r)
-
-  @doc false
   @r [action: "/_validate/query", bump: :post, bump!: :post!]
   def _validate_query(a, b, c), do: __c(urn([a, b, @r[:action], c]), @r)
   def _validate_query(a, {b}), do: __c(urn([a, @r[:action], {b}]), @r)
@@ -69,26 +62,4 @@ defmodule Tirexs.Resources.Search do
   @doc false
   @r [action: "/_search/scroll/_all", bump: :delete, bump!: :delete!]
   def _search_scroll_all(), do: __c(urn([@r[:action]]), @r)
-
-  @doc false
-  @r [action: "/.percolator", bump: :put, bump!: :put!]
-  def percolator(a,b), do: __c(urn([a, @r[:action], b]), @r)
-
-  @doc false
-  @r [action: "/_percolate", bump: :post, bump!: :post!]
-  def _percolate(a), do: __c(urn([a, @r[:action]]), @r)
-  def _percolate(a, {b}), do: __c(urn([a, @r[:action], {b}]), @r)
-  def _percolate(a, b), do: __c(urn([a, b, @r[:action]]), @r)
-  def _percolate(a, b, {c}), do: __c(urn([a, b, @r[:action], {c}]), @r)
-  def _percolate(a, b, c), do: __c(urn([a, b, c, @r[:action]]), @r)
-  def _percolate(a, b, c, d), do: __c(urn([a, b, c, @r[:action], d]), @r)
-
-  @doc false
-  @r [action: "/_percolate/count", bump: :post, bump!: :post!]
-  def _percolate_count(a), do: __c(urn([a, @r[:action]]), @r)
-  def _percolate_count(a, {b}), do: __c(urn([a, @r[:action], {b}]), @r)
-  def _percolate_count(a, b), do: __c(urn([a, b, @r[:action]]), @r)
-  def _percolate_count(a, b, {c}), do: __c(urn([a, b, @r[:action], {c}]), @r)
-  def _percolate_count(a, b, c), do: __c(urn([a, b, c, @r[:action]]), @r)
-  def _percolate_count(a, b, c, d), do: __c(urn([a, b, c, @r[:action], d]), @r)
 end

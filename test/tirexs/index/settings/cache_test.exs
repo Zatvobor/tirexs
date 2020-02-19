@@ -13,7 +13,7 @@ defmodule Tirexs.Index.Settings.CacheTest do
       cache max_size: -1, expire: -1
     end
 
-    expected = [index: [cache: [filter: [max_size: -1, expire: -1]]]]
+    expected = [cache: [filter: [max_size: -1, expire: -1]]]
     assert index[:settings] == expected
   end
 end

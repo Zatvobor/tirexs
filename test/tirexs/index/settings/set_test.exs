@@ -13,7 +13,7 @@ defmodule Tirexs.Index.Settings.SetTest do
       set number_of_replicas: 3, auto_expand_replicas: 5
     end
 
-    expected = [index: [number_of_replicas: 3, auto_expand_replicas: 5]]
+    expected = [number_of_replicas: 3, auto_expand_replicas: 5]
     assert index[:settings] == expected
   end
 end

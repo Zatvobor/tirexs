@@ -16,7 +16,7 @@ defmodule Tirexs.Index.Settings.AnalyzerTest do
       end
     end
 
-    expected = [analysis: [analyzer: [msg_search_analyzer: [tokenizer: "keyword", filter: ["lowercase"]], msg_index_analyzer: [tokenizer: "keyword", filter: ["lowercase","substring"]]]], index: []]
+    expected = [analysis: [analyzer: [msg_search_analyzer: [tokenizer: "keyword", filter: ["lowercase"]], msg_index_analyzer: [tokenizer: "keyword", filter: ["lowercase","substring"]]]]]
     assert index[:settings] == expected
   end
 end

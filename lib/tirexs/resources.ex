@@ -50,7 +50,7 @@ defmodule Tirexs.Resources do
 
   @doc false
   def normalize(resource) when is_binary(resource) do
-    String.strip(resource) |> String.replace_prefix("/", "")
+    String.trim(resource) |> String.replace_prefix("/", "")
   end
   def normalize({ params }) do
     "?" <> URI.encode_query(params)

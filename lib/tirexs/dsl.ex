@@ -2,8 +2,7 @@ defmodule Tirexs.DSL do
   @moduledoc """
   This module represents a main entry point for creating resources from DSL.
 
-  The resource types are allowed to be `settings`, `mapping`, `search`, or
-  `percolator` definitions.
+  The resource types are allowed to be `settings`, `mapping`, `search`, definitions.
 
   This convenience allows you to define particular resources over `*.exs`
   snippets and load them by request, for instance:
@@ -17,7 +16,7 @@ defmodule Tirexs.DSL do
 
   @doc """
   Calls a `definition_fn/1,2` function and will create their resource. The resource
-  types are allowed to be `settings`, `mapping`, `search`, or `percolator`.
+  types are allowed to be `settings`, `mapping`, `search`.
 
   """
   def define(initial, definition_fn) do
@@ -33,7 +32,7 @@ defmodule Tirexs.DSL do
 
   @doc """
   Calls a `definition_fn/0,1` function and will create their resource. The resource
-  types are allowed to be `settings`, `mapping`, `search`, or `percolator`.
+  types are allowed to be `settings`, `mapping`, `search`.
 
   """
   def define(definition_fn) when is_function(definition_fn) do
@@ -48,14 +47,13 @@ defmodule Tirexs.DSL do
   end
 
 
-  alias Tirexs.{ElasticSearch.Settings, Mapping, Query, Percolator}
+  alias Tirexs.{ElasticSearch.Settings, Mapping, Query}
 
   defp create_resource(definition, uri \\ Tirexs.get_uri_env()) do
     cond do
       definition[:settings]   -> Settings.create_resource(definition, uri)
       definition[:mapping]    -> Mapping.create_resource(definition, uri)
       definition[:search]     -> Query.create_resource(definition, uri)
-      definition[:percolator] -> Percolator.create_resource(definition[:percolator], uri)
     end
   end
 end

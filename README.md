@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/Zatvobor/tirexs.svg?branch=master)](https://travis-ci.org/Zatvobor/tirexs) [![HEX version](https://img.shields.io/hexpm/v/tirexs.svg)](https://hex.pm/packages/tirexs) [![HEX downloads](https://img.shields.io/hexpm/dw/tirexs.svg)](https://hex.pm/packages/tirexs) [![Deps Status](https://beta.hexfaktor.org/badge/all/github/Zatvobor/tirexs.svg)](https://beta.hexfaktor.org/github/Zatvobor/tirexs)
 
-An Elixir flavored HTTP client and DSL library for building JSON based settings, mappings, queries and percolators to Elasticsearch engine.
+An Elixir flavored HTTP client and DSL library for building JSON based settings, mappings, queries to Elasticsearch engine.
 
 ## Getting Started
 

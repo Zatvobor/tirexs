@@ -140,7 +140,7 @@ defmodule Tirexs.HTTPTest do
 
   @body ~S'{"hello":"world"}'
   test "decode/1 #{byte_size(@body)} bytes string" do
-    actual = decode(to_char_list(@body))
+    actual = decode(to_charlist(@body))
     assert actual == %{hello: "world"}
   end
 
