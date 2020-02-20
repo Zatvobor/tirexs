@@ -29,7 +29,7 @@ defmodule Tirexs.Index.Settings do
     end
   end
 
- @doc false
+  @doc false
   defmacro set(settings) do
     quote do
       settings = unquote(settings)
