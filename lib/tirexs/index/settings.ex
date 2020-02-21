@@ -47,7 +47,7 @@ defmodule Tirexs.Index.Settings do
   end
 
   @doc false
-  defmacro normalizer([do: block]) do
+  defmacro normalizer(name, value) do
     quote do
       var!(index) = put_index_setting(var!(index), :analysis, :normalizer)
       [name, value] = [unquote(name), unquote(value)]
