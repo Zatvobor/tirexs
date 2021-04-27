@@ -25,7 +25,7 @@ defmodule Tirexs.Mixfile do
   end
 
   defp deps do
-    [ {:exjsx, "~> 3.2.0"}, {:ex_doc, "~> 0.12", only: :dev}, {:earmark, "~> 1.0", only: :dev} ]
+    [ {:exjsx, git: "https://github.com/BandanaPandey/exjsx.git"}, {:ex_doc, "~> 0.12", only: :dev}, {:earmark, "~> 1.0", only: :dev} ]
   end
 
   defp description do
