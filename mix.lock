@@ -1,6 +1,6 @@
 %{
   "earmark": {:hex, :earmark, "1.0.1", "2c2cd903bfdc3de3f189bd9a8d4569a075b88a8981ded9a0d95672f6e2b63141", [:mix], [], "hexpm", "db7b13d74a9edc54d3681762154d164d4a661cd27673cca80760344449877664"},
   "ex_doc": {:hex, :ex_doc, "0.13.0", "aa2f8fe4c6136a2f7cfc0a7e06805f82530e91df00e2bff4b4362002b43ada65", [:mix], [{:earmark, "~> 1.0", [hex: :earmark, repo: "hexpm", optional: false]}], "hexpm", "4b40cd154c2660d795b88f73c61b5e3679abe7215e8c20eb9040101cc4819d12"},
-  "exjsx": {:git, "https://github.com/BandanaPandey/exjsx.git", "d064198ea60e2a2455b1e305de8251cf72ae2aa5", []},
-  "jsx": {:hex, :jsx, "3.1.0", "d12516baa0bb23a59bb35dccaf02a1bd08243fcbb9efe24f2d9d056ccff71268", [:rebar3], [], "hexpm", "0c5cc8fdc11b53cc25cf65ac6705ad39e54ecc56d1c22e4adb8f5a53fb9427f3"},
+  "exjsx": {:git, "https://github.com/DataKrewTech/exjsx.git", "c8bb1c4721707dcb75ed81c84dfc7f25c96c944d", []},
+  "jsx": {:hex, :jsx, "2.11.0", "08154624050333919b4ac1b789667d5f4db166dc50e190c4d778d1587f102ee0", [:rebar3], [], "hexpm", "eed26a0d04d217f9eecefffb89714452556cf90eb38f290a27a4d45b9988f8c0"},
 }
